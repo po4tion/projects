@@ -6,13 +6,13 @@ import InnerNamingBlock from '../atoms/name/InnerNamingBlock';
 import AttachNamingBlock from '../atoms/name/AttachNamingBlock';
 import NumberBlock from '../atoms/name/NumberBlock';
 
-function NamingBlock() {
+function NamingBlock({ coronic }) {
   return (
     <MainNamingBlock>
       <SpaceNamingBlock>
         <InnerNamingBlock>
           <AttachNamingBlock>총 확진자 수</AttachNamingBlock>
-          <NumberBlock>20,000</NumberBlock>
+          <NumberBlock>{coronic}</NumberBlock>
         </InnerNamingBlock>
         <InnerNamingBlock>
           <AttachNamingBlock>당일 확진자 수</AttachNamingBlock>

@@ -7,8 +7,9 @@ import InnerBgBlock from '../components/atoms/bg/InnerBgBlock';
 // molecules
 import HeadingBlock from '../components/molecules/HeadingBlock';
 import TypeBlock from '../components/molecules/TypeBlock';
-import NamingBlock from '../components/molecules/NamingBlock';
 import DetailBlock from '../components/molecules/DetailBlock';
+
+import CovidData from '../containers/data/CovidData';
 
 function Main() {
   return (
@@ -16,7 +17,7 @@ function Main() {
       <InnerBgBlock>
         <HeadingBlock />
         <TypeBlock />
-        <NamingBlock />
+        <CovidData />
         <DetailBlock />
       </InnerBgBlock>
     </MainBackgroundBlock>
