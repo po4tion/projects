@@ -8,6 +8,7 @@ const StyledWorldTypeBlock = styled.div`
   width: 50px;
   height: 30px;
   border: 1px solid black;
+  cursor: pointer;
 `;
 
 function InternalTypeBlock() {

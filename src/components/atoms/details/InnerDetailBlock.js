@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { openAction } from '../../../modules/detail';
 
@@ -10,7 +10,6 @@ const StyledInnerDetailBlock = styled.p`
 
 function InnerDetailBlock({ children }) {
   const dispatch = useDispatch();
-  const open = useSelector((state) => state.detail.open);
 
   return (
     <StyledInnerDetailBlock onClick={() => dispatch(openAction())}>
