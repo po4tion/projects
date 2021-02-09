@@ -11,8 +11,8 @@ const StyledWorldTypeBlock = styled.div`
   cursor: pointer;
 `;
 
-function InternalTypeBlock() {
-  return <StyledWorldTypeBlock>세계</StyledWorldTypeBlock>;
+function InternalTypeBlock({ children }) {
+  return <StyledWorldTypeBlock>{children}</StyledWorldTypeBlock>;
 }
 
 export default InternalTypeBlock;

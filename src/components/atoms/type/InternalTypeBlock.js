@@ -11,8 +11,8 @@ const StyledInternalTypeBlock = styled.div`
   cursor: pointer;
 `;
 
-function InternalTypeBlock() {
-  return <StyledInternalTypeBlock>국내</StyledInternalTypeBlock>;
+function InternalTypeBlock({ children }) {
+  return <StyledInternalTypeBlock>{children}</StyledInternalTypeBlock>;
 }
 
 export default InternalTypeBlock;
