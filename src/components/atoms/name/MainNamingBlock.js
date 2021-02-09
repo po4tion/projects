@@ -4,11 +4,11 @@ import styled from 'styled-components';
 const StyledMainNamingBlock = styled.div`
   border: 1px solid black;
   width: 100%;
-  height: 100px;
+  height: ${({ open }) => (open ? '400px' : '100px')};
 `;
 
-function MainNamingBlock({ children }) {
-  return <StyledMainNamingBlock>{children}</StyledMainNamingBlock>;
+function MainNamingBlock({ children, open }) {
+  return <StyledMainNamingBlock open={open}>{children}</StyledMainNamingBlock>;
 }
 
 export default MainNamingBlock;

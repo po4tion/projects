@@ -8,7 +8,7 @@ dotenv.config();
 
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=20210207&endCreateDt=20210208`;
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=20210208&endCreateDt=20210209`;
 
 function CovidData() {
   const [coronic, setCoronic] = useState();
