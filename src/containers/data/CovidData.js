@@ -20,7 +20,7 @@ function CovidData() {
     accDefRate: 10000,
   });
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchData = async () => {
       try {
         await axios
@@ -43,7 +43,7 @@ function CovidData() {
     };
 
     fetchData();
-  }, [coronic]);
+  }, [coronic]); */
 
   console.log('coronic:', coronic);
 
