@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledMainNamingBlock = styled.div`
-  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
   height: ${({ open }) => (open ? '400px' : '100px')};
 `;
 

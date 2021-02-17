@@ -12,10 +12,10 @@ import HeadingBlock from '../components/molecules/HeadingBlock';
 import TypeBlock from '../components/molecules/TypeBlock';
 import DetailBlock from '../components/molecules/DetailBlock';
 import SelectDateType from '../components/molecules/SelectDateType';
-import LocalBlock from '../components/molecules/LocalBlock';
 
 // API
 import CovidData from '../containers/data/CovidData';
+import LocalCovidData from '../containers/data/LocalCovidData';
 import WorldCovidData from '../containers/data/WorldCovidData';
 import Highchart from '../containers/highchart/Highchart';
 import HighchartMonth from '../containers/highchart/HighchartMonth';
@@ -41,10 +41,11 @@ function Main() {
           <Route path="/world" exact component={WorldCovidData} />
         </Switch>
         <DetailBlock />
+        <Line />
         <SelectDateType />
         {chart}
         <Line />
-        <LocalBlock />
+        <LocalCovidData />
       </InnerBgBlock>
     </MainBackgroundBlock>
   );

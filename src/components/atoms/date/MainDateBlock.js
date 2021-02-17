@@ -3,10 +3,9 @@ import styled from 'styled-components';
 
 const StyledMainDateBlock = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: flex-end;
   align-items: center;
-
-  height: 30px;
+  height: 50px;
   width: 100%;
 `;
 

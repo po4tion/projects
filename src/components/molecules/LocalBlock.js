@@ -7,22 +7,24 @@ import TypeView from '../atoms/local/TypeView';
 import TypeViewList, { FontFixed } from '../atoms/local/TypeViewList';
 import VerticalLine from '../atoms/line/VerticalLine';
 
-function LocalBlock({ children }) {
-  const array = [100, 100, 100, 100, 100];
+function LocalBlock({ local }) {
+  console.log('local', local);
 
-  const charList = array.map((x, index) => (
-    <MainLocalListBlock key={index}>
-      <TypeView>
-        <FontFixed>{x}</FontFixed>
-        <VerticalLine />
-        <FontFixed>{x}</FontFixed>
-        <VerticalLine />
-        <FontFixed>{x}</FontFixed>
-        <VerticalLine />
-        <FontFixed>{x}</FontFixed>
-      </TypeView>
-    </MainLocalListBlock>
-  ));
+  const charList = local.map((x, index) => {
+    return (
+      <MainLocalListBlock key={index} bg={index}>
+        <TypeView>
+          <FontFixed>{x.gubun}</FontFixed>
+          <VerticalLine />
+          <FontFixed>{x.defCnt}</FontFixed>
+          <VerticalLine />
+          <FontFixed>{x.defCnt}</FontFixed>
+          <VerticalLine />
+          <FontFixed>{x.stdDay}</FontFixed>
+        </TypeView>
+      </MainLocalListBlock>
+    );
+  });
 
   return (
     <>

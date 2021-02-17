@@ -12,15 +12,15 @@ const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKe
 
 function CovidData() {
   const [coronic, setCoronic] = useState({
-    decideCnt: 10000,
-    deathCnt: 10000,
-    clearCnt: 10000,
-    examCnt: 10000,
-    careCnt: 10000,
-    accDefRate: 10000,
+    decideCnt: 0,
+    deathCnt: 0,
+    clearCnt: 0,
+    examCnt: 0,
+    careCnt: 0,
+    accDefRate: 0,
   });
 
-  /* useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         await axios
@@ -43,7 +43,7 @@ function CovidData() {
     };
 
     fetchData();
-  }, [coronic]); */
+  }, [coronic]);
 
   console.log('coronic:', coronic);
 

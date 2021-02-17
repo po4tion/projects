@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledInnerHeadingBlock = styled.h3`
+import '../../../fonts/fonts.scss';
+
+const StyledInnerHeadingBlock = styled.p`
   margin: 0;
+  color: #182c61;
+  font-size: 35px;
+  font-family: 'Noto Sans', sans-serif;
 `;
 
 function InnerHeadingBlock({ children }) {

@@ -5,7 +5,8 @@ const StyledInnerDateBlock = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80px;
+  width: 100px;
+  height: 40px;
   padding-left: 0px;
   list-style: none;
   font-size: 18px;

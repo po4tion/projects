@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StyledAttachNamingBlock = styled.p`
   margin: 0;
+  color: #778ca3;
   font-size: 16px;
   font-weight: bold;
 `;
