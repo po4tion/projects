@@ -6,8 +6,10 @@ const StyledListDateBlock = styled.li`
   cursor: pointer;
 `;
 
-function ListDateBlock({ children }) {
-  return <StyledListDateBlock>{children}</StyledListDateBlock>;
+function ListDateBlock({ children, onClick }) {
+  return (
+    <StyledListDateBlock onClick={onClick}>{children}</StyledListDateBlock>
+  );
 }
 
 export default ListDateBlock;

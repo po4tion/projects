@@ -8,7 +8,7 @@ const options = {
     width: 700,
   },
   title: {
-    text: '일별 코로나 동향, 2020-2021',
+    text: '월별 코로나 동향, 2020-2021',
   },
 
   subtitle: {
@@ -36,8 +36,8 @@ const options = {
 
   plotOptions: {
     series: {
-      pointStart: Date.UTC(2021, 1, 9), // 날짜 시작 (년도, 월, 일)
-      pointInterval: 24 * 3600 * 1000, // 시간 간격
+      pointStart: Date.UTC(2020, 1, 9), // 날짜 시작 (년도, 월, 일)
+      pointInterval: 24 * 3600 * 1000 * 30, // 시간 간격
     },
   },
 
@@ -82,10 +82,10 @@ const options = {
   },
 };
 
-const Highchart = () => (
+const HighchartMonth = () => (
   <div>
     <HighchartsReact highcharts={Highcharts} options={options} />
   </div>
 );
 
-export default Highchart;
+export default HighchartMonth;

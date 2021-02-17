@@ -9,6 +9,7 @@ const StyledMainBackgroundBlock = styled.div`
   height: 100vh;
   background-color: #f5ddc4;
   z-index: -1;
+  overflow: scroll;
 `;
 
 function MainBackgroundBlock({ children }) {

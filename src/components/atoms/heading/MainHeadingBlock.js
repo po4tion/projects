@@ -7,7 +7,6 @@ const StyledMainHeadingBlock = styled.div`
   align-items: center;
   height: 5vh;
   width: 100%;
-  border: 1px solid black;
 `;
 
 function MainHeadingBlock({ children }) {

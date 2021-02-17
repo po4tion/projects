@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { openAction } from '../../../modules/detail';
 
 const StyledInnerDetailBlock = styled.p`
+  border: 1px solid black;
   font-size: 16px;
   cursor: pointer;
 `;

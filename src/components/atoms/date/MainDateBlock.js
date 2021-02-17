@@ -5,7 +5,7 @@ const StyledMainDateBlock = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  border: 1px solid black;
+
   height: 30px;
   width: 100%;
 `;

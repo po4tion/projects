@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const StyledInnerBgBlock = styled.div`
   width: 700px;
   height: 85vh;
-  border: 1px solid black;
 `;
 
 function InnerBgBlock({ children }) {
