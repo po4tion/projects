@@ -12,8 +12,6 @@ const StyledMainLocalListBlock = styled.div`
 `;
 
 function MainLocalListBlock({ children, bg }) {
-  console.log('bg', bg);
-
   return (
     <StyledMainLocalListBlock bg={bg}>{children}</StyledMainLocalListBlock>
   );

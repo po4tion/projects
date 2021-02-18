@@ -8,17 +8,15 @@ import TypeViewList, { FontFixed } from '../atoms/local/TypeViewList';
 import VerticalLine from '../atoms/line/VerticalLine';
 
 function LocalBlock({ local }) {
-  console.log('local', local);
-
   const charList = local.map((x, index) => {
     return (
       <MainLocalListBlock key={index} bg={index}>
         <TypeView>
           <FontFixed>{x.gubun}</FontFixed>
           <VerticalLine />
-          <FontFixed>{x.defCnt}</FontFixed>
+          <FontFixed>{x.defCnt} 명</FontFixed>
           <VerticalLine />
-          <FontFixed>{x.defCnt}</FontFixed>
+          <FontFixed>{x.defCnt} 명</FontFixed>
           <VerticalLine />
           <FontFixed>{x.stdDay}</FontFixed>
         </TypeView>

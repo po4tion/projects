@@ -1,6 +1,13 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { ChartDataFunc } from '../../middleware/ChartDataFunc';
+
+// const result = new Date();
+
+// const coronic = ChartDataFunc(result);
+
+// console.log('coronic', coronic);
 
 const options = {
   chart: {
@@ -82,10 +89,12 @@ const options = {
   },
 };
 
-const Highchart = () => (
-  <div>
-    <HighchartsReact highcharts={Highcharts} options={options} />
-  </div>
-);
+function Highchart() {
+  return (
+    <div>
+      <HighchartsReact highcharts={Highcharts} options={options} />
+    </div>
+  );
+}
 
 export default Highchart;

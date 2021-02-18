@@ -12,38 +12,39 @@ const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKe
 
 function CovidData() {
   const [coronic, setCoronic] = useState({
-    decideCnt: 0,
-    deathCnt: 0,
-    clearCnt: 0,
-    examCnt: 0,
-    careCnt: 0,
-    accDefRate: 0,
+    decideCnt: 1000,
+    deathCnt: 1000,
+    clearCnt: 1000,
+    examCnt: 1000,
+    careCnt: 1000,
+    accDefRate: 1000,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await axios
-          .get(covidUrl)
-          .then((res) => res.data)
-          .then((data) => {
-            setCoronic({
-              ...coronic,
-              decideCnt: data.response.body.items.item[0].decideCnt,
-              deathCnt: data.response.body.items.item[0].deathCnt,
-              clearCnt: data.response.body.items.item[0].clearCnt,
-              examCnt: data.response.body.items.item[0].examCnt,
-              careCnt: data.response.body.items.item[0].careCnt,
-              accDefRate: data.response.body.items.item[0].accDefRate,
-            });
-          });
-      } catch (e) {
-        console.log(e);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       await axios
+  //         .get(covidUrl)
+  //         .then((res) => res.data)
+  //         .then((data) => {
+  //           console.log('data', data);
 
-    fetchData();
-  }, [coronic]);
+  //           setCoronic({
+  //             decideCnt: data.response.body.items.item[0].decideCnt,
+  //             deathCnt: data.response.body.items.item[0].deathCnt,
+  //             clearCnt: data.response.body.items.item[0].clearCnt,
+  //             examCnt: data.response.body.items.item[0].examCnt,
+  //             careCnt: data.response.body.items.item[0].careCnt,
+  //             accDefRate: data.response.body.items.item[0].accDefRate,
+  //           });
+  //         });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [coronic]);
 
   console.log('coronic:', coronic);
 

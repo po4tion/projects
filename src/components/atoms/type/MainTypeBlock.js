@@ -5,7 +5,6 @@ const StyledMainTypeBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
   height: 5vh;
   width: 100%;
 `;

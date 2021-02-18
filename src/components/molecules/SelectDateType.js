@@ -9,7 +9,7 @@ import ListDateBlock from '../atoms/date/ListDateBlock';
 
 function SelectDateType() {
   const dispatch = useDispatch();
-  const result = useSelector((state) => console.log(state.chartType.type));
+  // const result = useSelector((state) => console.log(state.chartType.type));
 
   const onClickDay = () => dispatch(changeTypeDay());
   const onClickMonth = () => dispatch(changeTypeMonth());
