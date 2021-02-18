@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledTypeViewList = styled.li`
@@ -9,7 +10,9 @@ const StyledTypeViewList = styled.li`
 `;
 
 function TypeView({ children }) {
-  return <StyledTypeViewList>{children}</StyledTypeViewList>;
+  const result = useSelector((state) => state.bgColor.type);
+
+  return <StyledTypeViewList result={result}>{children}</StyledTypeViewList>;
 }
 
 export default TypeView;
@@ -17,5 +20,4 @@ export default TypeView;
 export const FontFixed = styled(StyledTypeViewList)`
   font-size: 16px;
   font-weight: normal;
-  color: blue;
 `;

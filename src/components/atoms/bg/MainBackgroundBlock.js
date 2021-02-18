@@ -10,7 +10,7 @@ const StyledMainBackgroundBlock = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ result }) => (result === 'moon' ? '#000' : '#fff')};
+  background-color: ${({ result }) => (result === 'moon' ? '#2f3640' : '#fff')};
   font-family: 'Jal_Onuel';
   z-index: -1;
   overflow: scroll;

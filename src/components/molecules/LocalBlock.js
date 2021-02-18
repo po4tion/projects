@@ -1,17 +1,19 @@
 import React from 'react';
 
-import MainDetailBlock from '../atoms/details/MainDetailBlock';
+import { MainDetailCustom } from '../atoms/details/MainDetailBlock';
 import LocalChartBlock from '../atoms/local/LocalChartBlock';
 import MainLocalListBlock from '../atoms/local/MainLocalListBlock';
 import TypeView from '../atoms/local/TypeView';
 import TypeViewList, { FontFixed } from '../atoms/local/TypeViewList';
 import VerticalLine from '../atoms/line/VerticalLine';
 
+import { CustomLine, CustomLine02 } from '../atoms/line/Line';
+
 function LocalBlock({ local }) {
   const charList = local.map((x, index) => {
     return (
       <MainLocalListBlock key={index} bg={index}>
-        <TypeView>
+        <TypeView idx={index}>
           <FontFixed>{x.gubun}</FontFixed>
           <VerticalLine />
           <FontFixed>{x.defCnt} 명</FontFixed>
@@ -26,7 +28,9 @@ function LocalBlock({ local }) {
 
   return (
     <>
-      <MainDetailBlock>지역별(시, 도)</MainDetailBlock>
+      <MainDetailCustom>지역별(시, 도)</MainDetailCustom>
+      <CustomLine />
+      <CustomLine02 />
       <LocalChartBlock>
         <MainLocalListBlock>
           <TypeView>

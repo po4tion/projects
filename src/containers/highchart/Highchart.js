@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { ChartDataFunc } from '../../middleware/ChartDataFunc';
@@ -9,87 +11,98 @@ import { ChartDataFunc } from '../../middleware/ChartDataFunc';
 
 // console.log('coronic', coronic);
 
-const options = {
-  chart: {
-    type: 'line',
-    width: 700,
-  },
-  title: {
-    text: '일별 코로나 동향, 2020-2021',
-  },
+function Highchart() {
+  const result = useSelector((state) => state.bgColor.type);
 
-  subtitle: {
-    text: '',
-  },
-
-  yAxis: {
+  const options = {
+    chart: {
+      type: 'line',
+      width: 700,
+      backgroundColor: `${result === 'moon' ? '#2f3640' : '#fff'}`,
+      borderRadius: '7px',
+    },
     title: {
-      text: '(명)',
+      text: '일별 코로나 동향, 2020-2021',
+      style: {
+        color: `${result === 'moon' ? '#f5f6fa' : '#2c3a47'}`,
+        fontWeight: 'bold',
+      },
     },
-  },
 
-  xAxis: {
-    type: 'datetime',
-    accessibility: {
-      rangeDescription: 'Range: 2020 to 2021',
+    subtitle: {
+      text: '',
     },
-  },
 
-  legend: {
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'middle',
-  },
+    yAxis: {
+      title: {
+        text: '(명)',
+      },
+    },
 
-  plotOptions: {
-    series: {
-      pointStart: Date.UTC(2021, 1, 9), // 날짜 시작 (년도, 월, 일)
-      pointInterval: 24 * 3600 * 1000, // 시간 간격
+    xAxis: {
+      type: 'datetime',
+      accessibility: {
+        rangeDescription: 'Range: 2020 to 2021',
+      },
     },
-  },
 
-  series: [
-    {
-      name: '총 확진자 수',
-      data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 137222],
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle',
+      itemStyle: {
+        color: '#778ca3',
+      },
     },
-    {
-      name: '사망자',
-      data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
-    },
-    {
-      name: '검사진행',
-      data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
-    },
-    {
-      name: '격리해제',
-      data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227],
-    },
-    {
-      name: '치료중',
-      data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111],
-    },
-  ],
 
-  responsive: {
-    rules: [
+    plotOptions: {
+      series: {
+        pointStart: Date.UTC(2021, 1, 9), // 날짜 시작 (년도, 월, 일)
+        pointInterval: 24 * 3600 * 1000, // 시간 간격
+      },
+    },
+
+    series: [
       {
-        condition: {
-          maxWidth: 600,
-        },
-        chartOptions: {
-          legend: {
-            layout: 'horizontal',
-            align: 'center',
-            verticalAlign: 'bottom',
-          },
-        },
+        name: '총 확진자 수',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 137222],
+      },
+      {
+        name: '사망자',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
+      },
+      {
+        name: '검사진행',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
+      },
+      {
+        name: '격리해제',
+        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227],
+      },
+      {
+        name: '치료중',
+        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111],
       },
     ],
-  },
-};
 
-function Highchart() {
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 600,
+          },
+          chartOptions: {
+            legend: {
+              layout: 'horizontal',
+              align: 'center',
+              verticalAlign: 'bottom',
+            },
+          },
+        },
+      ],
+    },
+  };
+
   return (
     <div>
       <HighchartsReact highcharts={Highcharts} options={options} />

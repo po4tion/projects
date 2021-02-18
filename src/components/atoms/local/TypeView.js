@@ -6,10 +6,11 @@ const StyledTypeView = styled.ul`
   align-items: center;
   list-style: none;
   padding: 0;
+  color: ${({ idx }) => (idx === 0 || idx % 2 === 0 ? '#dcdde1' : '#718093')};
 `;
 
-function TypeView({ children }) {
-  return <StyledTypeView>{children}</StyledTypeView>;
+function TypeView({ children, idx }) {
+  return <StyledTypeView idx={idx}>{children}</StyledTypeView>;
 }
 
 export default TypeView;
