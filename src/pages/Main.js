@@ -19,6 +19,7 @@ import LocalCovidData from '../containers/data/LocalCovidData';
 import WorldCovidData from '../containers/data/WorldCovidData';
 import Highchart from '../containers/highchart/Highchart';
 import HighchartMonth from '../containers/highchart/HighchartMonth';
+import Sunday from '../containers/data/days/Sunday';
 
 function Main() {
   const result = useSelector((state) => state.chartType.type);
@@ -26,7 +27,7 @@ function Main() {
   let chart = null;
 
   if (result === 'day') {
-    chart = <Highchart />;
+    chart = <Sunday />;
   } else if (result === 'month') {
     chart = <HighchartMonth />;
   }

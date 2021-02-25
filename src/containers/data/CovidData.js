@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { ChartDateFunc } from '../../middleware/ChartDateFunc';
 
 import NamingBlock from '../../components/molecules/NamingBlock';
 
@@ -8,16 +9,19 @@ dotenv.config();
 
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=20210208&endCreateDt=20210209`;
+const result = new Date();
+const date = ChartDateFunc(result);
+
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date}&endCreateDt=${date}`;
 
 function CovidData() {
   const [coronic, setCoronic] = useState({
-    decideCnt: 1000,
-    deathCnt: 1000,
-    clearCnt: 1000,
-    examCnt: 1000,
-    careCnt: 1000,
-    accDefRate: 1000,
+    decideCnt: 123,
+    deathCnt: 123,
+    clearCnt: 123,
+    examCnt: 123,
+    careCnt: 123,
+    accDefRate: 123,
   });
 
   // useEffect(() => {
@@ -27,15 +31,13 @@ function CovidData() {
   //         .get(covidUrl)
   //         .then((res) => res.data)
   //         .then((data) => {
-  //           console.log('data', data);
-
   //           setCoronic({
-  //             decideCnt: data.response.body.items.item[0].decideCnt,
-  //             deathCnt: data.response.body.items.item[0].deathCnt,
-  //             clearCnt: data.response.body.items.item[0].clearCnt,
-  //             examCnt: data.response.body.items.item[0].examCnt,
-  //             careCnt: data.response.body.items.item[0].careCnt,
-  //             accDefRate: data.response.body.items.item[0].accDefRate,
+  //             decideCnt: data.response.body.items.item.decideCnt,
+  //             deathCnt: data.response.body.items.item.deathCnt,
+  //             clearCnt: data.response.body.items.item.clearCnt,
+  //             examCnt: data.response.body.items.item.examCnt,
+  //             careCnt: data.response.body.items.item.careCnt,
+  //             accDefRate: data.response.body.items.item.accDefRate,
   //           });
   //         });
   //     } catch (e) {
@@ -46,7 +48,7 @@ function CovidData() {
   //   fetchData();
   // }, [coronic]);
 
-  console.log('coronic:', coronic);
+  // console.log('coronic:', coronic);
 
   return <NamingBlock coronic={coronic} />;
 }

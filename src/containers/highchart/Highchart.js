@@ -3,16 +3,10 @@ import { useSelector } from 'react-redux';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { ChartDataFunc } from '../../middleware/ChartDataFunc';
-
-// const result = new Date();
-
-// const coronic = ChartDataFunc(result);
-
-// console.log('coronic', coronic);
 
 function Highchart() {
   const result = useSelector((state) => state.bgColor.type);
+  const sun = useSelector((state) => state.date.sunday);
 
   const options = {
     chart: {
@@ -65,23 +59,23 @@ function Highchart() {
     series: [
       {
         name: '총 확진자 수',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 137222],
+        data: [43934, 52503, 57177, 69658, 97031, 119931, sun],
       },
       {
         name: '사망자',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121],
       },
       {
         name: '검사진행',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147],
       },
       {
         name: '격리해제',
-        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227],
+        data: [null, null, 7988, 12169, 15112, 22452, 34400],
       },
       {
         name: '치료중',
-        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111],
+        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274],
       },
     ],
 
