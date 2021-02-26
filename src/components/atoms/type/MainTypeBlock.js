@@ -14,3 +14,9 @@ function MainTypeBlock({ children }) {
 }
 
 export default MainTypeBlock;
+
+export const StyledMainTypeBlockCustom = styled(StyledMainTypeBlock)`
+  height: 80px;
+  justify-content: center;
+  margin-bottom: 20px;
+`;

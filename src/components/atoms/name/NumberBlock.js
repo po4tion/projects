@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledNumberBlock = styled.p`
+  display: flex;
+  justify-content: center;
   margin-top: 15px;
   margin-left: 25%;
   width: 60%;

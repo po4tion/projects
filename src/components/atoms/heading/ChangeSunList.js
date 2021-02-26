@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const StyledChangeSunList = styled.li`
   display: flex;
   align-items: center;
-  border: 1px solid black;
   cursor: pointer;
 `;
 

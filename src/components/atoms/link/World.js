@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const WorldBlock = styled(Link)`
-  color: black;
+  color: #778ca3;
   text-decoration: none;
 `;
 

@@ -6,7 +6,15 @@ import HighchartsReact from 'highcharts-react-official';
 
 function Highchart() {
   const result = useSelector((state) => state.bgColor.type);
-  const sun = useSelector((state) => state.date.sunday);
+  const sunday = useSelector((state) => state.date.sunday);
+  const monday = useSelector((state) => state.date.monday);
+  const tuesday = useSelector((state) => state.date.tuesday);
+  const wednesday = useSelector((state) => state.date.wednesday);
+  const thursday = useSelector((state) => state.date.thursday);
+  const friday = useSelector((state) => state.date.friday);
+  const saturday = useSelector((state) => state.date.saturday);
+
+  const _date = new Date();
 
   const options = {
     chart: {
@@ -16,7 +24,7 @@ function Highchart() {
       borderRadius: '7px',
     },
     title: {
-      text: '일별 코로나 동향, 2020-2021',
+      text: '',
       style: {
         color: `${result === 'moon' ? '#f5f6fa' : '#2c3a47'}`,
         fontWeight: 'bold',
@@ -51,7 +59,7 @@ function Highchart() {
 
     plotOptions: {
       series: {
-        pointStart: Date.UTC(2021, 1, 9), // 날짜 시작 (년도, 월, 일)
+        pointStart: Date.UTC(2021, _date.getMonth(), _date.getDate() - 6), // 날짜 시작 (년도, 월, 일)
         pointInterval: 24 * 3600 * 1000, // 시간 간격
       },
     },
@@ -59,7 +67,7 @@ function Highchart() {
     series: [
       {
         name: '총 확진자 수',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, sun],
+        data: [sunday, monday, tuesday, wednesday, thursday, friday, saturday],
       },
       {
         name: '사망자',

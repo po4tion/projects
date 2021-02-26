@@ -8,7 +8,7 @@ const StyledSpaceNamingBlock = styled.div`
   height: 100px;
 `;
 
-function SpaceNamingBlock({children}) {
+function SpaceNamingBlock({ children }) {
   return <StyledSpaceNamingBlock>{children}</StyledSpaceNamingBlock>;
 }
 

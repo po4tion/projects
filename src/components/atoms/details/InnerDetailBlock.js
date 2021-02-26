@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import { openAction } from '../../../modules/detail';
 
 const StyledInnerDetailBlock = styled.div`
-  border-radius: 50px;
-  background: linear-gradient(145deg, #dbdada, #ffffff);
-  box-shadow: 10px 10px 10px #cfcece, -10px -10px 10px #ffffff;
-  padding: 10px;
+  border: 1px solid #778ca3;
+  border-radius: 5px;
+  padding: 8px;
   font-size: 16px;
   cursor: pointer;
 
@@ -27,3 +26,13 @@ function InnerDetailBlock({ children }) {
 }
 
 export default InnerDetailBlock;
+
+/* const StyledInnerDetailBlock = styled.div`
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.95);
+  }
+`; */

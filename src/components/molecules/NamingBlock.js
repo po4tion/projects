@@ -18,16 +18,6 @@ function NamingBlock({ coronic }) {
         <>
           <SpaceNamingBlock>
             <InnerNamingBlock>
-              <AttachNamingBlock>사망자</AttachNamingBlock>
-              <NumberBlock>{coronic.deathCnt} 명</NumberBlock>
-            </InnerNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>격리해제</AttachNamingBlock>
-              <NumberBlock>{coronic.clearCnt} 명</NumberBlock>
-            </InnerNamingBlock>
-          </SpaceNamingBlock>
-          <SpaceNamingBlock>
-            <InnerNamingBlock>
               <AttachNamingBlock>검사진행</AttachNamingBlock>
               <NumberBlock>{coronic.examCnt} 명</NumberBlock>
             </InnerNamingBlock>
@@ -50,16 +40,28 @@ function NamingBlock({ coronic }) {
   return (
     <MainNamingBlock open={open}>
       {coronic ? (
-        <SpaceNamingBlock>
-          <InnerNamingBlock>
-            <AttachNamingBlock>총 확진자 수</AttachNamingBlock>
-            <NumberBlock>{coronic.decideCnt} 명</NumberBlock>
-          </InnerNamingBlock>
-          <InnerNamingBlock>
-            <AttachNamingBlock>당일 확진자 수</AttachNamingBlock>
-            <NumberBlock>1,000 명</NumberBlock>
-          </InnerNamingBlock>
-        </SpaceNamingBlock>
+        <>
+          <SpaceNamingBlock>
+            <InnerNamingBlock>
+              <AttachNamingBlock>총 확진자 수</AttachNamingBlock>
+              <NumberBlock>{coronic.decideCnt} 명</NumberBlock>
+            </InnerNamingBlock>
+            <InnerNamingBlock>
+              <AttachNamingBlock>당일 확진자 수</AttachNamingBlock>
+              <NumberBlock>1,000 명</NumberBlock>
+            </InnerNamingBlock>
+          </SpaceNamingBlock>
+          <SpaceNamingBlock>
+            <InnerNamingBlock>
+              <AttachNamingBlock>사망자</AttachNamingBlock>
+              <NumberBlock>{coronic.deathCnt} 명</NumberBlock>
+            </InnerNamingBlock>
+            <InnerNamingBlock>
+              <AttachNamingBlock>격리해제</AttachNamingBlock>
+              <NumberBlock>{coronic.clearCnt} 명</NumberBlock>
+            </InnerNamingBlock>
+          </SpaceNamingBlock>
+        </>
       ) : null}
 
       {details}

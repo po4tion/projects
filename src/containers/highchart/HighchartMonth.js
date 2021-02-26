@@ -8,7 +8,7 @@ const options = {
     width: 700,
   },
   title: {
-    text: '월별 코로나 동향, 2020-2021',
+    text: '',
   },
 
   subtitle: {

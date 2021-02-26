@@ -2,10 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledListDateBlock = styled.li`
-  border-radius: 50px;
-  background: linear-gradient(145deg, #dbdada, #ffffff);
-  box-shadow: 4px 4px 4px #cfcece, -4px -4px 4px #ffffff;
-  padding: 7px;
+  display: flex;
+  align-itmes: center;
+  justify-content: center;
+  border: 1px solid #778ca3;
+  width: 50px;
+  height: 30px;
+  color: #778ca3;
   cursor: pointer;
 
   &:active {
