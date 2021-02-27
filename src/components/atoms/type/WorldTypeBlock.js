@@ -18,3 +18,7 @@ function InternalTypeBlock({ children }) {
 }
 
 export default InternalTypeBlock;
+
+export const StyledWorldTypeBlockCustom = styled(StyledWorldTypeBlock)`
+  background-color: rgba(126, 214, 223, 0.3);
+`;

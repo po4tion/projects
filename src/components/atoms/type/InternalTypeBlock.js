@@ -17,3 +17,7 @@ function InternalTypeBlock({ children }) {
 }
 
 export default InternalTypeBlock;
+
+export const StyledInternalTypeBlockCustom = styled(StyledInternalTypeBlock)`
+  background-color: rgba(126, 214, 223, 0.3);
+`;

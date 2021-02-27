@@ -1,28 +1,57 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeTypeDay } from '../../modules/chartType';
 import { changeTypeMonth } from '../../modules/chartType';
 
 import MainTypeBlock from '../atoms/type/MainTypeBlock';
-import InternalTypeBlock from '../atoms/type/InternalTypeBlock';
-import WorldTypeBlock from '../atoms/type/WorldTypeBlock';
+import InternalTypeBlock, {
+  StyledInternalTypeBlockCustom,
+} from '../atoms/type/InternalTypeBlock';
+import WorldTypeBlock, {
+  StyledWorldTypeBlockCustom,
+} from '../atoms/type/WorldTypeBlock';
 import Day from '../atoms/link/Day';
 import Month from '../atoms/link/Month';
 
 function TypeBlock() {
   const dispatch = useDispatch();
+  const result = useSelector((state) => state.chartData.type);
 
   const onClickDay = () => dispatch(changeTypeDay());
   const onClickMonth = () => dispatch(changeTypeMonth());
 
-  return (
-    <MainTypeBlock>
-      <InternalTypeBlock>
+  let day_type = null;
+
+  let month_type = null;
+
+  if (result === 'day') {
+    day_type = (
+      <StyledInternalTypeBlockCustom>
         <Day onClick={onClickDay} />
-      </InternalTypeBlock>
+      </StyledInternalTypeBlockCustom>
+    );
+    month_type = (
       <WorldTypeBlock>
         <Month onClick={onClickMonth} />
       </WorldTypeBlock>
+    );
+  } else if (result === 'month') {
+    day_type = (
+      <InternalTypeBlock>
+        <Day onClick={onClickDay} />
+      </InternalTypeBlock>
+    );
+    month_type = (
+      <StyledWorldTypeBlockCustom>
+        <Month onClick={onClickMonth} />
+      </StyledWorldTypeBlockCustom>
+    );
+  }
+
+  return (
+    <MainTypeBlock>
+      {day_type}
+      {month_type}
     </MainTypeBlock>
   );
 }
