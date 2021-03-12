@@ -4,6 +4,7 @@ import chartType from './chartType';
 import chartData from './chartData';
 import bgColor from './bgColor';
 import date from './date';
+import differ from './differ';
 
 const rootReducer = combineReducers({
   detail,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   chartData,
   bgColor,
   date,
+  differ,
 });
 
 export default rootReducer;

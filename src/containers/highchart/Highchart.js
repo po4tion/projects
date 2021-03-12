@@ -67,24 +67,69 @@ function Highchart() {
 
     series: [
       {
+        // decideCnt
         name: '총 확진자 수',
-        data: [first, second, third, fourth, fifth, sixth, seventh],
+        data: [
+          first.decideCnt,
+          second.decideCnt,
+          third.decideCnt,
+          fourth.decideCnt,
+          fifth.decideCnt,
+          sixth.decideCnt,
+          seventh.decideCnt,
+        ],
       },
       {
+        // deathCnt
         name: '사망자',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121],
+        data: [
+          first.deathCnt,
+          second.deathCnt,
+          third.deathCnt,
+          fourth.deathCnt,
+          fifth.deathCnt,
+          sixth.deathCnt,
+          seventh.deathCnt,
+        ],
       },
       {
+        // examCnt
         name: '검사진행',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147],
+        data: [
+          first.examCnt,
+          second.examCnt,
+          third.examCnt,
+          fourth.examCnt,
+          fifth.examCnt,
+          sixth.examCnt,
+          seventh.examCnt,
+        ],
       },
       {
+        // clearCnt
         name: '격리해제',
-        data: [null, null, 7988, 12169, 15112, 22452, 34400],
+        data: [
+          first.clearCnt,
+          second.clearCnt,
+          third.clearCnt,
+          fourth.clearCnt,
+          fifth.clearCnt,
+          sixth.clearCnt,
+          seventh.clearCnt,
+        ],
       },
       {
+        // careCnt
         name: '치료중',
-        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274],
+        data: [
+          first.careCnt,
+          second.careCnt,
+          third.careCnt,
+          fourth.careCnt,
+          fifth.careCnt,
+          sixth.careCnt,
+          seventh.careCnt,
+        ],
       },
     ],
 

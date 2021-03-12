@@ -6,9 +6,14 @@ import SpaceNamingBlock from '../atoms/name/SpaceNamingBlock';
 import InnerNamingBlock from '../atoms/name/InnerNamingBlock';
 import AttachNamingBlock from '../atoms/name/AttachNamingBlock';
 import NumberBlock from '../atoms/name/NumberBlock';
+import FixValueBlock from '../atoms/name/FixValueBlock';
+
+// icon
+import { StyledArrowUp } from '../atoms/icons/Arrow';
 
 function NamingBlock({ coronic }) {
   const open = useSelector((state) => state.detail.open);
+  const differ = useSelector((state) => state.differ.result);
 
   let details = null;
 
@@ -19,11 +24,11 @@ function NamingBlock({ coronic }) {
           <SpaceNamingBlock>
             <InnerNamingBlock>
               <AttachNamingBlock>검사진행</AttachNamingBlock>
-              <NumberBlock>{coronic.examCnt} 명</NumberBlock>
+              <NumberBlock>{coronic.examCnt}</NumberBlock>
             </InnerNamingBlock>
             <InnerNamingBlock>
               <AttachNamingBlock>치료중</AttachNamingBlock>
-              <NumberBlock>{coronic.careCnt} 명</NumberBlock>
+              <NumberBlock>{coronic.careCnt}</NumberBlock>
             </InnerNamingBlock>
           </SpaceNamingBlock>
           <SpaceNamingBlock>
@@ -44,21 +49,21 @@ function NamingBlock({ coronic }) {
           <SpaceNamingBlock>
             <InnerNamingBlock>
               <AttachNamingBlock>총 확진자 수</AttachNamingBlock>
-              <NumberBlock>{coronic.decideCnt} 명</NumberBlock>
+              <NumberBlock>{coronic.decideCnt}</NumberBlock>
+              <FixValueBlock>
+                {differ}
+                <StyledArrowUp />
+              </FixValueBlock>
             </InnerNamingBlock>
             <InnerNamingBlock>
-              <AttachNamingBlock>당일 확진자 수</AttachNamingBlock>
-              <NumberBlock>1,000 명</NumberBlock>
+              <AttachNamingBlock>사망자</AttachNamingBlock>
+              <NumberBlock>{coronic.deathCnt}</NumberBlock>
             </InnerNamingBlock>
           </SpaceNamingBlock>
           <SpaceNamingBlock>
             <InnerNamingBlock>
-              <AttachNamingBlock>사망자</AttachNamingBlock>
-              <NumberBlock>{coronic.deathCnt} 명</NumberBlock>
-            </InnerNamingBlock>
-            <InnerNamingBlock>
               <AttachNamingBlock>격리해제</AttachNamingBlock>
-              <NumberBlock>{coronic.clearCnt} 명</NumberBlock>
+              <NumberBlock>{coronic.clearCnt}</NumberBlock>
             </InnerNamingBlock>
           </SpaceNamingBlock>
         </>

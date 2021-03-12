@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const StyledMainTypeBlock = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   height: 5vh;
   width: 100%;
+  border: 1px solid black;
 `;
 
 function MainTypeBlock({ children }) {

@@ -8,53 +8,200 @@ const FIFTH = 'date/FIFTH';
 const SIXTH = 'date/SIXTH';
 const SEVENTH = 'date/SEVENTH';
 
-export const first = createAction(FIRST, (first) => first);
-export const second = createAction(SECOND, (second) => second);
-export const third = createAction(THIRD, (third) => third);
-export const fourth = createAction(FOURTH, (fourth) => fourth);
-export const fifth = createAction(FIFTH, (fifth) => fifth);
-export const sixth = createAction(SIXTH, (sixth) => sixth);
-export const seventh = createAction(SEVENTH, (seventh) => seventh);
+export const first = createAction(
+  FIRST,
+  (decideCnt, deathCnt, examCnt, clearCnt, careCnt) => [
+    decideCnt,
+    deathCnt,
+    examCnt,
+    clearCnt,
+    careCnt,
+  ]
+);
+export const second = createAction(
+  SECOND,
+  (decideCnt, deathCnt, examCnt, clearCnt, careCnt) => [
+    decideCnt,
+    deathCnt,
+    examCnt,
+    clearCnt,
+    careCnt,
+  ]
+);
+export const third = createAction(
+  THIRD,
+  (decideCnt, deathCnt, examCnt, clearCnt, careCnt) => [
+    decideCnt,
+    deathCnt,
+    examCnt,
+    clearCnt,
+    careCnt,
+  ]
+);
+export const fourth = createAction(
+  FOURTH,
+  (decideCnt, deathCnt, examCnt, clearCnt, careCnt) => [
+    decideCnt,
+    deathCnt,
+    examCnt,
+    clearCnt,
+    careCnt,
+  ]
+);
+export const fifth = createAction(
+  FIFTH,
+  (decideCnt, deathCnt, examCnt, clearCnt, careCnt) => [
+    decideCnt,
+    deathCnt,
+    examCnt,
+    clearCnt,
+    careCnt,
+  ]
+);
+export const sixth = createAction(
+  SIXTH,
+  (decideCnt, deathCnt, examCnt, clearCnt, careCnt) => [
+    decideCnt,
+    deathCnt,
+    examCnt,
+    clearCnt,
+    careCnt,
+  ]
+);
+export const seventh = createAction(
+  SEVENTH,
+  (decideCnt, deathCnt, examCnt, clearCnt, careCnt) => [
+    decideCnt,
+    deathCnt,
+    examCnt,
+    clearCnt,
+    careCnt,
+  ]
+);
 
 const initialState = {
-  first: 0,
-  second: 0,
-  third: 0,
-  fourth: 0,
-  fifth: 0,
-  sixth: 0,
-  seventh: 0,
+  first: {
+    decideCnt: 0,
+    deathCnt: 0,
+    examCnt: 0,
+    clearCnt: 0,
+    careCnt: 0,
+  },
+  second: {
+    decideCnt: 0,
+    deathCnt: 0,
+    examCnt: 0,
+    clearCnt: 0,
+    careCnt: 0,
+  },
+  third: {
+    decideCnt: 0,
+    deathCnt: 0,
+    examCnt: 0,
+    clearCnt: 0,
+    careCnt: 0,
+  },
+  fourth: {
+    decideCnt: 0,
+    deathCnt: 0,
+    examCnt: 0,
+    clearCnt: 0,
+    careCnt: 0,
+  },
+  fifth: {
+    decideCnt: 0,
+    deathCnt: 0,
+    examCnt: 0,
+    clearCnt: 0,
+    careCnt: 0,
+  },
+  sixth: {
+    decideCnt: 0,
+    deathCnt: 0,
+    examCnt: 0,
+    clearCnt: 0,
+    careCnt: 0,
+  },
+  seventh: {
+    decideCnt: 0,
+    deathCnt: 0,
+    examCnt: 0,
+    clearCnt: 0,
+    careCnt: 0,
+  },
 };
 
 const date = handleActions(
   {
     [FIRST]: (state, action) => ({
       ...state,
-      first: action.payload,
+      first: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        examCnt: action.payload[2],
+        clearCnt: action.payload[3],
+        careCnt: action.payload[4],
+      },
     }),
     [SECOND]: (state, action) => ({
       ...state,
-      second: action.payload,
+      second: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        examCnt: action.payload[2],
+        clearCnt: action.payload[3],
+        careCnt: action.payload[4],
+      },
     }),
     [THIRD]: (state, action) => ({
       ...state,
-      third: action.payload,
+      third: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        examCnt: action.payload[2],
+        clearCnt: action.payload[3],
+        careCnt: action.payload[4],
+      },
     }),
     [FOURTH]: (state, action) => ({
       ...state,
-      fourth: action.payload,
+      fourth: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        examCnt: action.payload[2],
+        clearCnt: action.payload[3],
+        careCnt: action.payload[4],
+      },
     }),
     [FIFTH]: (state, action) => ({
       ...state,
-      fifth: action.payload,
+      fifth: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        examCnt: action.payload[2],
+        clearCnt: action.payload[3],
+        careCnt: action.payload[4],
+      },
     }),
     [SIXTH]: (state, action) => ({
       ...state,
-      sixth: action.payload,
+      sixth: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        examCnt: action.payload[2],
+        clearCnt: action.payload[3],
+        careCnt: action.payload[4],
+      },
     }),
     [SEVENTH]: (state, action) => ({
       ...state,
-      seventh: action.payload,
+      seventh: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        examCnt: action.payload[2],
+        clearCnt: action.payload[3],
+        careCnt: action.payload[4],
+      },
     }),
   },
   initialState

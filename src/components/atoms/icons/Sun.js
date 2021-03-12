@@ -9,4 +9,8 @@ export const StyledSun = styled(BiSun)`
     color: #778ca3;
     transform: scale(1.5);
   }
+
+  &:active {
+    transform: scale(1.3);
+  }
 `;

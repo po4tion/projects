@@ -22,7 +22,9 @@ const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 const result = new Date();
 const date = ChartDateFunc(result);
 
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date}&endCreateDt=${date}`;
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  date - 6
+}&endCreateDt=${date}`;
 
 function ChartValue() {
   const dispatch = useDispatch();
@@ -34,11 +36,70 @@ function ChartValue() {
   //         .get(covidUrl)
   //         .then((res) => res.data)
   //         .then((data) => {
-  //           // 여기서 dispatch로 mon~sun 값 넣어주기
-  //           // setCoronic({
-  //           //   decideCnt: data.response.body.items.item.decideCnt,
-  //           // });
-  //           // dispatch(seventh(data.response.body.items.item.decideCnt));
+  //           // 총 확진자
+  //           dispatch(
+  //             first(
+  //               data.response.body.items.item[6].decideCnt,
+  //               data.response.body.items.item[6].deathCnt,
+  //               data.response.body.items.item[6].examCnt,
+  //               data.response.body.items.item[6].clearCnt,
+  //               data.response.body.items.item[6].careCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             second(
+  //               data.response.body.items.item[5].decideCnt,
+  //               data.response.body.items.item[5].deathCnt,
+  //               data.response.body.items.item[5].examCnt,
+  //               data.response.body.items.item[5].clearCnt,
+  //               data.response.body.items.item[5].careCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             third(
+  //               data.response.body.items.item[4].decideCnt,
+  //               data.response.body.items.item[4].deathCnt,
+  //               data.response.body.items.item[4].examCnt,
+  //               data.response.body.items.item[4].clearCnt,
+  //               data.response.body.items.item[4].careCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             fourth(
+  //               data.response.body.items.item[3].decideCnt,
+  //               data.response.body.items.item[3].deathCnt,
+  //               data.response.body.items.item[3].examCnt,
+  //               data.response.body.items.item[3].clearCnt,
+  //               data.response.body.items.item[3].careCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             fifth(
+  //               data.response.body.items.item[2].decideCnt,
+  //               data.response.body.items.item[2].deathCnt,
+  //               data.response.body.items.item[2].examCnt,
+  //               data.response.body.items.item[2].clearCnt,
+  //               data.response.body.items.item[2].careCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             sixth(
+  //               data.response.body.items.item[1].decideCnt,
+  //               data.response.body.items.item[1].deathCnt,
+  //               data.response.body.items.item[1].examCnt,
+  //               data.response.body.items.item[1].clearCnt,
+  //               data.response.body.items.item[1].careCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             seventh(
+  //               data.response.body.items.item[0].decideCnt,
+  //               data.response.body.items.item[0].deathCnt,
+  //               data.response.body.items.item[0].examCnt,
+  //               data.response.body.items.item[0].clearCnt,
+  //               data.response.body.items.item[0].careCnt
+  //             )
+  //           );
   //         });
   //     } catch (e) {
   //       console.log(e);
@@ -48,13 +109,13 @@ function ChartValue() {
   //   fetchData();
   // }, [dispatch]);
 
-  dispatch(first(10000));
-  dispatch(second(20000));
-  dispatch(third(30000));
-  dispatch(fourth(40000));
-  dispatch(fifth(35000));
-  dispatch(sixth(40000));
-  dispatch(seventh(45000));
+  dispatch(first(1, 10, 30, 40, 60));
+  dispatch(second(2, 11, 29, 41, 59));
+  dispatch(third(3, 12, 28, 42, 58));
+  dispatch(fourth(4, 13, 27, 43, 57));
+  dispatch(fifth(5, 14, 26, 44, 56));
+  dispatch(sixth(6, 15, 25, 45, 55));
+  dispatch(seventh(7, 16, 24, 46, 54));
 
   return <Highchart />;
 }

@@ -50,6 +50,7 @@ function TypeBlock() {
 
   return (
     <MainTypeBlock>
+      <select>d</select>
       {day_type}
       {month_type}
     </MainTypeBlock>
