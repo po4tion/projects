@@ -6,13 +6,14 @@ import HighchartsReact from 'highcharts-react-official';
 
 function Highchart() {
   const result = useSelector((state) => state.bgColor.type);
-  const sunday = useSelector((state) => state.date.sunday);
-  const monday = useSelector((state) => state.date.monday);
-  const tuesday = useSelector((state) => state.date.tuesday);
-  const wednesday = useSelector((state) => state.date.wednesday);
-  const thursday = useSelector((state) => state.date.thursday);
-  const friday = useSelector((state) => state.date.friday);
-  const saturday = useSelector((state) => state.date.saturday);
+
+  const first = useSelector((state) => state.date.first);
+  const second = useSelector((state) => state.date.second);
+  const third = useSelector((state) => state.date.third);
+  const fourth = useSelector((state) => state.date.fourth);
+  const fifth = useSelector((state) => state.date.fifth);
+  const sixth = useSelector((state) => state.date.sixth);
+  const seventh = useSelector((state) => state.date.seventh);
 
   const _date = new Date();
 
@@ -67,7 +68,7 @@ function Highchart() {
     series: [
       {
         name: '총 확진자 수',
-        data: [sunday, monday, tuesday, wednesday, thursday, friday, saturday],
+        data: [first, second, third, fourth, fifth, sixth, seventh],
       },
       {
         name: '사망자',

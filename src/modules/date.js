@@ -1,60 +1,60 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const MON = 'date/MON';
-const TUE = 'date/TUE';
-const WED = 'date/WED';
-const THUR = 'date/THUR';
-const FRI = 'date/FRI';
-const SAT = 'date/SAT';
-const SUN = 'date/SUN';
+const FIRST = 'date/FIRST';
+const SECOND = 'date/SECOND';
+const THIRD = 'date/THIRD';
+const FOURTH = 'date/FOURTH';
+const FIFTH = 'date/FIFTH';
+const SIXTH = 'date/SIXTH';
+const SEVENTH = 'date/SEVENTH';
 
-export const mon = createAction(MON, (mon) => mon);
-export const tue = createAction(TUE, (tue) => tue);
-export const wed = createAction(WED, (wed) => wed);
-export const thur = createAction(THUR, (thur) => thur);
-export const fri = createAction(FRI, (fri) => fri);
-export const sat = createAction(SAT, (sat) => sat);
-export const sun = createAction(SUN, (sun) => sun);
+export const first = createAction(FIRST, (first) => first);
+export const second = createAction(SECOND, (second) => second);
+export const third = createAction(THIRD, (third) => third);
+export const fourth = createAction(FOURTH, (fourth) => fourth);
+export const fifth = createAction(FIFTH, (fifth) => fifth);
+export const sixth = createAction(SIXTH, (sixth) => sixth);
+export const seventh = createAction(SEVENTH, (seventh) => seventh);
 
 const initialState = {
-  monday: 0,
-  tuesday: 0,
-  wednesday: 0,
-  thursday: 0,
-  friday: 0,
-  saturday: 0,
-  sunday: 0,
+  first: 0,
+  second: 0,
+  third: 0,
+  fourth: 0,
+  fifth: 0,
+  sixth: 0,
+  seventh: 0,
 };
 
 const date = handleActions(
   {
-    [MON]: (state, action) => ({
+    [FIRST]: (state, action) => ({
       ...state,
-      monday: action.payload,
+      first: action.payload,
     }),
-    [TUE]: (state, action) => ({
+    [SECOND]: (state, action) => ({
       ...state,
-      tuesday: action.payload,
+      second: action.payload,
     }),
-    [WED]: (state, action) => ({
+    [THIRD]: (state, action) => ({
       ...state,
-      wednesday: action.payload,
+      third: action.payload,
     }),
-    [THUR]: (state, action) => ({
+    [FOURTH]: (state, action) => ({
       ...state,
-      thursday: action.payload,
+      fourth: action.payload,
     }),
-    [FRI]: (state, action) => ({
+    [FIFTH]: (state, action) => ({
       ...state,
-      friday: action.payload,
+      fifth: action.payload,
     }),
-    [SAT]: (state, action) => ({
+    [SIXTH]: (state, action) => ({
       ...state,
-      saturday: action.payload,
+      sixth: action.payload,
     }),
-    [SUN]: (state, action) => ({
+    [SEVENTH]: (state, action) => ({
       ...state,
-      sunday: action.payload,
+      seventh: action.payload,
     }),
   },
   initialState

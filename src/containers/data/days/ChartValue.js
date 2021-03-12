@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-import { sun, mon, tue, wed, thur, fri, sat } from '../../../modules/date';
+import {
+  first,
+  second,
+  third,
+  fourth,
+  fifth,
+  sixth,
+  seventh,
+} from '../../../modules/date';
 import { ChartDateFunc } from '../../../middleware/ChartDateFunc';
 import Highchart from '../../highchart/Highchart';
 
@@ -17,7 +25,6 @@ const date = ChartDateFunc(result);
 const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date}&endCreateDt=${date}`;
 
 function ChartValue() {
-  const [coronic, setCoronic] = useState(null);
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -31,7 +38,7 @@ function ChartValue() {
   //           // setCoronic({
   //           //   decideCnt: data.response.body.items.item.decideCnt,
   //           // });
-  //           dispatch(sun(data.response.body.items.item[1].defCnt));
+  //           // dispatch(seventh(data.response.body.items.item.decideCnt));
   //         });
   //     } catch (e) {
   //       console.log(e);
@@ -39,17 +46,15 @@ function ChartValue() {
   //   };
 
   //   fetchData();
-  // }, []);
+  // }, [dispatch]);
 
-  dispatch(sun(10000));
-
-  dispatch(mon(23000));
-
-  dispatch(tue(20000));
-  dispatch(wed(13200));
-  dispatch(thur(17200));
-  dispatch(fri(19200));
-  dispatch(sat(9000));
+  dispatch(first(10000));
+  dispatch(second(20000));
+  dispatch(third(30000));
+  dispatch(fourth(40000));
+  dispatch(fifth(35000));
+  dispatch(sixth(40000));
+  dispatch(seventh(45000));
 
   return <Highchart />;
 }
