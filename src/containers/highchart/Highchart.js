@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 function Highchart() {
+  // Chart BG-C Type change
   const result = useSelector((state) => state.bgColor.type);
 
+  // ~7days Value
   const first = useSelector((state) => state.date.first);
   const second = useSelector((state) => state.date.second);
   const third = useSelector((state) => state.date.third);

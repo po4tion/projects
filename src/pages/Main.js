@@ -1,3 +1,5 @@
+// Page View
+
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -18,9 +20,11 @@ import DateBlock from '../components/molecules/DateBlock';
 import CovidData from '../containers/data/CovidData';
 import LocalCovidData from '../containers/data/LocalCovidData';
 import WorldCovidData from '../containers/data/WorldCovidData';
-// import Highchart from '../containers/highchart/Highchart';
+
+// Chart
 import HighchartMonth from '../containers/highchart/HighchartMonth';
 import ChartValue from '../containers/data/days/ChartValue';
+import Chart from '../containers/chart/Chart';
 
 function Main() {
   const result = useSelector((state) => state.chartType.type);
@@ -51,6 +55,7 @@ function Main() {
         <MainDetailCustom>{chartHeading}</MainDetailCustom>
         <DateBlock />
         {chart}
+        <Chart />
         <Line />
         <LocalCovidData />
       </InnerBgBlock>
