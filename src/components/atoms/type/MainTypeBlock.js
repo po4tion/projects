@@ -7,7 +7,6 @@ const StyledMainTypeBlock = styled.div`
   justify-content: space-between;
   height: 5vh;
   width: 100%;
-  border: 1px solid red;
 `;
 
 function MainTypeBlock({ children }) {

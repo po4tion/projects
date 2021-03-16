@@ -12,43 +12,15 @@ import FixValueBlock from '../atoms/name/FixValueBlock';
 import { StyledArrowUp } from '../atoms/icons/Arrow';
 
 function NamingBlock({ coronic }) {
-  const open = useSelector((state) => state.detail.open);
   const differ = useSelector((state) => state.differ.result);
 
-  let details = null;
-
-  if (coronic) {
-    if (open) {
-      details = (
-        <>
-          <SpaceNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>검사진행</AttachNamingBlock>
-              <NumberBlock>{coronic.examCnt}</NumberBlock>
-            </InnerNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>치료중</AttachNamingBlock>
-              <NumberBlock>{coronic.careCnt}</NumberBlock>
-            </InnerNamingBlock>
-          </SpaceNamingBlock>
-          <SpaceNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>확진률</AttachNamingBlock>
-              <NumberBlock>{coronic.accDefRate.toFixed(2)}%</NumberBlock>
-            </InnerNamingBlock>
-          </SpaceNamingBlock>
-        </>
-      );
-    }
-  }
-
   return (
-    <MainNamingBlock open={open}>
+    <MainNamingBlock>
       {coronic ? (
         <>
           <SpaceNamingBlock>
             <InnerNamingBlock>
-              <AttachNamingBlock>총 확진자 수</AttachNamingBlock>
+              <AttachNamingBlock>확진자 </AttachNamingBlock>
               <NumberBlock>{coronic.decideCnt}</NumberBlock>
               <FixValueBlock>
                 {differ}
@@ -58,18 +30,30 @@ function NamingBlock({ coronic }) {
             <InnerNamingBlock>
               <AttachNamingBlock>사망자</AttachNamingBlock>
               <NumberBlock>{coronic.deathCnt}</NumberBlock>
+              <FixValueBlock>
+                {differ}
+                <StyledArrowUp />
+              </FixValueBlock>
             </InnerNamingBlock>
-          </SpaceNamingBlock>
-          <SpaceNamingBlock>
             <InnerNamingBlock>
               <AttachNamingBlock>격리해제</AttachNamingBlock>
               <NumberBlock>{coronic.clearCnt}</NumberBlock>
+              <FixValueBlock>
+                {differ}
+                <StyledArrowUp />
+              </FixValueBlock>
+            </InnerNamingBlock>
+            <InnerNamingBlock>
+              <AttachNamingBlock>검사진행</AttachNamingBlock>
+              <NumberBlock>{coronic.examCnt}</NumberBlock>
+              <FixValueBlock>
+                {differ}
+                <StyledArrowUp />
+              </FixValueBlock>
             </InnerNamingBlock>
           </SpaceNamingBlock>
         </>
       ) : null}
-
-      {details}
     </MainNamingBlock>
   );
 }

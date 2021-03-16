@@ -6,6 +6,7 @@ const StyledSpaceNamingBlock = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100px;
+  border: 1px solid red;
 `;
 
 function SpaceNamingBlock({ children }) {

@@ -7,6 +7,7 @@ const StyledInnerNamingBlock = styled.div`
   flex-direction: column;
   width: 48%;
   height: 100px;
+  border: 1px solid blue;
 `;
 
 function InnerNamingBlock({ children }) {

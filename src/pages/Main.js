@@ -13,7 +13,6 @@ import { MainDetailCustom } from '../components/atoms/details/MainDetailBlock';
 // molecules
 import HeadingBlock from '../components/molecules/HeadingBlock';
 import TypeBlock from '../components/molecules/TypeBlock';
-import DetailBlock from '../components/molecules/DetailBlock';
 import DateBlock from '../components/molecules/DateBlock';
 
 // API
@@ -24,7 +23,6 @@ import WorldCovidData from '../containers/data/WorldCovidData';
 // Chart
 import ChartValue from '../containers/data/days/ChartValue';
 import ChartValueMonth from '../containers/data/days/ChartValueMonth';
-import Chart from '../containers/chart/Chart';
 
 function Main() {
   const result = useSelector((state) => state.chartType.type);
@@ -50,7 +48,6 @@ function Main() {
           <Route path="/" exact component={CovidData} />
           <Route path="/world" exact component={WorldCovidData} />
         </Switch>
-        <DetailBlock />
         <Line />
         <MainDetailCustom>{chartHeading}</MainDetailCustom>
         <DateBlock />
