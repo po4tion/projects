@@ -22,8 +22,8 @@ import LocalCovidData from '../containers/data/LocalCovidData';
 import WorldCovidData from '../containers/data/WorldCovidData';
 
 // Chart
-import HighchartMonth from '../containers/highchart/HighchartMonth';
 import ChartValue from '../containers/data/days/ChartValue';
+import ChartValueMonth from '../containers/data/days/ChartValueMonth';
 import Chart from '../containers/chart/Chart';
 
 function Main() {
@@ -38,7 +38,7 @@ function Main() {
   if (result === 'day') {
     chart = <ChartValue />;
   } else if (result === 'month') {
-    chart = <HighchartMonth />;
+    chart = <ChartValueMonth />;
   }
 
   return (
@@ -55,7 +55,6 @@ function Main() {
         <MainDetailCustom>{chartHeading}</MainDetailCustom>
         <DateBlock />
         {chart}
-        <Chart />
         <Line />
         <LocalCovidData />
       </InnerBgBlock>

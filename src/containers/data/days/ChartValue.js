@@ -13,7 +13,7 @@ import {
   seventh,
 } from '../../../modules/date';
 import { ChartDateFunc } from '../../../middleware/ChartDateFunc';
-import Highchart from '../../highchart/Highchart';
+import Chart from '../../chart/Chart';
 
 dotenv.config();
 
@@ -117,7 +117,7 @@ function ChartValue() {
   dispatch(sixth(6, 15, 25, 45, 55));
   dispatch(seventh(7, 16, 24, 46, 54));
 
-  return <Highchart />;
+  return <Chart />;
 }
 
 export default ChartValue;

@@ -7,7 +7,7 @@ const StyledInternalTypeBlock = styled.div`
   align-items: center;
   width: 50px;
   height: 30px;
-  border: 1px solid #778ca3;
+  border: 2px solid #778ca3;
   border-radius: 5px;
   cursor: pointer;
 `;

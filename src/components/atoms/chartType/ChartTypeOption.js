@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledChartTypeOption = styled.option`
-  background-color: #fff;
+  color: #778ca3;
 `;
 
 function ChartTypeOption({ value, children }) {

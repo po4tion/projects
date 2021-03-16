@@ -14,6 +14,7 @@ import InternalTypeBlock, {
 import WorldTypeBlock, {
   StyledWorldTypeBlockCustom,
 } from '../atoms/type/WorldTypeBlock';
+import AlignBlock from '../atoms/type/AlignBlock';
 import Day from '../atoms/link/Day';
 import Month from '../atoms/link/Month';
 
@@ -67,8 +68,10 @@ function DateBlock() {
         <ChartTypeOption value="clear">격리해제</ChartTypeOption>
         <ChartTypeOption value="care">치료중</ChartTypeOption>
       </ChartTypeSelect>
-      {day_type}
-      {month_type}
+      <AlignBlock>
+        {day_type}
+        {month_type}
+      </AlignBlock>
     </MainTypeBlock>
   );
 }

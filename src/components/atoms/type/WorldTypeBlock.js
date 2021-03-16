@@ -8,7 +8,7 @@ const StyledWorldTypeBlock = styled.div`
   width: 50px;
   height: 30px;
   margin-left: 1px;
-  border: 1px solid #778ca3;
+  border: 2px solid #778ca3;
   border-radius: 5px;
   cursor: pointer;
 `;
