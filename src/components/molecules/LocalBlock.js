@@ -4,27 +4,34 @@ import { MainDetailCustom } from '../atoms/details/MainDetailBlock';
 import LocalChartBlock from '../atoms/local/LocalChartBlock';
 import MainLocalListBlock from '../atoms/local/MainLocalListBlock';
 import TypeView from '../atoms/local/TypeView';
-import TypeViewList, { FontFixed } from '../atoms/local/TypeViewList';
+import TypeViewList, {
+  FontFixed,
+  FontFixedUpdate,
+} from '../atoms/local/TypeViewList';
 import VerticalLine from '../atoms/line/VerticalLine';
 
 import { CustomLine, CustomLine02 } from '../atoms/line/Line';
 
 function LocalBlock({ local }) {
-  const charList = local.map((x, index) => {
-    return (
-      <MainLocalListBlock key={index} bg={index}>
-        <TypeView idx={index}>
-          <FontFixed>{x.gubun}</FontFixed>
-          <VerticalLine />
-          <FontFixed>{x.defCnt} 명</FontFixed>
-          <VerticalLine />
-          <FontFixed>{x.defCnt} 명</FontFixed>
-          <VerticalLine />
-          <FontFixed>{x.stdDay}</FontFixed>
-        </TypeView>
-      </MainLocalListBlock>
-    );
-  });
+  let charList;
+
+  if (local) {
+    charList = local.map((x, index) => {
+      return (
+        <MainLocalListBlock key={index} bg={index}>
+          <TypeView idx={index}>
+            <FontFixed>{x.gubun}</FontFixed>
+            <VerticalLine />
+            <FontFixed>{x.defCnt} 명</FontFixed>
+            <VerticalLine />
+            <FontFixed>{x.defCnt} 명</FontFixed>
+            <VerticalLine />
+            <FontFixed>{x.stdDay}</FontFixed>
+          </TypeView>
+        </MainLocalListBlock>
+      );
+    });
+  }
 
   return (
     <>

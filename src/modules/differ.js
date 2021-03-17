@@ -1,17 +1,25 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const DIFFER = 'differ/DIFFER';
+const PREV = 'differ/PREV';
+const CURRENT = 'differ/CURRENT';
 
-export const difference = createAction(DIFFER, (differ) => differ);
+export const prev = createAction(PREV, (prev) => prev);
+export const current = createAction(CURRENT, (current) => current);
 
 const initialState = {
-  result: 0,
+  prev: 0,
+  current: 0,
 };
 
 const differ = handleActions(
   {
-    [DIFFER]: (_, action) => ({
-      result: action.payload,
+    [PREV]: (state, action) => ({
+      ...state,
+      prev: action.payload,
+    }),
+    [CURRENT]: (state, action) => ({
+      ...state,
+      current: action.payload,
     }),
   },
   initialState

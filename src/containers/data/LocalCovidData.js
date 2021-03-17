@@ -3,12 +3,15 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 
 import LocalBlock from '../../components/molecules/LocalBlock';
+import { ChartDateFunc } from '../../middleware/ChartDateFunc';
 
 dotenv.config();
 
+const date = ChartDateFunc(new Date());
+
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=20210217&endCreateDt=20210217`;
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date}&endCreateDt=${date}`;
 
 function LocalCovidData() {
   const [local, setLocal] = useState([

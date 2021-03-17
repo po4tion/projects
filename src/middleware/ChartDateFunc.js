@@ -21,32 +21,48 @@ export function ChartDateFunc(result) {
 }
 
 // 월별 그래프 월단위 API 입력값
-export function ChartMonthFunc(result) {
-  let year = result.getFullYear();
-  const date = result.getDate();
-  let endMonth = result.getMonth() + 1;
-  let startMonth = null;
+export function ChartMonthFunc() {
+  const array = [];
 
-  if (endMonth < 7) {
-    startMonth = endMonth + 6;
-    year -= 1;
-  } else {
-    startMonth = endMonth - 6;
+  const dateSet = new Date();
+  let yearSet = dateSet.getFullYear();
+  const monthSet = dateSet.getMonth();
+
+  // 현재 날짜
+  const current =
+    String(yearSet) +
+    (monthSet + 1 < 10 ? '0' + String(monthSet + 1) : String(monthSet + 1)) +
+    (dateSet.getDate() < 10
+      ? '0' + String(dateSet.getDate())
+      : String(dateSet.getDate()));
+
+  array.push(current);
+
+  const date = new Date(yearSet, monthSet, 0);
+
+  for (let i = 0; i < 7; i++) {
+    let day;
+    let month = date.getMonth() - i;
+
+    // 전년도로 넘어가는 경우
+    if (month < 0) {
+      month += 12;
+      day = new Date(yearSet - 1, month + 1, 0);
+    } else {
+      day = new Date(yearSet, month + 1, 0);
+    }
+
+    const prev =
+      String(day.getFullYear()) +
+      (month + 1 < 10 ? '0' + String(month + 1) : String(month + 1)) +
+      (day.getDate() < 10
+        ? '0' + String(day.getDate())
+        : String(day.getDate()));
+
+    array.push(prev);
   }
 
-  if (startMonth < 10) {
-    startMonth = String(year) + '0' + String(startMonth) + '01';
-  } else {
-    startMonth = String(year) + String(startMonth) + '01';
-  }
-
-  if (endMonth < 10) {
-    endMonth = String(year + 1) + '0' + String(endMonth) + String(date);
-  } else {
-    endMonth = String(year + 1) + String(endMonth) + String(date);
-  }
-
-  return [startMonth, endMonth];
+  return array;
 }
 
 // 일별 그래프 일별단위 데이터 추출

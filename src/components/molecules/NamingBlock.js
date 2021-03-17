@@ -9,10 +9,19 @@ import NumberBlock from '../atoms/name/NumberBlock';
 import FixValueBlock from '../atoms/name/FixValueBlock';
 
 // icon
-import { StyledArrowUp } from '../atoms/icons/Arrow';
+import { StyledArrowUp, StyledArrowDown } from '../atoms/icons/Arrow';
 
 function NamingBlock({ coronic }) {
-  const differ = useSelector((state) => state.differ.result);
+  const prev = useSelector((state) => state.differ.prev);
+  const current = useSelector((state) => state.differ.current);
+
+  console.log(prev);
+
+  let result = <StyledArrowUp />;
+
+  if (current - prev < 0) {
+    result = <StyledArrowDown />;
+  }
 
   return (
     <MainNamingBlock>
@@ -23,32 +32,32 @@ function NamingBlock({ coronic }) {
               <AttachNamingBlock>확진자 </AttachNamingBlock>
               <NumberBlock>{coronic.decideCnt}</NumberBlock>
               <FixValueBlock>
-                {differ}
-                <StyledArrowUp />
+                {Math.abs(current - prev)}
+                {result}
               </FixValueBlock>
             </InnerNamingBlock>
             <InnerNamingBlock>
               <AttachNamingBlock>사망자</AttachNamingBlock>
               <NumberBlock>{coronic.deathCnt}</NumberBlock>
               <FixValueBlock>
-                {differ}
-                <StyledArrowUp />
+                {Math.abs(current - prev)}
+                {result}
               </FixValueBlock>
             </InnerNamingBlock>
             <InnerNamingBlock>
               <AttachNamingBlock>격리해제</AttachNamingBlock>
               <NumberBlock>{coronic.clearCnt}</NumberBlock>
               <FixValueBlock>
-                {differ}
-                <StyledArrowUp />
+                {Math.abs(current - prev)}
+                {result}
               </FixValueBlock>
             </InnerNamingBlock>
             <InnerNamingBlock>
               <AttachNamingBlock>검사진행</AttachNamingBlock>
               <NumberBlock>{coronic.examCnt}</NumberBlock>
               <FixValueBlock>
-                {differ}
-                <StyledArrowUp />
+                {Math.abs(current - prev)}
+                {result}
               </FixValueBlock>
             </InnerNamingBlock>
           </SpaceNamingBlock>

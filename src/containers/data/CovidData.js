@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import { ChartDateFunc } from '../../middleware/ChartDateFunc';
 
 import NamingBlock from '../../components/molecules/NamingBlock';
-import { difference } from '../../modules/differ';
+import { prev, current } from '../../modules/differ';
 
 dotenv.config();
 
@@ -59,7 +59,10 @@ function CovidData() {
   //   };
 
   //   fetchData();
-  // }, [coronic]);
+  // }, [coronic, dispatch]);
+
+  dispatch(prev(12000));
+  dispatch(current(12550));
 
   return <NamingBlock coronic={coronic} />;
 }

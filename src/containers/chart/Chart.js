@@ -35,7 +35,23 @@ function Chart() {
   const seventh = useSelector((state) => state.date.seventh);
 
   const types = useSelector((state) => state.chartType.option);
-  let view = null;
+  let view = {
+    label: ['확진자'],
+    borderColor: 'black', // 선의 색
+    borderWidth: 2, // 선의 굵기(단위 px)
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    hoverBackgroundColor: 'green',
+    hoverBorderColor: 'red',
+    data: [
+      first.decideCnt,
+      second.decideCnt,
+      third.decideCnt,
+      fourth.decideCnt,
+      fifth.decideCnt,
+      sixth.decideCnt,
+      seventh.decideCnt,
+    ],
+  };
 
   if (types === 'decide') {
     view = {
