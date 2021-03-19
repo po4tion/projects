@@ -11,58 +11,54 @@ import FixValueBlock from '../atoms/name/FixValueBlock';
 // icon
 import { StyledArrowUp, StyledArrowDown } from '../atoms/icons/Arrow';
 
-function NamingBlock({ coronic }) {
+function NamingBlock() {
   const prev = useSelector((state) => state.differ.prev);
   const current = useSelector((state) => state.differ.current);
 
-  console.log(prev);
-
   let result = <StyledArrowUp />;
 
-  if (current - prev < 0) {
-    result = <StyledArrowDown />;
-  }
+  // if (current - prev < 0) {
+  //   result = <StyledArrowDown />;
+  // }
 
   return (
     <MainNamingBlock>
-      {coronic ? (
-        <>
-          <SpaceNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>확진자 </AttachNamingBlock>
-              <NumberBlock>{coronic.decideCnt}</NumberBlock>
-              <FixValueBlock>
-                {Math.abs(current - prev)}
-                {result}
-              </FixValueBlock>
-            </InnerNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>사망자</AttachNamingBlock>
-              <NumberBlock>{coronic.deathCnt}</NumberBlock>
-              <FixValueBlock>
-                {Math.abs(current - prev)}
-                {result}
-              </FixValueBlock>
-            </InnerNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>격리해제</AttachNamingBlock>
-              <NumberBlock>{coronic.clearCnt}</NumberBlock>
-              <FixValueBlock>
-                {Math.abs(current - prev)}
-                {result}
-              </FixValueBlock>
-            </InnerNamingBlock>
-            <InnerNamingBlock>
-              <AttachNamingBlock>검사진행</AttachNamingBlock>
-              <NumberBlock>{coronic.examCnt}</NumberBlock>
-              <FixValueBlock>
-                {Math.abs(current - prev)}
-                {result}
-              </FixValueBlock>
-            </InnerNamingBlock>
-          </SpaceNamingBlock>
-        </>
-      ) : null}
+      <>
+        <SpaceNamingBlock>
+          <InnerNamingBlock>
+            <AttachNamingBlock>확진자 </AttachNamingBlock>
+            <NumberBlock>{current.decideCnt}</NumberBlock>
+            <FixValueBlock>
+              {Math.abs(current.decideCnt - prev.decideCnt)}
+              {result}
+            </FixValueBlock>
+          </InnerNamingBlock>
+          <InnerNamingBlock>
+            <AttachNamingBlock>사망자</AttachNamingBlock>
+            <NumberBlock>{current.deathCnt}</NumberBlock>
+            <FixValueBlock>
+              {Math.abs(current.deathCnt - prev.deathCnt)}
+              {result}
+            </FixValueBlock>
+          </InnerNamingBlock>
+          <InnerNamingBlock>
+            <AttachNamingBlock>격리해제</AttachNamingBlock>
+            <NumberBlock>{current.clearCnt}</NumberBlock>
+            <FixValueBlock>
+              {Math.abs(current.clearCnt - prev.clearCnt)}
+              {result}
+            </FixValueBlock>
+          </InnerNamingBlock>
+          <InnerNamingBlock>
+            <AttachNamingBlock>검사진행</AttachNamingBlock>
+            <NumberBlock>{current.examCnt}</NumberBlock>
+            <FixValueBlock>
+              {Math.abs(current.examCnt - prev.examCnt)}
+              {result}
+            </FixValueBlock>
+          </InnerNamingBlock>
+        </SpaceNamingBlock>
+      </>
     </MainNamingBlock>
   );
 }

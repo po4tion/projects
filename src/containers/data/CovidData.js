@@ -19,15 +19,6 @@ const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKe
 }&endCreateDt=${date}`;
 
 function CovidData() {
-  const [coronic, setCoronic] = useState({
-    decideCnt: 12322,
-    deathCnt: 12322,
-    clearCnt: 12322,
-    examCnt: 12322,
-    careCnt: 12322,
-    accDefRate: 1.3,
-  });
-
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -37,19 +28,23 @@ function CovidData() {
   //         .get(covidUrl)
   //         .then((res) => res.data)
   //         .then((data) => {
-  //           setCoronic({
-  //             decideCnt: data.response.body.items.item[1].decideCnt,
-  //             deathCnt: data.response.body.items.item[1].deathCnt,
-  //             clearCnt: data.response.body.items.item[1].clearCnt,
-  //             examCnt: data.response.body.items.item[1].examCnt,
-  //             careCnt: data.response.body.items.item[1].careCnt,
-  //             accDefRate: data.response.body.items.item[1].accDefRate,
-  //           });
+  //           const dataPrev = data.response.body.items.item[1];
+  //           const dataCurrent = data.response.body.items.item[0];
 
   //           dispatch(
-  //             difference(
-  //               data.response.body.items.item[0].decideCnt -
-  //                 data.response.body.items.item[1].decideCnt
+  //             prev(
+  //               dataPrev.decideCnt,
+  //               dataPrev.deathCnt,
+  //               dataPrev.clearCnt,
+  //               dataPrev.examCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             current(
+  //               dataCurrent.decideCnt,
+  //               dataCurrent.deathCnt,
+  //               dataCurrent.clearCnt,
+  //               dataCurrent.examCnt
   //             )
   //           );
   //         });
@@ -59,12 +54,13 @@ function CovidData() {
   //   };
 
   //   fetchData();
-  // }, [coronic, dispatch]);
+  // }, [dispatch]);
 
-  dispatch(prev(12000));
-  dispatch(current(12550));
+  // TEST CODE
+  dispatch(prev(1000, 2000, 3000, 4000));
+  dispatch(current(1250, 2450, 3650, 4850));
 
-  return <NamingBlock coronic={coronic} />;
+  return <NamingBlock />;
 }
 
 export default CovidData;

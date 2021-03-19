@@ -3,23 +3,53 @@ import { createAction, handleActions } from 'redux-actions';
 const PREV = 'differ/PREV';
 const CURRENT = 'differ/CURRENT';
 
-export const prev = createAction(PREV, (prev) => prev);
-export const current = createAction(CURRENT, (current) => current);
+export const prev = createAction(PREV, (decide, death, clear, exam) => [
+  decide,
+  death,
+  clear,
+  exam,
+]);
+export const current = createAction(CURRENT, (decide, death, clear, exam) => [
+  decide,
+  death,
+  clear,
+  exam,
+]);
 
 const initialState = {
-  prev: 0,
-  current: 0,
+  prev: {
+    decideCnt: 0,
+    deathCnt: 0,
+    clearCnt: 0,
+    examCnt: 0,
+  },
+  current: {
+    decideCnt: 0,
+    deathCnt: 0,
+    clearCnt: 0,
+    examCnt: 0,
+  },
 };
 
 const differ = handleActions(
   {
     [PREV]: (state, action) => ({
       ...state,
-      prev: action.payload,
+      prev: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        clearCnt: action.payload[2],
+        examCnt: action.payload[3],
+      },
     }),
     [CURRENT]: (state, action) => ({
       ...state,
-      current: action.payload,
+      current: {
+        decideCnt: action.payload[0],
+        deathCnt: action.payload[1],
+        clearCnt: action.payload[2],
+        examCnt: action.payload[3],
+      },
     }),
   },
   initialState
