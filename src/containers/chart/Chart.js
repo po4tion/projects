@@ -5,26 +5,6 @@ import { Line } from 'react-chartjs-2';
 // middleware
 import { CustomChartDay } from '../../middleware/ChartDateFunc';
 
-const options = {
-  legend: {
-    display: false, // label 숨기기
-    labels: {
-      boxWidth: 10,
-    },
-  },
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          min: 0, // 스케일에 대한 최솟갓 설정, 0 부터 시작
-          stepSize: 10, // 스케일에 대한 사용자 고정 정의 값
-        },
-      },
-    ],
-  },
-  responsive: true,
-};
-
 function Chart() {
   const first = useSelector((state) => state.date.first);
   const second = useSelector((state) => state.date.second);
@@ -144,6 +124,48 @@ function Chart() {
       ],
     };
   }
+
+  const options = {
+    legend: {
+      display: false, // label 숨기기
+      labels: {
+        boxWidth: 10,
+      },
+    },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            // min:
+            //   types === 'decide'
+            //     ? 96000
+            //     : types === 'death'
+            //     ? 1650
+            //     : types === 'exam'
+            //     ? 78000
+            //     : types === 'clear'
+            //     ? 88000
+            //     : types === 'care'
+            //     ? 6200
+            //     : 6200, // 스케일에 대한 최솟갓 설정, 0 부터 시작
+            stepSize:
+              types === 'decide'
+                ? 500
+                : types === 'death'
+                ? 10
+                : types === 'exam'
+                ? 3500
+                : types === 'clear'
+                ? 500
+                : types === 'care'
+                ? 100
+                : 100, // 스케일에 대한 사용자 고정 정의 값
+          },
+        },
+      ],
+    },
+    responsive: true,
+  };
 
   const data = {
     labels: [...CustomChartDay(new Date())], // 날짜값 넣기

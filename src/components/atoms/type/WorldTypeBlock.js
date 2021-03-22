@@ -13,11 +13,11 @@ const StyledWorldTypeBlock = styled.div`
   cursor: pointer;
 `;
 
-function InternalTypeBlock({ children }) {
+function WorldTypeBlock({ children }) {
   return <StyledWorldTypeBlock>{children}</StyledWorldTypeBlock>;
 }
 
-export default InternalTypeBlock;
+export default WorldTypeBlock;
 
 export const StyledWorldTypeBlockCustom = styled(StyledWorldTypeBlock)`
   background-color: rgba(126, 214, 223, 0.3);

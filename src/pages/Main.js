@@ -1,7 +1,6 @@
 // Page View
 
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // atoms
@@ -18,7 +17,6 @@ import DateBlock from '../components/molecules/DateBlock';
 // API
 import CovidData from '../containers/data/CovidData';
 import LocalCovidData from '../containers/data/LocalCovidData';
-import WorldCovidData from '../containers/data/WorldCovidData';
 
 // Chart
 import ChartValue from '../containers/data/days/ChartValue';
@@ -44,10 +42,7 @@ function Main() {
       <InnerBgBlock>
         <HeadingBlock />
         <TypeBlock />
-        <Switch>
-          <Route path="/" exact component={CovidData} />
-          <Route path="/world" exact component={WorldCovidData} />
-        </Switch>
+        <CovidData />
         <Line />
         <MainDetailCustom>{chartHeading}</MainDetailCustom>
         <DateBlock />
