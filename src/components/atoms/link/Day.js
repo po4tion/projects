@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const DayBlock = styled.a`
+const DayBlock = styled.div`
   color: #778ca3;
   text-decoration: none;
 `;

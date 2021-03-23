@@ -56,6 +56,7 @@ function CovidData() {
   //   };
 
   //   fetchData();
+  //   return () => fetchData();
   // }, [dispatch]);
 
   // TEST CODE

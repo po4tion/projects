@@ -4,8 +4,9 @@ import styled from 'styled-components';
 
 const InternalBlock = styled(Link)`
   color: #778ca3;
-  text-decoration: none;
   font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
 `;
 
 function Internal() {

@@ -47,6 +47,7 @@ function LocalCovidData() {
   //   };
 
   //   fetchData();
+  //   return () => fetchData();
   // }, [local]);
 
   return <LocalBlock local={local} />;

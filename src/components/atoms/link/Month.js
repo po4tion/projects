@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MonthBlock = styled.a`
+const MonthBlock = styled.div`
   color: #778ca3;
-  text-decoration: none;
+  cursor: pointer;
 `;
 
 function Month({ onClick }) {

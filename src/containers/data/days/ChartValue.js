@@ -107,15 +107,18 @@ function ChartValue() {
   //   };
 
   //   fetchData();
+  //   return () => fetchData();
   // }, [dispatch]);
 
-  dispatch(first(1, 10, 30, 40, 60));
-  dispatch(second(2, 11, 29, 41, 59));
-  dispatch(third(3, 12, 28, 42, 58));
-  dispatch(fourth(4, 13, 27, 43, 57));
-  dispatch(fifth(5, 14, 26, 44, 56));
-  dispatch(sixth(6, 15, 25, 45, 55));
-  dispatch(seventh(7, 16, 24, 46, 54));
+  useEffect(() => {
+    dispatch(first(1, 10, 30, 40, 60));
+    dispatch(second(2, 11, 29, 41, 59));
+    dispatch(third(3, 12, 28, 42, 58));
+    dispatch(fourth(4, 13, 27, 43, 57));
+    dispatch(fifth(5, 14, 26, 44, 56));
+    dispatch(sixth(6, 15, 25, 45, 55));
+    dispatch(seventh(7, 16, 24, 46, 54));
+  });
 
   return <Chart />;
 }
