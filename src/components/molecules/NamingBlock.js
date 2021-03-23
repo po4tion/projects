@@ -27,7 +27,9 @@ function NamingBlock() {
         <SpaceNamingBlock>
           <InnerNamingBlock>
             <AttachNamingBlock>확진자 </AttachNamingBlock>
-            <NumberBlock>{current.decideCnt}</NumberBlock>
+            <NumberBlock>
+              {current.decideCnt.toLocaleString('ko-KR')}
+            </NumberBlock>
             <FixValueBlock>
               {Math.abs(current.decideCnt - prev.decideCnt)}
               {result}
@@ -35,7 +37,9 @@ function NamingBlock() {
           </InnerNamingBlock>
           <InnerNamingBlock>
             <AttachNamingBlock>사망자</AttachNamingBlock>
-            <NumberBlock>{current.deathCnt}</NumberBlock>
+            <NumberBlock>
+              {current.deathCnt.toLocaleString('ko-KR')}
+            </NumberBlock>
             <FixValueBlock>
               {Math.abs(current.deathCnt - prev.deathCnt)}
               {result}
@@ -43,7 +47,9 @@ function NamingBlock() {
           </InnerNamingBlock>
           <InnerNamingBlock>
             <AttachNamingBlock>격리해제</AttachNamingBlock>
-            <NumberBlock>{current.clearCnt}</NumberBlock>
+            <NumberBlock>
+              {current.clearCnt.toLocaleString('ko-KR')}
+            </NumberBlock>
             <FixValueBlock>
               {Math.abs(current.clearCnt - prev.clearCnt)}
               {result}
@@ -51,7 +57,7 @@ function NamingBlock() {
           </InnerNamingBlock>
           <InnerNamingBlock>
             <AttachNamingBlock>검사진행</AttachNamingBlock>
-            <NumberBlock>{current.examCnt}</NumberBlock>
+            <NumberBlock>{current.examCnt.toLocaleString('ko-KR')}</NumberBlock>
             <FixValueBlock>
               {Math.abs(current.examCnt - prev.examCnt)}
               {result}

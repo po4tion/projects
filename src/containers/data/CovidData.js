@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { ChartDateFunc } from '../../middleware/ChartDateFunc';
 
+import { ChartDateFunc } from '../../middleware/ChartDateFunc';
 import NamingBlock from '../../components/molecules/NamingBlock';
 import { prev, current } from '../../modules/differ';
 
+// API KEY
 dotenv.config();
-
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
+// Calculate Date
 const result = new Date();
 const date = ChartDateFunc(result);
 
+// Get data.go.kr URL
 const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
   date - 1
 }&endCreateDt=${date}`;
