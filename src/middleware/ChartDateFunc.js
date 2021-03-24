@@ -20,7 +20,7 @@ export function ChartDateFunc(result) {
   return sum;
 }
 
-// 월별 그래프 월단위 API 입력값
+// 월별 그래프 월단위 API 입력값(내림차순)
 export function ChartMonthFunc() {
   const array = [];
 
