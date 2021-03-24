@@ -79,6 +79,32 @@ export function CustomChartDay(result) {
   return array;
 }
 
+// ChartValueW 년월일 -8일까지 계산해서 배열 리턴
+export function ChartValueWFunc() {
+  const calc = new Date();
+
+  let year = calc.getFullYear();
+  let month = calc.getMonth();
+  let date = calc.getDate();
+  let array = [];
+
+  // 오름차순으로 배열에 넣기
+  for (let i = 7; i >= 0; i--) {
+    const newd = new Date(year, month, date - i);
+    const newYear = String(newd.getFullYear());
+    const newMonth =
+      newd.getMonth() < 10
+        ? '0' + String(newd.getMonth() + 1)
+        : String(newd.getMonth() + 1);
+    const newDate = String(newd.getDate());
+
+    const sum = newYear + newMonth + newDate;
+    array.push(sum);
+  }
+
+  return array;
+}
+
 // 월별 그래프 월별단위 데이터 추출
 export function CustomChartMonth(result) {
   let month = result.getMonth() + 1;
