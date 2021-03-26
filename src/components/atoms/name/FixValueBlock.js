@@ -9,6 +9,7 @@ const StyledFixValueBlock = styled.div`
   border-radius: 15px;
   padding: 0 3px;
   background-color: #dfe6e9;
+  color: black;
 `;
 
 function FixValueBlock({ children }) {

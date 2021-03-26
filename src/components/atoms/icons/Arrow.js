@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const StyledArrowUp = styled(AiOutlineArrowUp)`
   font-size: 18px;
+  color: black;
   margin-bottom: 3px;
 `;
 

@@ -60,8 +60,10 @@ function CovidData() {
   // }, [dispatch]);
 
   // TEST CODE
-  dispatch(prev(1000, 2000, 3000, 4000));
-  dispatch(current(1250, 2450, 3650, 4850));
+  useEffect(() => {
+    dispatch(prev(1000, 2000, 3000, 4000));
+    dispatch(current(1250, 2450, 3650, 4850));
+  });
 
   return <NamingBlock />;
 }

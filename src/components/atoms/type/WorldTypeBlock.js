@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const StyledWorldTypeBlock = styled.div`
+const StyledWorldTypeBlock = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,14 +13,17 @@ const StyledWorldTypeBlock = styled.div`
   border: 2px solid #778ca3;
   border-radius: 5px;
   cursor: pointer;
+  background-color: ${({ pathname }) =>
+    pathname === '/world' ? 'rgba(126, 214, 223, 0.3)' : 'transparent'};
+  text-decoration: none;
 `;
 
-function WorldTypeBlock({ children }) {
-  return <StyledWorldTypeBlock>{children}</StyledWorldTypeBlock>;
+function WorldTypeBlock({ children, location }) {
+  return (
+    <StyledWorldTypeBlock pathname={location.pathname} to="/world">
+      {children}
+    </StyledWorldTypeBlock>
+  );
 }
 
-export default WorldTypeBlock;
-
-export const StyledWorldTypeBlockCustom = styled(StyledWorldTypeBlock)`
-  background-color: rgba(126, 214, 223, 0.3);
-`;
+export default withRouter(WorldTypeBlock);

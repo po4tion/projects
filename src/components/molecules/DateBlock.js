@@ -12,12 +12,8 @@ import {
 
 // atoms
 import MainTypeBlock from '../atoms/type/MainTypeBlock';
-import InternalTypeBlock, {
-  StyledInternalTypeBlockCustom,
-} from '../atoms/type/InternalTypeBlock';
-import WorldTypeBlock, {
-  StyledWorldTypeBlockCustom,
-} from '../atoms/type/WorldTypeBlock';
+import DayBlock from '../atoms/type/DayBlock';
+import MonthBlock from '../atoms/type/MonthBlock';
 import AlignBlock from '../atoms/type/AlignBlock';
 import Day from '../atoms/link/Day';
 import Month from '../atoms/link/Month';
@@ -32,34 +28,6 @@ function DateBlock({ location }) {
 
   const onClickDay = () => dispatch(changeTypeDay());
   const onClickMonth = () => dispatch(changeTypeMonth());
-
-  // 월별, 일별 selected
-  let day_type = null;
-  let month_type = null;
-
-  if (result === 'day') {
-    day_type = (
-      <StyledInternalTypeBlockCustom>
-        <Day onClick={onClickDay} />
-      </StyledInternalTypeBlockCustom>
-    );
-    month_type = (
-      <WorldTypeBlock>
-        <Month onClick={onClickMonth} />
-      </WorldTypeBlock>
-    );
-  } else if (result === 'month') {
-    day_type = (
-      <InternalTypeBlock>
-        <Day onClick={onClickDay} />
-      </InternalTypeBlock>
-    );
-    month_type = (
-      <StyledWorldTypeBlockCustom>
-        <Month onClick={onClickMonth} />
-      </StyledWorldTypeBlockCustom>
-    );
-  }
 
   const onChange = (e) => dispatch(changeTypeOption(e.target.value));
 
@@ -87,8 +55,12 @@ function DateBlock({ location }) {
     <MainTypeBlock>
       <ChartTypeSelect onChange={onChange}>{options}</ChartTypeSelect>
       <AlignBlock>
-        {day_type}
-        {month_type}
+        <DayBlock day={result} onClick={onClickDay}>
+          <Day />
+        </DayBlock>
+        <MonthBlock month={result} onClick={onClickMonth}>
+          <Month />
+        </MonthBlock>
       </AlignBlock>
     </MainTypeBlock>
   );

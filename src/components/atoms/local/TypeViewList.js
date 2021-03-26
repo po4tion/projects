@@ -18,6 +18,9 @@ function TypeView({ children }) {
 export default TypeView;
 
 export const FontFixed = styled(StyledTypeViewList)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 14px;
   font-weight: normal;
 `;

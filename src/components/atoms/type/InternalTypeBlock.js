@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const StyledInternalTypeBlock = styled.div`
+const StyledInternalTypeBlock = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,15 +11,18 @@ const StyledInternalTypeBlock = styled.div`
   height: 30px;
   border: 2px solid #778ca3;
   border-radius: 5px;
+  background-color: ${({ pathname }) =>
+    pathname === '/' ? 'rgba(126, 214, 223, 0.3)' : 'transparent'};
   cursor: pointer;
+  text-decoration: none;
 `;
 
-function InternalTypeBlock({ children }) {
-  return <StyledInternalTypeBlock>{children}</StyledInternalTypeBlock>;
+function InternalTypeBlock({ children, location }) {
+  return (
+    <StyledInternalTypeBlock pathname={location.pathname} to="/">
+      {children}
+    </StyledInternalTypeBlock>
+  );
 }
 
-export default InternalTypeBlock;
-
-export const StyledInternalTypeBlockCustom = styled(StyledInternalTypeBlock)`
-  background-color: rgba(126, 214, 223, 0.3);
-`;
+export default withRouter(InternalTypeBlock);

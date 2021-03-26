@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+// atoms
 import { MainDetailCustom } from '../atoms/details/MainDetailBlock';
 import LocalChartBlock from '../atoms/local/LocalChartBlock';
 import MainLocalListBlock from '../atoms/local/MainLocalListBlock';
@@ -9,24 +11,36 @@ import TypeViewList, {
   FontFixedUpdate,
 } from '../atoms/local/TypeViewList';
 import VerticalLine from '../atoms/line/VerticalLine';
-
+import FixValueBlock from '../atoms/name/FixValueBlock';
+import { StyledArrowUp } from '../atoms/icons/Arrow';
 import { CustomLine, CustomLine02 } from '../atoms/line/Line';
 
-function LocalBlock({ local }) {
-  let charList;
+function LocalBlock() {
+  const result = useSelector((state) => state.internalLocal);
+  const current = result.array;
+  const prev = result.prevArray;
+  let charList = null;
 
-  if (local) {
-    charList = local.map((x, index) => {
+  if (prev.length !== 0) {
+    charList = current.map((x, index) => {
       return (
         <MainLocalListBlock key={index} bg={index}>
           <TypeView idx={index}>
             <FontFixed>{x.gubun}</FontFixed>
             <VerticalLine />
-            <FontFixed>{x.defCnt} 명</FontFixed>
+            <FontFixed>{x.defCnt.toLocaleString('ko-KR')}</FontFixed>
             <VerticalLine />
-            <FontFixed>{x.defCnt} 명</FontFixed>
+            <FontFixed>
+              {(x.defCnt - prev[index].defCnt).toLocaleString('ko-KR')}
+            </FontFixed>
             <VerticalLine />
-            <FontFixed>{x.stdDay}</FontFixed>
+            <FontFixed>
+              {x.deathCnt.toLocaleString('ko-KR')}&nbsp;
+              <FixValueBlock>
+                {(x.deathCnt - prev[index].deathCnt).toLocaleString('ko-KR')}
+                <StyledArrowUp />
+              </FixValueBlock>
+            </FontFixed>
           </TypeView>
         </MainLocalListBlock>
       );
@@ -43,11 +57,11 @@ function LocalBlock({ local }) {
           <TypeView>
             <TypeViewList>지역</TypeViewList>
             <VerticalLine />
-            <TypeViewList>총 확진자</TypeViewList>
+            <TypeViewList>확진자</TypeViewList>
             <VerticalLine />
             <TypeViewList>당일 확진자</TypeViewList>
             <VerticalLine />
-            <TypeViewList>업데이트 시각</TypeViewList>
+            <TypeViewList>사망자</TypeViewList>
           </TypeView>
         </MainLocalListBlock>
         {charList}

@@ -6,8 +6,8 @@ const DayBlock = styled.div`
   text-decoration: none;
 `;
 
-function Day({ onClick }) {
-  return <DayBlock onClick={onClick}>일별</DayBlock>;
+function Day() {
+  return <DayBlock>일별</DayBlock>;
 }
 
 export default Day;

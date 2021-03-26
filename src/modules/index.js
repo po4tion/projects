@@ -9,6 +9,7 @@ import worldValue from './worldValue';
 import worldLocal from './worldLocal';
 import worldDay from './worldDay';
 import worldMonth from './worldMonth';
+import internalLocal from './internalLocal';
 
 const rootReducer = combineReducers({
   chartType,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   worldLocal,
   worldDay,
   worldMonth,
+  internalLocal,
 });
 
 export default rootReducer;

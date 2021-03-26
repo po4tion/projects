@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
 import LocalBlock from '../../components/molecules/LocalBlock';
 import { ChartDateFunc } from '../../middleware/ChartDateFunc';
+import { internalMap, prevInternalMap } from '../../modules/internalLocal';
 
 dotenv.config();
 
@@ -11,26 +13,12 @@ const date = ChartDateFunc(new Date());
 
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date}&endCreateDt=${date}`;
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  date - 1
+}&endCreateDt=${date}`;
 
 function LocalCovidData() {
-  const [local, setLocal] = useState([
-    {
-      gubun: '경기',
-      defCnt: 1000,
-      stdDay: '2021년',
-    },
-    {
-      gubun: '경기',
-      defCnt: 1000,
-      stdDay: '2021년',
-    },
-    {
-      gubun: '경기',
-      defCnt: 1000,
-      stdDay: '2021년',
-    },
-  ]);
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -39,7 +27,11 @@ function LocalCovidData() {
   //         .get(covidUrl)
   //         .then((res) => res.data)
   //         .then((data) => {
-  //           setLocal(data.response.body.items.item);
+  //           const current = data.response.body.items.item.slice(0, 19);
+  //           const prev = data.response.body.items.item.slice(19);
+
+  //           dispatch(internalMap(current));
+  //           dispatch(prevInternalMap(prev));
   //         });
   //     } catch (e) {
   //       console.log(e);
@@ -48,9 +40,9 @@ function LocalCovidData() {
 
   //   fetchData();
   //   return () => fetchData();
-  // }, [local]);
+  // }, [dispatch]);
 
-  return <LocalBlock local={local} />;
+  return <LocalBlock />;
 }
 
 export default LocalCovidData;
