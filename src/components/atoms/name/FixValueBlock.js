@@ -5,15 +5,12 @@ const StyledFixValueBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-  border-radius: 15px;
   padding: 0 3px;
-  background-color: #dfe6e9;
-  color: black;
+  color: ${({ color }) => color};
 `;
 
-function FixValueBlock({ children }) {
-  return <StyledFixValueBlock>{children}</StyledFixValueBlock>;
+function FixValueBlock({ children, color }) {
+  return <StyledFixValueBlock color={color}>{children}</StyledFixValueBlock>;
 }
 
 export default FixValueBlock;

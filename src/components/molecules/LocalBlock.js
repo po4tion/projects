@@ -12,7 +12,7 @@ import TypeViewList, {
 } from '../atoms/local/TypeViewList';
 import VerticalLine from '../atoms/line/VerticalLine';
 import FixValueBlock from '../atoms/name/FixValueBlock';
-import { StyledArrowUp } from '../atoms/icons/Arrow';
+import Arrow from '../atoms/icons/Arrow';
 import { CustomLine, CustomLine02 } from '../atoms/line/Line';
 
 function LocalBlock() {
@@ -38,7 +38,7 @@ function LocalBlock() {
               {x.deathCnt.toLocaleString('ko-KR')}&nbsp;
               <FixValueBlock>
                 {(x.deathCnt - prev[index].deathCnt).toLocaleString('ko-KR')}
-                <StyledArrowUp />
+                <Arrow />
               </FixValueBlock>
             </FontFixed>
           </TypeView>

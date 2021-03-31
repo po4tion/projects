@@ -5,13 +5,14 @@ const StyledAttachNamingBlock = styled.p`
   display: flex;
   justify-content: center;
   margin: 0;
-  color: #778ca3;
+  color: ${({ color }) => color};
   font-size: 16px;
-  font-weight: bold;
 `;
 
-function AttachNamingBlock({ children }) {
-  return <StyledAttachNamingBlock>{children}</StyledAttachNamingBlock>;
+function AttachNamingBlock({ children, color }) {
+  return (
+    <StyledAttachNamingBlock color={color}>{children}</StyledAttachNamingBlock>
+  );
 }
 
 export default AttachNamingBlock;

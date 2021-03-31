@@ -9,51 +9,53 @@ import NumberBlock from '../atoms/name/NumberBlock';
 import FixValueBlock from '../atoms/name/FixValueBlock';
 
 // icon
-import { StyledArrowUp, StyledArrowDown } from '../atoms/icons/Arrow';
+import Arrow from '../atoms/icons/Arrow';
 
-function NamingBlock({ location }) {
+function NamingBlock() {
   const prev = useSelector((state) => state.differ.prev);
   const current = useSelector((state) => state.differ.current);
-
-  let result = <StyledArrowUp />;
-
-  // if (current - prev < 0) {
-  //   result = <StyledArrowDown />;
-  // }
 
   return (
     <MainNamingBlock>
       <SpaceNamingBlock>
         <InnerNamingBlock>
-          <AttachNamingBlock>확진자 </AttachNamingBlock>
-          <NumberBlock>{current.decideCnt.toLocaleString('ko-KR')}</NumberBlock>
-          <FixValueBlock>
+          <AttachNamingBlock color="red">확진자</AttachNamingBlock>
+          <NumberBlock color="red">
+            {current.decideCnt.toLocaleString('ko-KR')}
+          </NumberBlock>
+          <FixValueBlock color="red">
             {Math.abs(current.decideCnt - prev.decideCnt)}
-            {result}
+            <Arrow color="red" />
           </FixValueBlock>
         </InnerNamingBlock>
         <InnerNamingBlock>
-          <AttachNamingBlock>사망자</AttachNamingBlock>
-          <NumberBlock>{current.deathCnt.toLocaleString('ko-KR')}</NumberBlock>
-          <FixValueBlock>
-            {Math.abs(current.deathCnt - prev.deathCnt)}
-            {result}
-          </FixValueBlock>
-        </InnerNamingBlock>
-        <InnerNamingBlock>
-          <AttachNamingBlock>격리해제</AttachNamingBlock>
-          <NumberBlock>{current.clearCnt.toLocaleString('ko-KR')}</NumberBlock>
-          <FixValueBlock>
-            {Math.abs(current.clearCnt - prev.clearCnt)}
-            {result}
-          </FixValueBlock>
-        </InnerNamingBlock>
-        <InnerNamingBlock>
-          <AttachNamingBlock>검사진행</AttachNamingBlock>
-          <NumberBlock>{current.examCnt.toLocaleString('ko-KR')}</NumberBlock>
-          <FixValueBlock>
+          <AttachNamingBlock color="orange">검사진행</AttachNamingBlock>
+          <NumberBlock color="orange">
+            {current.examCnt.toLocaleString('ko-KR')}
+          </NumberBlock>
+          <FixValueBlock color="orange">
             {Math.abs(current.examCnt - prev.examCnt)}
-            {result}
+            <Arrow color="orange" />
+          </FixValueBlock>
+        </InnerNamingBlock>
+        <InnerNamingBlock>
+          <AttachNamingBlock color="green">격리해제</AttachNamingBlock>
+          <NumberBlock color="green">
+            {current.clearCnt.toLocaleString('ko-KR')}
+          </NumberBlock>
+          <FixValueBlock color="green">
+            {Math.abs(current.clearCnt - prev.clearCnt)}
+            <Arrow color="green" />
+          </FixValueBlock>
+        </InnerNamingBlock>
+        <InnerNamingBlock>
+          <AttachNamingBlock color="black">사망자</AttachNamingBlock>
+          <NumberBlock color="black">
+            {current.deathCnt.toLocaleString('ko-KR')}
+          </NumberBlock>
+          <FixValueBlock color="black">
+            {Math.abs(current.deathCnt - prev.deathCnt)}
+            <Arrow color="black" />
           </FixValueBlock>
         </InnerNamingBlock>
       </SpaceNamingBlock>

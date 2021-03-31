@@ -8,16 +8,20 @@ const StyledNumberBlock = styled.p`
   margin-top: 10px;
   margin-bottom: 0;
   width: 60%;
-  color: ${({ result }) => (result === 'moon' ? '#f5f6fa' : '#2c3a47')};
+  color: ${({ color }) => color};
   font-size: 35px;
   font-weight: bold;
   text-align: center;
 `;
 
-function NumberBlock({ children }) {
+function NumberBlock({ children, color }) {
   const result = useSelector((state) => state.bgColor.type);
 
-  return <StyledNumberBlock result={result}>{children}</StyledNumberBlock>;
+  return (
+    <StyledNumberBlock result={result} color={color}>
+      {children}
+    </StyledNumberBlock>
+  );
 }
 
 export default NumberBlock;

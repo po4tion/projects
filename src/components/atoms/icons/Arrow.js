@@ -1,13 +1,14 @@
 import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai';
 import styled from 'styled-components';
 
-export const StyledArrowUp = styled(AiOutlineArrowUp)`
+const StyledArrowUp = styled(AiOutlineArrowUp)`
   font-size: 18px;
-  color: black;
+  color: ${({ color }) => color};
   margin-bottom: 3px;
 `;
 
-export const StyledArrowDown = styled(AiOutlineArrowDown)`
-  font-size: 18px;
-  margin-bottom: 3px;
-`;
+function Arrow({ color }) {
+  return <StyledArrowUp color={color} />;
+}
+
+export default Arrow;

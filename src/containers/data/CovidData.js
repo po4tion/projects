@@ -61,8 +61,8 @@ function CovidData() {
 
   // TEST CODE
   useEffect(() => {
-    dispatch(prev(1000, 2000, 3000, 4000));
-    dispatch(current(1250, 2450, 3650, 4850));
+    dispatch(prev(102500, 1729, 94500, 85000));
+    dispatch(current(103088, 1831, 95030, 87000));
   });
 
   return <NamingBlock />;

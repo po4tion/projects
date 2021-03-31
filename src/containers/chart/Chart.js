@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 
 // middleware
 import { CustomChartDay } from '../../middleware/ChartDateFunc';
+import { reduce } from 'highcharts';
 
 function Chart() {
   const first = useSelector((state) => state.date.first);
@@ -17,11 +18,12 @@ function Chart() {
   const types = useSelector((state) => state.chartType.option);
   let view = {
     label: ['확진자'],
-    borderColor: 'black', // 선의 색
-    borderWidth: 2, // 선의 굵기(단위 px)
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    hoverBackgroundColor: 'green',
-    hoverBorderColor: 'red',
+    borderColor: 'rgba(255, 0, 0, 0.5)', // 선의 색
+    borderWidth: 4, // 선의 굵기(단위 px)
+    backgroundColor: 'transparent',
+    pointBorderColor: 'red',
+    hoverBackgroundColor: 'red',
+    hoverBorderWidth: 10,
     data: [
       first.decideCnt,
       second.decideCnt,
@@ -36,11 +38,12 @@ function Chart() {
   if (types === 'decide') {
     view = {
       label: ['확진자'],
-      borderColor: 'black', // 선의 색
-      borderWidth: 2, // 선의 굵기(단위 px)
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      hoverBackgroundColor: 'green',
-      hoverBorderColor: 'red',
+      borderColor: 'rgba(255, 0, 0, 0.5)', // 선의 색
+      borderWidth: 4, // 선의 굵기(단위 px)
+      backgroundColor: 'transparent',
+      pointBorderColor: 'red',
+      hoverBackgroundColor: 'red',
+      hoverBorderWidth: 10,
       data: [
         first.decideCnt,
         second.decideCnt,
@@ -54,9 +57,9 @@ function Chart() {
   } else if (types === 'death') {
     view = {
       label: ['사망자'],
-      borderColor: 'blue', // 선의 색
-      borderWidth: 2, // 선의 굵기(단위 px)
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      borderColor: 'black', // 선의 색
+      borderWidth: 4, // 선의 굵기(단위 px)
+      backgroundColor: 'transparent',
       hoverBackgroundColor: 'green',
       hoverBorderColor: 'red',
       data: [
@@ -72,9 +75,9 @@ function Chart() {
   } else if (types === 'exam') {
     view = {
       label: ['검사진행'],
-      borderColor: 'steelblue', // 선의 색
-      borderWidth: 2, // 선의 굵기(단위 px)
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      borderColor: 'orange', // 선의 색
+      borderWidth: 4, // 선의 굵기(단위 px)
+      backgroundColor: 'transparent',
       hoverBackgroundColor: 'green',
       hoverBorderColor: 'red',
       data: [
@@ -90,9 +93,9 @@ function Chart() {
   } else if (types === 'clear') {
     view = {
       label: ['격리해제'],
-      borderColor: 'violet', // 선의 색
-      borderWidth: 2, // 선의 굵기(단위 px)
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      borderColor: 'green', // 선의 색
+      borderWidth: 4, // 선의 굵기(단위 px)
+      backgroundColor: 'transparent',
       hoverBackgroundColor: 'green',
       hoverBorderColor: 'red',
       data: [
@@ -136,18 +139,6 @@ function Chart() {
       yAxes: [
         {
           ticks: {
-            // min:
-            //   types === 'decide'
-            //     ? 96000
-            //     : types === 'death'
-            //     ? 1650
-            //     : types === 'exam'
-            //     ? 78000
-            //     : types === 'clear'
-            //     ? 88000
-            //     : types === 'care'
-            //     ? 6200
-            //     : 6200, // 스케일에 대한 최솟갓 설정, 0 부터 시작
             stepSize:
               types === 'decide'
                 ? 500
@@ -165,6 +156,14 @@ function Chart() {
       ],
     },
     responsive: true,
+    plugins: {
+      tooltip: {
+        position: 'nearest',
+        mode: 'index',
+        intersect: false,
+        borderWidth: 10,
+      },
+    },
   };
 
   const data = {
