@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const DayBlock = styled.div`
-  color: #778ca3;
-  text-decoration: none;
+  font-size: 16px;
 `;
 
 function Day() {

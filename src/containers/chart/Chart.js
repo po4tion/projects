@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 
 // middleware
-import { CustomChartDay } from '../../middleware/ChartDateFunc';
-import { reduce } from 'highcharts';
+import { ChartDay } from '../../middleware/ChartDateFunc';
 
 function Chart() {
   const first = useSelector((state) => state.date.first);
@@ -113,7 +112,7 @@ function Chart() {
       label: ['치료중'],
       borderColor: 'darkblue', // 선의 색
       borderWidth: 2, // 선의 굵기(단위 px)
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      backgroundColor: 'transparent',
       hoverBackgroundColor: 'green',
       hoverBorderColor: 'red',
       data: [
@@ -167,7 +166,7 @@ function Chart() {
   };
 
   const data = {
-    labels: [...CustomChartDay(new Date())], // 날짜값 넣기
+    labels: [...ChartDay(new Date())], // 날짜값 넣기
     datasets: [view],
   };
   return <Line data={data} width={700} height={300} options={options} />;

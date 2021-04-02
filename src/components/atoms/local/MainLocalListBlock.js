@@ -10,7 +10,7 @@ const StyledMainLocalListBlock = styled.div`
   height: 40px;
   width: 100%;
   background-color: ${({ bg }) =>
-    bg === 0 || bg % 2 === 0 ? '#2f3640' : '#fff'};
+    bg === 0 || bg % 2 === 0 ? '#fff' : '#2f3640'};
 `;
 
 function MainLocalListBlock({ children, bg }) {

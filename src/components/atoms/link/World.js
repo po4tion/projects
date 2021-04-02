@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const WorldBlock = styled.p`
-  color: #778ca3;
   font-size: 16px;
 `;
 

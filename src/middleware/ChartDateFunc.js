@@ -66,17 +66,22 @@ export function ChartMonthFunc() {
 }
 
 // 일별 그래프 일별단위 데이터 추출
-export function CustomChartDay(result) {
-  let month = result.getMonth() + 1; // +1
+export function ChartDay() {
+  const result = new Date();
   let date = result.getDate();
-  let array = [];
+  const month = result.getMonth();
+  const year = result.getFullYear();
+  const array = [];
 
-  for (let i = 6; i >= 0; i--) {
-    const keyword = month + '월 ' + (date - i) + '일';
+  while (array.length < 7) {
+    const value = new Date(year, month, date--);
+
+    const keyword = value.getMonth() + 1 + '월 ' + value.getDate() + '일';
+
     array.push(keyword);
   }
 
-  return array;
+  return array.reverse();
 }
 
 // ChartValueW 년월일 -8일까지 계산해서 배열 리턴

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const InternalBlock = styled.p`
-  color: #778ca3;
   font-size: 16px;
 `;
 

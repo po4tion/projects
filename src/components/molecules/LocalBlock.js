@@ -6,10 +6,7 @@ import { MainDetailCustom } from '../atoms/details/MainDetailBlock';
 import LocalChartBlock from '../atoms/local/LocalChartBlock';
 import MainLocalListBlock from '../atoms/local/MainLocalListBlock';
 import TypeView from '../atoms/local/TypeView';
-import TypeViewList, {
-  FontFixed,
-  FontFixedUpdate,
-} from '../atoms/local/TypeViewList';
+import TypeViewList, { FontFixed } from '../atoms/local/TypeViewList';
 import VerticalLine from '../atoms/line/VerticalLine';
 import FixValueBlock from '../atoms/name/FixValueBlock';
 import Arrow from '../atoms/icons/Arrow';
