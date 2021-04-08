@@ -130,9 +130,6 @@ function Chart() {
   const options = {
     legend: {
       display: false, // label 숨기기
-      labels: {
-        boxWidth: 10,
-      },
     },
     scales: {
       yAxes: [
@@ -155,13 +152,11 @@ function Chart() {
       ],
     },
     responsive: true,
-    plugins: {
-      tooltip: {
-        position: 'nearest',
-        mode: 'index',
-        intersect: false,
-        borderWidth: 10,
-      },
+    tooltips: {
+      enabled: true,
+      intersect: false,
+      mode: 'nearest',
+      axis: 'x',
     },
   };
 
