@@ -16,24 +16,7 @@ function Chart() {
 
   const types = useSelector((state) => state.chartType.option);
 
-  let view = {
-    label: ['확진자'],
-    borderColor: 'rgba(255, 0, 0, 0.5)', // 선의 색
-    borderWidth: 4, // 선의 굵기(단위 px)
-    backgroundColor: 'transparent',
-    pointBorderColor: 'red',
-    hoverBackgroundColor: 'red',
-    hoverBorderWidth: 10,
-    data: [
-      first.decideCnt,
-      second.decideCnt,
-      third.decideCnt,
-      fourth.decideCnt,
-      fifth.decideCnt,
-      sixth.decideCnt,
-      seventh.decideCnt,
-    ],
-  };
+  let view = {};
 
   if (types === 'decide') {
     view = {
@@ -41,8 +24,8 @@ function Chart() {
       borderColor: 'rgba(255, 0, 0, 0.5)', // 선의 색
       borderWidth: 4, // 선의 굵기(단위 px)
       backgroundColor: 'transparent',
-      pointBorderColor: 'red',
-      hoverBackgroundColor: 'red',
+      pointBorderColor: 'rgb(255, 0, 0)',
+      hoverBackgroundColor: 'rgb(255, 0, 0)',
       hoverBorderWidth: 10,
       data: [
         first.decideCnt,
@@ -57,11 +40,12 @@ function Chart() {
   } else if (types === 'death') {
     view = {
       label: ['사망자'],
-      borderColor: 'black', // 선의 색
+      borderColor: 'rgba(0, 0, 0, 0.5)', // 선의 색
       borderWidth: 4, // 선의 굵기(단위 px)
       backgroundColor: 'transparent',
-      hoverBackgroundColor: 'green',
-      hoverBorderColor: 'red',
+      pointBorderColor: 'rgb(0, 0, 0)',
+      hoverBackgroundColor: 'rgb(0, 0, 0)',
+      hoverBorderWidth: 10,
       data: [
         first.deathCnt,
         second.deathCnt,
@@ -75,11 +59,12 @@ function Chart() {
   } else if (types === 'exam') {
     view = {
       label: ['검사진행'],
-      borderColor: 'orange', // 선의 색
+      borderColor: 'rgba(255, 195, 0, 0.5)', // 선의 색
       borderWidth: 4, // 선의 굵기(단위 px)
       backgroundColor: 'transparent',
-      hoverBackgroundColor: 'green',
-      hoverBorderColor: 'red',
+      pointBorderColor: 'rgb(255, 195, 0)',
+      hoverBackgroundColor: 'rgb(255, 195, 0)',
+      hoverBorderWidth: 10,
       data: [
         first.examCnt,
         second.examCnt,
@@ -93,11 +78,12 @@ function Chart() {
   } else if (types === 'clear') {
     view = {
       label: ['격리해제'],
-      borderColor: 'green', // 선의 색
+      borderColor: 'rgba(164, 255, 0, 0.5)', // 선의 색
       borderWidth: 4, // 선의 굵기(단위 px)
       backgroundColor: 'transparent',
-      hoverBackgroundColor: 'green',
-      hoverBorderColor: 'red',
+      pointBorderColor: 'rgb(164, 255, 0)',
+      hoverBackgroundColor: 'rgb(164, 255, 0)',
+      hoverBorderWidth: 10,
       data: [
         first.clearCnt,
         second.clearCnt,
@@ -111,11 +97,12 @@ function Chart() {
   } else if (types === 'care') {
     view = {
       label: ['치료중'],
-      borderColor: 'darkblue', // 선의 색
-      borderWidth: 2, // 선의 굵기(단위 px)
+      borderColor: 'rgba(0, 125, 255, 0.5)', // 선의 색
+      borderWidth: 4, // 선의 굵기(단위 px)
       backgroundColor: 'transparent',
-      hoverBackgroundColor: 'green',
-      hoverBorderColor: 'red',
+      pointBorderColor: 'rgb(0, 125, 255)',
+      hoverBackgroundColor: 'rgb(0, 125, 255)',
+      hoverBorderWidth: 10,
       data: [
         first.careCnt,
         second.careCnt,
@@ -130,32 +117,12 @@ function Chart() {
 
   const options = {
     legend: {
-      display: false, // label 숨기기
+      display: false, // label 숨기기,
     },
     elements: {
       point: {
         pointStyle: 'rect',
       },
-    },
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            stepSize:
-              types === 'decide'
-                ? 500
-                : types === 'death'
-                ? 10
-                : types === 'exam'
-                ? 3500
-                : types === 'clear'
-                ? 500
-                : types === 'care'
-                ? 100
-                : 100, // 스케일에 대한 사용자 고정 정의 값
-          },
-        },
-      ],
     },
     responsive: true,
     tooltips: {

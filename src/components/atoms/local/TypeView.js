@@ -6,7 +6,7 @@ const StyledTypeView = styled.ul`
   align-items: center;
   list-style: none;
   padding: 0;
-  color: ${({ idx }) => (idx === 0 || idx % 2 === 0 ? '2f3640' : '#fff')};
+  color: ${({ idx }) => (idx === 0 || idx % 2 === 0 ? '#2f3640' : '#fff')};
 `;
 
 function TypeView({ children, idx }) {
