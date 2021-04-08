@@ -26,10 +26,9 @@ function DateBlock({ location }) {
   const dispatch = useDispatch();
   const result = useSelector((state) => state.chartData.type);
 
+  const onChange = (e) => dispatch(changeTypeOption(e.target.value));
   const onClickDay = () => dispatch(changeTypeDay());
   const onClickMonth = () => dispatch(changeTypeMonth());
-
-  const onChange = (e) => dispatch(changeTypeOption(e.target.value));
 
   // pathname에 따른 optiontype
   let options = (

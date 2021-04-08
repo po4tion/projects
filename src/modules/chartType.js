@@ -18,10 +18,12 @@ const initialState = {
 
 const chartType = handleActions(
   {
-    [CHANGE_TYPE_DAY]: (_, __) => ({
+    [CHANGE_TYPE_DAY]: (state, __) => ({
+      ...state,
       type: 'day',
     }),
-    [CHANGE_TYPE_MONTH]: (_, __) => ({
+    [CHANGE_TYPE_MONTH]: (state, __) => ({
+      ...state,
       type: 'month',
     }),
     [CHANGE_TYPE_OPTION]: (state, action) => ({

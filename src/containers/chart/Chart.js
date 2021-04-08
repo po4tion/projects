@@ -15,6 +15,7 @@ function Chart() {
   const seventh = useSelector((state) => state.date.seventh);
 
   const types = useSelector((state) => state.chartType.option);
+
   let view = {
     label: ['확진자'],
     borderColor: 'rgba(255, 0, 0, 0.5)', // 선의 색
@@ -107,7 +108,7 @@ function Chart() {
         seventh.clearCnt,
       ],
     };
-  } else {
+  } else if (types === 'care') {
     view = {
       label: ['치료중'],
       borderColor: 'darkblue', // 선의 색
@@ -130,6 +131,11 @@ function Chart() {
   const options = {
     legend: {
       display: false, // label 숨기기
+    },
+    elements: {
+      point: {
+        pointStyle: 'rect',
+      },
     },
     scales: {
       yAxes: [
