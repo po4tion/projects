@@ -13,6 +13,7 @@ import { MainDetailCustom } from '../components/atoms/details/MainDetailBlock';
 import HeadingBlock from '../components/molecules/HeadingBlock';
 import TypeBlock from '../components/molecules/TypeBlock';
 import DateBlock from '../components/molecules/DateBlock';
+import FooterBlock from '../components/molecules/FooterBlock';
 
 // API
 import CovidData from '../containers/data/CovidData';
@@ -49,6 +50,8 @@ function Main() {
         {chart}
         <Line />
         <LocalCovidData />
+        <Line />
+        <FooterBlock />
       </InnerBgBlock>
     </MainBackgroundBlock>
   );

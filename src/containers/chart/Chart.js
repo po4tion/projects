@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
+import '../../fonts/fonts.scss';
 
 // middleware
 import { ChartDay } from '../../middleware/ChartDateFunc';
@@ -15,6 +16,7 @@ function Chart() {
   const seventh = useSelector((state) => state.date.seventh);
 
   const types = useSelector((state) => state.chartType.option);
+  const bg = useSelector((state) => state.bgColor.type);
 
   let view = {};
 
@@ -123,6 +125,38 @@ function Chart() {
       point: {
         pointStyle: 'rect',
       },
+    },
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            fontColor: bg === 'moon' ? '#fff' : '#2f3640',
+            fontSize: 12,
+            fontFamily: 'Jal_Onuel',
+          },
+          gridLines: {
+            color:
+              bg === 'moon'
+                ? 'rgba(255, 255, 255, 0.5)'
+                : 'rgba(47, 54, 64, 0.5)',
+          },
+        },
+      ],
+      yAxes: [
+        {
+          ticks: {
+            fontColor: bg === 'moon' ? '#fff' : '#2f3640',
+            fontSize: 12,
+            fontFamily: 'Jal_Onuel',
+          },
+          gridLines: {
+            color:
+              bg === 'moon'
+                ? 'rgba(255, 255, 255, 0.5)'
+                : 'rgba(47, 54, 64, 0.5)',
+          },
+        },
+      ],
     },
     responsive: true,
     tooltips: {

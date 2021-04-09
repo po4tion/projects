@@ -101,7 +101,10 @@ export function ChartValueWFunc() {
       newd.getMonth() < 10
         ? '0' + String(newd.getMonth() + 1)
         : String(newd.getMonth() + 1);
-    const newDate = String(newd.getDate());
+    const newDate =
+      newd.getDate() < 10
+        ? '0' + String(newd.getDate())
+        : String(newd.getDate());
 
     const sum = newYear + newMonth + newDate;
     array.push(sum);
