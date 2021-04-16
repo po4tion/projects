@@ -33,7 +33,7 @@ function LocalBlock() {
             <VerticalLine />
             <FontFixed>
               {x.deathCnt.toLocaleString('ko-KR')}&nbsp;
-              <FixValueBlock>
+              <FixValueBlock color="rgb(255, 87, 51)">
                 {(x.deathCnt - prev[index].deathCnt).toLocaleString('ko-KR')}
                 <Arrow />
               </FixValueBlock>
