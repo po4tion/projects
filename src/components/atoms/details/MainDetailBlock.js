@@ -10,6 +10,7 @@ const StyledMainDetailBlock = styled.div`
   color: #778ca3;
   font-weight: bold;
   height: 30px;
+  user-select: none;
 `;
 
 function MainDetailBlock({ children }) {

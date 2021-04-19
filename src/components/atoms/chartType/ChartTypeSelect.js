@@ -17,6 +17,7 @@ const StyledCharttypeSelect = styled.select`
     result === 'moon' ? '#fff' : 'rgba(47, 54, 64, 0.9)'};
   cursor: pointer;
   color: ${({ result }) => (result === 'moon' ? '#778ca3' : '#fff')};
+  user-select: none;
 `;
 
 function ChartTypeBlock({ onChange, children }) {

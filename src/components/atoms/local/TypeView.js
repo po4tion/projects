@@ -7,6 +7,7 @@ const StyledTypeView = styled.ul`
   list-style: none;
   padding: 0;
   color: ${({ idx }) => (idx === 0 || idx % 2 === 0 ? '#2f3640' : '#fff')};
+  user-select: none;
 `;
 
 function TypeView({ children, idx }) {

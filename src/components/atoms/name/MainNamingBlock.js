@@ -13,6 +13,7 @@ const StyledMainNamingBlock = styled.div`
     result === 'moon'
       ? '5px 5px 7px #9c9c9c, -5px -5px 7px #ffffff'
       : '5px 5px 7px #1d2127, -5px -5px 7px #414b59'};
+  user-select: none;
 `;
 
 function MainNamingBlock({ children, open }) {
