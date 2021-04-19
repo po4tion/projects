@@ -1,11 +1,11 @@
 ![version](https://img.shields.io/github/v/release/po4tion/covid19-app)
 
 ## Skills
-![](https://img.shields.io/badge/axios-0.21.1-green)
-![](https://img.shields.io/badge/chart.js-2.9.4-green)
-![](https://img.shields.io/badge/react-icons-4.2.0-green)
-![](https://img.shields.io/badge/react-redux-7.2.2-green)
-![](https://img.shields.io/badge/styled-components-5.2.1-green)
+![1](https://img.shields.io/badge/axios-0.21.1-green)
+![2](https://img.shields.io/badge/chart.js-2.9.4-green)
+![3](https://img.shields.io/badge/react--icons-4.2.0-green)
+![4](https://img.shields.io/badge/react--redux-7.2.2-green)
+![5](https://img.shields.io/badge/styled--components-5.2.1-green)
 
 ## Latest Release (2021/04/19)
 
