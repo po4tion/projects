@@ -7,6 +7,11 @@ const StyledTypeViewList = styled.li`
   font-weight: bold;
   font-size: 20px;
   text-align: center;
+
+  @media screen and (max-width: 500px) {
+    width: 130px;
+    font-size: 15px;
+  }
 `;
 
 function TypeView({ children }) {
