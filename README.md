@@ -7,7 +7,7 @@
 ![4](https://img.shields.io/badge/react--redux-7.2.2-green)
 ![5](https://img.shields.io/badge/redux--actions-2.6.5-green)
 ![6](https://img.shields.io/badge/styled--components-5.2.1-green)
-![7](https://img.shields.io/badge/-Atomic--Patterns-green)
+![7](https://img.shields.io/badge/-Atomic--Pattern-green)
 
 ## Latest Release (2021/04/19)
 
