@@ -23,41 +23,41 @@ const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKe
 function CovidData() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await axios
-          .get(covidUrl)
-          .then((res) => res.data)
-          .then((data) => {
-            const dataPrev = data.response.body.items.item[1];
-            const dataCurrent = data.response.body.items.item[0];
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       await axios
+  //         .get(covidUrl)
+  //         .then((res) => res.data)
+  //         .then((data) => {
+  //           const dataPrev = data.response.body.items.item[1];
+  //           const dataCurrent = data.response.body.items.item[0];
 
-            dispatch(
-              prev(
-                dataPrev.decideCnt,
-                dataPrev.deathCnt,
-                dataPrev.clearCnt,
-                dataPrev.examCnt
-              )
-            );
-            dispatch(
-              current(
-                dataCurrent.decideCnt,
-                dataCurrent.deathCnt,
-                dataCurrent.clearCnt,
-                dataCurrent.examCnt
-              )
-            );
-          });
-      } catch (e) {
-        console.log(e);
-      }
-    };
+  //           dispatch(
+  //             prev(
+  //               dataPrev.decideCnt,
+  //               dataPrev.deathCnt,
+  //               dataPrev.clearCnt,
+  //               dataPrev.examCnt
+  //             )
+  //           );
+  //           dispatch(
+  //             current(
+  //               dataCurrent.decideCnt,
+  //               dataCurrent.deathCnt,
+  //               dataCurrent.clearCnt,
+  //               dataCurrent.examCnt
+  //             )
+  //           );
+  //         });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
 
-    fetchData();
-    return () => fetchData();
-  }, [dispatch]);
+  //   fetchData();
+  //   return () => fetchData();
+  // }, [dispatch]);
 
   // TEST CODE
   // useEffect(() => {

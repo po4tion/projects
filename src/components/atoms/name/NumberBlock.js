@@ -12,6 +12,10 @@ const StyledNumberBlock = styled.p`
   font-size: 35px;
   font-weight: bold;
   text-align: center;
+
+  @media screen and (max-width: 500px) {
+    font-size: 25px;
+  }
 `;
 
 function NumberBlock({ children, color }) {
