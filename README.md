@@ -23,7 +23,7 @@
 우리 사회에 만연해 있는 COVID-19.
 COVID-19의 확진자, 사망자 등의 지표를 궁금해하는 사용자들을 위한 어플리케이션입니다.
 
-- 상단 NamingBlock 
+- 상단 NamingBlock <br />
 <img src="/doc/images/CORONA_DATA_상단.png" width="450px" height="450px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 
 
