@@ -1,5 +1,12 @@
 ![version](https://img.shields.io/github/v/release/po4tion/covid19-app)
 
+## Skills
+![](https://img.shields.io/badge/axios-0.21.1-green)
+![](https://img.shields.io/badge/chart.js-2.9.4-green)
+![](https://img.shields.io/badge/react-icons-4.2.0-green)
+![](https://img.shields.io/badge/react-redux-7.2.2-green)
+![](https://img.shields.io/badge/styled-components-5.2.1-green)
+
 ## Latest Release (2021/04/19)
 
 - 상단 확진자 차트, 미디어 쿼리 적용
@@ -36,7 +43,7 @@ COVID-19의 확진자, 사망자 등의 지표를 궁금해하는 사용자들�
 <img src="/doc/images/CORONA_DATA_하단.png" width="450px" height="450px" title="CORONA_DATA_하단" alt="COVID"></img><br/>
 
 
-## informant
+## Informant
 
 - 보건복지부(COVID-19 국내발생 현황)
 - 보건복지부(COVID-19 해외발생 현황)
