@@ -3,6 +3,7 @@
 ## Latest Release (2021/04/19)
 
 - 상단 확진자 차트, 미디어 쿼리 적용
+- 하단 지역 차트, 미디어 쿼리 적용
 
 ## About covid19-app(Covid Data)
 
