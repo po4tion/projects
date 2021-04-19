@@ -1,6 +1,7 @@
 ![version](https://img.shields.io/github/v/release/po4tion/covid19-app)
 
 ## Skills
+
 ![1](https://img.shields.io/badge/axios-0.21.1-green)
 ![2](https://img.shields.io/badge/chart.js-2.9.4-green)
 ![3](https://img.shields.io/badge/react--icons-4.2.0-green)
@@ -34,16 +35,19 @@ COVID-19의 확진자, 사망자 등의 지표를 궁금해하는 사용자들�
 
 - 최상단 NamingBlock - 사용자의 눈의 피로를 줄이기 위한 다크모드와 라이트 모드를 제공합니다. 또한 국내뿐 아니라 세계의 COVID-19 상황 추이도 알 수 있습니다.
 <br />
-<img src="/doc/images/CORONA_DATA_최상단.png" width="600px" height="150px" title="CORONA_DATA_상단" alt="COVID"></img><br/>
+<p align="center"><img src="/doc/images/CORONA_DATA_최상단.png" width="600px" height="150px" title="CORONA_DATA_최상단" alt="COVID"></img></p><br/>
 
-- 상단 NamingBlock - 국내 지표와 세계 지표를 선택해서 볼 수 있습니다. 또한 BlockChart와 LineChart를 통해 국내 COVID-19 환자들에 대한 추이를 알 수 있습니다.
+- 상단 NamingBlock - BlockChart와 LineChart를 통해 국내 COVID-19 환자들에 대한 추이를 알 수 있습니다.
 <br />
-<img src="/doc/images/CORONA_DATA_상단.png" width="450px" height="450px" title="CORONA_DATA_상단" alt="COVID"></img><br/>
+<p align="center"><img src="/doc/images/CORONA_DATA_상단.png" width="450px" height="450px" title="CORONA_DATA_상단" alt="COVID"></img></p><br/>
 
 - 하단 NamingBlock - 지역별 또는 나라별로 데이터를 볼 수 있습니다.
 <br />
-<img src="/doc/images/CORONA_DATA_하단.png" width="450px" height="450px" title="CORONA_DATA_하단" alt="COVID"></img><br/>
+<p align="center"><img src="/doc/images/CORONA_DATA_하단.png" width="450px" height="450px" title="CORONA_DATA_하단" alt="COVID"></img></p><br/>
 
+- Dark Mode
+<br />
+<p align="center"><img src="/doc/images/CORONA_DARK.png" width="300px" height="700px" title="CORONA_DARK" alt="COVID"></img></p><br/>
 
 ## Informant
 
