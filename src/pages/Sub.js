@@ -14,6 +14,7 @@ import HeadingBlock from '../components/molecules/HeadingBlock';
 import TypeBlock from '../components/molecules/TypeBlock';
 import DateBlock from '../components/molecules/DateBlock';
 import WorldBlock from '../components/molecules/world/WorldBlock';
+import FooterBlock from '../components/molecules/FooterBlock';
 
 // API
 import CovidDataW from '../containers/data/world/CovidDataW';
@@ -49,6 +50,8 @@ function Main() {
         {chart}
         <Line />
         <WorldBlock />
+        <Line />
+        <FooterBlock />
       </InnerBgBlock>
     </MainBackgroundBlock>
   );
