@@ -45,7 +45,7 @@ COVID-19의 확진자, 사망자 등의 지표를 궁금해하는 사용자들�
 <br />
 <p align="center"><img src="/doc/images/CORONA_DATA_하단.png" width="450px" height="450px" title="CORONA_DATA_하단" alt="COVID"></img></p><br/>
 
-- Dark Mode
+- Dark Mode - 사용자의 피로도를 줄여줄 어두운 스타일의 UI 입니다.
 <br />
 <p align="center"><img src="/doc/images/CORONA_DARK.png" width="300px" height="700px" title="CORONA_DARK" alt="COVID"></img></p><br/>
 
