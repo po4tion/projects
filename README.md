@@ -35,7 +35,7 @@ COVID-19의 확진자, 사망자 등의 지표를 궁금해하는 사용자들�
 
 - 최상단 NamingBlock - 사용자의 눈의 피로를 줄이기 위한 다크모드와 라이트 모드를 제공합니다. 또한 국내뿐 아니라 세계의 COVID-19 상황 추이도 알 수 있습니다.
 <br />
-<p align="center"><img src="/doc/images/CORONA_DATA_최상단.png" width="600px" height="150px" title="CORONA_DATA_최상단" alt="COVID"></img></p><br/>
+<p align="center"><img src="/doc/images/CORONA_DATA_최상단.png" width="450px" height="150px" title="CORONA_DATA_최상단" alt="COVID"></img></p><br/>
 
 - 상단 NamingBlock - BlockChart와 LineChart를 통해 국내 COVID-19 환자들에 대한 추이를 알 수 있습니다.
 <br />
