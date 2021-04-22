@@ -1,3 +1,5 @@
+// 세계 일별 chart.js
+
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';

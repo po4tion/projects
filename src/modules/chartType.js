@@ -1,3 +1,4 @@
+// chart.js의 option 값(decide, death ...etc)에 해당하는 그래프를 보여주기 위한 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const CHANGE_TYPE_DAY = 'chartType/CHANGE_TYPE_DAY';

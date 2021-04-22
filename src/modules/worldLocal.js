@@ -1,3 +1,4 @@
+// 세계 각 나라의 API 데이터를 위한 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const WORLD_LOCAL = 'worldLocal/WORLD_LOCAL';

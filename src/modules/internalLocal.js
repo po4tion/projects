@@ -1,3 +1,4 @@
+// 국내 각 지역에 해당하는 값들 위한 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const INTERNAL_LOCAL = 'internalLocal/INTERNAL_LOCAL';

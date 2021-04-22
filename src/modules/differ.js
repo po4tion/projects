@@ -1,3 +1,4 @@
+// 전날 대비 증가값 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const PREV = 'differ/PREV';

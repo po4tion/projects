@@ -1,3 +1,5 @@
+// 세계 카테고리의 총 확진자수와 총 사망자 수
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';

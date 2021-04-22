@@ -1,3 +1,4 @@
+// 일별 API 값들을 위한 상태관리
 import { createAction, handleActions } from 'redux-actions';
 
 const FIRST = 'date/FIRST';

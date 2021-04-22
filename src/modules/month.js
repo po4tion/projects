@@ -1,3 +1,4 @@
+// chart.js 월별 값들을 위한 상태관리
 import { createAction, handleActions } from 'redux-actions';
 
 const MONTH01 = 'month/MONTH01';

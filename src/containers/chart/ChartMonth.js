@@ -1,3 +1,5 @@
+// 국내 월별 chart.js
+
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
@@ -7,6 +9,7 @@ import { CustomChartMonth } from '../../middleware/ChartDateFunc';
 import '../../fonts/fonts.scss';
 
 function Chart() {
+  // 총 8개월간의 값들을 가져와 계산 후 그래프에 출력
   const month01 = useSelector((state) => state.month.month01);
   const month02 = useSelector((state) => state.month.month02);
   const month03 = useSelector((state) => state.month.month03);
@@ -17,6 +20,8 @@ function Chart() {
   const month08 = useSelector((state) => state.month.month08);
 
   const types = useSelector((state) => state.chartType.option);
+
+  // 다크모드로 인해 차트의 색을 바꿔줘야 한다
   const bg = useSelector((state) => state.bgColor.type);
 
   let view = {};
@@ -160,6 +165,8 @@ function Chart() {
       ],
     },
     responsive: true,
+
+    // Line에 마우스 hover 시, 두 값 사이 중 더 가까운 값이 표시
     tooltips: {
       enabled: true,
       intersect: false,

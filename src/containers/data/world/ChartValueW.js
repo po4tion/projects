@@ -1,3 +1,5 @@
+// 세계 카테고리 일별 데이터 FETCH 후 DISPATCH
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -20,7 +22,7 @@ import ChartW from '../../chart/world/ChartW';
 dotenv.config();
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
-// Date value
+// Date value, 날짜 값을 배열로 받아온다
 const dateArray = ChartValueWFunc();
 
 // API URL

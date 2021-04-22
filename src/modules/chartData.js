@@ -1,3 +1,4 @@
+// 일별, 월별 카테고리를 통해 그래프를 변경하기 위한 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const CHANGE_TYPE_DAY = 'chartType/CHANGE_TYPE_DAY';

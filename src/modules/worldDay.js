@@ -1,3 +1,4 @@
+// 세계 일별 API 값을 위한 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const WORLD_DAY01 = 'worldDay/WORLD_DAY01';

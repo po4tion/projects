@@ -1,3 +1,5 @@
+// 오늘자 API 값들과 전날 대비 증가수
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';

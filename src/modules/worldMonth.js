@@ -1,3 +1,4 @@
+// chart.js의 세계 - 월별 데이터를 위한 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const WORLD_MONTH01 = 'worldMonth/WORLD_MONTH01';

@@ -1,3 +1,5 @@
+// 국내 월별 데이터 FETCH 후 DISPATCH
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';

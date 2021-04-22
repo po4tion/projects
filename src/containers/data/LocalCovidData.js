@@ -1,3 +1,5 @@
+// 국내 각 도시당 확진자수와 사망자 수
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -9,6 +11,7 @@ import { internalMap, prevInternalMap } from '../../modules/internalLocal';
 
 dotenv.config();
 
+// 받아오는 date 값의 형태는 ex)20210422
 const date = ChartDateFunc(new Date());
 
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
@@ -27,6 +30,7 @@ function LocalCovidData() {
           .get(covidUrl)
           .then((res) => res.data)
           .then((data) => {
+            // 이틀치의 값을 받아와서 반으로 잘라 변수에 대입해준다.
             const current = data.response.body.items.item.slice(0, 19);
             const prev = data.response.body.items.item.slice(19);
 

@@ -1,3 +1,5 @@
+// 세계 카테고리 월별 데이터 FETCH 후 DISPATCH
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -20,6 +22,7 @@ dotenv.config();
 
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
+// 날짜값을 배열로 받아온다.
 const date = ChartMonthFunc();
 
 const covidUrl = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[0]}&endCreateDt=${date[0]}`;

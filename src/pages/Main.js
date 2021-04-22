@@ -1,4 +1,4 @@
-// Page View
+// 국내 Page View
 
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -25,6 +25,8 @@ import ChartValueMonth from '../containers/data/days/ChartValueMonth';
 
 function Main() {
   const result = useSelector((state) => state.chartType.type);
+
+  // 차트 날짜 계산
   const _date = new Date();
   const _dateMonth = _date.getMonth() + 1;
   const _dateYear = _date.getFullYear();
@@ -32,6 +34,7 @@ function Main() {
   let chart = null;
   let chartHeading = `코로나 동향 (${_dateMonth}월, ${_dateYear}년)`;
 
+  // 일별, 월별 카테고리에 따라 그래프 변경
   if (result === 'day') {
     chart = <ChartValue />;
   } else if (result === 'month') {

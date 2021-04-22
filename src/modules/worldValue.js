@@ -1,3 +1,4 @@
+// 전 세계 총합 확진자, 사망자 수와 전날 대비 증가수를 위한 상태 관리
 import { createAction, handleActions } from 'redux-actions';
 
 const WORLD_DECIDECNT = 'worldValue/WORLD_DECIDECNT';

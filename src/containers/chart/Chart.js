@@ -1,3 +1,5 @@
+// 국내 일별 chart.js
+
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
@@ -7,6 +9,7 @@ import '../../fonts/fonts.scss';
 import { ChartDay } from '../../middleware/ChartDateFunc';
 
 function Chart() {
+  // 일별 값들 selector로 가져온 후 데이터 표시
   const first = useSelector((state) => state.date.first);
   const second = useSelector((state) => state.date.second);
   const third = useSelector((state) => state.date.third);

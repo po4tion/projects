@@ -1,3 +1,4 @@
+// 다크모드 설정을 위한 상태관리
 import { createAction, handleActions } from 'redux-actions';
 
 const CHANGE_TYPE_SUN = 'bgColor/CHANGE_TYPE_SUN';
