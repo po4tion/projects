@@ -50,7 +50,7 @@ function WorldBlock() {
 
   return (
     <>
-      <MainDetailCustom>지역별(시, 도)</MainDetailCustom>
+      <MainDetailCustom>국가별</MainDetailCustom>
       <CustomLine />
       <CustomLine02 />
       <LocalChartBlock>

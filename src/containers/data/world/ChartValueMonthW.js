@@ -24,15 +24,32 @@ const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
 // 날짜값을 배열로 받아온다.
 const date = ChartMonthFunc();
+const result = new Date().getHours();
 
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[0]}&endCreateDt=${date[0]}`;
-const covidUrl2 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[1]}&endCreateDt=${date[1]}`;
-const covidUrl3 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[2]}&endCreateDt=${date[2]}`;
-const covidUrl4 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[3]}&endCreateDt=${date[3]}`;
-const covidUrl5 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[4]}&endCreateDt=${date[4]}`;
-const covidUrl6 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[5]}&endCreateDt=${date[5]}`;
-const covidUrl7 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[6]}&endCreateDt=${date[6]}`;
-const covidUrl8 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${date[7]}&endCreateDt=${date[7]}`;
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[0] - 1 : date[0]
+}&endCreateDt=${result < 10 ? date[0] - 1 : date[0]}`;
+const covidUrl2 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[1] - 1 : date[1]
+}&endCreateDt=${result < 10 ? date[1] - 1 : date[1]}`;
+const covidUrl3 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[2] - 1 : date[2]
+}&endCreateDt=${result < 10 ? date[2] - 1 : date[2]}`;
+const covidUrl4 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[3] - 1 : date[3]
+}&endCreateDt=${result < 10 ? date[3] - 1 : date[3]}`;
+const covidUrl5 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[4] - 1 : date[4]
+}&endCreateDt=${result < 10 ? date[4] - 1 : date[4]}`;
+const covidUrl6 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[5] - 1 : date[5]
+}&endCreateDt=${result < 10 ? date[5] - 1 : date[5]}`;
+const covidUrl7 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[6] - 1 : date[6]
+}&endCreateDt=${result < 10 ? date[6] - 1 : date[6]}`;
+const covidUrl8 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
+  result < 10 ? date[7] - 1 : date[7]
+}&endCreateDt=${result < 10 ? date[7] - 1 : date[7]}`;
 
 function ChartValueMonth() {
   const dispatch = useDispatch();

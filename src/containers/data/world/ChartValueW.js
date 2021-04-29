@@ -24,16 +24,33 @@ const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
 // Date value, 날짜 값을 배열로 받아온다
 const dateArray = ChartValueWFunc();
+const result = new Date().getHours();
 
 // API URL
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[0]}&endCreateDt=${dateArray[0]}`;
-const covidUrl2 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[1]}&endCreateDt=${dateArray[1]}`;
-const covidUrl3 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[2]}&endCreateDt=${dateArray[2]}`;
-const covidUrl4 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[3]}&endCreateDt=${dateArray[3]}`;
-const covidUrl5 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[4]}&endCreateDt=${dateArray[4]}`;
-const covidUrl6 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[5]}&endCreateDt=${dateArray[5]}`;
-const covidUrl7 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[6]}&endCreateDt=${dateArray[6]}`;
-const covidUrl8 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${dateArray[7]}&endCreateDt=${dateArray[7]}`;
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[0] - 1 : dateArray[0]
+}&endCreateDt=${result < 10 ? dateArray[0] - 1 : dateArray[0]}`;
+const covidUrl2 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[1] - 1 : dateArray[1]
+}&endCreateDt=${result < 10 ? dateArray[1] - 1 : dateArray[1]}`;
+const covidUrl3 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[2] - 1 : dateArray[2]
+}&endCreateDt=${result < 10 ? dateArray[2] - 1 : dateArray[2]}`;
+const covidUrl4 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[3] - 1 : dateArray[3]
+}&endCreateDt=${result < 10 ? dateArray[3] - 1 : dateArray[3]}`;
+const covidUrl5 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[4] - 1 : dateArray[4]
+}&endCreateDt=${result < 10 ? dateArray[4] - 1 : dateArray[4]}`;
+const covidUrl6 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[5] - 1 : dateArray[5]
+}&endCreateDt=${result < 10 ? dateArray[5] - 1 : dateArray[5]}`;
+const covidUrl7 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[6] - 1 : dateArray[6]
+}&endCreateDt=${result < 10 ? dateArray[6] - 1 : dateArray[6]}`;
+const covidUrl8 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  result < 10 ? dateArray[7] - 1 : dateArray[7]
+}&endCreateDt=${result < 10 ? dateArray[7] - 1 : dateArray[7]}`;
 
 function ChartValue() {
   const dispatch = useDispatch();

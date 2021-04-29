@@ -23,10 +23,11 @@ const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
 const result = new Date();
 const date = ChartDateFunc(result);
+const time = result.getHours();
 
 const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
-  date - 6
-}&endCreateDt=${date}`;
+  time < 10 ? date - 7 : date - 6
+}&endCreateDt=${time < 10 ? date - 1 : date}`;
 
 function ChartValue() {
   const dispatch = useDispatch();

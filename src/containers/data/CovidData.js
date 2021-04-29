@@ -15,12 +15,13 @@ const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
 // Calculate Date
 const result = new Date();
+const time = result.getHours();
 const date = ChartDateFunc(result);
 
 // Get data.go.kr URL
 const covidUrl = `/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
-  date - 1
-}&endCreateDt=${date}`;
+  time < 10 ? date - 2 : date - 1
+}&endCreateDt=${time < 10 ? date - 1 : date}`;
 
 function CovidData() {
   const dispatch = useDispatch();

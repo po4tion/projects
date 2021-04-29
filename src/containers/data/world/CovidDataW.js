@@ -26,14 +26,17 @@ const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
 // Calc Date
 const result = new Date();
+const time = result.getHours();
 const date = ChartDateFunc(result);
 
 // Get data.go.kr URL
-const covidUrl = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${date}&endCreateDt=${date}`;
+const covidUrl = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
+  time < 10 ? date - 1 : date
+}&endCreateDt=${time < 10 ? date - 1 : date}`;
 
 const covidUrl2 = `/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${API_KEY}&startCreateDt=${
-  date - 1
-}&endCreateDt=${date - 1}`;
+  time < 10 ? date - 2 : date - 1
+}&endCreateDt=${time < 10 ? date - 2 : date - 1}`;
 
 function CovidDataW() {
   const dispatch = useDispatch();

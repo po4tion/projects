@@ -13,12 +13,13 @@ dotenv.config();
 
 // 받아오는 date 값의 형태는 ex)20210422
 const date = ChartDateFunc(new Date());
+const result = new Date().getHours();
 
 const API_KEY = process.env.REACT_APP_SERVICE_KEY;
 
 const covidUrl = `/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${API_KEY}&pageNo=1&numOfRows=10&startCreateDt=${
-  date - 1
-}&endCreateDt=${date}`;
+  result < 10 ? date - 2 : date - 1
+}&endCreateDt=${result < 10 ? date - 1 : date}`;
 
 function LocalCovidData() {
   const dispatch = useDispatch();
