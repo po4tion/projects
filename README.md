@@ -23,10 +23,6 @@
 - 사용자의 눈의 피로를 줄이기 위한 다크모드 제공
 - 국내 지역별, 세계 나라별 확잔지/사망자 정보 제공
 
-## Getting Started
-
-- yarn install
-- yarn start
 
 ## Overview
 
