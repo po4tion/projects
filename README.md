@@ -10,10 +10,9 @@
 ![6](https://img.shields.io/badge/styled--components-5.2.1-green)
 ![7](https://img.shields.io/badge/-Atomic--Pattern-green)
 
-## Latest Release (2021/04/19)
+## Latest Release (2021/04/30)
 
-- 상단 확진자 차트, 미디어 쿼리 적용
-- 하단 지역 차트, 미디어 쿼리 적용
+- API 데이터 업데이트 간극 0시 ~ 10시 사이 데이터 missing 해결
 
 ## About covid19-app(Covid Data)
 
