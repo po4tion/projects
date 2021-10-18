@@ -1,11 +1,13 @@
 # modules & package
 node_modules
-.package-lock.json
-.yarn.lock
+package-lock.json
+yarn.lock
 
-# prettier & cSpell
+# prettier & cSpell & eslint
 cspell.json
+.prettierrc.json
 .prettierignore
+.eslintrc.json
 
 # next
 .next
