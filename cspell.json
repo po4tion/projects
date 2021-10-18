@@ -3,7 +3,10 @@
 	"ignorePaths": [],
 	"dictionaryDefinitions": [],
 	"dictionaries": [],
-	"words": ["Parens"],
+	"words": [
+		"devblog",
+		"Parens"
+	],
 	"ignoreWords": [],
 	"import": []
 }
