@@ -4,9 +4,9 @@ node_modules
 .yarn.lock
 
 # prettier & cSpell
-.cspell.json
+cspell.json
 .prettierignore
 
 # next
 .next
-.next.config.js
+next.config.js
