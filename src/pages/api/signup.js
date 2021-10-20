@@ -19,34 +19,35 @@ export default function handler(req, res) {
 							res.status(400).json({ error: '이메일이 이미 존재합니다' });
 							return;
 						}
+					});
 
-						// 등록되지 않은 유저라면
-						const username = nanoid(10);
-						const profile = `${process.env.DEV_API_URL}/profile/${username}`;
-						const createUser = new User({
-							username,
-							name,
-							email,
-							password,
-							profile,
-						});
+					// 등록되지 않은 유저라면
+					const username = nanoid(10);
+					const profile = `${process.env.DEV_API_URL}/profile/${username}`;
+					const createUser = new User({
+						username,
+						name,
+						email,
+						profile,
+					});
 
-						createUser.save((err, _) => {
-							if (err) {
-								res.status(400).json({ msg: 'createUser.save 실패' });
-								return;
-							}
+					await createUser.setPwd(password);
 
-							res.status(201).json({ msg: '가입해주셔서 감사합니다!' });
-						});
+					await createUser.save((err, _) => {
+						if (err) {
+							res.status(400).json({ error: '사용자 정보 저장 실패' });
+							return;
+						}
+
+						res.status(201).json({ success: '가입해주셔서 감사합니다!' });
 					});
 				} catch (error) {
-					res.status(400).json({ success: false });
+					res.status(400).json({ success: error });
 					return;
 				}
 				break;
 			default:
-				res.status(400).json({ success: false });
+				res.status(400).json({ error: 'request method를 확인해주세요' });
 				break;
 		}
 	});
