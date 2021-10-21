@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const UserSchema = new mongoose.Schema(
 	{
@@ -63,6 +64,18 @@ UserSchema.methods.matchPwd = async function (pwd) {
 	const result = await bcrypt.compare(pwd, this.password);
 
 	return result;
+};
+
+UserSchema.methods.generateToken = function () {
+	const payload = {
+		_id: this._id.toString(),
+	};
+	const expire = {
+		expiresIn: process.env.EXPIRE_IN,
+	};
+	const token = jwt.sign(payload, process.env.JWT_SECRET, expire);
+
+	return token;
 };
 
 // nextjs는 usermodel을 사용할 때마다 새로운 모델을 만드므로 그것을 방지하기 위해
