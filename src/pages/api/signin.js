@@ -26,6 +26,7 @@ export default function handler(req, res) {
 						return;
 					}
 
+					// 토큰 발급 후 쿠키에 access token 저장
 					const token = await findUser.generateToken();
 
 					await res.setHeader(
@@ -36,7 +37,18 @@ export default function handler(req, res) {
 						})
 					);
 
-					res.status(201).json({ success: '로그인 성공!' });
+					const { _id, username, name, email: _email, role } = findUser;
+
+					res.status(201).json({
+						token,
+						data: {
+							_id,
+							username,
+							name,
+							email: _email,
+							role,
+						},
+					});
 				} catch (error) {
 					res.status(400).json({ success: error });
 					return;
