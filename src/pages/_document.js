@@ -1,19 +1,13 @@
 import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
-import theme from 'view/theme';
-import createEmotionCache from 'view/createEmotionCache';
+import { theme, createEmotionCache } from 'view';
 
 export default class MyDocument extends Document {
 	render() {
 		return (
 			<Html lang="ko">
 				<Head>
-					<meta charSet="UTF-8" />
-					<meta
-						name="viewport"
-						content="width=device-width, initial-scale= 1.0"
-					/>
 					<meta name="theme-color" content={theme.palette.primary.main} />
 				</Head>
 				<body>

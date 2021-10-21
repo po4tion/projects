@@ -1,5 +1,5 @@
 import User from 'models/User';
-import dbConnect from 'lib/dbConnect';
+import { dbConnect } from 'lib';
 import cookie from 'cookie';
 
 export default function handler(req, res) {
@@ -50,7 +50,7 @@ export default function handler(req, res) {
 						},
 					});
 				} catch (error) {
-					res.status(400).json({ success: error });
+					res.status(400).json({ error: error });
 					return;
 				}
 				break;

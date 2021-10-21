@@ -1,4 +1,4 @@
-import Layout from 'components/Layout';
+import { Layout } from 'components';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
