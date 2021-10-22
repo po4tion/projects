@@ -16,6 +16,7 @@ function Header() {
 			>
 				<Typography
 					align="center"
+					component="h2"
 					noWrap
 					variant="h4"
 					sx={{ fontWeight: 'bold' }}

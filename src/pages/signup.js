@@ -1,4 +1,4 @@
-function signup() {
+function Signup() {
 	return (
 		<>
 			<p>signup 페이지</p>
@@ -6,4 +6,4 @@ function signup() {
 	);
 }
 
-export default signup;
+export default Signup;
