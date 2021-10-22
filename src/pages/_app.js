@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import { theme, createEmotionCache } from 'view';
+import { Layout } from 'components';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -18,12 +19,13 @@ export default function MyApp(props) {
 					name="viewport"
 					content="width=device-width, initial-scale= 1.0"
 				/>
-				<title>My page</title>
+				<title>{process.env.APP_NAME}</title>
 			</Head>
 			<ThemeProvider theme={theme}>
-				{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-				<CssBaseline />
-				<Component {...pageProps} />
+				<Layout>
+					<CssBaseline />
+					<Component {...pageProps} />
+				</Layout>
 			</ThemeProvider>
 		</CacheProvider>
 	);
