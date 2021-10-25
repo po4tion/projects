@@ -7,3 +7,10 @@ export const signupAxios = user => {
 		.then(res => res.data)
 		.catch(err => err.response.data);
 };
+
+export const signinAxios = user => {
+	return axios
+		.post(`${API}/auth/signin`, user)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+};
