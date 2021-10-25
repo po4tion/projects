@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupValidation } from '/lib';
@@ -14,7 +14,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+import { signupAxios } from '/actions/auth';
+
 function Signup() {
+	const [err, setErr] = useState('');
 	const {
 		register,
 		handleSubmit,
@@ -25,7 +28,12 @@ function Signup() {
 	});
 
 	const onSubmit = data => {
-		console.log(data);
+		const { name, email, password } = data;
+
+		signupAxios({ name, email, password }).then(value => {
+			if (value.error) setErr(value.error);
+			else setErr('');
+		});
 	};
 
 	return (
@@ -69,10 +77,11 @@ function Signup() {
 								required
 								type="email"
 								{...register('email')}
-								error={errors.email ? true : false}
+								error={errors.email || err ? true : false}
 							/>
 							<Typography variant="inherit" color="error">
 								{errors.email?.message}
+								{err}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
