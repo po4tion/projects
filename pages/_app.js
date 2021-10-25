@@ -1,10 +1,25 @@
 import * as React from 'react';
+import NProgress from 'nprogress';
 import Head from 'next/head';
+import Router from 'next/router';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
-import { theme, createEmotionCache } from 'view';
-import { Layout } from 'components';
+import { theme, createEmotionCache } from '/view';
+import { Layout } from '/components';
+import '/public/css/nprogress.css';
+
+// NProgress settings
+Router.events.on('routeChangeStart', url => {
+	console.log(url);
+	NProgress.start();
+});
+Router.events.on('routeChangeComplete', url => {
+	NProgress.done();
+});
+Router.events.on('routeChangeError', url => {
+	NProgress.done();
+});
 
 const clientSideEmotionCache = createEmotionCache();
 

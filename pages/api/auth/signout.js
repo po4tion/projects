@@ -1,4 +1,4 @@
-import { dbConnect } from 'lib';
+import { dbConnect } from '/lib';
 import cookie from 'cookie';
 
 export default function handler(req, res) {

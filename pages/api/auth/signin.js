@@ -1,5 +1,5 @@
-import User from 'models/User';
-import { dbConnect } from 'lib';
+import User from '/models/User';
+import { dbConnect } from '/lib';
 import cookie from 'cookie';
 
 export default function handler(req, res) {

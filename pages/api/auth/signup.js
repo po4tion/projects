@@ -1,5 +1,5 @@
-import User from 'models/User';
-import { dbConnect } from 'lib';
+import User from '/models/User';
+import { dbConnect } from '/lib';
 import { nanoid } from 'nanoid';
 
 export default function handler(req, res) {

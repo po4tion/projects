@@ -23,7 +23,7 @@ function Header() {
 				>
 					{process.env.APP_NAME}
 				</Typography>
-				<Link href="/signin">
+				<Link href="/signin" passHref>
 					<Button color="primary" variant="contained" size="medium">
 						로그인
 					</Button>
