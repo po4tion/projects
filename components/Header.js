@@ -1,4 +1,4 @@
-import Link from 'next/Link';
+import Link from 'next/link';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -14,15 +14,17 @@ function Header() {
 					justifyContent: 'space-between',
 				}}
 			>
-				<Typography
-					align="center"
-					component="h2"
-					noWrap
-					variant="h4"
-					sx={{ fontWeight: 'bold' }}
-				>
-					{process.env.APP_NAME}
-				</Typography>
+				<Link href="/" passHref>
+					<Typography
+						align="center"
+						component="h2"
+						noWrap
+						variant="h4"
+						sx={{ userSelect: 'none', fontWeight: 'bold' }}
+					>
+						{process.env.APP_NAME}
+					</Typography>
+				</Link>
 				<Link href="/signin" passHref>
 					<Button color="primary" variant="contained" size="medium">
 						로그인

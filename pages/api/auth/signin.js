@@ -1,6 +1,5 @@
 import User from '/models/User';
 import { dbConnect } from '/lib';
-import cookie from 'cookie';
 
 export default function handler(req, res) {
 	return new Promise(async () => {
@@ -22,20 +21,12 @@ export default function handler(req, res) {
 					const matchPassword = await findUser.matchPwd(password);
 
 					if (!matchPassword) {
-						res.status(400).json({ error: '비밀번호가 일치하지 않습니다' });
+						res.status(400).json({ pwdError: '비밀번호가 일치하지 않습니다' });
 						return;
 					}
 
-					// 토큰 발급 후 쿠키에 access token 저장
+					// 토큰 발급
 					const token = await findUser.generateToken();
-
-					await res.setHeader(
-						'Set-Cookie',
-						cookie.serialize('access_token', token, {
-							httpOnly: true,
-							maxAge: 1000 * 60 * 60 * 24, // 1day
-						})
-					);
 
 					const { _id, username, name, email: _email, role } = findUser;
 

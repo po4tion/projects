@@ -27,21 +27,23 @@ export default function MyApp(props) {
 	const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
 	return (
-		<CacheProvider value={emotionCache}>
-			<Head>
-				<meta charSet="UTF-8" />
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale= 1.0"
-				/>
-				<title>{process.env.APP_NAME}</title>
-			</Head>
-			<ThemeProvider theme={theme}>
-				<Layout>
-					<CssBaseline />
-					<Component {...pageProps} />
-				</Layout>
-			</ThemeProvider>
-		</CacheProvider>
+		<>
+			<CacheProvider value={emotionCache}>
+				<Head>
+					<meta charSet="UTF-8" />
+					<meta
+						name="viewport"
+						content="width=device-width, initial-scale= 1.0"
+					/>
+					<title>{process.env.APP_NAME}</title>
+				</Head>
+				<ThemeProvider theme={theme}>
+					<Layout>
+						<CssBaseline />
+						<Component {...pageProps} />
+					</Layout>
+				</ThemeProvider>
+			</CacheProvider>
+		</>
 	);
 }

@@ -1,5 +1,14 @@
+import TextField from '@mui/material/TextField';
+
 function HomePage() {
-	return <p>인덱스페이지</p>;
+	const onChange = () => {
+		console.log('하이');
+	};
+	return (
+		<>
+			<TextField onChange={onChange}>테스트</TextField>
+		</>
+	);
 }
 
 export default HomePage;

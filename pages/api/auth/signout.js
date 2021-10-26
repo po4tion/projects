@@ -1,5 +1,4 @@
 import { dbConnect } from '/lib';
-import cookie from 'cookie';
 
 export default function handler(req, res) {
 	return new Promise(async () => {
@@ -11,13 +10,7 @@ export default function handler(req, res) {
 			case 'POST':
 				try {
 					// access token 값을 제거
-					await res.setHeader(
-						'Set-Cookie',
-						cookie.serialize('access_token', '', {
-							httpOnly: true,
-							expires: new Date(0),
-						})
-					);
+					res.clearCookie('access-token');
 
 					res.status(201).json({ success: '로그아웃 되었습니다' });
 				} catch (error) {

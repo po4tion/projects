@@ -7,7 +7,13 @@ function Footer({ title, description }) {
 		<>
 			<Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
 				<Container maxWidth="lg">
-					<Typography component="h2" variant="h6" align="center" gutterBottom>
+					<Typography
+						component="h2"
+						variant="h6"
+						align="center"
+						gutterBottom
+						sx={{ userSelect: 'none' }}
+					>
 						{title}
 					</Typography>
 					<Typography
@@ -15,6 +21,7 @@ function Footer({ title, description }) {
 						align="center"
 						color="text.secondary"
 						component="p"
+						sx={{ userSelect: 'none' }}
 					>
 						{description}
 					</Typography>
@@ -23,6 +30,7 @@ function Footer({ title, description }) {
 						variant="body2"
 						color="text.secondary"
 						align="center"
+						sx={{ userSelect: 'none' }}
 					>
 						{'Copyright © '}
 						DEVBLOG&nbsp;
