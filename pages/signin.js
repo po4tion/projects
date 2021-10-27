@@ -16,6 +16,10 @@ import Link from '@mui/material/Link';
 import NextLink from 'next/link';
 
 function Signin() {
+	useEffect(() => {
+		isAuth() && Router.push('/');
+	}, []);
+
 	const [err, setErr] = useState({
 		userErr: '',
 		pwdErr: '',

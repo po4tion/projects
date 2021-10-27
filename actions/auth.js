@@ -16,6 +16,17 @@ export const signinAxios = user => {
 		.catch(err => err.response.data);
 };
 
+export const signoutAxios = next => {
+	removeCookie('access-token');
+	removeLocalStorage('user');
+	next();
+
+	return axios
+		.get(`${API}/auth/signout`)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+};
+
 export const setCookie = (key, value) => {
 	if (process.browser) {
 		cookie.set(key, value, {
@@ -30,9 +41,23 @@ export const getCookie = key => {
 	}
 };
 
+export const removeCookie = key => {
+	if (process.browser) {
+		cookie.remove(key, {
+			expires: 1,
+		});
+	}
+};
+
 export const setLocalStorage = (key, data) => {
 	if (process.browser) {
 		localStorage.setItem(key, JSON.stringify(data));
+	}
+};
+
+export const removeLocalStorage = key => {
+	if (process.browser) {
+		localStorage.removeItem(key);
 	}
 };
 

@@ -7,7 +7,7 @@ export default function handler(req, res) {
 		await dbConnect();
 
 		switch (method) {
-			case 'POST':
+			case 'GET':
 				try {
 					// access token 값을 제거
 					res.clearCookie('access-token');

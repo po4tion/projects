@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupValidation } from '/lib';
-import { signupAxios } from '/actions/auth';
+import { signupAxios, isAuth } from '/actions/auth';
+import Router from 'next/router';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,6 +18,10 @@ import NextLink from 'next/link';
 import Link from '@mui/material/Link';
 
 function Signup() {
+	useEffect(() => {
+		isAuth() && Router.push('/');
+	}, []);
+
 	const [err, setErr] = useState('');
 	const {
 		register,
