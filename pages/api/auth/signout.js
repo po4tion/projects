@@ -9,17 +9,13 @@ export default function handler(req, res) {
 		switch (method) {
 			case 'GET':
 				try {
-					// access token 값을 제거
-					res.clearCookie('access-token');
-
-					res.status(201).json({ success: '로그아웃 되었습니다' });
+					return res.status(201).json({ success: '로그아웃 되었습니다' });
 				} catch (error) {
-					res.status(400).json({ success: error });
-					return;
+					return res.status(400).json({ success: error });
 				}
 				break;
 			default:
-				res.status(400).json({ error: 'request method를 확인해주세요' });
+				return res.status(400).json({ error: 'request method를 확인해주세요' });
 				break;
 		}
 	});

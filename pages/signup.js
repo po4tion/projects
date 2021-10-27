@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { signupValidation } from '/lib';
 import { signupAxios, isAuth } from '/actions/auth';
 import Router from 'next/router';
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import NextLink from 'next/link';
 import Link from '@mui/material/Link';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 function Signup() {
 	useEffect(() => {
@@ -24,10 +27,12 @@ function Signup() {
 
 	const [err, setErr] = useState('');
 	const {
+		control,
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
+		mode: 'onSubmit',
 		resolver: yupResolver(signupValidation),
 	});
 
@@ -35,8 +40,16 @@ function Signup() {
 		const { name, email, password } = data;
 
 		signupAxios({ name, email, password }).then(value => {
-			if (value.error) setErr(value.error);
-			else setErr('');
+			if (value.error) {
+				setErr(value.error);
+
+				setTimeout(() => {
+					setErr('');
+				}, 3000);
+			} else {
+				setErr('');
+				Router.push('/signin');
+			}
 		});
 	};
 
@@ -60,6 +73,7 @@ function Signup() {
 							<Grid item xs={12}>
 								<TextField
 									autoFocus
+									defaultValue=""
 									fullWidth
 									id="name"
 									label="이름 입력"
@@ -85,8 +99,7 @@ function Signup() {
 									error={errors.email || err ? true : false}
 								/>
 								<Typography variant="inherit" color="error">
-									{errors.email?.message}
-									{err}
+									{errors.email?.message || err}
 								</Typography>
 							</Grid>
 							<Grid item xs={12}>

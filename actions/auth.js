@@ -2,29 +2,35 @@ import axios from 'axios';
 import { API } from '/config';
 import cookie from 'js-cookie';
 
-export const signupAxios = user => {
-	return axios
+export const signupAxios = async user => {
+	const result = await axios
 		.post(`${API}/auth/signup`, user)
 		.then(res => res.data)
 		.catch(err => err.response.data);
+
+	return result;
 };
 
-export const signinAxios = user => {
-	return axios
+export const signinAxios = async user => {
+	const result = await axios
 		.post(`${API}/auth/signin`, user)
 		.then(res => res.data)
 		.catch(err => err.response.data);
+
+	return result;
 };
 
-export const signoutAxios = next => {
+export const signoutAxios = async next => {
 	removeCookie('access-token');
 	removeLocalStorage('user');
 	next();
 
-	return axios
+	const result = await axios
 		.get(`${API}/auth/signout`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
+
+	return result;
 };
 
 export const setCookie = (key, value) => {

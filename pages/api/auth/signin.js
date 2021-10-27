@@ -14,15 +14,15 @@ export default function handler(req, res) {
 					const findUser = await User.findOne({ email });
 
 					if (!findUser) {
-						res.status(400).json({ error: '등록된 사용자가 아닙니다' });
-						return;
+						return res.status(400).json({ error: '등록된 사용자가 아닙니다' });
 					}
 
 					const matchPassword = await findUser.matchPwd(password);
 
 					if (!matchPassword) {
-						res.status(400).json({ pwdError: '비밀번호가 일치하지 않습니다' });
-						return;
+						return res
+							.status(400)
+							.json({ pwdError: '비밀번호가 일치하지 않습니다' });
 					}
 
 					// 토큰 발급
@@ -41,12 +41,11 @@ export default function handler(req, res) {
 						},
 					});
 				} catch (error) {
-					res.status(400).json({ error: error });
-					return;
+					return res.status(400).json({ error: error });
 				}
 				break;
 			default:
-				res.status(400).json({ error: 'request method를 확인해주세요' });
+				return res.status(400).json({ error: 'request method를 확인해주세요' });
 				break;
 		}
 	});

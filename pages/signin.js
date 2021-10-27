@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useForm, Controller, useWatch } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { signinValidation } from '/lib';
 import { signinAxios, authenticate, isAuth } from '/actions/auth';
 import Router from 'next/router';
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
+import isLength from 'validator/lib/isLength';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,48 +14,78 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import NextLink from 'next/link';
+import { getTypeByValue } from '@mui/utils/integerPropType';
 
 function Signin() {
 	useEffect(() => {
 		isAuth() && Router.push('/');
 	}, []);
 
-	const [err, setErr] = useState({
-		userErr: '',
-		pwdErr: '',
+	const [info, setInfo] = useState({
+		email: '',
+		password: '',
 	});
 
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { errors },
-	} = useForm({
-		resolver: yupResolver(signinValidation),
+	const [state, setState] = useState({
+		emailState: false,
+		pwdState: false,
 	});
 
-	const onSubmit = data => {
-		const { email, password } = data;
+	// signin API[POST]
+	const handleSubmit = _ => {
+		const { emailState, pwdState } = state;
+		const { email, password } = info;
 
-		signinAxios({ email, password }).then(value => {
-			if (value.error) {
-				setErr({ userErr: value.error, pwdErr: '' });
-			} else if (value.pwdError) {
-				setErr({ userErr: '', pwdErr: value.pwdError });
-			} else {
-				setErr({ userErr: '', pwdErr: '' });
-			}
-
-			authenticate(value, () => {
-				if (isAuth() && isAuth().role === 1) Router.push('/admin');
-				else if (isAuth() && isAuth().role === 0) Router.push('/user');
-				else Router.push('/');
+		if (emailState === '' && pwdState === '') {
+			signinAxios({ email, password }).then(value => {
+				if (value.error) {
+					setState({ ...state, emailState: value.error });
+				} else if (value.pwdError) {
+					setState({ ...state, pwdState: value.pwdError });
+				} else {
+					authenticate(value, () => {
+						if (isAuth() && isAuth().role === 1) {
+							Router.push('/admin');
+						} else if (isAuth() && isAuth().role === 0) {
+							Router.push('/user');
+						} else {
+							Router.push('/');
+						}
+					});
+				}
 			});
-		});
+		}
 	};
 
-	const onChange = () => {
-		setErr({ ...err, userErr: '' });
+	// 이메일 유효성 검사
+	const handleEmail = e => {
+		const { value } = e.target;
+
+		if (isEmpty(value)) {
+			setState({ ...state, emailState: '이메일을 입력해주세요' });
+		} else if (!isEmail(value)) {
+			setState({ ...state, emailState: '이메일 양식에 맞게 입력해주세요' });
+		} else {
+			setInfo({ ...info, email: value });
+			setState({ ...state, emailState: '' });
+		}
+	};
+
+	// 비밀번호 유효성 검사
+	const handlePassword = e => {
+		const { value } = e.target;
+
+		if (isEmpty(value)) {
+			setState({ ...state, pwdState: '비밀번호를 입력해주세요' });
+		} else if (isLength(value, { min: 8, max: 32 })) {
+			setInfo({ ...info, password: value });
+			setState({ ...state, pwdState: '' });
+		} else {
+			setState({
+				...state,
+				pwdState: '비밀번호는 8자 이상, 32자 이하로 입력해주세요',
+			});
+		}
 	};
 
 	return (
@@ -73,51 +103,53 @@ function Signin() {
 					<Typography component="h1" variant="h5">
 						로그인
 					</Typography>
-					<Box component="form" novalidate sx={{ mt: 1 }}>
+					<Box
+						component="form"
+						onSubmit={handleSubmit}
+						noValidate
+						sx={{ mt: 1 }}
+					>
 						<Grid container>
 							<Grid item xs={12}>
 								<TextField
-									autoComplete="email"
-									autoFocus
+									margin="normal"
+									required
 									fullWidth
 									id="email"
 									label="이메일 입력"
 									name="email"
-									margin="normal"
-									required
-									type="email"
-									{...register('email')}
-									onChange={onChange}
-									error={errors.email || err.userErr ? true : false}
+									autoComplete="email"
+									autoFocus
+									onChange={handleEmail}
 								/>
-								<Typography variant="inherit" color="error">
-									{errors.email?.message || err.userErr}
-								</Typography>
+								{
+									<Typography variant="inherit" color="error">
+										{state.emailState}
+									</Typography>
+								}
 							</Grid>
 							<Grid item xs={12}>
-								{' '}
 								<TextField
-									autoComplete="current-password"
-									fullWidth
-									id="password"
-									label="비밀번호 입력"
-									name="password"
 									margin="normal"
 									required
+									fullWidth
+									name="password"
+									label="비밀번호 입력"
 									type="password"
-									{...register('password')}
-									error={errors.password || err.pwdErr ? true : false}
+									id="password"
+									autoComplete="current-password"
+									onChange={handlePassword}
 								/>
-								<Typography variant="inherit" color="error">
-									{errors.password?.message}
-									{err.pwdErr}
-								</Typography>
+								{
+									<Typography variant="inherit" color="error">
+										{state.pwdState}
+									</Typography>
+								}
 							</Grid>
 						</Grid>
 						<Button
-							color="primary"
+							onClick={handleSubmit}
 							fullWidth
-							onClick={handleSubmit(onSubmit)}
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
 						>
