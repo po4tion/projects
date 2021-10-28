@@ -14,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import NextLink from 'next/link';
-import { getTypeByValue } from '@mui/utils/integerPropType';
 
 function Signin() {
 	useEffect(() => {
@@ -27,8 +26,8 @@ function Signin() {
 	});
 
 	const [state, setState] = useState({
-		emailState: false,
-		pwdState: false,
+		emailState: '',
+		pwdState: '',
 	});
 
 	// signin API[POST]
@@ -36,7 +35,22 @@ function Signin() {
 		const { emailState, pwdState } = state;
 		const { email, password } = info;
 
-		if (emailState === '' && pwdState === '') {
+		if (isEmpty(email) && isEmpty(password)) {
+			setState({
+				emailState: '이메일을 입력해주세요',
+				pwdState: '비밀번호를 입력해주세요',
+			});
+		} else if (isEmpty(email)) {
+			setState({
+				...state,
+				emailState: '이메일을 입력해주세요',
+			});
+		} else if (isEmpty(password)) {
+			setState({
+				...state,
+				pwdState: '비밀번호를 입력해주세요',
+			});
+		} else if (emailState === '' && pwdState === '') {
 			signinAxios({ email, password }).then(value => {
 				if (value.error) {
 					setState({ ...state, emailState: value.error });
@@ -67,7 +81,7 @@ function Signin() {
 			setState({ ...state, emailState: '이메일 양식에 맞게 입력해주세요' });
 		} else {
 			setInfo({ ...info, email: value });
-			setState({ ...state, emailState: '' });
+			setState({ emailState: '', pwdState: '' });
 		}
 	};
 
@@ -121,6 +135,7 @@ function Signin() {
 									autoComplete="email"
 									autoFocus
 									onChange={handleEmail}
+									error={state.emailState ? true : false}
 								/>
 								{
 									<Typography variant="inherit" color="error">
@@ -139,6 +154,7 @@ function Signin() {
 									id="password"
 									autoComplete="current-password"
 									onChange={handlePassword}
+									error={state.pwdState ? true : false}
 								/>
 								{
 									<Typography variant="inherit" color="error">

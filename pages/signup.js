@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signupValidation } from '/lib';
+import { signupValidation } from '/lib/signupValidation';
 import { signupAxios, isAuth } from '/actions/auth';
 import Router from 'next/router';
 import isEmail from 'validator/lib/isEmail';
@@ -13,12 +13,10 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import NextLink from 'next/link';
 import Link from '@mui/material/Link';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 function Signup() {
 	useEffect(() => {
@@ -27,12 +25,11 @@ function Signup() {
 
 	const [err, setErr] = useState('');
 	const {
-		control,
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: 'onSubmit',
+		mode: 'onBlur',
 		resolver: yupResolver(signupValidation),
 	});
 
@@ -73,7 +70,7 @@ function Signup() {
 							<Grid item xs={12}>
 								<TextField
 									autoFocus
-									defaultValue=""
+									defaultValue="홍길동"
 									fullWidth
 									id="name"
 									label="이름 입력"
