@@ -18,7 +18,7 @@ export default function handler(req, res) {
 						// email을 조건으로 등록된 유저인지 확인한다
 						if (value) {
 							return res
-								.status(409)
+								.status(400)
 								.json({ error: '이메일이 이미 존재합니다' });
 						}
 

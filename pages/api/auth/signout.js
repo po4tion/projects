@@ -9,7 +9,7 @@ export default function handler(req, res) {
 		switch (method) {
 			case 'GET':
 				try {
-					return res.status(201).json({ success: '로그아웃 되었습니다' });
+					return res.status(200).json({ success: '로그아웃 되었습니다' });
 				} catch (error) {
 					return res.status(400).json({ success: error });
 				}
