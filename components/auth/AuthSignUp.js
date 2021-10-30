@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { signupValidation } from '/lib/signupValidation';
 import { signupAxios, isAuth } from '/actions/auth';
 import Router from 'next/router';
+import NextLink from 'next/link';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 
@@ -15,15 +16,19 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import NextLink from 'next/link';
 import Link from '@mui/material/Link';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Signup() {
+	// protect route
 	useEffect(() => {
 		isAuth() && Router.push('/');
 	}, []);
 
 	const [err, setErr] = useState('');
+	const [state, setState] = useState({
+		loading: false,
+	});
 	const {
 		register,
 		handleSubmit,
@@ -34,9 +39,13 @@ function Signup() {
 	});
 
 	const onSubmit = data => {
+		setState({ loading: true });
+
 		const { name, email, password } = data;
 
 		signupAxios({ name, email, password }).then(value => {
+			setState({ loading: false });
+
 			if (value.error) {
 				setErr(value.error);
 
@@ -67,6 +76,9 @@ function Signup() {
 					</Typography>
 					<Box component="form" novalidate sx={{ mt: 3 }}>
 						<Grid container spacing={2}>
+							<Grid item xs={12} sx={{ textAlign: 'center' }}>
+								{state.loading && <CircularProgress />}
+							</Grid>
 							<Grid item xs={12}>
 								<TextField
 									autoFocus

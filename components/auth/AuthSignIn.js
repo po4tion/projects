@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { signinAxios, authenticate, isAuth } from '/actions/auth';
 import Router from 'next/router';
+import NextLink from 'next/link';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import isLength from 'validator/lib/isLength';
@@ -13,7 +14,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-import NextLink from 'next/link';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function AuthSignIn() {
 	useEffect(() => {
@@ -28,10 +29,13 @@ function AuthSignIn() {
 	const [state, setState] = useState({
 		emailState: '',
 		pwdState: '',
+		loading: false,
 	});
 
 	// signin API[POST]
 	const handleSubmit = _ => {
+		setState({ ...state, loading: true });
+
 		const { emailState, pwdState } = state;
 		const { email, password } = info;
 
@@ -58,6 +62,8 @@ function AuthSignIn() {
 					setState({ ...state, pwdState: value.pwdError });
 				} else {
 					authenticate(value, () => {
+						setState({ ...state, loading: false });
+
 						if (isAuth() && isAuth().role === 1) {
 							Router.push('/admin');
 						} else if (isAuth() && isAuth().role === 0) {
@@ -124,6 +130,9 @@ function AuthSignIn() {
 						sx={{ mt: 1 }}
 					>
 						<Grid container>
+							<Grid item xs={12} sx={{ textAlign: 'center' }}>
+								{state.loading && <CircularProgress />}
+							</Grid>
 							<Grid item xs={12}>
 								<TextField
 									margin="normal"
