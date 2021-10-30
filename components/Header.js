@@ -5,6 +5,7 @@ import { signoutAxios, isAuth } from '/actions/auth';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 function Header() {
 	const onClick = () => signoutAxios(() => Router.replace('/signin'));
@@ -30,23 +31,40 @@ function Header() {
 						{process.env.APP_NAME}
 					</Typography>
 				</Link>
-				{!isAuth() && (
-					<Link href="/signin" passHref>
-						<Button color="primary" variant="contained" size="medium">
-							로그인
+				<Box>
+					{!isAuth() && (
+						<Link href="/signin" passHref>
+							<Button color="primary" variant="contained" size="medium">
+								로그인
+							</Button>
+						</Link>
+					)}
+					{isAuth() && isAuth().role === 1 && (
+						<Link href="/admin" passHref>
+							<Button color="primary" variant="contained" size="medium">
+								{`${isAuth().name}님`}
+							</Button>
+						</Link>
+					)}
+					{isAuth() && isAuth().role === 0 && (
+						<Link href="/user" passHref>
+							<Button color="primary" variant="contained" size="medium">
+								{`${isAuth().name}님`}
+							</Button>
+						</Link>
+					)}
+					{isAuth() && (
+						<Button
+							onClick={onClick}
+							color="primary"
+							variant="contained"
+							size="medium"
+							sx={{ ml: 0.5 }}
+						>
+							로그아웃
 						</Button>
-					</Link>
-				)}
-				{isAuth() && (
-					<Button
-						onClick={onClick}
-						color="primary"
-						variant="contained"
-						size="medium"
-					>
-						로그아웃
-					</Button>
-				)}
+					)}
+				</Box>
 			</Toolbar>
 		</>
 	);
