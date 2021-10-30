@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import CircularProgress from '@mui/material/CircularProgress';
+import { FlashOnTwoTone } from '@mui/icons-material';
 
 function AuthSignIn() {
 	useEffect(() => {
@@ -43,23 +44,34 @@ function AuthSignIn() {
 			setState({
 				emailState: '이메일을 입력해주세요',
 				pwdState: '비밀번호를 입력해주세요',
+				loading: false,
 			});
 		} else if (isEmpty(email)) {
 			setState({
 				...state,
 				emailState: '이메일을 입력해주세요',
+				loading: false,
 			});
 		} else if (isEmpty(password)) {
 			setState({
 				...state,
 				pwdState: '비밀번호를 입력해주세요',
+				loading: false,
 			});
 		} else if (emailState === '' && pwdState === '') {
 			signinAxios({ email, password }).then(value => {
 				if (value.error) {
-					setState({ ...state, emailState: value.error });
+					setState({
+						...state,
+						emailState: value.error,
+						loading: false,
+					});
 				} else if (value.pwdError) {
-					setState({ ...state, pwdState: value.pwdError });
+					setState({
+						...state,
+						pwdState: value.pwdError,
+						loading: false,
+					});
 				} else {
 					authenticate(value, () => {
 						setState({ ...state, loading: false });
@@ -74,6 +86,8 @@ function AuthSignIn() {
 					});
 				}
 			});
+		} else if (emailState !== '' || pwdState !== '') {
+			setState({ ...state, loading: false });
 		}
 	};
 
@@ -87,7 +101,7 @@ function AuthSignIn() {
 			setState({ ...state, emailState: '이메일 양식에 맞게 입력해주세요' });
 		} else {
 			setInfo({ ...info, email: value });
-			setState({ emailState: '', pwdState: '' });
+			setState({ ...state, emailState: '', pwdState: '' });
 		}
 	};
 
