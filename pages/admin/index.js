@@ -1,12 +1,11 @@
 import { ProtectAdminRoute } from '/components/auth';
+import { Main } from '/components/admin';
 
 function Admin() {
 	return (
-		<>
-			<ProtectAdminRoute>
-				<p>운영자 페이지</p>
-			</ProtectAdminRoute>
-		</>
+		<ProtectAdminRoute>
+			<Main />
+		</ProtectAdminRoute>
 	);
 }
 

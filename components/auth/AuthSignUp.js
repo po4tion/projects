@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupValidation } from '/lib/signupValidation';
-import { signupAxios, isAuth } from '/actions/auth';
+import { signupAxios, isAuth } from '/actions/handleAuth';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import isEmail from 'validator/lib/isEmail';

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { signinAxios, authenticate, isAuth } from '/actions/auth';
+import { signinAxios, authenticate, isAuth } from '/actions/handleAuth';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import isEmail from 'validator/lib/isEmail';
@@ -15,7 +15,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import CircularProgress from '@mui/material/CircularProgress';
-import { FlashOnTwoTone } from '@mui/icons-material';
 
 function AuthSignIn() {
 	useEffect(() => {
@@ -137,12 +136,7 @@ function AuthSignIn() {
 					<Typography component="h1" variant="h5">
 						로그인
 					</Typography>
-					<Box
-						component="form"
-						onSubmit={handleSubmit}
-						noValidate
-						sx={{ mt: 1 }}
-					>
+					<Box component="form" noValidate sx={{ width: '100%', mt: 1 }}>
 						<Grid container>
 							<Grid item xs={12} sx={{ textAlign: 'center' }}>
 								{state.loading && <CircularProgress />}

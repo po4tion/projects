@@ -39,7 +39,7 @@ export default function handler(req, res) {
 								return res.status(400).json({ error: errorHandler(err) });
 							}
 
-							return res.status(201).json({ data });
+							return res.status(201).json(data);
 						});
 					}
 				} catch (error) {
