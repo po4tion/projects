@@ -1,9 +1,9 @@
 /* 
-  1. 해당 카테고리의 정보를 가져온다
-	2. 해당 카테고리의 정보를 제거한다
+  1. 해당 태그의 정보를 가져온다
+  2. 해당 태그의 정보를 제거한다
 */
 
-import Category from '/models/Category';
+import Tag from '/models/Tag';
 import {
 	dbConnect,
 	errorHandler,
@@ -22,17 +22,15 @@ export default function handler(req, res) {
 				try {
 					const { slug } = req.query;
 
-					await Category.findOne({ slug: slug.toLowerCase() }).exec(
-						(err, category) => {
-							if (err) {
-								return res.status(400).json({
-									error: errorHandler(err),
-								});
-							}
-
-							return res.status(201).json(category);
+					await Tag.findOne({ slug: slug.toLowerCase() }).exec((err, tag) => {
+						if (err) {
+							return res.status(400).json({
+								error: errorHandler(err),
+							});
 						}
-					);
+
+						return res.status(201).json(tag);
+					});
 				} catch (error) {
 					return res.status(400).json({ error: '에러' });
 				}
@@ -52,7 +50,7 @@ export default function handler(req, res) {
 					if (auth) {
 						const { slug } = req.query;
 
-						await Category.findOneAndRemove({ slug: slug.toLowerCase() }).exec(
+						await Tag.findOneAndRemove({ slug: slug.toLowerCase() }).exec(
 							(err, data) => {
 								if (err) {
 									return res.status(400).json({
@@ -62,7 +60,7 @@ export default function handler(req, res) {
 
 								return res
 									.status(200)
-									.json({ success: '카테고리가 성공적으로 지워졌습니다' });
+									.json({ success: '태그가 성공적으로 지워졌습니다' });
 							}
 						);
 					}

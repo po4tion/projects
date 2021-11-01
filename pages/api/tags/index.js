@@ -1,8 +1,8 @@
 /* 
-  카테고리의 모든 리스트를 불러온다
+  태그의 모든 리스트를 불러온다
 */
 
-import Category from '/models/Category';
+import Tag from '/models/Tag';
 import { dbConnect, errorHandler } from '/lib';
 
 export default function handler(req, res) {
@@ -14,7 +14,7 @@ export default function handler(req, res) {
 		switch (method) {
 			case 'GET':
 				try {
-					await Category.find({}).exec((err, data) => {
+					await Tag.find({}).exec((err, data) => {
 						if (err) {
 							return res.status(400).json({ error: errorHandler(err) });
 						}

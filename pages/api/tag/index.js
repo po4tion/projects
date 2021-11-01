@@ -1,7 +1,7 @@
 /* 
-	새로운 카테고리를 추가한다
+	새로운 태그를 추가한다
 */
-import Category from '/models/Category';
+import Tag from '/models/Tag';
 import {
 	dbConnect,
 	tokenValidation,
@@ -32,9 +32,9 @@ export default function handler(req, res) {
 					if (auth) {
 						const { name } = req.body;
 						const slug = name.split(' ').join('-').toLowerCase();
-						const createCategory = new Category({ name, slug });
+						const createTag = new Tag({ name, slug });
 
-						await createCategory.save((err, data) => {
+						await createTag.save((err, data) => {
 							if (err) {
 								return res.status(400).json({ error: errorHandler(err) });
 							}
