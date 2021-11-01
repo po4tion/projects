@@ -1,4 +1,4 @@
-import { tokenValidation, authMiddleware, adminMiddleware } from '/lib';
+import { tokenValidation, authMiddleware } from '/lib';
 
 export default function handler(req, res) {
 	return new Promise(async () => {

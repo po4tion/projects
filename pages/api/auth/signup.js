@@ -1,7 +1,6 @@
 import User from '/models/User';
 import { dbConnect } from '/lib';
 import { nanoid } from 'nanoid';
-import { API } from '/config';
 
 export default function handler(req, res) {
 	return new Promise(async () => {
@@ -24,7 +23,7 @@ export default function handler(req, res) {
 
 						// 등록되지 않은 유저라면
 						const username = nanoid(10);
-						const profile = `${API}/profile/${username}`;
+						const profile = `${process.env.API}/profile/${username}`;
 						const createUser = new User({
 							username,
 							name,
