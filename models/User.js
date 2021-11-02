@@ -55,7 +55,7 @@ const UserSchema = new mongoose.Schema(
 
 // bcrypt를 사용한 암호화
 UserSchema.methods.setPwd = async function (pwd) {
-	const hash = await bcrypt.hash(pwd, process.env.NEXT_PUBLIC_SALT);
+	const hash = await bcrypt.hash(pwd, process.env.SALT);
 	this.password = hash;
 };
 
@@ -71,9 +71,9 @@ UserSchema.methods.generateToken = function () {
 		_id: this._id.toString(),
 	};
 	const expire = {
-		expiresIn: process.env.NEXT_PUBLIC_EXPIRE_IN,
+		expiresIn: process.env.EXPIRE_IN,
 	};
-	const token = jwt.sign(payload, process.env.NEXT_PUBLIC_JWT_SECRET, expire);
+	const token = jwt.sign(payload, process.env.JWT_SECRET, expire);
 
 	return token;
 };
