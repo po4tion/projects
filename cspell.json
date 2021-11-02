@@ -1,0 +1,22 @@
+{
+	"version": "0.2",
+	"ignorePaths": [],
+	"dictionaryDefinitions": [],
+	"dictionaries": [],
+	"words": [
+		"bgcolor",
+		"clsx",
+		"devblog",
+		"errorors",
+		"hookform",
+		"nextjs",
+		"nprogress",
+		"Parens",
+		"signin",
+		"signout",
+		"signup",
+		"usermodel"
+	],
+	"ignoreWords": [],
+	"import": []
+}

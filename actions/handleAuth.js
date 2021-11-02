@@ -3,7 +3,7 @@ import cookie from 'js-cookie';
 
 export const signupAxios = async user => {
 	const result = await axios
-		.post(`/api/auth/signup`, user)
+		.post('/api/auth/signup', user)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
@@ -12,7 +12,7 @@ export const signupAxios = async user => {
 
 export const signinAxios = async user => {
 	const result = await axios
-		.post(`/api/auth/signin`, user)
+		.post('/api/auth/signin', user)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
@@ -25,7 +25,7 @@ export const signoutAxios = async next => {
 	next();
 
 	const result = await axios
-		.get(`/api/auth/signout`)
+		.get('/api/auth/signout')
 		.then(res => res.data)
 		.catch(err => err.response.data);
 

@@ -11,13 +11,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 
-function AdminCategory() {
-	const [token, setToken] = useState('');
+function AdminCategory({ accessToken }) {
+	const [token, setToken] = useState(accessToken);
 
 	// pre-render를 통한 토큰 가져오기
-	useEffect(() => {
-		setToken(getCookie('access-token'));
-	}, []);
+	// 방법 1.
+	// useEffect(() => {
+	// 	setToken(getCookie('access-token'));
+	// }, []);
+
+	// 방법 2는 category page에서 getServerSideProps로 토큰값을 넘겨주는 것
 
 	const [info, setInfo] = useState({
 		name: '',
@@ -26,9 +29,10 @@ function AdminCategory() {
 		categories: [],
 		removed: '',
 		reload: '',
+		loading: false,
 	});
 
-	const { name, error, success, categories, removed, reload } = info;
+	const { name, error, success, categories, removed, reload, loading } = info;
 
 	// 카테고리 입력
 	const handleChange = e => {
@@ -46,14 +50,18 @@ function AdminCategory() {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		createCategory({ name }, token).then(data => {
-			console.log(data);
+		setInfo({
+			...info,
+			loading: true,
+		});
 
+		createCategory({ name }, token).then(data => {
 			if (data.error) {
 				setInfo({
 					...info,
 					error: '카테고리가 이미 존재합니다',
 					success: false,
+					loading: false,
 				});
 			} else {
 				setInfo({
@@ -61,6 +69,7 @@ function AdminCategory() {
 					name: '',
 					error: false,
 					success: '카테고리가 추가되었습니다',
+					loading: false,
 				});
 			}
 		});
@@ -79,6 +88,9 @@ function AdminCategory() {
 					}}
 				>
 					<Box component="form" noValidate sx={{ width: '100%', mt: 1 }}>
+						<Grid item xs={12} sx={{ textAlign: 'center' }}>
+							{loading && <CircularProgress />}
+						</Grid>
 						<Grid container>
 							<Grid item xs={12}>
 								<TextField

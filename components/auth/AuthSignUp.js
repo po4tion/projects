@@ -44,6 +44,7 @@ function Signup() {
 		const { name, email, password } = data;
 
 		signupAxios({ name, email, password }).then(value => {
+			console.log(value);
 			setState({ loading: false });
 
 			if (value.error) {
