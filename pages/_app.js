@@ -35,7 +35,7 @@ export default function MyApp(props) {
 						name="viewport"
 						content="width=device-width, initial-scale= 1.0"
 					/>
-					<title>{process.env.APP_NAME}</title>
+					<title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
 				</Head>
 				<ThemeProvider theme={theme}>
 					<Layout>

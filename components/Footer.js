@@ -33,7 +33,7 @@ function Footer({ title, description }) {
 						sx={{ userSelect: 'none' }}
 					>
 						{'Copyright © '}
-						DEVBLOG&nbsp;
+						{title}&nbsp;
 						{new Date().getFullYear()}
 						{'.'}
 					</Typography>

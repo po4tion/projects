@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
-function Header() {
+function Header({ title }) {
 	const [start, setStart] = useState(false);
 
 	useEffect(() => {
@@ -36,7 +36,7 @@ function Header() {
 							variant="h4"
 							sx={{ userSelect: 'none', fontWeight: 'bold' }}
 						>
-							{process.env.APP_NAME}
+							{title}
 						</Typography>
 					</Link>
 					<Box>
