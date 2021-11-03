@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { ProtectAdminRoute } from '/components/auth';
 import { AdminCategory } from '/components/admin';
-import { getCategories } from '/actions/handleCategory';
+import { getCookie } from '/actions/handleAuth';
 
-function Category({ accessToken, categories }) {
+function Category({ accessToken }) {
 	return (
 		<ProtectAdminRoute>
-			<AdminCategory accessToken={accessToken} categoryList={categories} />
+			<AdminCategory accessToken={accessToken} />
 		</ProtectAdminRoute>
 	);
 }
@@ -17,7 +17,5 @@ export async function getServerSideProps(ctx) {
 	const { req } = ctx;
 	const accessToken = req.headers.cookie.slice(13);
 
-	const categories = await getCategories();
-
-	return { props: { accessToken, categories } };
+	return { props: { accessToken } };
 }

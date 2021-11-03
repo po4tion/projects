@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { createCategory } from '/actions/handleCategory';
+import { useState, useEffect } from 'react';
+import { createCategory, getCategories } from '/actions/handleCategory';
 import { getCookie } from '/actions/handleAuth';
+import Router from 'next/router';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -15,28 +16,37 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 
-function AdminCategory({ accessToken, categoryList }) {
-	const [token, setToken] = useState(accessToken);
-
+function AdminCategory({ accessToken }) {
 	// pre-render를 통한 토큰 가져오기
-	// 방법 1.
-	// useEffect(() => {
-	// 	setToken(getCookie('access-token'));
-	// }, []);
+	/* 방법 1.
+	useEffect(() => {
+		setToken(getCookie('access-token'));
+	}, []); */
 
 	// 방법 2는 category page에서 getServerSideProps로 토큰값을 넘겨주는 것
-
+	const [token, setToken] = useState(accessToken);
 	const [info, setInfo] = useState({
 		name: '',
-		error: false,
-		success: false,
-		categories: categoryList.data,
+		error: '',
+		success: '',
 		removed: '',
-		reload: '',
+		reload: false,
 		loading: false,
 	});
+	const [categories, setCategories] = useState(null);
+	const { name, error, success, removed, reload, loading } = info;
 
-	const { name, error, success, categories, removed, reload, loading } = info;
+	// 카테고리 리스트 불러오기
+	useEffect(() => {
+		getCategoryList();
+	}, [reload]);
+
+	const getCategoryList = async () => {
+		const result = await getCategories();
+		const data = await result.data;
+
+		setCategories(data);
+	};
 
 	// 카테고리 입력
 	const handleChange = e => {
@@ -52,8 +62,6 @@ function AdminCategory({ accessToken, categoryList }) {
 
 	// 카테고리 추가
 	const handleSubmit = e => {
-		e.preventDefault();
-
 		setInfo({
 			...info,
 			loading: true,
@@ -74,7 +82,10 @@ function AdminCategory({ accessToken, categoryList }) {
 					error: false,
 					success: '카테고리가 추가되었습니다',
 					loading: false,
+					reload: !reload,
 				});
+
+				// Router.reload(window.location.pathname);
 			}
 		});
 	};
@@ -111,16 +122,16 @@ function AdminCategory({ accessToken, categoryList }) {
 									error={info.error ? true : false}
 								/>
 							</Grid>
-							{
+							{info.error && (
 								<Typography variant="inherit" color="error">
 									{info.error}
 								</Typography>
-							}
-							{
+							)}
+							{info.success && (
 								<Typography variant="inherit" color="primary">
 									{info.success}
 								</Typography>
-							}
+							)}
 						</Grid>
 						<Button
 							onClick={handleSubmit}
@@ -151,17 +162,18 @@ function AdminCategory({ accessToken, categoryList }) {
 							'& ul': { padding: 0 },
 						}}
 					>
-						{categories.map(ctg => (
-							<li key={`${ctg._id}`}>
-								<ul>
-									<ListItem divider disablePadding>
-										<ListItemButton onDoubleClick={() => console.log('hi')}>
-											<ListItemText primary={`${ctg.name}`} />
-										</ListItemButton>
-									</ListItem>
-								</ul>
-							</li>
-						))}
+						{categories &&
+							categories.map(ctg => (
+								<li key={`${ctg._id}`}>
+									<ul>
+										<ListItem divider disablePadding>
+											<ListItemButton onDoubleClick={() => console.log('hi')}>
+												<ListItemText primary={`${ctg.name}`} />
+											</ListItemButton>
+										</ListItem>
+									</ul>
+								</li>
+							))}
 					</List>
 				</Box>
 			</Container>
