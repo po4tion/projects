@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 
 function Signup() {
 	// protect route
@@ -74,13 +75,14 @@ function Signup() {
 					<Typography component="h1" variant="h5">
 						회원가입
 					</Typography>
-					<Box component="form" novalidate sx={{ mt: 3 }}>
-						<Grid container spacing={2}>
+					<Box component="form" novalidate sx={{ width: '100%', mt: 1 }}>
+						<Grid container spacing={1}>
 							<Grid item xs={12} sx={{ textAlign: 'center' }}>
 								{state.loading && <CircularProgress />}
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
+									margin="normal"
 									autoFocus
 									defaultValue="홍길동"
 									fullWidth
@@ -92,12 +94,15 @@ function Signup() {
 									{...register('name')}
 									error={errors.name ? true : false}
 								/>
-								<Typography variant="inherit" color="error">
-									{errors.name?.message}
-								</Typography>
+								{errors.name && (
+									<Alert severity="error" sx={{ width: '100%' }}>
+										{errors.name?.message}
+									</Alert>
+								)}
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
+									margin="normal"
 									fullWidth
 									id="email"
 									label="이메일 입력"
@@ -107,12 +112,15 @@ function Signup() {
 									{...register('email')}
 									error={errors.email || err ? true : false}
 								/>
-								<Typography variant="inherit" color="error">
-									{errors.email?.message || err}
-								</Typography>
+								{(errors.email || err) && (
+									<Alert severity="error" sx={{ width: '100%' }}>
+										{errors.email?.message || err}
+									</Alert>
+								)}
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
+									margin="normal"
 									fullWidth
 									id="password"
 									label="비밀번호 입력"
@@ -122,12 +130,15 @@ function Signup() {
 									{...register('password')}
 									error={errors.password ? true : false}
 								/>
-								<Typography variant="inherit" color="error">
-									{errors.password?.message}
-								</Typography>
+								{errors.password && (
+									<Alert severity="error" sx={{ width: '100%' }}>
+										{errors.password?.message}
+									</Alert>
+								)}
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
+									margin="normal"
 									fullWidth
 									id="confirmPassword"
 									label="비밀번호 재입력"
@@ -137,9 +148,12 @@ function Signup() {
 									{...register('confirmPassword')}
 									error={errors.confirmPassword ? true : false}
 								/>
-								<Typography variant="inherit" color="error">
-									{errors.confirmPassword?.message}
-								</Typography>
+
+								{errors.confirmPassword && (
+									<Alert severity="error" sx={{ width: '100%' }}>
+										{errors.confirmPassword?.message}
+									</Alert>
+								)}
 							</Grid>
 						</Grid>
 						<Button

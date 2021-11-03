@@ -14,6 +14,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
+import Alert from '@mui/material/Alert';
 
 function AdminTag({ accessToken }) {
 	const [token, setToken] = useState(accessToken);
@@ -159,14 +160,14 @@ function AdminTag({ accessToken }) {
 										/>
 									</Grid>
 									{error && (
-										<Typography variant="inherit" color="error">
+										<Alert severity="error" sx={{ width: '100%' }}>
 											{error}
-										</Typography>
+										</Alert>
 									)}
 									{success && (
-										<Typography variant="inherit" color="primary">
+										<Alert severity="success" sx={{ width: '100%' }}>
 											{success}
-										</Typography>
+										</Alert>
 									)}
 								</Grid>
 								<Button

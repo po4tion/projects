@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 
 function AuthSignIn() {
 	useEffect(() => {
@@ -154,11 +155,11 @@ function AuthSignIn() {
 									onChange={handleEmail}
 									error={state.emailState ? true : false}
 								/>
-								{
-									<Typography variant="inherit" color="error">
+								{state.emailState && (
+									<Alert severity="error" sx={{ width: '100%' }}>
 										{state.emailState}
-									</Typography>
-								}
+									</Alert>
+								)}
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
@@ -173,11 +174,11 @@ function AuthSignIn() {
 									onChange={handlePassword}
 									error={state.pwdState ? true : false}
 								/>
-								{
-									<Typography variant="inherit" color="error">
+								{state.pwdState && (
+									<Alert severity="error" sx={{ width: '100%' }}>
 										{state.pwdState}
-									</Typography>
-								}
+									</Alert>
+								)}
 							</Grid>
 						</Grid>
 						<Button
