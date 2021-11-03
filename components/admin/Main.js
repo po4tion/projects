@@ -8,7 +8,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
 import CategoryIcon from '@mui/icons-material/Category';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import BookIcon from '@mui/icons-material/Book';
@@ -27,7 +26,7 @@ function Main() {
 					<nav aria-label="category tag blog">
 						<List>
 							<Link href="/admin/crud/category" passHref>
-								<ListItem disablePadding>
+								<ListItem divider disablePadding>
 									<ListItemButton>
 										<ListItemIcon>
 											<CategoryIcon />
@@ -36,9 +35,9 @@ function Main() {
 									</ListItemButton>
 								</ListItem>
 							</Link>
-							<Divider />
+
 							<Link href="/admin/crud/tag" passHref>
-								<ListItem disablePadding>
+								<ListItem divider disablePadding>
 									<ListItemButton>
 										<ListItemIcon>
 											<LocalOfferIcon />
@@ -47,7 +46,7 @@ function Main() {
 									</ListItemButton>
 								</ListItem>
 							</Link>
-							<Divider />
+
 							<Link href="/admin/crud/blog" passHref>
 								<ListItem disablePadding>
 									<ListItemButton>

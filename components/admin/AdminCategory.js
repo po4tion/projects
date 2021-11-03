@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createCategory } from '/actions/handleCategory';
 import { getCookie } from '/actions/handleAuth';
 
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
 
-function AdminCategory({ accessToken }) {
+function AdminCategory({ accessToken, categoryList }) {
 	const [token, setToken] = useState(accessToken);
 
 	// pre-render를 통한 토큰 가져오기
@@ -26,7 +30,7 @@ function AdminCategory({ accessToken }) {
 		name: '',
 		error: false,
 		success: false,
-		categories: [],
+		categories: categoryList.data,
 		removed: '',
 		reload: '',
 		loading: false,
@@ -127,6 +131,38 @@ function AdminCategory({ accessToken }) {
 							추가하기
 						</Button>
 					</Box>
+				</Box>
+				<Box
+					sx={{
+						marginTop: 8,
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					}}
+				>
+					<List
+						sx={{
+							width: '100%',
+							maxWidth: 360,
+							bgcolor: 'background.paper',
+							position: 'relative',
+							overflow: 'auto',
+							maxHeight: 300,
+							'& ul': { padding: 0 },
+						}}
+					>
+						{categories.map(ctg => (
+							<li key={`${ctg._id}`}>
+								<ul>
+									<ListItem divider disablePadding>
+										<ListItemButton onDoubleClick={() => console.log('hi')}>
+											<ListItemText primary={`${ctg.name}`} />
+										</ListItemButton>
+									</ListItem>
+								</ul>
+							</li>
+						))}
+					</List>
 				</Box>
 			</Container>
 		</>
