@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-	createCategory,
-	getCategories,
-	removeCategory,
-} from '/actions/handleCategory';
+import { createTag, getTags, removeTag } from '/actions/handleTag';
 import { getCookie } from '/actions/handleAuth';
 
 import Button from '@mui/material/Button';
@@ -19,14 +15,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 
-function AdminCategory({ accessToken }) {
-	// pre-render를 통한 토큰 가져오기
-	/* 방법 1.
-	useEffect(() => {
-		setToken(getCookie('access-token'));
-	}, []); */
-
-	// 방법 2는 category page에서 getServerSideProps로 토큰값을 넘겨주는 것
+function AdminTag({ accessToken }) {
 	const [token, setToken] = useState(accessToken);
 	const [info, setInfo] = useState({
 		name: '',
@@ -35,22 +24,22 @@ function AdminCategory({ accessToken }) {
 		reload: false,
 		loading: false,
 	});
-	const [categories, setCategories] = useState(null);
+	const [tags, setTags] = useState(null);
 	const { name, error, success, reload, loading } = info;
 
-	// 카테고리 리스트 불러오기
+	// 태그 리스트 불러오기
 	useEffect(() => {
-		getCategoryList();
+		getTagList();
 	}, [reload]);
 
-	const getCategoryList = async () => {
-		const result = await getCategories();
+	const getTagList = async () => {
+		const result = await getTags();
 		const data = await result.data;
 
-		setCategories(data);
+		setTags(data);
 	};
 
-	// 카테고리 입력
+	// 태그 입력
 	const handleChange = e => {
 		const { value } = e.target;
 
@@ -62,18 +51,18 @@ function AdminCategory({ accessToken }) {
 		});
 	};
 
-	// 카테고리 추가
+	// 태그 추가
 	const handleSubmit = e => {
 		setInfo({
 			...info,
 			loading: true,
 		});
 
-		createCategory({ name }, token).then(data => {
+		createTag({ name }, token).then(data => {
 			if (data.error) {
 				setInfo({
 					...info,
-					error: '카테고리가 이미 존재합니다',
+					error: '태그가 이미 존재합니다',
 					success: false,
 					loading: false,
 				});
@@ -82,7 +71,7 @@ function AdminCategory({ accessToken }) {
 					...info,
 					name: '',
 					error: false,
-					success: '카테고리가 추가되었습니다',
+					success: '태그가 추가되었습니다',
 					loading: false,
 					reload: !reload,
 				});
@@ -90,27 +79,27 @@ function AdminCategory({ accessToken }) {
 		});
 	};
 
-	// 카테고리 삭제 알람
-	const deleteCtgCheck = (name, slug) => {
-		const result = window.confirm(`${name} 카테고리를 삭제하시겠습니까?`);
+	// 태그 삭제 알람
+	const deleteTagCheck = (name, slug) => {
+		const result = window.confirm(`${name} 태그를 삭제하시겠습니까?`);
 
 		if (result) {
-			deleteCategory(name, slug);
+			deleteTag(name, slug);
 		}
 	};
 
-	// 카테고리 삭제
-	const deleteCategory = async (name, slug) => {
+	// 태그 삭제
+	const deleteTag = async (name, slug) => {
 		setInfo({
 			...info,
 			loading: true,
 		});
 
-		await removeCategory(slug, token).then(data => {
+		await removeTag(slug, token).then(data => {
 			if (data.error) {
 				setInfo({
 					...info,
-					error: `${name} 카테고리 삭제가 불가능합니다`,
+					error: `${name} 태그 삭제가 불가능합니다`,
 					success: false,
 					loading: false,
 				});
@@ -118,7 +107,7 @@ function AdminCategory({ accessToken }) {
 				setInfo({
 					...info,
 					error: false,
-					success: `${name} 카테고리가 삭제되었습니다`,
+					success: `${name} 태그가 삭제되었습니다`,
 					loading: false,
 					reload: !reload,
 				});
@@ -160,10 +149,10 @@ function AdminCategory({ accessToken }) {
 											margin="normal"
 											required
 											fullWidth
-											id="category"
-											label="카테고리 입력"
-											name="category"
-											autoComplete="category"
+											id="tag"
+											label="태그 입력"
+											name="tag"
+											autoComplete="tag"
 											autoFocus
 											onChange={handleChange}
 											error={error ? true : false}
@@ -213,17 +202,17 @@ function AdminCategory({ accessToken }) {
 									'& ul': { padding: 0 },
 								}}
 							>
-								{categories &&
-									categories.map(ctg => (
-										<li key={`${ctg._id}`}>
+								{tags &&
+									tags.map(tg => (
+										<li key={`${tg._id}`}>
 											<ul>
 												<ListItem divider disablePadding>
 													<ListItemButton
 														onDoubleClick={() =>
-															deleteCtgCheck(ctg.name, ctg.slug)
+															deleteTagCheck(tg.name, tg.slug)
 														}
 													>
-														<ListItemText primary={`${ctg.name}`} />
+														<ListItemText primary={`${tg.name}`} />
 													</ListItemButton>
 												</ListItem>
 											</ul>
@@ -232,7 +221,7 @@ function AdminCategory({ accessToken }) {
 							</List>
 
 							<Typography sx={{ mt: '30px' }} color="secondary">
-								* 더블 클릭을 하여 카테고리를 삭제할 수 있습니다
+								* 더블 클릭을 하여 태그를 삭제할 수 있습니다
 							</Typography>
 						</Box>
 					</Grid>
@@ -242,4 +231,4 @@ function AdminCategory({ accessToken }) {
 	);
 }
 
-export default AdminCategory;
+export default AdminTag;

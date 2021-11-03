@@ -1,9 +1,21 @@
-function Tag() {
+import axios from 'axios';
+import { ProtectAdminRoute } from '/components/auth';
+import { AdminTag } from '/components/admin';
+import { getCookie } from '/actions/handleAuth';
+
+function Tag({ accessToken }) {
 	return (
-		<>
-			<p>태그 페이지</p>
-		</>
+		<ProtectAdminRoute>
+			<AdminTag accessToken={accessToken} />
+		</ProtectAdminRoute>
 	);
 }
 
 export default Tag;
+
+export async function getServerSideProps(ctx) {
+	const { req } = ctx;
+	const accessToken = req.headers.cookie.slice(13);
+
+	return { props: { accessToken } };
+}
