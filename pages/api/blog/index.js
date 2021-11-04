@@ -9,13 +9,11 @@ import {
 	tokenValidation,
 	adminMiddleware,
 	errorHandler,
+	excerptHandler,
 } from '/lib';
-import { excerptHandler } from '/lib';
 import formidable from 'formidable';
 import { stripHtml } from 'string-strip-html';
-import _ from 'lodash';
 import fs from 'fs';
-import { formatMuiErrorMessage } from '@mui/utils';
 
 export const config = {
 	api: {
@@ -45,15 +43,12 @@ export default function handler(req, res) {
 
 					if (auth) {
 						// form 객체 생성(확장자 포함)
-						let form = new formidable.IncomingForm();
-						form.keepExtensions = true;
+						const form = new formidable.IncomingForm({ keepExtensions: true });
 
 						// text data는 fields, file data는 files
 						form.parse(req, async (err, fields, files) => {
 							if (err) {
-								return res
-									.status(400)
-									.json({ error: 'form 정보 불러들이기 실패' });
+								return res.status(400).json({ error: '사진 업로드 실패' });
 							}
 
 							const { title, body, categories, tags } = fields;
