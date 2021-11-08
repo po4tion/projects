@@ -1,9 +1,7 @@
+import { Main } from '/components/blog';
+
 function Blog() {
-	return (
-		<>
-			<p>블로그 페이지</p>
-		</>
-	);
+	return <Main />;
 }
 
 export default Blog;
