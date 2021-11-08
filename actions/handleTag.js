@@ -15,7 +15,7 @@ export const createTag = async (tag, token) => {
 
 export const getTags = async () => {
 	const result = await axios
-		.get('/api/tags')
+		.get(`${process.env.DEV_API}/api/tags`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
