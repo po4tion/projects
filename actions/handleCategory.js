@@ -15,7 +15,16 @@ export const createCategory = async (category, token) => {
 
 export const getCategories = async () => {
 	const result = await axios
-		.get(`${process.env.NEXT_PUBLIC_API}/api/categories`)
+		.get(`/api/categories`)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const getCategoriesInServer = async () => {
+	const result = await axios
+		.get(`${process.env.API}/api/categories`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 

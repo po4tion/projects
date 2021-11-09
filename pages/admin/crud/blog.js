@@ -1,18 +1,30 @@
 import axios from 'axios';
 import { Main } from '/components/blog';
-import { getCategories } from '/actions/handleCategory';
-import { getTags } from '/actions/handleTag';
+import { getCategoriesInServer } from '/actions/handleCategory';
+import { getTagsInServer } from '/actions/handleTag';
+import Cookies from 'js-cookie';
 
 function Blog({ data }) {
-	return <Main categories={data.categories.data} tags={data.tags.data} />;
+	return (
+		<Main
+			categories={data.categories.data}
+			tags={data.tags.data}
+			token={data.token}
+		/>
+	);
 }
 
 export default Blog;
 
-export async function getServerSideProps() {
-	const categories = await getCategories();
+export async function getServerSideProps(ctx) {
+	const categories = await getCategoriesInServer();
 
-	const tags = await getTags();
+	const tags = await getTagsInServer();
 
-	return { props: { data: { categories, tags } } };
+	const { req } = ctx;
+	const accessToken = req.headers.cookie.slice(13);
+
+	return {
+		props: { data: { categories, tags, token: accessToken } },
+	};
 }

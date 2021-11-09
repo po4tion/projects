@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 
 export const signupAxios = async user => {
 	const result = await axios
@@ -34,7 +34,7 @@ export const signoutAxios = async next => {
 
 export const setCookie = (key, value) => {
 	if (process.browser) {
-		cookie.set(key, value, {
+		Cookies.set(key, value, {
 			expires: 1,
 		});
 	}
@@ -42,13 +42,13 @@ export const setCookie = (key, value) => {
 
 export const getCookie = key => {
 	if (process.browser) {
-		return cookie.get(key);
+		return Cookies.get(key);
 	}
 };
 
 export const removeCookie = key => {
 	if (process.browser) {
-		cookie.remove(key, {
+		Cookies.remove(key, {
 			expires: 1,
 		});
 	}

@@ -10,14 +10,21 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListSubheader from '@mui/material/ListSubheader';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
 import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
-import { settings } from 'nprogress';
 
-function Main({ router, categories, tags }) {
+function Main({ router, categories, tags, token }) {
 	const [info, setInfo] = useState({
 		error: '',
 		success: '',
@@ -33,19 +40,6 @@ function Main({ router, categories, tags }) {
 
 	const [ctg, setCtg] = useState(categories);
 	const [tg, setTg] = useState(tags);
-
-	const getTagList = async () => {
-		await getTags().then(data => {
-			if (data.error) {
-				setInfo({
-					...info,
-					error: data.error,
-				});
-			} else {
-				settings(data);
-			}
-		});
-	};
 
 	// 작성 중이던 글 임시 저장 기능(뒤로 가기, 새로 고침 시 글 초기화 방지)
 	const blogSave = () => {
@@ -77,6 +71,44 @@ function Main({ router, categories, tags }) {
 		setData(data);
 	};
 
+	// 카테고리 & 태그 체크박스 control
+	const [checkCtg, setCheckCtg] = useState([]);
+	const [checkTg, setCheckTg] = useState([]);
+
+	const handleCheckBox = (name, _id) => () => {
+		setInfo({ ...info, error: '' });
+
+		if (name === '카테고리') {
+			const category = checkCtg.indexOf(_id);
+			const store = [...checkCtg];
+
+			// store에 선택된 카테고리가 존재하지 않을 경우
+			if (category === -1) {
+				store.push(_id);
+			} else {
+				// store에 선택된 카테고리가 존재할 경우 store 배열에서 삭제
+				store.splice(category, 1);
+			}
+			console.log('categories: ', store);
+			setCheckCtg(store);
+			data.set('categories', store);
+		}
+
+		if (name === '태그') {
+			const tag = checkTg.indexOf(_id);
+			const store = [...checkTg];
+
+			if (tag === -1) {
+				store.push(_id);
+			} else {
+				store.splice(tag, 1);
+			}
+			console.log('tags: ', store);
+			setCheckTg(store);
+			data.set('tags', store);
+		}
+	};
+
 	// quill 본문 control
 	const handleQuill = e => {
 		setBody(e);
@@ -92,61 +124,129 @@ function Main({ router, categories, tags }) {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		console.log('handleSubmit');
+		createBlog(data, token).then(data => {
+			console.log(data);
+			if (data.error) {
+				setInfo({ ...info, error: data.error });
+			} else {
+				setInfo({
+					...info,
+					error: '',
+					success: `${data.title} 글이 게시되었습니다`,
+					title: '',
+				});
+
+				setBody('');
+				setCtg([]);
+				setTg([]);
+			}
+		});
 	};
 
-	const blogForm = () => {
+	const handleForm = (name, type) => {
 		return (
-			<Container component="main" maxWidth="lg">
-				<CssBaseline />
-				<Box
-					component="form"
-					onSubmit={handleSubmit}
-					noValidate
+			<Box
+				sx={{
+					width: '100%',
+					mt: 8,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}
+			>
+				<List
+					subheader={
+						<ListSubheader
+							color="primary"
+							component="div"
+							id="categories"
+							sx={{ fontSize: '24px' }}
+						>
+							{name}
+						</ListSubheader>
+					}
 					sx={{
-						marginTop: 8,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
+						width: '100%',
+						maxWidth: 360,
+						bgcolor: 'background.paper',
+						position: 'relative',
+						overflow: 'auto',
+						maxHeight: 300,
+						'& ul': { padding: 0 },
 					}}
 				>
-					<TextField
-						id="title"
-						label="제목을 입력해주세요"
-						variant="outlined"
-						fullWidth
-						onChange={handleChange('title')}
-					/>
-					<Box sx={{ width: '100%', mt: 1 }}>
-						<ReactQuill
-							theme="snow"
-							modules={Modules}
-							formats={Formats}
-							value={body}
-							placeholder="내용을 입력해주세요"
-							onChange={handleQuill}
-							style={{ height: '600px', marginBottom: '24px' }}
-						/>
-					</Box>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						sx={{ mt: 3, mb: 2 }}
-					>
-						작성완료
-					</Button>
-					{ctg.map((c, i) => (
-						<li key={i}>
-							<p>{c.name}</p>
+					{type.map((value, idx) => (
+						<li key={`${idx}`}>
+							<ul>
+								<ListItem divider disablePadding>
+									<FormControlLabel
+										label={value.name}
+										control={
+											<Checkbox onChange={handleCheckBox(name, value._id)} />
+										}
+									/>
+								</ListItem>
+							</ul>
 						</li>
 					))}
-				</Box>
-			</Container>
+				</List>
+			</Box>
 		);
 	};
 
-	return <>{blogForm()}</>;
+	return (
+		<>
+			<Container component="main" maxWidth="xl">
+				<CssBaseline />
+				<Grid container spacing={2}>
+					<Grid item xs={8}>
+						<Box
+							component="form"
+							onSubmit={handleSubmit}
+							noValidate
+							sx={{
+								marginTop: 8,
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+							}}
+						>
+							<TextField
+								id="title"
+								label="제목을 입력해주세요"
+								variant="outlined"
+								fullWidth
+								onChange={handleChange('title')}
+							/>
+							<Box sx={{ width: '100%', mt: 1 }}>
+								<ReactQuill
+									theme="snow"
+									modules={Modules}
+									formats={Formats}
+									value={body}
+									placeholder="내용을 입력해주세요"
+									onChange={handleQuill}
+									style={{ height: '600px', marginBottom: '24px' }}
+								/>
+							</Box>
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								sx={{ mt: 3, mb: 2 }}
+							>
+								작성완료
+							</Button>
+						</Box>
+					</Grid>
+					<Grid item xs={4}>
+						{handleForm('카테고리', ctg)}
+						{handleForm('태그', tg)}
+					</Grid>
+				</Grid>
+			</Container>
+		</>
+	);
 }
 
 export default withRouter(Main);
