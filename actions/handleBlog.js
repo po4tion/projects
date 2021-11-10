@@ -56,3 +56,13 @@ export const updateBlog = async (blog, slug, token) => {
 
 	return result;
 };
+
+export const listAllInServer = async (limit, skip) => {
+	const data = { limit, skip };
+	const result = await axios
+		.post(`${process.env.API}/api/blogs/blogs-categories-tags`, data)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};

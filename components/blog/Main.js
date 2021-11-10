@@ -18,6 +18,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListSubheader from '@mui/material/ListSubheader';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Alert from '@mui/material/Alert';
+import Input from '@mui/material/Input';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
@@ -89,7 +91,7 @@ function Main({ router, categories, tags, token }) {
 				// store에 선택된 카테고리가 존재할 경우 store 배열에서 삭제
 				store.splice(category, 1);
 			}
-			console.log('categories: ', store);
+
 			setCheckCtg(store);
 			data.set('categories', store);
 		}
@@ -103,7 +105,7 @@ function Main({ router, categories, tags, token }) {
 			} else {
 				store.splice(tag, 1);
 			}
-			console.log('tags: ', store);
+
 			setCheckTg(store);
 			data.set('tags', store);
 		}
@@ -113,7 +115,7 @@ function Main({ router, categories, tags, token }) {
 	const handleQuill = e => {
 		setBody(e);
 
-		data.set('body', e);
+		// data.set('body', e);
 
 		// window === 'object' => 브라우저 상태
 		if (typeof window !== 'undefined') {
@@ -124,8 +126,13 @@ function Main({ router, categories, tags, token }) {
 	const handleSubmit = e => {
 		e.preventDefault();
 
+		if (localStorage.getItem('blog')) {
+			const value = JSON.parse(localStorage.getItem('blog'));
+
+			data.set('body', value);
+		}
+
 		createBlog(data, token).then(data => {
-			console.log(data);
 			if (data.error) {
 				setInfo({ ...info, error: data.error });
 			} else {
@@ -139,6 +146,8 @@ function Main({ router, categories, tags, token }) {
 				setBody('');
 				setCtg([]);
 				setTg([]);
+
+				router.push('/admin');
 			}
 		});
 	};
@@ -194,6 +203,37 @@ function Main({ router, categories, tags, token }) {
 		);
 	};
 
+	const handlePhotoForm = () => {
+		return (
+			<Box
+				sx={{
+					width: '100%',
+					mt: 10,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}
+			>
+				<label style={{ width: '100%' }}>
+					<Input
+						onChange={handleChange('photo')}
+						type="file"
+						accept="image/*"
+						sx={{ display: 'none' }}
+					/>
+					<Button
+						fullWidth
+						color="primary"
+						variant="contained"
+						component="span"
+					>
+						썸네일 업로드 (파일 크기 : 10mb 이하)
+					</Button>
+				</label>
+			</Box>
+		);
+	};
+
 	return (
 		<>
 			<Container component="main" maxWidth="xl">
@@ -211,12 +251,18 @@ function Main({ router, categories, tags, token }) {
 								alignItems: 'center',
 							}}
 						>
+							{info.error && (
+								<Alert severity="error" sx={{ width: '100%' }}>
+									{info.error}
+								</Alert>
+							)}
 							<TextField
 								id="title"
 								label="제목을 입력해주세요"
 								variant="outlined"
 								fullWidth
 								onChange={handleChange('title')}
+								sx={{ mt: 2 }}
 							/>
 							<Box sx={{ width: '100%', mt: 1 }}>
 								<ReactQuill
@@ -233,13 +279,14 @@ function Main({ router, categories, tags, token }) {
 								type="submit"
 								fullWidth
 								variant="contained"
-								sx={{ mt: 3, mb: 2 }}
+								sx={{ mt: 6, mb: 2 }}
 							>
 								작성완료
 							</Button>
 						</Box>
 					</Grid>
 					<Grid item xs={4}>
+						{handlePhotoForm()}
 						{handleForm('카테고리', ctg)}
 						{handleForm('태그', tg)}
 					</Grid>

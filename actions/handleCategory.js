@@ -15,7 +15,7 @@ export const createCategory = async (category, token) => {
 
 export const getCategories = async () => {
 	const result = await axios
-		.get(`/api/categories`)
+		.get('/api/categories')
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
