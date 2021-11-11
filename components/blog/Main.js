@@ -63,8 +63,17 @@ function Main({ router, categories, tags, token }) {
 	const handleChange = key => e => {
 		const value = key === 'photo' ? e.target.files[0] : e.target.value;
 
-		data.set(key, value);
+		if (key === 'photo' && e.target && e.target.files[0].size > 1500000) {
+			setInfo({
+				...info,
+				error: '사진의 용량은 1mb 이하여야 합니다',
+				photo: '',
+			});
 
+			return;
+		}
+
+		data.set(key, value);
 		setInfo({
 			...info,
 			error: '',
@@ -255,7 +264,7 @@ function Main({ router, categories, tags, token }) {
 						component="span"
 						sx={{ maxWidth: '300px' }}
 					>
-						썸네일 등록
+						썸네일 등록(1mb 이하)
 					</Button>
 				</label>
 			</Box>

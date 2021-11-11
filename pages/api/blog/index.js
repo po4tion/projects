@@ -84,9 +84,9 @@ export default function handler(req, res) {
 
 							// file data[photo]
 							if (files.photo) {
-								if (files.photo.size > 40000000) {
+								if (files.photo.size >= 1500000) {
 									return res.status(400).json({
-										error: '사진은 4mb를 넘을 수 없습니다.',
+										error: '사진은 1mb를 넘을 수 없습니다.',
 									});
 								}
 

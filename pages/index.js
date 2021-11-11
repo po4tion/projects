@@ -8,8 +8,8 @@ import {
 } from '/actions/handleBlog';
 import { BlogList } from '/components/blog';
 import axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
@@ -27,14 +27,14 @@ function Home({
 	skipNum,
 	allSize,
 }) {
-	const [blogObj, setBlogObj] = useState(blogs);
+	const [blogObj, setBlogObj] = useState([]);
 	const [size, setSize] = useState(blogSize);
 	const [limit, setLimit] = useState(limitNum);
 	const [skip, setSkip] = useState(skipNum);
 	const [hasMore, setHasMore] = useState(true);
 
 	const displayBlog = () => {
-		return blogObj.map((blog, idx) => {
+		return blogs.map((blog, idx) => {
 			return (
 				<article key={idx}>
 					<BlogList blog={blog} />
@@ -47,25 +47,35 @@ function Home({
 		// 2 페이지씩 증가(mongoose 기준)
 		const addSkip = limit + skip;
 
-		const result = await listAll(limit, addSkip).then(async data => {
-			setBlogObj(blog => [...blog, ...data.blogs]);
+		const result = await listAll(limit, addSkip).then(data => {
+			setBlogObj([...blogObj, ...data.blogs]);
 			setSize(data.size);
 			setSkip(addSkip);
-
-			if (allSize.data.length <= addSkip + limit) {
-				setHasMore(false);
-			}
-
-			// 블로그 총 개수가 홀수일 경우
-			if (allSize.data.length === addSkip + limit + 1) {
-				await listAll(1, addSkip + limit).then(data => {
-					setBlogObj(blog => [...blog, ...data.blogs]);
-					setSize(data.size);
-					setHasMore(false);
-				});
-			}
 		});
 	};
+
+	const getMoreBtn = () => {
+		if (size > 0 && size >= limit) {
+			return (
+				<Button size="large" variant="outlined" onClick={getMoreBlog}>
+					더보기
+				</Button>
+			);
+		} else {
+			return <Alert severity="info">마지막 글입니다</Alert>;
+		}
+	};
+
+	const displayNewBlog = () => {
+		return blogObj.map((blog, idx) => {
+			return (
+				<article key={idx}>
+					<BlogList blog={blog} />
+				</article>
+			);
+		});
+	};
+
 	return (
 		<>
 			<Head>
@@ -109,35 +119,9 @@ function Home({
 						alignItems: 'center',
 					}}
 				>
-					<InfiniteScroll
-						dataLength={size}
-						next={getMoreBlog}
-						hasMore={hasMore}
-						loader={
-							<Box
-								sx={{
-									display: 'flex',
-									justifyContent: 'center',
-									alignItems: 'center',
-								}}
-							>
-								<CircularProgress />
-							</Box>
-						}
-						endMessage={
-							<Box
-								sx={{
-									display: 'flex',
-									justifyContent: 'center',
-									alignItems: 'center',
-								}}
-							>
-								<Alert severity="info">마지막 글입니다</Alert>
-							</Box>
-						}
-					>
-						{displayBlog()}
-					</InfiniteScroll>
+					{displayBlog()}
+					{displayNewBlog()}
+					{getMoreBtn()}
 				</Box>
 			</Container>
 		</>
