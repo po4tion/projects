@@ -1,5 +1,4 @@
 import NextLink from 'next/link';
-import Image from 'next/image';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import axios from 'axios';

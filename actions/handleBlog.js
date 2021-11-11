@@ -31,6 +31,15 @@ export const getBlogs = async () => {
 	return result;
 };
 
+export const getBlogsInServer = async () => {
+	const result = await axios
+		.get(`${process.env.API}/api/blogs`)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
 export const removeBlog = async (slug, token) => {
 	const result = await axios
 		.delete(`/api/blog/${slug}`, {
@@ -51,6 +60,16 @@ export const updateBlog = async (blog, slug, token) => {
 				authorization: `Bearer ${token}`,
 			},
 		})
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const listAll = async (limit, skip) => {
+	const data = { limit, skip };
+	const result = await axios
+		.post('/api/blogs/blogs-categories-tags', data)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 

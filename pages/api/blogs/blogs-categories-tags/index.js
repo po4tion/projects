@@ -17,8 +17,8 @@ export default function handler(req, res) {
 			case 'POST':
 				try {
 					const { limit, skip } = req.body;
-					const limitPage = limit;
-					const skipPage = skip;
+					const limitPage = parseInt(limit);
+					const skipPage = parseInt(skip);
 					let blogs, ctg, tg;
 
 					await Blog.find({})
