@@ -24,16 +24,15 @@ export default function handler(req, res) {
 
 					await Blog.findOne({ slug: slug.toLowerCase() })
 						.select('photo')
-						.exec((err, blog) => {
+						.exec(async (err, blog) => {
 							if (err || !blog) {
 								return res.status(400).json({
 									error: '사진을 찾을 수 없습니다',
 								});
 							}
+							await res.setHeader('Content-type', blog.photo.contentType);
 
-							res.setHeader('Content-type', blog.photo.contentType);
-							// return res.status(200).json(res.getHeader('content-type'));
-							return res.status(200).json({ photo: blog.photo.data });
+							return res.status(200).send(blog.photo.data);
 						});
 				} catch (error) {
 					return res.status(400).json({ error: '에러' });

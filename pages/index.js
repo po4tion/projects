@@ -24,7 +24,7 @@ function Home({ blogs, categories, tags, blogSize, limitNum, skipNum }) {
 	};
 
 	return (
-		<Container component="main" maxWidth="xl">
+		<Container component="main" maxWidth="md">
 			<CssBaseline />
 			<Box
 				sx={{

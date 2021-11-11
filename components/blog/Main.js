@@ -4,6 +4,7 @@ import Router, { withRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { getCookie, isAuth } from '/actions/handleAuth';
 import { createBlog } from '/actions/handleBlog';
+import Image from 'next/image';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -214,7 +215,33 @@ function Main({ router, categories, tags, token }) {
 					alignItems: 'center',
 				}}
 			>
-				<label style={{ width: '100%' }}>
+				{info.photo && (
+					<>
+						<Box
+							sx={{
+								// display: 'flex',
+								// alignItems: 'center',
+								// justifyContent: 'center',
+								width: '300px',
+								maxWidth: '300px',
+								height: '250px',
+								maxHeight: '250px',
+								overflow: 'hidden',
+								marginBottom: 1,
+							}}
+						>
+							<Image
+								src={URL.createObjectURL(info.photo)}
+								alt="#"
+								width={300}
+								height={250}
+							/>
+						</Box>
+					</>
+				)}
+				<label
+					style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
+				>
 					<Input
 						onChange={handleChange('photo')}
 						type="file"
@@ -226,8 +253,9 @@ function Main({ router, categories, tags, token }) {
 						color="primary"
 						variant="contained"
 						component="span"
+						sx={{ maxWidth: '300px' }}
 					>
-						썸네일 업로드 (파일 크기 : 10mb 이하)
+						썸네일 등록
 					</Button>
 				</label>
 			</Box>
