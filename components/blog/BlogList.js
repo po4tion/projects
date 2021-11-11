@@ -15,16 +15,9 @@ import CardMedia from '@mui/material/CardMedia';
 import UpdateIcon from '@mui/icons-material/Update';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 
 function BlogList({ blog }) {
-	const getImage = async blog => {
-		const result = await axios.get(
-			`http://localhost:3000/api/blog/photo/${blog.slug}`
-		);
-
-		return result;
-	};
-
 	const categoryList = blog => {
 		return blog.categories.map((cat, idx) => (
 			<NextLink key={idx} href={`/categories/${cat.slug}`} passHref>
@@ -51,7 +44,7 @@ function BlogList({ blog }) {
 							<CardMedia
 								component="img"
 								sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-								image={`http://localhost:3000/api/blog/photo/${blog.slug}`}
+								image={`/api/blog/photo/${blog.slug}`}
 								alt={blog.title}
 							/>
 							<CardContent sx={{ flex: 1 }}>
@@ -73,9 +66,7 @@ function BlogList({ blog }) {
 									{categoryList(blog)}
 									{tagList(blog)}
 								</Stack>
-								<Typography variant="subtitle1">
-									{renderHTML(blog.excerpt)}
-								</Typography>
+								<Box>{renderHTML(blog.excerpt)}</Box>
 							</CardContent>
 						</Card>
 					</CardActionArea>
