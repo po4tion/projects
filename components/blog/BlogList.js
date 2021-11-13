@@ -1,9 +1,9 @@
-import NextLink from 'next/link';
+import Link from 'next/link';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
+import 'moment/locale/ko';
 
 import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -12,23 +12,22 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import UpdateIcon from '@mui/icons-material/Update';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 
 function BlogList({ blog }) {
 	const categoryList = blog => {
 		return blog.categories.map((cat, idx) => (
-			<NextLink key={idx} href={`/categories/${cat.slug}`} passHref>
+			<Link key={idx} href={`/categories/${cat.slug}`} passHref>
 				<Chip color="primary" label={cat.name} sx={{ marginRight: 1 }} />
-			</NextLink>
+			</Link>
 		));
 	};
 
 	const tagList = blog => {
 		return blog.tags.map((tag, idx) => (
-			<NextLink key={idx} href={`/tags/${tag.slug}`} passHref>
+			<Link key={idx} href={`/tags/${tag.slug}`} passHref>
 				<Chip color="secondary" label={tag.name} sx={{ marginRight: 1 }} />
-			</NextLink>
+			</Link>
 		));
 	};
 
@@ -36,7 +35,7 @@ function BlogList({ blog }) {
 		<div>
 			<CssBaseline />
 			<Grid item xs={12} mb={2}>
-				<NextLink href={`/blogs/${blog.slug}`}>
+				<Link href={`/blogs/${blog.slug}`} passHref>
 					<CardActionArea component="div">
 						<Card sx={{ display: 'flex' }}>
 							<CardMedia
@@ -60,15 +59,19 @@ function BlogList({ blog }) {
 										{moment(blog.updatedAt).fromNow()}
 									</Grid>
 								</Typography>
-								<Stack direction="row">
-									{categoryList(blog)}
-									{tagList(blog)}
-								</Stack>
+								<Grid container spacing={1}>
+									<Grid item xs={12}>
+										{categoryList(blog)}
+									</Grid>
+									<Grid item xs={12}>
+										{tagList(blog)}
+									</Grid>
+								</Grid>
 								<Box>{renderHTML(blog.excerpt)}</Box>
 							</CardContent>
 						</Card>
 					</CardActionArea>
-				</NextLink>
+				</Link>
 			</Grid>
 		</div>
 	);

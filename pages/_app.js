@@ -11,7 +11,6 @@ import '/public/css/nprogress.css';
 
 // NProgress settings
 Router.events.on('routeChangeStart', url => {
-	console.log(url);
 	NProgress.start();
 });
 Router.events.on('routeChangeComplete', url => {

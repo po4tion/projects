@@ -85,3 +85,21 @@ export const listAllInServer = async (limit, skip) => {
 
 	return result;
 };
+
+export const blogRelated = async blog => {
+	const result = await axios
+		.post(`/api/blogs/related`, blog)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const blogRelatedInServer = async blog => {
+	const result = await axios
+		.post(`${process.env.API}/api/blogs/related`, blog)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
