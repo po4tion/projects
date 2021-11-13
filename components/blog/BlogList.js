@@ -1,7 +1,6 @@
 import NextLink from 'next/link';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
-import axios from 'axios';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';

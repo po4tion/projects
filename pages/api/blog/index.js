@@ -78,7 +78,7 @@ export default function handler(req, res) {
 							blog.slug = title.split(' ').join('-').toLowerCase();
 							blog.body = body;
 							blog.excerpt = excerptHandler(body, 300, ' ', ' ...');
-							blog.sTitle = `${title} | ${process.env.APP_NAME}`;
+							blog.sTitle = `${process.env.APP_NAME} | ${title} `;
 							blog.sDesc = stripHtml(body.substring(0, 150)).result;
 							blog.postedBy = user._id;
 

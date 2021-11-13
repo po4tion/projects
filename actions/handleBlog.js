@@ -13,9 +13,18 @@ export const createBlog = async (blog, token) => {
 	return result;
 };
 
-export const getBlog = async slug => {
+// export const getBlog = async slug => {
+// 	const result = await axios
+// 		.get(`/api/blog/${slug}`)
+// 		.then(res => res.data)
+// 		.catch(err => err.response.data);
+
+// 	return result;
+// };
+
+export const getBlogInServer = async slug => {
 	const result = await axios
-		.get(`/api/blog/${slug}`)
+		.get(`${process.env.API}/api/blog/${slug}`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
@@ -25,15 +34,6 @@ export const getBlog = async slug => {
 export const getBlogs = async () => {
 	const result = await axios
 		.get('/api/blogs')
-		.then(res => res.data)
-		.catch(err => err.response.data);
-
-	return result;
-};
-
-export const getBlogsInServer = async () => {
-	const result = await axios
-		.get(`${process.env.API}/api/blogs`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
