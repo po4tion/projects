@@ -27,7 +27,7 @@ function Home({
 export default withRouter(Home);
 
 export async function getServerSideProps() {
-	const limit = 2,
+	const limit = 4,
 		skip = 0;
 	const data = await listAllInServer(limit, skip);
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { ProtectAdminRoute } from '/components/auth';
 import { AdminTag } from '/components/admin';
-import { getCookie } from '/actions/handleAuth';
 
 function Tag({ accessToken }) {
 	return (

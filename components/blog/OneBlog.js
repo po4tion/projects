@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
@@ -22,6 +21,7 @@ function OneBlog({ router, blog, related }) {
 	const { title, sDesc, slug, postedBy, updatedAt, body, categories, tags } =
 		blog.data;
 
+	// 카테고리 Chip 생성
 	const handleCtg = ctgs => {
 		return ctgs.map((ctg, idx) => (
 			<Link key={idx} href={`/categories/${ctg.slug}`} passHref>
@@ -30,6 +30,7 @@ function OneBlog({ router, blog, related }) {
 		));
 	};
 
+	// 태그 Chip 생성
 	const handleTag = tgs => {
 		return tgs.map((tg, idx) => (
 			<Link key={idx} href={`/tags/${tg.slug}`} passHref>
@@ -38,6 +39,8 @@ function OneBlog({ router, blog, related }) {
 		));
 	};
 
+	// 현재 선택한 블로그를 제외하고 현재 선택한 블로그의 카테고리와 연관있는
+	// 블로그를 보여준다
 	const relateCards = blogs => {
 		return blogs.map((blog, idx) => {
 			return (
@@ -55,7 +58,9 @@ function OneBlog({ router, blog, related }) {
 							/>
 							<CardHeader
 								title={blog.title}
-								subheader={moment(updatedAt).format(`YYYY년 MM월 DD일 HH:MM`)}
+								subheader={`${blog.postedBy.name} | ${moment(updatedAt).format(
+									'YYYY년 MM월 DD일 HH:MM'
+								)}`}
 								sx={{ paddingBottom: 0 }}
 							/>
 							<CardContent sx={{ paddingTop: 0 }}>

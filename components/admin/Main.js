@@ -23,7 +23,7 @@ function Main() {
 						bgcolor: 'background.paper',
 					}}
 				>
-					<nav aria-label="category tag blog">
+					<nav aria-label="category tag blog management">
 						<List>
 							<Link href="/admin/crud/category" passHref>
 								<ListItem divider disablePadding>
@@ -48,12 +48,23 @@ function Main() {
 							</Link>
 
 							<Link href="/admin/crud/blog" passHref>
-								<ListItem disablePadding>
+								<ListItem divider disablePadding>
 									<ListItemButton>
 										<ListItemIcon>
 											<BookIcon />
 										</ListItemIcon>
 										<ListItemText primary="블로그 생성" />
+									</ListItemButton>
+								</ListItem>
+							</Link>
+
+							<Link href="/admin/crud/management" passHref>
+								<ListItem disablePadding>
+									<ListItemButton>
+										<ListItemIcon>
+											<BookIcon />
+										</ListItemIcon>
+										<ListItemText primary="블로그 관리" />
 									</ListItemButton>
 								</ListItem>
 							</Link>
