@@ -3,10 +3,18 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { getBlogInServer } from '/actions/handleBlog';
+import moment from 'moment';
+import renderHTML from 'react-render-html';
+
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
 function Blogs({ router, blog }) {
 	console.log(blog);
-	const { title, sDesc, slug } = blog.data;
+	const { title, sDesc, slug, postedBy, updatedAt, body } = blog.data;
 
 	return (
 		<>
@@ -43,6 +51,33 @@ function Blogs({ router, blog }) {
 				/>
 				<meta property="og:image:type" content="image/jpg" />
 			</Head>
+			<Container component="main" maxWidth="md">
+				<CssBaseline />
+				<Box
+					sx={{
+						marginTop: 6,
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					}}
+				>
+					<Grid container rowSpacing={2}>
+						<Grid item xs={12}>
+							<Typography component="h1" variant="h4" gutterBottom>
+								{title}
+							</Typography>
+						</Grid>
+						<Grid item xs={12}>
+							<Typography variant="h6">
+								{postedBy.name} | {moment(updatedAt).fromNow()}
+							</Typography>
+						</Grid>
+						<Grid item xs={12}>
+							<Box>{renderHTML(body)}</Box>
+						</Grid>
+					</Grid>
+				</Box>
+			</Container>
 		</>
 	);
 }
@@ -62,7 +97,7 @@ export async function getStaticProps(ctx) {
 	return {
 		props: {
 			blog,
-			revalidate: 60,
+			revalidate: 60, // In 60 Seconds
 		},
 	};
 }
