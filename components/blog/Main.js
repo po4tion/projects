@@ -63,7 +63,7 @@ function Main({ router, categories, tags, token }) {
 	const handleChange = key => e => {
 		const value = key === 'photo' ? e.target.files[0] : e.target.value;
 
-		if (e.target.files.length === 0) {
+		if (key === 'photo' && e.target.files.length === 0) {
 			setInfo({
 				...info,
 				[key]: '',

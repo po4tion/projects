@@ -51,7 +51,7 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 	const handleChange = key => e => {
 		const value = key === 'photo' ? e.target.files[0] : e.target.value;
 
-		if (e.target.files.length === 0) {
+		if (key === 'photo' && e.target.files.length === 0) {
 			data.set(key, undefined);
 
 			setInfo({
