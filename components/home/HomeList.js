@@ -116,6 +116,7 @@ function HomeList({
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
+						width: '100%',
 					}}
 				>
 					{displayBlog()}

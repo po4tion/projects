@@ -37,7 +37,7 @@ function BlogList({ blog }) {
 			<Grid item xs={12} mb={2}>
 				<Link href={`/blogs/${blog.slug}`} passHref>
 					<CardActionArea component="div">
-						<Card sx={{ display: 'flex' }}>
+						<Card sx={{ display: 'flex', width: '600px', height: '400px' }}>
 							<CardMedia
 								component="img"
 								sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}

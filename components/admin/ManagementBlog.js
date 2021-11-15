@@ -81,7 +81,14 @@ function ManagementBlog({ blogList, token, size }) {
 					<Grid item xs={11} sx={{ zIndex: 10 }}>
 						<Link href={`/blogs/${blogs[i].slug}`} passHref>
 							<CardActionArea component="div">
-								<Card sx={{ userSelect: 'none', position: 'relative' }}>
+								<Card
+									sx={{
+										userSelect: 'none',
+										position: 'relative',
+										width: '100%',
+										height: '200px',
+									}}
+								>
 									<CardHeader
 										title={blogs[i].title}
 										subheader={`${blogs[i].postedBy.name} ${moment(
