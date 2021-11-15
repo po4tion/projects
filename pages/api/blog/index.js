@@ -14,6 +14,7 @@ import {
 import formidable from 'formidable';
 import { stripHtml } from 'string-strip-html';
 import fs from 'fs';
+import axios from 'axios';
 
 export const config = {
 	api: {
@@ -92,7 +93,13 @@ export default function handler(req, res) {
 								blog.photo.data = fs.readFileSync(files.photo.filepath);
 								blog.photo.contentType = files.photo.mimetype;
 							} else {
-								blog.photo.data = fs.readFileSync('./public/images/kuma.jpg');
+								const res = await axios.get(
+									'https://devblog-mu.vercel.app/images/kuma.jpg',
+									{ responseType: 'arraybuffer' }
+								);
+								const buffer = Buffer.from(res.data, 'utf-8');
+
+								blog.photo.data = buffer;
 								blog.photo.contentType = 'image/jpeg';
 							}
 
