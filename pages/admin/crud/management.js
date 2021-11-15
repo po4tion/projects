@@ -1,11 +1,12 @@
 import { getBlogsInServer } from '/actions/handleBlog';
 import { ManagementBlog } from '/components/admin';
+import { ProtectAdminRoute } from '/components/auth';
 
 function Management({ blogList, token, size }) {
 	return (
-		<>
+		<ProtectAdminRoute>
 			<ManagementBlog blogList={blogList} token={token} size={size} />
-		</>
+		</ProtectAdminRoute>
 	);
 }
 

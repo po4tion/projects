@@ -145,9 +145,9 @@ export default function handler(req, res) {
 
 									// 사진 업데이트
 									if (files.photo) {
-										if (files.photo.size > 100000000) {
+										if (files.photo.size >= 1500000) {
 											return res.status(400).json({
-												error: '사진은 10mb를 넘을 수 없습니다.',
+												error: '사진은 1mb를 넘을 수 없습니다.',
 											});
 										}
 

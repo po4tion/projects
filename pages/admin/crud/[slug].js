@@ -1,31 +1,33 @@
-import { Main } from '/components/blog';
+import { ProtectAdminRoute } from '/components/auth';
+import { AdminUpdatePost } from '/components/admin';
 import { getCategoriesInServer } from '/actions/handleCategory';
 import { getTagsInServer } from '/actions/handleTag';
-import { ProtectAdminRoute } from '/components/auth';
+import { getBlogInServer } from '/actions/handleBlog';
 
-function Blog({ data }) {
+function UpdateBlog({ data }) {
 	return (
 		<ProtectAdminRoute>
-			<Main
+			<AdminUpdatePost
 				categories={data.categories.data}
 				tags={data.tags.data}
 				token={data.token}
+				post={data.blog.data}
 			/>
 		</ProtectAdminRoute>
 	);
 }
 
-export default Blog;
+export default UpdateBlog;
 
 export async function getServerSideProps(ctx) {
 	const categories = await getCategoriesInServer();
-
 	const tags = await getTagsInServer();
+	const blog = await getBlogInServer(encodeURI(ctx.params.slug));
 
 	const { req } = ctx;
 	const accessToken = req.headers.cookie.slice(13);
 
 	return {
-		props: { data: { categories, tags, token: accessToken } },
+		props: { data: { categories, tags, blog, token: accessToken } },
 	};
 }

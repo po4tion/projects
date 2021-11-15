@@ -22,6 +22,7 @@ export default function handler(req, res) {
 						.populate('categories', '_id name slug')
 						.populate('tags', '_id name slug')
 						.populate('postedBy', '_id username name')
+						.sort({ createdAt: -1 })
 						.select(
 							'categories tags _id title slug excerpt postedBy createdAt updatedAt'
 						)

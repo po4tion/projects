@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { getCookie, isAuth } from '/actions/handleAuth';
-import { createBlog } from '/actions/handleBlog';
+import { updateBlog } from '/actions/handleBlog';
 import Image from 'next/image';
 
 import Button from '@mui/material/Button';
@@ -27,11 +27,13 @@ import '/node_modules/react-quill/dist/quill.snow.css';
 import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
 
-function Main({ router, categories, tags, token }) {
+function AdminUpdatePost({ categories, tags, token, post }) {
+	const router = useRouter();
+
 	const [info, setInfo] = useState({
 		error: '',
 		success: '',
-		title: '',
+		title: post.title,
 		hideButton: false,
 	});
 
@@ -43,31 +45,21 @@ function Main({ router, categories, tags, token }) {
 
 	const [ctg, setCtg] = useState(categories);
 	const [tg, setTg] = useState(tags);
-
-	// 작성 중이던 글 임시 저장 기능(뒤로 가기, 새로 고침 시 글 초기화 방지)
-	const blogSave = () => {
-		if (typeof window === 'undefined') {
-			return '';
-		}
-
-		if (localStorage.getItem('blog')) {
-			return JSON.parse(localStorage.getItem('blog'));
-		} else {
-			return '';
-		}
-	};
-
-	const [body, setBody] = useState(blogSave());
+	const [body, setBody] = useState(post.body);
 
 	// title & photo control
 	const handleChange = key => e => {
 		const value = key === 'photo' ? e.target.files[0] : e.target.value;
 
 		if (e.target.files.length === 0) {
+			data.set(key, undefined);
+
 			setInfo({
 				...info,
 				[key]: '',
 			});
+
+			setData(data);
 			return;
 		}
 
@@ -91,16 +83,41 @@ function Main({ router, categories, tags, token }) {
 		setData(data);
 	};
 
-	// 카테고리 & 태그 체크박스 control
-	const [checkCtg, setCheckCtg] = useState([]);
-	const [checkTg, setCheckTg] = useState([]);
+	// 선택되어 있던 카테고리 관리
+	const checkedCategories = ctgs => {
+		const store = [];
 
+		ctgs.forEach(ctg => {
+			store.push(ctg._id);
+		});
+
+		return store;
+	};
+
+	// 선택되어 있던 태그 관리
+	const checkedTags = tgs => {
+		const store = [];
+
+		tgs.forEach(tag => {
+			store.push(tag._id);
+		});
+
+		return store;
+	};
+
+	// 카테고리 & 태그 체크박스 control
+	const [checkedCtg, setCheckedCtg] = useState(
+		checkedCategories(post.categories)
+	);
+	const [checkedTg, setCheckedTg] = useState(checkedTags(post.tags));
+
+	// 체크박스 control
 	const handleCheckBox = (name, _id) => () => {
 		setInfo({ ...info, error: '' });
 
 		if (name === '카테고리') {
-			const category = checkCtg.indexOf(_id);
-			const store = [...checkCtg];
+			const category = checkedCtg.indexOf(_id);
+			const store = [...checkedCtg];
 
 			// store에 선택된 카테고리가 존재하지 않을 경우
 			if (category === -1) {
@@ -110,13 +127,13 @@ function Main({ router, categories, tags, token }) {
 				store.splice(category, 1);
 			}
 
-			setCheckCtg(store);
+			setCheckedCtg(store);
 			data.set('categories', store);
 		}
 
 		if (name === '태그') {
-			const tag = checkTg.indexOf(_id);
-			const store = [...checkTg];
+			const tag = checkedTg.indexOf(_id);
+			const store = [...checkedTg];
 
 			if (tag === -1) {
 				store.push(_id);
@@ -124,8 +141,30 @@ function Main({ router, categories, tags, token }) {
 				store.splice(tag, 1);
 			}
 
-			setCheckTg(store);
+			setCheckedTg(store);
 			data.set('tags', store);
+		}
+	};
+
+	const isChecked = (name, id) => {
+		if (name === '카테고리') {
+			const result = checkedCtg.indexOf(id);
+
+			if (result !== -1) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (name === '태그') {
+			const result = checkedTg.indexOf(id);
+
+			if (result !== -1) {
+				return true;
+			}
+
+			return false;
 		}
 	};
 
@@ -133,39 +172,29 @@ function Main({ router, categories, tags, token }) {
 	const handleQuill = e => {
 		setBody(e);
 
-		// data.set('body', e);
-
-		// window === 'object' => 브라우저 상태
-		if (typeof window !== 'undefined') {
-			localStorage.setItem('blog', JSON.stringify(e));
-		}
+		data.set('body', e);
 	};
 
-	const handleSubmit = e => {
+	const handleSubmit = async e => {
 		e.preventDefault();
 
-		if (localStorage.getItem('blog')) {
-			const value = JSON.parse(localStorage.getItem('blog'));
-
-			data.set('body', value);
-		}
-
-		createBlog(data, token).then(data => {
+		await updateBlog(data, post.slug, token).then(data => {
 			if (data.error) {
-				setInfo({ ...info, error: data.error });
+				setInfo({
+					...info,
+					error: '업데이트 할 수 없습니다',
+				});
 			} else {
 				setInfo({
 					...info,
-					error: '',
-					success: `${data.title} 글이 게시되었습니다`,
-					title: '',
+					success: '수정되었습니다',
 				});
 
-				setBody('');
-				setCtg([]);
-				setTg([]);
-
-				router.push('/admin');
+				if (isAuth() && isAuth().role === 0) {
+					router.replace('/user');
+				} else if (isAuth() && isAuth().role === 1) {
+					router.replace('/admin');
+				}
 			}
 		});
 	};
@@ -209,7 +238,10 @@ function Main({ router, categories, tags, token }) {
 									<FormControlLabel
 										label={value.name}
 										control={
-											<Checkbox onChange={handleCheckBox(name, value._id)} />
+											<Checkbox
+												checked={isChecked(name, value._id)}
+												onChange={handleCheckBox(name, value._id)}
+											/>
 										}
 									/>
 								</ListItem>
@@ -236,9 +268,6 @@ function Main({ router, categories, tags, token }) {
 					<>
 						<Box
 							sx={{
-								// display: 'flex',
-								// alignItems: 'center',
-								// justifyContent: 'center',
 								width: '300px',
 								maxWidth: '300px',
 								height: '250px',
@@ -302,6 +331,7 @@ function Main({ router, categories, tags, token }) {
 								</Alert>
 							)}
 							<TextField
+								defaultValue={info.title}
 								id="title"
 								label="제목을 입력해주세요"
 								variant="outlined"
@@ -341,4 +371,4 @@ function Main({ router, categories, tags, token }) {
 	);
 }
 
-export default withRouter(Main);
+export default AdminUpdatePost;
