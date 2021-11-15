@@ -100,11 +100,11 @@ function HomeList({
 				/>
 				<meta
 					property="og:image"
-					content={`${process.env.NEXT_PUBLIC_API}/public/images/kuma.jpg`}
+					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
 				/>
 				<meta
 					property="og:image:secure_url"
-					content={`${process.env.NEXT_PUBLIC_API}/public/images/kuma.jpg`}
+					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
 				/>
 				<meta property="og:image:type" content="image/jpg" />
 			</Head>

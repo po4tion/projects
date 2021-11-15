@@ -64,19 +64,30 @@ function Main({ router, categories, tags, token }) {
 		const value = key === 'photo' ? e.target.files[0] : e.target.value;
 
 		if (key === 'photo' && e.target.files.length === 0) {
+			URL.revokeObjectURL(info.photo);
+
 			setInfo({
 				...info,
 				[key]: '',
 			});
+
+			data.set(key, '');
+			setData(data);
+
 			return;
 		}
 
 		if (key === 'photo' && e.target && e.target.files[0].size > 1500000) {
+			URL.revokeObjectURL(info.photo);
+
 			setInfo({
 				...info,
 				error: '사진의 용량은 1mb 이하여야 합니다',
-				photo: '',
+				[key]: '',
 			});
+
+			data.set(key, '');
+			setData(data);
 
 			return;
 		}
@@ -164,6 +175,7 @@ function Main({ router, categories, tags, token }) {
 				setBody('');
 				setCtg([]);
 				setTg([]);
+				URL.revokeObjectURL(info.photo);
 
 				router.push('/admin');
 			}

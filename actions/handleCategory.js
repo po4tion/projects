@@ -40,6 +40,15 @@ export const getCategory = async slug => {
 	return result;
 };
 
+export const getCategoryInServer = async slug => {
+	const result = await axios
+		.get(`${process.env.API}/api/category/${slug}`)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
 export const removeCategory = async (slug, token) => {
 	const result = await axios
 		.delete(`/api/category/${slug}`, {

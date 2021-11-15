@@ -89,9 +89,11 @@ export default function handler(req, res) {
 										error: '사진은 1mb를 넘을 수 없습니다.',
 									});
 								}
-
 								blog.photo.data = fs.readFileSync(files.photo.filepath);
 								blog.photo.contentType = files.photo.mimetype;
+							} else {
+								blog.photo.data = fs.readFileSync('./public/images/kuma.jpg');
+								blog.photo.contentType = 'image/jpeg';
 							}
 
 							// 블로그 저장과 카테고리와 태그
@@ -104,7 +106,6 @@ export default function handler(req, res) {
 										error: '제목이 중복됩니다.',
 									});
 								}
-
 								// 카테고리
 								await Blog.findByIdAndUpdate(
 									result._id,

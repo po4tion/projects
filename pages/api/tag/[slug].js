@@ -4,6 +4,7 @@
 */
 
 import Tag from '/models/Tag';
+import Blog from '/models/Blog';
 import {
 	dbConnect,
 	errorHandler,
@@ -22,15 +23,33 @@ export default function handler(req, res) {
 				try {
 					const { slug } = req.query;
 
-					await Tag.findOne({ slug: slug.toLowerCase() }).exec((err, tag) => {
-						if (err) {
-							return res.status(400).json({
-								error: errorHandler(err),
-							});
-						}
+					await Tag.findOne({ slug: slug.toLowerCase() }).exec(
+						async (err, tag) => {
+							if (err) {
+								return res.status(400).json({
+									error: errorHandler(err),
+								});
+							}
 
-						return res.status(201).json(tag);
-					});
+							await Blog.find({ tags: tag })
+								.populate('categories', '_id name slug')
+								.populate('tags', '_id name slug')
+								.populate('postedBy', '_id name')
+								.sort({ createdAt: -1 })
+								.select(
+									'categories tags _id title slug excerpt postedBy createdAt updatedAt'
+								)
+								.exec((err, data) => {
+									if (err) {
+										return res.status(400).json({
+											error: '해당 태그와 연관된 블로그를 불러오지 못했습니다.',
+										});
+									}
+
+									return res.status(200).json({ tag, blogs: data });
+								});
+						}
+					);
 				} catch (error) {
 					return res.status(400).json({ error: '에러' });
 				}

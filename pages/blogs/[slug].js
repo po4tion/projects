@@ -26,7 +26,7 @@ export async function getStaticProps(ctx) {
 	return {
 		props: {
 			blog,
-			revalidate: 60, // In 60 Seconds
+			revalidate: 5, // In 60 Seconds
 			related,
 		},
 	};

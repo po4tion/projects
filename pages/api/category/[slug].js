@@ -4,6 +4,7 @@
 */
 
 import Category from '/models/Category';
+import Blog from '/models/Blog';
 import {
 	dbConnect,
 	errorHandler,
@@ -23,14 +24,31 @@ export default function handler(req, res) {
 					const { slug } = req.query;
 
 					await Category.findOne({ slug: slug.toLowerCase() }).exec(
-						(err, category) => {
+						async (err, category) => {
 							if (err) {
 								return res.status(400).json({
 									error: errorHandler(err),
 								});
 							}
 
-							return res.status(201).json(category);
+							await Blog.find({ categories: category })
+								.populate('categories', '_id name slug')
+								.populate('tags', '_id name slug')
+								.populate('postedBy', '_id name')
+								.sort({ createdAt: -1 })
+								.select(
+									'categories tags _id title slug excerpt postedBy createdAt updatedAt'
+								)
+								.exec((err, data) => {
+									if (err) {
+										return res.status(400).json({
+											error:
+												'해당 카테고리와 연관된 블로그를 불러오지 못했습니다.',
+										});
+									}
+
+									return res.status(200).json({ category, blogs: data });
+								});
 						}
 					);
 				} catch (error) {
