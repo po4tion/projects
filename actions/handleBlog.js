@@ -1,4 +1,5 @@
 import axios from 'axios';
+import queryString from 'query-string';
 
 export const createBlog = async (blog, token) => {
 	const result = await axios
@@ -107,6 +108,18 @@ export const blogRelated = async blog => {
 export const blogRelatedInServer = async blog => {
 	const result = await axios
 		.post(`${process.env.API}/api/blogs/related`, blog)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const blogSearch = async params => {
+	console.log('params', params);
+
+	const query = queryString.stringify(params);
+	const result = await axios
+		.get(`/api/blogs/search?${query}`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
