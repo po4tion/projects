@@ -58,7 +58,7 @@ function BlogList({ blog, noLink = true }) {
 										{noLink && (
 											<>
 												<NextLink
-													href={`/profile/${blog.postedBy.username}`}
+													href={`/profile/${encodeURI(blog.postedBy.username)}`}
 													passHref
 												>
 													<Link underline="hover">

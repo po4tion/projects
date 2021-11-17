@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -18,10 +18,7 @@ import Alert from '@mui/material/Alert';
 
 function ProfileUpdate({ token, profile }) {
 	const router = useRouter();
-
-	useEffect(() => {
-		console.log('하이');
-	}, [router]);
+	const [photoRefresh, setPhotoRefresh] = useState(false);
 
 	const [info, setInfo] = useState({
 		username: '',
@@ -36,6 +33,10 @@ function ProfileUpdate({ token, profile }) {
 	});
 
 	const handleChange = key => e => {
+		if (key === 'photo') {
+			setPhotoRefresh(false);
+		}
+
 		const value = key === 'photo' ? e.target.files[0] : e.target.value;
 		const userData = new FormData();
 
@@ -109,11 +110,14 @@ function ProfileUpdate({ token, profile }) {
 					});
 
 					// 상단의 username 버튼 활성화를 위해 refresh, 사진은 브라우저 새로고침
-					if (info.photo) {
-						window.location.replace(router.asPath);
-					} else {
-						router.replace(router.asPath);
-					}
+					// if (info.photo) {
+					// 	window.location.replace(router.asPath);
+					// } else {
+					// 	router.replace(router.asPath);
+					// }
+					URL.revokeObjectURL(info.photo);
+					setPhotoRefresh(handlePhotoForm);
+					router.replace(router.asPath);
 				});
 			}
 		});
@@ -175,6 +179,7 @@ function ProfileUpdate({ token, profile }) {
 							}}
 						>
 							<Image
+								priority={true}
 								loader={myLoader}
 								quality={100}
 								src={src}
@@ -251,7 +256,6 @@ function ProfileUpdate({ token, profile }) {
 				<Typography variant="h4" align="left" sx={{ mb: 6, width: '100%' }}>
 					{profile.name} 님의 프로필
 				</Typography>
-
 				<Box
 					component="form"
 					onSubmit={handleSubmit}
@@ -272,7 +276,7 @@ function ProfileUpdate({ token, profile }) {
 							</Grid>
 						)}
 						<Grid item xs={12}>
-							{handlePhotoForm()}
+							{photoRefresh || handlePhotoForm()}
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
