@@ -57,14 +57,14 @@ function Header({ title }) {
 						{isAuth() && isAuth().role === 1 && (
 							<Link href="/admin" passHref>
 								<Button color="primary" variant="contained" size="medium">
-									{`${isAuth().name}님`}
+									{`${isAuth().username}님`}
 								</Button>
 							</Link>
 						)}
 						{isAuth() && isAuth().role === 0 && (
 							<Link href="/user" passHref>
 								<Button color="primary" variant="contained" size="medium">
-									{`${isAuth().name}님`}
+									{`${isAuth().username}님`}
 								</Button>
 							</Link>
 						)}

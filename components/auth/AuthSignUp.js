@@ -5,8 +5,6 @@ import { signupValidation } from '/lib/signupValidation';
 import { signupAxios, isAuth } from '/actions/handleAuth';
 import Router from 'next/router';
 import NextLink from 'next/link';
-import isEmail from 'validator/lib/isEmail';
-import isEmpty from 'validator/lib/isEmpty';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';

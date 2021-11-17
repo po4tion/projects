@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import NextLink from 'next/link';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -13,21 +13,22 @@ import CardMedia from '@mui/material/CardMedia';
 import UpdateIcon from '@mui/icons-material/Update';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 
-function BlogList({ blog }) {
+function BlogList({ blog, noLink = true }) {
 	const categoryList = blog => {
 		return blog.categories.map((cat, idx) => (
-			<Link key={idx} href={`/categories/${cat.slug}`} passHref>
+			<NextLink key={idx} href={`/categories/${cat.slug}`} passHref>
 				<Chip color="primary" label={cat.name} sx={{ marginRight: 1 }} />
-			</Link>
+			</NextLink>
 		));
 	};
 
 	const tagList = blog => {
 		return blog.tags.map((tag, idx) => (
-			<Link key={idx} href={`/tags/${tag.slug}`} passHref>
+			<NextLink key={idx} href={`/tags/${tag.slug}`} passHref>
 				<Chip color="secondary" label={tag.name} sx={{ marginRight: 1 }} />
-			</Link>
+			</NextLink>
 		));
 	};
 
@@ -35,7 +36,7 @@ function BlogList({ blog }) {
 		<div>
 			<CssBaseline />
 			<Grid item xs={12} mb={2}>
-				<Link href={`/blogs/${blog.slug}`} passHref>
+				<NextLink href={`/blogs/${blog.slug}`} passHref>
 					<CardActionArea component="div">
 						<Card sx={{ display: 'flex', width: '600px', height: '400px' }}>
 							<CardMedia
@@ -54,7 +55,19 @@ function BlogList({ blog }) {
 										container
 										sx={{ direction: 'row', alignItems: 'center' }}
 									>
-										{blog.postedBy.name} &nbsp;
+										{noLink && (
+											<>
+												<NextLink
+													href={`/profile/${blog.postedBy.username}`}
+													passHref
+												>
+													<Link underline="hover">
+														{blog.postedBy.username}
+													</Link>
+												</NextLink>{' '}
+												&nbsp;
+											</>
+										)}
 										<UpdateIcon fontSize="small" />
 										{moment(blog.updatedAt).fromNow()}
 									</Grid>
@@ -71,7 +84,7 @@ function BlogList({ blog }) {
 							</CardContent>
 						</Card>
 					</CardActionArea>
-				</Link>
+				</NextLink>
 			</Grid>
 		</div>
 	);

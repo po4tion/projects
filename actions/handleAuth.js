@@ -66,6 +66,15 @@ export const removeLocalStorage = key => {
 	}
 };
 
+export const updateLocalStorage = (user, next) => {
+	if (process.browser) {
+		if (localStorage.getItem('user')) {
+			localStorage.setItem('user', JSON.stringify(user));
+			next();
+		}
+	}
+};
+
 export const authenticate = (value, next) => {
 	setCookie('access-token', value.token);
 	setLocalStorage('user', value.data);

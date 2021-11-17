@@ -71,7 +71,7 @@ function Main({ router, categories, tags, token }) {
 				[key]: '',
 			});
 
-			data.set(key, '');
+			data.set(key, undefined);
 			setData(data);
 
 			return;
@@ -86,7 +86,7 @@ function Main({ router, categories, tags, token }) {
 				[key]: '',
 			});
 
-			data.set(key, '');
+			data.set(key, undefined);
 			setData(data);
 
 			return;

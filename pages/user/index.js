@@ -1,9 +1,10 @@
 import { ProtectRoute } from '/components/auth';
+import { Main } from '/components/user';
 
 function User() {
 	return (
 		<ProtectRoute>
-			<p>유저 페이지</p>
+			<Main />
 		</ProtectRoute>
 	);
 }

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { withRouter } from 'next/router';
 import { getBlogInServer } from '/actions/handleBlog';
 import moment from 'moment';
@@ -16,6 +16,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Link from '@mui/material/Link';
 
 function OneBlog({ router, blog, related }) {
 	const { title, sDesc, slug, postedBy, updatedAt, body, categories, tags } =
@@ -24,18 +25,18 @@ function OneBlog({ router, blog, related }) {
 	// 카테고리 Chip 생성
 	const handleCtg = ctgs => {
 		return ctgs.map((ctg, idx) => (
-			<Link key={idx} href={`/categories/${ctg.slug}`} passHref>
+			<NextLink key={idx} href={`/categories/${ctg.slug}`} passHref>
 				<Chip color="primary" label={ctg.name} sx={{ marginRight: 1 }} />
-			</Link>
+			</NextLink>
 		));
 	};
 
 	// 태그 Chip 생성
 	const handleTag = tgs => {
 		return tgs.map((tg, idx) => (
-			<Link key={idx} href={`/tags/${tg.slug}`} passHref>
+			<NextLink key={idx} href={`/tags/${tg.slug}`} passHref>
 				<Chip color="secondary" label={tg.name} sx={{ marginRight: 1 }} />
-			</Link>
+			</NextLink>
 		));
 	};
 
@@ -44,9 +45,9 @@ function OneBlog({ router, blog, related }) {
 	const relateCards = blogs => {
 		return blogs.map((blog, idx) => {
 			return (
-				<Link key={idx} href={`/blogs/${blog.slug}`} passHref>
+				<NextLink key={idx} href={`/blogs/${blog.slug}`} passHref>
 					<Grid item xs={6} md={4}>
-						<Card raised>
+						<Card raised sx={{ height: '400px' }}>
 							<CardMedia
 								component="img"
 								image={`/api/blog/photo/${blog.slug}`}
@@ -58,9 +59,15 @@ function OneBlog({ router, blog, related }) {
 							/>
 							<CardHeader
 								title={blog.title}
-								subheader={`${blog.postedBy.name} | ${moment(updatedAt).format(
-									'YYYY년 MM월 DD일 HH:MM'
-								)}`}
+								subheader={
+									<Box>
+										<NextLink href={`/profile/${postedBy.username}`} passHref>
+											<Link>{postedBy.username}</Link>
+										</NextLink>{' '}
+										&#183;&nbsp;
+										{moment(updatedAt).format('YYYY년 MM월 DD일')}
+									</Box>
+								}
 								sx={{ paddingBottom: 0 }}
 							/>
 							<CardContent sx={{ paddingTop: 0 }}>
@@ -68,7 +75,7 @@ function OneBlog({ router, blog, related }) {
 							</CardContent>
 						</Card>
 					</Grid>
-				</Link>
+				</NextLink>
 			);
 		});
 	};
@@ -129,8 +136,11 @@ function OneBlog({ router, blog, related }) {
 						</Grid>
 						<Grid item xs={12}>
 							<Typography variant="h6">
-								{postedBy.name} &#183;&nbsp;
-								{moment(updatedAt).format(`YYYY년 MM월 DD일 HH:MM`)}
+								<NextLink href={`/profile/${postedBy.username}`} passHref>
+									<Link underline="hover">{postedBy.username}</Link>
+								</NextLink>{' '}
+								&#183;&nbsp;
+								{moment(updatedAt).format(`YYYY년 MM월 DD일`)}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
