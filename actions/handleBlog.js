@@ -50,17 +50,22 @@ export const getBlogInServer = async slug => {
 // 	return result;
 // };
 
-export const getBlogsInServer = async username => {
-	let endpoint;
-
-	if (username) {
-		endpoint = `${process.env.API}/api/${username}/blogs`;
-	} else {
-		endpoint = `${process.env.API}/api/blogs`;
-	}
-
+export const getBlogsUsers = async token => {
 	const result = await axios
-		.get(endpoint)
+		.get(`${process.env.API}/api/user/profileAndBlog`, {
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		})
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const getBlogsInServer = async () => {
+	const result = await axios
+		.get(`${process.env.API}/api/blogs`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
