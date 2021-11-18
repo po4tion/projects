@@ -11,14 +11,7 @@ function UserBlogs({ blogs, user }) {
 
 export default UserBlogs;
 
-export async function getStaticPaths() {
-	return {
-		paths: [],
-		fallback: 'blocking',
-	};
-}
-
-export async function getStaticProps(ctx) {
+export async function getServerSideProps(ctx) {
 	const data = await getUserBlogs(encodeURI(ctx.params.username));
 
 	return {
@@ -26,6 +19,5 @@ export async function getStaticProps(ctx) {
 			blogs: data.blogs,
 			user: data.user,
 		},
-		revalidate: 5,
 	};
 }

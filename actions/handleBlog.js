@@ -41,15 +41,6 @@ export const getBlogInServer = async slug => {
 	return result;
 };
 
-// export const getBlogs = async username => {
-// 	const result = await axios
-// 		.get(`/api/${username}/blogs`)
-// 		.then(res => res.data)
-// 		.catch(err => err.response.data);
-
-// 	return result;
-// };
-
 export const getBlogsUsers = async token => {
 	const result = await axios
 		.get(`${process.env.API}/api/user/profileAndBlog`, {
