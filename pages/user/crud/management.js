@@ -23,7 +23,7 @@ export async function getServerSideProps(ctx) {
 	const { req } = ctx;
 	const accessToken = req.headers.cookie.slice(13);
 	const profile = await getUserProfile(accessToken);
-	const blogList = await getBlogsInServer(encodeURI(profile.profile.username));
+	const blogList = await getBlogsInServer(encodeURI('포션'));
 
 	return {
 		props: {
