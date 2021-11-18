@@ -4,12 +4,10 @@ import { getBlogsUsers } from '/actions/handleBlog';
 import { ManagementBlog } from '/components/blog';
 import { ProtectRoute } from '/components/auth';
 
-function Management({ token, blogs }) {
-	console.log(blogs);
+function Management({ token, blogs, size }) {
 	return (
 		<ProtectRoute>
-			{/* <ManagementBlog blogList={blogList} token={token} size={size} /> */}
-			{JSON.stringify(blogs)}
+			<ManagementBlog blogList={blogs} token={token} size={size} />
 		</ProtectRoute>
 	);
 }
@@ -25,6 +23,7 @@ export async function getServerSideProps(ctx) {
 		props: {
 			token: accessToken,
 			blogs,
+			size: blogs.data.length,
 		},
 	};
 }

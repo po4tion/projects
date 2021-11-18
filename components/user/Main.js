@@ -36,7 +36,7 @@ function Main() {
 								</ListItem>
 							</Link>
 
-							<Link href={`/user/crud/management`} passHref>
+							<Link href={'/user/crud/management'} passHref>
 								<ListItem divider disablePadding>
 									<ListItemButton>
 										<ListItemIcon>
