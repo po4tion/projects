@@ -1,5 +1,5 @@
 import { getBlogsInServer } from '/actions/handleBlog';
-import { ManagementBlog } from '/components/admin';
+import { ManagementBlog } from '/components/blog';
 import { ProtectAdminRoute } from '/components/auth';
 
 function Management({ blogList, token, size }) {

@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { isAuth } from '/actions/handleAuth';
 
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +15,12 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import BookIcon from '@mui/icons-material/Book';
 
 function Main() {
+	const [un, setUn] = useState();
+
+	useEffect(() => {
+		setUn(isAuth() && isAuth().username);
+	}, []);
+
 	return (
 		<>
 			<Container maxWidth="sm">
@@ -36,7 +44,7 @@ function Main() {
 								</ListItem>
 							</Link>
 
-							<Link href="/user/crud/management" passHref>
+							<Link href={`/user/management/${un}`} passHref>
 								<ListItem divider disablePadding>
 									<ListItemButton>
 										<ListItemIcon>

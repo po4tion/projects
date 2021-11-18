@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { isAuth } from '/actions/handleAuth';
@@ -21,12 +21,19 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 
 function ManagementBlog({ blogList, token, size }) {
+	const [auth, setAuth] = useState();
+
+	useEffect(() => {
+		setAuth(isAuth() && isAuth().role);
+	}, []);
+
 	const [page, setPage] = useState(1);
 	const { data: blogs } = blogList;
 	const router = useRouter();
 
 	const deletePost = async slug => {
-		await removeBlog(slug, token).then(_ => {
+		await removeBlog(slug, token).then(data => {
+			console.log(data);
 			router.replace(router.asPath);
 		});
 	};
@@ -40,7 +47,7 @@ function ManagementBlog({ blogList, token, size }) {
 	};
 
 	const updateBtn = blog => {
-		if (isAuth() && isAuth().role === 0) {
+		if (auth === 0) {
 			return (
 				<Link href={`/user/crud/${blog.slug}`} passHref>
 					<Button
@@ -52,7 +59,7 @@ function ManagementBlog({ blogList, token, size }) {
 					</Button>
 				</Link>
 			);
-		} else if (isAuth() && isAuth().role === 1) {
+		} else if (auth === 1) {
 			return (
 				<Link href={`/admin/crud/${blog.slug}`} passHref>
 					<Button
@@ -80,7 +87,7 @@ function ManagementBlog({ blogList, token, size }) {
 				<Grid key={i} container spacing={2} sx={{ marginBottom: 2 }}>
 					<Grid item xs={11} sx={{ zIndex: 10 }}>
 						<Link href={`/blogs/${blogs[i].slug}`} passHref>
-							<CardActionArea component="div">
+							<CardActionArea component="a">
 								<Card
 									sx={{
 										userSelect: 'none',

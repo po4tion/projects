@@ -1,4 +1,4 @@
-import { ProtectAdminRoute } from '/components/auth';
+import { ProtectRoute } from '/components/auth';
 import { UpdatePost } from '/components/blog';
 import { getCategoriesInServer } from '/actions/handleCategory';
 import { getTagsInServer } from '/actions/handleTag';
@@ -6,14 +6,14 @@ import { getBlogInServer } from '/actions/handleBlog';
 
 function UpdateBlog({ data }) {
 	return (
-		<ProtectAdminRoute>
+		<ProtectRoute>
 			<UpdatePost
 				categories={data.categories.data}
 				tags={data.tags.data}
 				token={data.token}
 				post={data.blog.data}
 			/>
-		</ProtectAdminRoute>
+		</ProtectRoute>
 	);
 }
 

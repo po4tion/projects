@@ -1,9 +1,18 @@
 import axios from 'axios';
 import queryString from 'query-string';
+import { isAuth } from '/actions/handleAuth';
 
 export const createBlog = async (blog, token) => {
+	let endpoint;
+
+	if (isAuth() && isAuth().role === 1) {
+		endpoint = '/api/blog';
+	} else if (isAuth() && isAuth().role === 0) {
+		endpoint = '/api/user/blog';
+	}
+
 	const result = await axios
-		.post('/api/blog', blog, {
+		.post(endpoint, blog, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -32,18 +41,26 @@ export const getBlogInServer = async slug => {
 	return result;
 };
 
-// export const getBlogs = async () => {
+// export const getBlogs = async username => {
 // 	const result = await axios
-// 		.get('/api/blogs')
+// 		.get(`/api/${username}/blogs`)
 // 		.then(res => res.data)
 // 		.catch(err => err.response.data);
 
 // 	return result;
 // };
 
-export const getBlogsInServer = async () => {
+export const getBlogsInServer = async username => {
+	let endpoint;
+
+	if (username) {
+		endpoint = `${process.env.API}/api/${username}/blogs`;
+	} else {
+		endpoint = `${process.env.API}/api/blogs`;
+	}
+
 	const result = await axios
-		.get(`${process.env.API}/api/blogs`)
+		.get(endpoint)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
@@ -51,8 +68,16 @@ export const getBlogsInServer = async () => {
 };
 
 export const removeBlog = async (slug, token) => {
+	let endpoint;
+
+	if (isAuth() && isAuth().role === 1) {
+		endpoint = `/api/blog/${slug}`;
+	} else if (isAuth() && isAuth().role === 0) {
+		endpoint = `/api/user/blog/${slug}`;
+	}
+
 	const result = await axios
-		.delete(`/api/blog/${slug}`, {
+		.delete(endpoint, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -64,8 +89,16 @@ export const removeBlog = async (slug, token) => {
 };
 
 export const updateBlog = async (blog, slug, token) => {
+	let endpoint;
+
+	if (isAuth() && isAuth().role === 1) {
+		endpoint = `/api/blog/${slug}`;
+	} else if (isAuth() && isAuth().role === 0) {
+		endpoint = `/api/user/blog/${slug}`;
+	}
+
 	const result = await axios
-		.put(`/api/blog/${slug}`, blog, {
+		.put(endpoint, blog, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -115,8 +148,6 @@ export const blogRelatedInServer = async blog => {
 };
 
 export const blogSearch = async params => {
-	console.log('params', params);
-
 	const query = queryString.stringify(params);
 	const result = await axios
 		.get(`/api/blogs/search?${query}`)

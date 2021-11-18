@@ -177,7 +177,11 @@ function Main({ router, categories, tags, token }) {
 				setTg([]);
 				URL.revokeObjectURL(info.photo);
 
-				router.push('/admin');
+				if (isAuth() && isAuth().role === 1) {
+					router.push('/admin');
+				} else if (isAuth() && isAuth().role === 0) {
+					router.push('/user');
+				}
 			}
 		});
 	};
