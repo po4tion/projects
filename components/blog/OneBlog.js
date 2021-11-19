@@ -1,9 +1,12 @@
+import { useRef } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { withRouter } from 'next/router';
 import { getBlogInServer } from '/actions/handleBlog';
 import moment from 'moment';
 import renderHTML from 'react-render-html';
+import Script from 'next/script';
+import useScript from '/lib/blog/useScript';
 
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -79,6 +82,16 @@ function OneBlog({ router, blog, related }) {
 			);
 		});
 	};
+
+	const comment = useRef(null);
+
+	const status = useScript({
+		url: 'https://utteranc.es/client.js',
+		theme: 'github-light',
+		issueTerm: 'pathname',
+		repo: 'po4tion/devblog',
+		ref: comment,
+	});
 
 	return (
 		<>
@@ -156,6 +169,9 @@ function OneBlog({ router, blog, related }) {
 						<Divider sx={{ width: '100%', marginBottom: 5 }} />
 
 						<Grid container spacing={2}>
+							<Grid item xs={12}>
+								<Box ref={comment}></Box>
+							</Grid>
 							<Grid item xs={12}>
 								<Typography variant="h6" sx={{ textAlign: 'center' }}>
 									관심 있을 만한 포스터
