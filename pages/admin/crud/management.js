@@ -6,6 +6,7 @@ import { withRouter } from 'next/router';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/system/Box';
+import Alert from '@mui/material/Alert';
 
 function Management({ router, blogList, token, size }) {
 	if (blogList === 401) {
@@ -21,7 +22,7 @@ function Management({ router, blogList, token, size }) {
 						alignItems: 'center',
 					}}
 				>
-					토큰이 만료되어 로그아웃 됩니다
+					<Alert severity="warning">토큰이 만료되어 로그아웃 됩니다</Alert>
 				</Box>
 			</Container>
 		);

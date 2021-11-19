@@ -72,7 +72,7 @@ UserSchema.methods.generateToken = function () {
 		_id: this._id.toString(),
 	};
 	const expire = {
-		expiresIn: '1m',
+		expiresIn: '1d',
 	};
 	const token = jwt.sign(payload, process.env.JWT_SECRET, expire);
 

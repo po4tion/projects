@@ -8,6 +8,7 @@ import { ProtectRoute } from '/components/auth';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/system/Box';
+import Alert from '@mui/material/Alert';
 
 function Management({ router, token, blogs, size }) {
 	if (blogs === 401) {
@@ -23,7 +24,7 @@ function Management({ router, token, blogs, size }) {
 						alignItems: 'center',
 					}}
 				>
-					토큰이 만료되어 로그아웃 됩니다
+					<Alert severity="warning">토큰이 만료되어 로그아웃 됩니다</Alert>
 				</Box>
 			</Container>
 		);
