@@ -4,7 +4,8 @@ import {
 	getCategories,
 	removeCategory,
 } from '/actions/handleCategory';
-import { getCookie } from '/actions/handleAuth';
+import { getCookie, signoutAxios } from '/actions/handleAuth';
+import { useRouter } from 'next/router';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -21,6 +22,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Alert from '@mui/material/Alert';
 
 function AdminCategory({ accessToken }) {
+	const router = useRouter();
 	// pre-render를 통한 토큰 가져오기
 	/* 방법 1.
 	useEffect(() => {
@@ -74,10 +76,15 @@ function AdminCategory({ accessToken }) {
 			if (data.error) {
 				setInfo({
 					...info,
-					error: '카테고리가 이미 존재합니다',
+					error: data.error,
 					success: false,
 					loading: false,
 				});
+
+				// 토큰 만료 handler
+				if (data.error.startsWith('토큰')) {
+					signoutAxios(() => router.replace('/signin'));
+				}
 			} else {
 				setInfo({
 					...info,
@@ -115,6 +122,11 @@ function AdminCategory({ accessToken }) {
 					success: false,
 					loading: false,
 				});
+
+				// 토큰 만료 handler
+				if (data.error.startsWith('토큰')) {
+					signoutAxios(() => router.replace('/signin'));
+				}
 			} else {
 				setInfo({
 					...info,

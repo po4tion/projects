@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Router from 'next/router';
 
 export const signupAxios = async user => {
 	const result = await axios

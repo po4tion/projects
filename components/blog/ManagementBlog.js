@@ -98,7 +98,7 @@ function ManagementBlog({ blogList, token, size }) {
 								>
 									<CardHeader
 										title={blogs[i].title}
-										subheader={`${blogs[i].postedBy.name} ${moment(
+										subheader={`${blogs[i].postedBy.username} ${moment(
 											blogs[i].updatedAt
 										).format('YYYY년 MM월 DD일 HH:MM')}`}
 									/>

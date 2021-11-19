@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createTag, getTags, removeTag } from '/actions/handleTag';
-import { getCookie } from '/actions/handleAuth';
+import { getCookie, signoutAxios } from '/actions/handleAuth';
+import { useRouter } from 'next/router';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -17,6 +18,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Alert from '@mui/material/Alert';
 
 function AdminTag({ accessToken }) {
+	const router = useRouter();
 	const [token, setToken] = useState(accessToken);
 	const [info, setInfo] = useState({
 		name: '',
@@ -63,10 +65,15 @@ function AdminTag({ accessToken }) {
 			if (data.error) {
 				setInfo({
 					...info,
-					error: '태그가 이미 존재합니다',
+					error: data.error,
 					success: false,
 					loading: false,
 				});
+
+				// 토큰 만료 handler
+				if (data.error.startsWith('토큰')) {
+					signoutAxios(() => router.replace('/signin'));
+				}
 			} else {
 				setInfo({
 					...info,
@@ -104,6 +111,11 @@ function AdminTag({ accessToken }) {
 					success: false,
 					loading: false,
 				});
+
+				// 토큰 만료 handler
+				if (data.error.startsWith('토큰')) {
+					signoutAxios(() => router.replace('/signin'));
+				}
 			} else {
 				setInfo({
 					...info,

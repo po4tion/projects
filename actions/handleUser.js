@@ -17,7 +17,7 @@ export const getUserProfile = async token => {
 			},
 		})
 		.then(res => res.data)
-		.catch(err => err.response.data);
+		.catch(err => err.response);
 
 	return result;
 };

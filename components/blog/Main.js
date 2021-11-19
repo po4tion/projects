@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { getCookie, isAuth } from '/actions/handleAuth';
+import { getCookie, isAuth, signoutAxios } from '/actions/handleAuth';
 import { createBlog } from '/actions/handleBlog';
 import Image from 'next/image';
 
@@ -164,6 +164,11 @@ function Main({ router, categories, tags, token }) {
 		createBlog(data, token).then(data => {
 			if (data.error) {
 				setInfo({ ...info, error: data.error });
+
+				// 토큰 만료 handler
+				if (data.error.startsWith('토큰')) {
+					signoutAxios(() => router.replace('/signin'));
+				}
 			} else {
 				setInfo({
 					...info,

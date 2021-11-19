@@ -1,6 +1,6 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import { isAuth } from '/actions/handleAuth';
+import { isAuth, handleResponse } from '/actions/handleAuth';
 
 export const createBlog = async (blog, token) => {
 	let endpoint;
@@ -49,16 +49,20 @@ export const getBlogsUsers = async token => {
 			},
 		})
 		.then(res => res.data)
-		.catch(err => err.response.data);
+		.catch(err => err.response);
 
 	return result;
 };
 
-export const getBlogsInServer = async () => {
+export const getBlogsInServer = async token => {
 	const result = await axios
-		.get(`${process.env.API}/api/blogs`)
+		.get(`${process.env.API}/api/blogs`, {
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		})
 		.then(res => res.data)
-		.catch(err => err.response.data);
+		.catch(err => err.response);
 
 	return result;
 };

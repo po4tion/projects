@@ -45,6 +45,7 @@ function BlogList({ blog, noLink = true }) {
 								image={`/api/blog/photo/${blog.slug}`}
 								alt={blog.title}
 							/>
+
 							<CardContent sx={{ flex: 1 }}>
 								<Typography component="h2" variant="h5">
 									{blog.title}

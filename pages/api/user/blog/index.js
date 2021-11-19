@@ -84,7 +84,7 @@ export default function handler(req, res) {
 							blog.postedBy = user._id;
 
 							// file data[photo]
-							if (files.photo) {
+							if (files.photo !== undefined) {
 								if (files.photo.size >= 1500000) {
 									return res.status(400).json({
 										error: '사진은 1mb를 넘을 수 없습니다.',
