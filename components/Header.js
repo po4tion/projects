@@ -79,6 +79,11 @@ function Header({ title }) {
 								로그아웃
 							</Button>
 						)}
+						<Link href="/admin/contact" passHref>
+							<Button color="primary" variant="contained" size="medium">
+								고객문의
+							</Button>
+						</Link>
 					</Box>
 				</Toolbar>
 			)}

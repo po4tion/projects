@@ -5,7 +5,6 @@ import { withRouter } from 'next/router';
 import { getBlogInServer } from '/actions/handleBlog';
 import moment from 'moment';
 import renderHTML from 'react-render-html';
-import Script from 'next/script';
 import useScript from '/lib/blog/useScript';
 
 import Container from '@mui/material/Container';
