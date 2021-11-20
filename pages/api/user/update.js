@@ -53,6 +53,9 @@ export default function handler(req, res) {
 								}
 
 								prev = _.assignIn(prev, fields);
+								prev.profile = `${process.env.API}/profile/${encodeURI(
+									fields.username
+								)}`;
 
 								// if (fields.username) {
 								// 	prev.username = fields.username.split(' ').join('-');
