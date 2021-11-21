@@ -79,6 +79,18 @@ UserSchema.methods.generateToken = function () {
 	return token;
 };
 
+UserSchema.methods.generateResetToken = function () {
+	const payload = {
+		_id: this._id.toString(),
+	};
+	const expire = {
+		expiresIn: '5m',
+	};
+	const token = jwt.sign(payload, process.env.JWT_SECRET_RESET, expire);
+
+	return token;
+};
+
 // nextjs는 usermodel을 사용할 때마다 새로운 모델을 만드므로 그것을 방지하기 위해
 // global 값에 저장되어 있는 모델 값들을 먼저 불러와서 값을 확인하게 한다.
 /* 

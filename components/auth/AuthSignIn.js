@@ -191,7 +191,7 @@ function AuthSignIn() {
 						</Button>
 						<Grid container>
 							<Grid item xs>
-								<NextLink href="#" passHref>
+								<NextLink href="/user/forgot" passHref>
 									<Link underline="hover" variant="body2">
 										비밀번호 찾기
 									</Link>

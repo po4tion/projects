@@ -95,3 +95,21 @@ export const isAuth = () => {
 		}
 	}
 };
+
+export const findForgotPwd = async email => {
+	const result = axios
+		.put('/api/password/forgot', email)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const setResetPwd = async value => {
+	const result = axios
+		.put(`/api/password/reset`, value)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
