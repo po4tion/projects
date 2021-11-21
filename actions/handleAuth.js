@@ -2,9 +2,18 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Router from 'next/router';
 
-export const signupAxios = async user => {
+export const beforeSignup = async user => {
 	const result = await axios
-		.post('/api/auth/signup', user)
+		.post('/api/auth/beforeSignup', user)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const signupAxios = async token => {
+	const result = await axios
+		.post('/api/auth/signup', token)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
