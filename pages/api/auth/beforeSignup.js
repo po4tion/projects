@@ -33,6 +33,8 @@ export default function handler(req, res) {
 							{ expiresIn: '5m' }
 						);
 
+						const url = `${process.env.API}/user/beforeCheck/${token}`;
+
 						const sendgridData = {
 							to: email,
 							from: process.env.EMAIL_ADMIN,
@@ -40,7 +42,7 @@ export default function handler(req, res) {
 							html: `
                 <p>아래의 링크를 클릭하여 이메일 인증을 완료해주세요</p>
                 <p>아래의 링크는 5분 후 파기됩니다</p>
-                <a href={${process.env.API}/user/beforeCheck/${token}} alt="beforeCheck Email Auth">${process.env.API}/user/beforeCheck/${token}</a>
+                <a href=${url}>링크 클릭</a>
                 <p>본 메일은 DEVBLOG에서 정식으로 보낸 이메일입니다</p>
                 <a href="https://devblog-mu.vercel.app" alt="devblog">https://devblog-mu.vercel.app</a>
               `,
