@@ -49,6 +49,19 @@ export default function handler(req, res) {
 					return res.status(201).json({ error });
 				}
 				break;
+			case 'GET':
+				try {
+					await Utag.find().exec((err, tags) => {
+						if (err) {
+							return res.status(400).json({ error: err });
+						}
+
+						return res.status(200).json({ success: tags });
+					});
+				} catch (error) {
+					return res.status(201).json({ error });
+				}
+				break;
 			default:
 				return res.status(400).json({ error: 'request method를 확인해주세요' });
 				break;

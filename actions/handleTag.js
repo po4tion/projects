@@ -12,6 +12,14 @@ export const createTag = async (tag, token) => {
 
 	return result;
 };
+export const getTagList = async () => {
+	const result = await axios
+		.get(`${process.env.API}/api/tag`)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
 
 export const getTagInServer = async slug => {
 	const result = await axios

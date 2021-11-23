@@ -23,12 +23,12 @@ export default function handler(req, res) {
 						들어간 mongoose를 최소 한번은 실행해야 한다
 						그래서 blog를 create하고 read하면 오류가 안생김 */
 					await Blog.find({})
-						.populate('tags', '_id name slug')
 						.populate('postedBy', '_id username name')
 						.sort({ createdAt: -1 })
 						.skip(skipPage)
 						.limit(limitPage)
 						.select('tags _id title slug excerpt postedBy createdAt updatedAt')
+						.populate('tags', '_id name slug')
 						.exec((err, blogs) => {
 							if (err) {
 								return res
