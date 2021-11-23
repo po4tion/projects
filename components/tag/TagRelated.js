@@ -51,7 +51,7 @@ function TagRelated({ tag, blogs }) {
 				/>
 				<meta
 					property="og:description"
-					content={`${name} 카테고리와 관련된 포스트`}
+					content={`${name} 태그와 관련된 포스트`}
 				/>
 				<meta property="og:type" content="website" />
 				<meta

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import { BlogList } from '/components/blog';
-import { listAll } from '/actions/handleBlog';
+import { getBlogs } from '/actions/handleBlog';
 
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,15 +11,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 
-function HomeList({
-	router,
-	blogs,
-	categories,
-	tags,
-	blogSize,
-	limitNum,
-	skipNum,
-}) {
+function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 	const [blogObj, setBlogObj] = useState([]);
 	const [size, setSize] = useState(blogSize);
 	const [limit, setLimit] = useState(limitNum);
@@ -43,7 +35,7 @@ function HomeList({
 		// 2 페이지씩 증가(mongoose 기준)
 		const addSkip = limit + skip;
 
-		const result = await listAll(limit, addSkip).then(data => {
+		const result = await getBlogs(limit, addSkip).then(data => {
 			setBlogObj([...blogObj, ...data.blogs]);
 			setSize(data.size);
 			setSkip(addSkip);

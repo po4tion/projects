@@ -3,7 +3,7 @@
   2. 해당 태그의 정보를 제거한다
 */
 
-import Tag from '/models/Tag';
+import Utag from '/models/Utag';
 import Blog from '/models/Blog';
 import {
 	dbConnect,
@@ -23,7 +23,7 @@ export default function handler(req, res) {
 				try {
 					const { slug } = req.query;
 
-					await Tag.findOne({ slug: slug.toLowerCase() }).exec(
+					await Utag.findOne({ slug: slug.toLowerCase() }).exec(
 						async (err, tag) => {
 							if (err) {
 								return res.status(400).json({
@@ -32,12 +32,11 @@ export default function handler(req, res) {
 							}
 
 							await Blog.find({ tags: tag })
-								.populate('categories', '_id name slug')
 								.populate('tags', '_id name slug')
 								.populate('postedBy', '_id name')
 								.sort({ createdAt: -1 })
 								.select(
-									'categories tags _id title slug excerpt postedBy createdAt updatedAt'
+									'tags _id title slug excerpt postedBy createdAt updatedAt'
 								)
 								.exec((err, data) => {
 									if (err) {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { withRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { getCookie, isAuth, signoutAxios } from '/actions/handleAuth';
+import { isAuth, signoutAxios } from '/actions/handleAuth';
 import { createBlog } from '/actions/handleBlog';
+import { createTag } from '/actions/handleTag';
 import Image from 'next/image';
 
 import Button from '@mui/material/Button';
@@ -21,18 +21,19 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Alert from '@mui/material/Alert';
 import Input from '@mui/material/Input';
+import Chip from '@mui/material/Chip';
+import Paper from '@mui/material/Paper';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
 import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
 
-function Main({ router, categories, tags, token }) {
+function Main({ router, token }) {
 	const [info, setInfo] = useState({
 		error: '',
 		success: '',
 		title: '',
-		hideButton: false,
 	});
 
 	const [data, setData] = useState('');
@@ -40,24 +41,6 @@ function Main({ router, categories, tags, token }) {
 	useEffect(() => {
 		setData(new FormData());
 	}, [router]);
-
-	const [ctg, setCtg] = useState(categories);
-	const [tg, setTg] = useState(tags);
-
-	// 작성 중이던 글 임시 저장 기능(뒤로 가기, 새로 고침 시 글 초기화 방지)
-	const blogSave = () => {
-		if (typeof window === 'undefined') {
-			return '';
-		}
-
-		if (localStorage.getItem('blog')) {
-			return JSON.parse(localStorage.getItem('blog'));
-		} else {
-			return '';
-		}
-	};
-
-	const [body, setBody] = useState(blogSave());
 
 	// title & photo control
 	const handleChange = key => e => {
@@ -102,49 +85,24 @@ function Main({ router, categories, tags, token }) {
 		setData(data);
 	};
 
-	// 카테고리 & 태그 체크박스 control
-	const [checkCtg, setCheckCtg] = useState([]);
-	const [checkTg, setCheckTg] = useState([]);
-
-	const handleCheckBox = (name, _id) => () => {
-		setInfo({ ...info, error: '' });
-
-		if (name === '카테고리') {
-			const category = checkCtg.indexOf(_id);
-			const store = [...checkCtg];
-
-			// store에 선택된 카테고리가 존재하지 않을 경우
-			if (category === -1) {
-				store.push(_id);
-			} else {
-				// store에 선택된 카테고리가 존재할 경우 store 배열에서 삭제
-				store.splice(category, 1);
-			}
-
-			setCheckCtg(store);
-			data.set('categories', store);
+	// 작성 중이던 글 임시 저장 기능(뒤로 가기, 새로 고침 시 글 초기화 방지)
+	const blogSave = () => {
+		if (typeof window === 'undefined') {
+			return '';
 		}
 
-		if (name === '태그') {
-			const tag = checkTg.indexOf(_id);
-			const store = [...checkTg];
-
-			if (tag === -1) {
-				store.push(_id);
-			} else {
-				store.splice(tag, 1);
-			}
-
-			setCheckTg(store);
-			data.set('tags', store);
+		if (localStorage.getItem('blog')) {
+			return JSON.parse(localStorage.getItem('blog'));
+		} else {
+			return '';
 		}
 	};
+
+	const [body, setBody] = useState(blogSave());
 
 	// quill 본문 control
 	const handleQuill = e => {
 		setBody(e);
-
-		// data.set('body', e);
 
 		// window === 'object' => 브라우저 상태
 		if (typeof window !== 'undefined') {
@@ -178,8 +136,7 @@ function Main({ router, categories, tags, token }) {
 				});
 
 				setBody('');
-				setCtg([]);
-				setTg([]);
+				setTags([]);
 				URL.revokeObjectURL(info.photo);
 
 				if (isAuth() && isAuth().role === 1) {
@@ -189,57 +146,6 @@ function Main({ router, categories, tags, token }) {
 				}
 			}
 		});
-	};
-
-	const handleForm = (name, type) => {
-		return (
-			<Box
-				sx={{
-					width: '100%',
-					mt: 8,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
-			>
-				<List
-					subheader={
-						<ListSubheader
-							color="primary"
-							component="div"
-							id="categories"
-							sx={{ fontSize: '24px' }}
-						>
-							{name}
-						</ListSubheader>
-					}
-					sx={{
-						width: '100%',
-						maxWidth: 360,
-						bgcolor: 'background.paper',
-						position: 'relative',
-						overflow: 'auto',
-						maxHeight: 300,
-						'& ul': { padding: 0 },
-					}}
-				>
-					{type.map((value, idx) => (
-						<li key={`${idx}`}>
-							<ul>
-								<ListItem divider disablePadding>
-									<FormControlLabel
-										label={value.name}
-										control={
-											<Checkbox onChange={handleCheckBox(name, value._id)} />
-										}
-									/>
-								</ListItem>
-							</ul>
-						</li>
-					))}
-				</List>
-			</Box>
-		);
 	};
 
 	const handlePhotoForm = () => {
@@ -300,12 +206,87 @@ function Main({ router, categories, tags, token }) {
 		);
 	};
 
+	const titleView = () => {
+		return (
+			<TextField
+				id="title"
+				label="제목을 입력해주세요"
+				variant="outlined"
+				fullWidth
+				onChange={handleChange('title')}
+				sx={{ mt: 2 }}
+			/>
+		);
+	};
+
+	// Tag Control
+	const [currentTag, setCurrentTag] = useState('');
+	const [tags, setTags] = useState([]);
+	const [tagId, setTagId] = useState([]);
+
+	const handleTags = async e => {
+		const { value } = e.target;
+
+		// 쉼표(,)만 입력하는 상황 방지
+		if (value === ',') {
+			setCurrentTag('');
+
+			return;
+		}
+
+		// 쉼표(,)를 통해 태그 등록
+		if (value.substr(value.length - 1) === ',') {
+			setCurrentTag('');
+
+			const delComma = value.substr(0, value.length - 1);
+			const duplication = tags.indexOf(delComma);
+
+			// 태그 중복 입력 Control
+			if (duplication === -1) {
+				setTags([...tags, delComma]);
+
+				const tag = { name: delComma };
+
+				const store = [...tagId];
+
+				await createTag(tag, token).then(value => {
+					store.push(value.data._id);
+					setTagId([...tagId, value.data._id]);
+
+					data.set('tags', store);
+				});
+			}
+		} else {
+			setCurrentTag(value);
+		}
+	};
+
+	const tagView = () => {
+		return tags.map((tag, idx) => {
+			return (
+				<Chip key={idx} color="primary" label={tag} sx={{ margin: 0.5 }} />
+			);
+		});
+	};
+
+	const inputView = () => {
+		return (
+			<Input
+				value={currentTag}
+				onChange={handleTags}
+				sx={{ width: '100%', padding: 0.5 }}
+				type="text"
+				placeholder="쉼표(,)를 사용하여 태그를 등록할 수 있습니다"
+			/>
+		);
+	};
+
 	return (
 		<>
-			<Container component="main" maxWidth="xl">
+			<Container component="main" maxWidth="md">
 				<CssBaseline />
 				<Grid container spacing={2}>
-					<Grid item xs={8}>
+					<Grid item xs={12}>
 						<Box
 							component="form"
 							onSubmit={handleSubmit}
@@ -322,14 +303,20 @@ function Main({ router, categories, tags, token }) {
 									{info.error}
 								</Alert>
 							)}
-							<TextField
-								id="title"
-								label="제목을 입력해주세요"
-								variant="outlined"
-								fullWidth
-								onChange={handleChange('title')}
-								sx={{ mt: 2 }}
-							/>
+							{titleView()}
+							<Paper
+								sx={{
+									display: 'flex',
+									flexWrap: 'wrap',
+									p: 0.5,
+									mt: 1,
+									width: '100%',
+								}}
+							>
+								{tagView()}
+								{inputView()}
+							</Paper>
+
 							<Box sx={{ width: '100%', mt: 1 }}>
 								<ReactQuill
 									theme="snow"
@@ -350,11 +337,6 @@ function Main({ router, categories, tags, token }) {
 								작성완료
 							</Button>
 						</Box>
-					</Grid>
-					<Grid item xs={4}>
-						{handlePhotoForm()}
-						{handleForm('카테고리', ctg)}
-						{handleForm('태그', tg)}
 					</Grid>
 				</Grid>
 			</Container>

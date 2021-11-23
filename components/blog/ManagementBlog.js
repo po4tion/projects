@@ -33,7 +33,6 @@ function ManagementBlog({ blogList, token, size }) {
 
 	const deletePost = async slug => {
 		await removeBlog(slug, token).then(data => {
-			console.log(data);
 			router.replace(router.asPath);
 		});
 	};
@@ -50,18 +49,6 @@ function ManagementBlog({ blogList, token, size }) {
 		if (auth === 0) {
 			return (
 				<Link href={`/user/crud/${blog.slug}`} passHref>
-					<Button
-						component="a"
-						variant="outlined"
-						sx={{ borderBottom: 'none' }}
-					>
-						수정
-					</Button>
-				</Link>
-			);
-		} else if (auth === 1) {
-			return (
-				<Link href={`/admin/crud/${blog.slug}`} passHref>
 					<Button
 						component="a"
 						variant="outlined"

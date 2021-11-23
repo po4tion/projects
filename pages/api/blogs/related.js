@@ -15,11 +15,11 @@ export default function handler(req, res) {
 			case 'POST':
 				try {
 					const limit = req.body.limit ? parseInt(req.body.limit) : 3;
-					const { _id, categories } = req.body;
+					const { _id, tags } = req.body;
 
 					await Blog.find({
 						_id: { $ne: _id },
-						categories: { $in: categories },
+						tags: { $in: tags },
 					})
 						.limit(limit)
 						.populate('postedBy', '_id name username profile')

@@ -2,8 +2,7 @@
 	새로운 블로그를 추가한다
 */
 import Blog from '/models/Blog';
-import Category from '/models/Category';
-import Tag from '/models/Tag';
+import Utag from '/models/Utag';
 import {
 	dbConnect,
 	tokenValidation,
@@ -52,7 +51,7 @@ export default function handler(req, res) {
 								return res.status(400).json({ error: '사진 업로드 실패' });
 							}
 
-							const { title, body, categories, tags } = fields;
+							const { title, body, tags } = fields;
 
 							if (!title || !title.length) {
 								return res.status(400).json({
@@ -61,10 +60,6 @@ export default function handler(req, res) {
 							} else if (!body || body.length < 10) {
 								return res.status(400).json({
 									error: '내용이 너무 짧습니다(10자 이상)',
-								});
-							} else if (!categories || !categories.length) {
-								return res.status(400).json({
-									error: '최소 하나의 카테고리가 필요합니다',
 								});
 							} else if (!tags || !tags.length) {
 								return res.status(400).json({
@@ -103,9 +98,8 @@ export default function handler(req, res) {
 								blog.photo.contentType = 'image/jpeg';
 							}
 
-							// 블로그 저장과 카테고리와 태그
-							const ctg = categories && categories.split(',');
-							const tg = tags && tags.split(',');
+							// 블로그 저장과 태그
+							const _tags = tags && tags.split(',');
 
 							blog.save(async (err, result) => {
 								if (err) {
@@ -113,32 +107,20 @@ export default function handler(req, res) {
 										error: '제목이 중복됩니다.',
 									});
 								}
-								// 카테고리
+
+								// 태그
 								await Blog.findByIdAndUpdate(
 									result._id,
-									{ $push: { categories: ctg } },
+									{ $push: { tags: _tags } },
 									{ new: true }
-								).exec(async (err, result) => {
+								).exec((err, result) => {
 									if (err) {
 										return res.status(400).json({
-											error: '카테고리 업데이트 실패',
+											error: err,
 										});
 									}
 
-									// 태그
-									await Blog.findByIdAndUpdate(
-										result._id,
-										{ $push: { tags: tg } },
-										{ new: true }
-									).exec((err, result) => {
-										if (err) {
-											return res.status(400).json({
-												error: '태그 업데이트 실패',
-											});
-										}
-
-										return res.status(201).json({ data: result });
-									});
+									return res.status(201).json({ data: result });
 								});
 							});
 						});

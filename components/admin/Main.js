@@ -25,29 +25,7 @@ function Main() {
 				>
 					<nav aria-label="category tag blog management">
 						<List>
-							<Link href="/admin/crud/category" passHref>
-								<ListItem divider disablePadding>
-									<ListItemButton>
-										<ListItemIcon>
-											<CategoryIcon />
-										</ListItemIcon>
-										<ListItemText primary="카테고리 생성" />
-									</ListItemButton>
-								</ListItem>
-							</Link>
-
-							<Link href="/admin/crud/tag" passHref>
-								<ListItem divider disablePadding>
-									<ListItemButton>
-										<ListItemIcon>
-											<LocalOfferIcon />
-										</ListItemIcon>
-										<ListItemText primary="태그 생성" />
-									</ListItemButton>
-								</ListItem>
-							</Link>
-
-							<Link href="/admin/crud/blog" passHref>
+							<Link href="/user/crud/blog" passHref>
 								<ListItem divider disablePadding>
 									<ListItemButton>
 										<ListItemIcon>

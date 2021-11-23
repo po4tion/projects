@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { getCookie, isAuth } from '/actions/handleAuth';
 import { updateBlog } from '/actions/handleBlog';
+import { createTag } from '/actions/handleTag';
 import Image from 'next/image';
 
 import Button from '@mui/material/Button';
@@ -21,20 +22,21 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Alert from '@mui/material/Alert';
 import Input from '@mui/material/Input';
+import Chip from '@mui/material/Chip';
+import Paper from '@mui/material/Paper';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
 import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
 
-function AdminUpdatePost({ categories, tags, token, post }) {
+function AdminUpdatePost({ token, post }) {
 	const router = useRouter();
 
 	const [info, setInfo] = useState({
 		error: '',
 		success: '',
 		title: post.title,
-		hideButton: false,
 	});
 
 	const [data, setData] = useState('');
@@ -43,8 +45,6 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 		setData(new FormData());
 	}, [router]);
 
-	const [ctg, setCtg] = useState(categories);
-	const [tg, setTg] = useState(tags);
 	const [body, setBody] = useState(post.body);
 
 	// title & photo control
@@ -83,17 +83,6 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 		setData(data);
 	};
 
-	// 선택되어 있던 카테고리 관리
-	const checkedCategories = ctgs => {
-		const store = [];
-
-		ctgs.forEach(ctg => {
-			store.push(ctg._id);
-		});
-
-		return store;
-	};
-
 	// 선택되어 있던 태그 관리
 	const checkedTags = tgs => {
 		const store = [];
@@ -103,69 +92,6 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 		});
 
 		return store;
-	};
-
-	// 카테고리 & 태그 체크박스 control
-	const [checkedCtg, setCheckedCtg] = useState(
-		checkedCategories(post.categories)
-	);
-	const [checkedTg, setCheckedTg] = useState(checkedTags(post.tags));
-
-	// 체크박스 control
-	const handleCheckBox = (name, _id) => () => {
-		setInfo({ ...info, error: '' });
-
-		if (name === '카테고리') {
-			const category = checkedCtg.indexOf(_id);
-			const store = [...checkedCtg];
-
-			// store에 선택된 카테고리가 존재하지 않을 경우
-			if (category === -1) {
-				store.push(_id);
-			} else {
-				// store에 선택된 카테고리가 존재할 경우 store 배열에서 삭제
-				store.splice(category, 1);
-			}
-
-			setCheckedCtg(store);
-			data.set('categories', store);
-		}
-
-		if (name === '태그') {
-			const tag = checkedTg.indexOf(_id);
-			const store = [...checkedTg];
-
-			if (tag === -1) {
-				store.push(_id);
-			} else {
-				store.splice(tag, 1);
-			}
-
-			setCheckedTg(store);
-			data.set('tags', store);
-		}
-	};
-
-	const isChecked = (name, id) => {
-		if (name === '카테고리') {
-			const result = checkedCtg.indexOf(id);
-
-			if (result !== -1) {
-				return true;
-			}
-
-			return false;
-		}
-
-		if (name === '태그') {
-			const result = checkedTg.indexOf(id);
-
-			if (result !== -1) {
-				return true;
-			}
-
-			return false;
-		}
 	};
 
 	// quill 본문 control
@@ -197,60 +123,6 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 				}
 			}
 		});
-	};
-
-	const handleForm = (name, type) => {
-		return (
-			<Box
-				sx={{
-					width: '100%',
-					mt: 8,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
-			>
-				<List
-					subheader={
-						<ListSubheader
-							color="primary"
-							component="div"
-							id="categories"
-							sx={{ fontSize: '24px' }}
-						>
-							{name}
-						</ListSubheader>
-					}
-					sx={{
-						width: '100%',
-						maxWidth: 360,
-						bgcolor: 'background.paper',
-						position: 'relative',
-						overflow: 'auto',
-						maxHeight: 300,
-						'& ul': { padding: 0 },
-					}}
-				>
-					{type.map((value, idx) => (
-						<li key={`${idx}`}>
-							<ul>
-								<ListItem divider disablePadding>
-									<FormControlLabel
-										label={value.name}
-										control={
-											<Checkbox
-												checked={isChecked(name, value._id)}
-												onChange={handleCheckBox(name, value._id)}
-											/>
-										}
-									/>
-								</ListItem>
-							</ul>
-						</li>
-					))}
-				</List>
-			</Box>
-		);
 	};
 
 	const handlePhotoForm = () => {
@@ -308,12 +180,83 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 		);
 	};
 
+	const titleView = () => {
+		return (
+			<TextField
+				defaultValue={info.title}
+				id="title"
+				label="제목을 입력해주세요"
+				variant="outlined"
+				fullWidth
+				onChange={handleChange('title')}
+				sx={{ mt: 2 }}
+			/>
+		);
+	};
+
+	// Tag Control
+	const [currentTag, setCurrentTag] = useState('');
+	const [tags, setTags] = useState(post.tags.map(tag => tag.name));
+	const [tagId, setTagId] = useState(post.tags.map(tag => tag._id));
+
+	const handleTags = async e => {
+		const { value } = e.target;
+		// 쉼표(,)만 입력하는 상황 방지
+		if (value === ',') {
+			setCurrentTag('');
+			return;
+		}
+		// 쉼표(,)를 통해 태그 등록
+		if (value.substr(value.length - 1) === ',') {
+			setCurrentTag('');
+
+			const delComma = value.substr(0, value.length - 1);
+			const duplication = tags.indexOf(delComma);
+
+			// 태그 중복 입력 Control
+			if (duplication === -1) {
+				setTags([...tags, delComma]);
+
+				const tag = { name: delComma };
+				const store = [...tagId];
+
+				await createTag(tag, token).then(value => {
+					store.push(value.data._id);
+					setTagId([...tagId, value.data._id]);
+					data.set('tags', store);
+				});
+			}
+		} else {
+			setCurrentTag(value);
+		}
+	};
+
+	const tagView = () => {
+		return tags.map((tag, idx) => {
+			return (
+				<Chip key={idx} color="primary" label={tag} sx={{ margin: 0.5 }} />
+			);
+		});
+	};
+
+	const inputView = () => {
+		return (
+			<Input
+				value={currentTag}
+				onChange={handleTags}
+				sx={{ width: '100%', padding: 0.5 }}
+				type="text"
+				placeholder="쉼표(,)를 사용하여 태그를 등록할 수 있습니다"
+			/>
+		);
+	};
+
 	return (
 		<>
-			<Container component="main" maxWidth="xl">
+			<Container component="main" maxWidth="md">
 				<CssBaseline />
 				<Grid container spacing={2}>
-					<Grid item xs={8}>
+					<Grid item xs={12}>
 						<Box
 							component="form"
 							onSubmit={handleSubmit}
@@ -330,15 +273,19 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 									{info.error}
 								</Alert>
 							)}
-							<TextField
-								defaultValue={info.title}
-								id="title"
-								label="제목을 입력해주세요"
-								variant="outlined"
-								fullWidth
-								onChange={handleChange('title')}
-								sx={{ mt: 2 }}
-							/>
+							{titleView()}
+							<Paper
+								sx={{
+									display: 'flex',
+									flexWrap: 'wrap',
+									p: 0.5,
+									mt: 1,
+									width: '100%',
+								}}
+							>
+								{tagView()}
+								{inputView()}
+							</Paper>
 							<Box sx={{ width: '100%', mt: 1 }}>
 								<ReactQuill
 									theme="snow"
@@ -361,9 +308,7 @@ function AdminUpdatePost({ categories, tags, token, post }) {
 						</Box>
 					</Grid>
 					<Grid item xs={4}>
-						{handlePhotoForm()}
-						{handleForm('카테고리', ctg)}
-						{handleForm('태그', tg)}
+						{/* {handlePhotoForm()} */}
 					</Grid>
 				</Grid>
 			</Container>

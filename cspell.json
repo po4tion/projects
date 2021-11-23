@@ -19,7 +19,8 @@
 		"signout",
 		"signup",
 		"tion",
-		"usermodel"
+		"usermodel",
+		"Utag"
 	],
 	"ignoreWords": [],
 	"import": []

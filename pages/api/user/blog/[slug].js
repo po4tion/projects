@@ -120,7 +120,7 @@ export default function handler(req, res) {
 									prev = _.merge(prev, fields);
 									// prev.slug = prevSlug;
 
-									const { body, desc, categories: ctg, tags: tg } = fields;
+									const { body, desc, tags: tag } = fields;
 
 									// 본문 업데이트
 									if (body) {
@@ -128,14 +128,9 @@ export default function handler(req, res) {
 										prev.sDesc = stripHtml(body.substring(0, 150)).result;
 									}
 
-									// 카테고리 업데이트
-									if (ctg) {
-										prev.categories = ctg.split(',');
-									}
-
 									// 태그 업데이트
-									if (tg) {
-										prev.tags = tg.split(',');
+									if (tag) {
+										prev.tags = tag.split(',');
 									}
 
 									// 사진 업데이트

@@ -25,12 +25,11 @@ export default function handler(req, res) {
 
 					if (auth) {
 						await Blog.find({ postedBy: req.profile._id })
-							.populate('categories', '_id name slug')
 							.populate('tags', '_id name slug')
 							.populate('postedBy', '_id username name')
 							.sort({ createdAt: -1 })
 							.select(
-								'categories tags _id title slug excerpt postedBy createdAt updatedAt'
+								'tags _id title slug excerpt postedBy createdAt updatedAt'
 							)
 							.exec((err, data) => {
 								if (err) {

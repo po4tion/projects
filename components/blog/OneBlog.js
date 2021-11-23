@@ -21,23 +21,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Link from '@mui/material/Link';
 
 function OneBlog({ router, blog, related }) {
-	const { title, sDesc, slug, postedBy, updatedAt, body, categories, tags } =
-		blog.data;
-
-	// 카테고리 Chip 생성
-	const handleCtg = ctgs => {
-		return ctgs.map((ctg, idx) => (
-			<NextLink key={idx} href={`/categories/${ctg.slug}`} passHref>
-				<Chip color="primary" label={ctg.name} sx={{ marginRight: 1 }} />
-			</NextLink>
-		));
-	};
+	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data;
 
 	// 태그 Chip 생성
-	const handleTag = tgs => {
-		return tgs.map((tg, idx) => (
-			<NextLink key={idx} href={`/tags/${tg.slug}`} passHref>
-				<Chip color="secondary" label={tg.name} sx={{ marginRight: 1 }} />
+	const handleTag = tags => {
+		return tags.map((tag, idx) => (
+			<NextLink key={idx} href={`/tags/${encodeURI(tag.slug)}`} passHref>
+				<Chip color="secondary" label={tag.name} sx={{ marginRight: 1 }} />
 			</NextLink>
 		));
 	};
@@ -155,9 +145,7 @@ function OneBlog({ router, blog, related }) {
 								{moment(updatedAt).format(`YYYY년 MM월 DD일`)}
 							</Typography>
 						</Grid>
-						<Grid item xs={12}>
-							{handleCtg(categories)}
-						</Grid>
+
 						<Grid item xs={12} sx={{ marginBottom: 5 }}>
 							{handleTag(tags)}
 						</Grid>

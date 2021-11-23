@@ -38,11 +38,8 @@ const BlogSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
 		},
-		categories: [
-			{ type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
-		],
 		tags: [
-			{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', required: true },
+			{ type: mongoose.Schema.Types.ObjectId, ref: 'Utag', required: true },
 		],
 	},
 	{ timestamps: true }

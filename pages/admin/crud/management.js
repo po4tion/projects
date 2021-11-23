@@ -1,4 +1,4 @@
-import { getBlogsInServer } from '/actions/handleBlog';
+import { adminManageBlogs } from '/actions/handleBlog';
 import { ManagementBlog } from '/components/blog';
 import { ProtectAdminRoute } from '/components/auth';
 import { signoutAxios } from '/actions/handleAuth';
@@ -40,7 +40,8 @@ export default withRouter(Management);
 export async function getServerSideProps(ctx) {
 	const { req } = ctx;
 	const accessToken = req.headers.cookie.slice(13);
-	const blogList = await getBlogsInServer(accessToken).then(data => {
+
+	const blogList = await adminManageBlogs(accessToken).then(data => {
 		if (data.status === 401) {
 			return 401;
 		}
@@ -50,9 +51,9 @@ export async function getServerSideProps(ctx) {
 
 	return {
 		props: {
-			blogList,
+			blogList: blogList,
 			token: accessToken,
-			size: blogList === 401 ? 0 : blogList.data.length,
+			size: blogList === 401 ? 0 : blogList.size,
 		},
 	};
 }

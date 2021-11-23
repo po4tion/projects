@@ -1,13 +1,9 @@
 /* 
-	새로운 카테고리를 추가한다
+  운영자 전용 회원들 블로그 리스트 불러오기 (삭제 목적)
 */
-import Category from '/models/Category';
-import {
-	dbConnect,
-	tokenValidation,
-	adminMiddleware,
-	errorHandler,
-} from '/lib';
+
+import Blog from '/models/Blog';
+import { dbConnect, tokenValidation, adminMiddleware } from '/lib';
 
 export default function handler(req, res) {
 	return new Promise(async () => {
@@ -16,7 +12,7 @@ export default function handler(req, res) {
 		await dbConnect();
 
 		switch (method) {
-			case 'POST':
+			case 'GET':
 				try {
 					// 토큰 유효성 검사
 					const user = await tokenValidation(req, res).catch(msg =>
@@ -30,17 +26,21 @@ export default function handler(req, res) {
 					req.profile.password = undefined;
 
 					if (auth) {
-						const { name } = req.body;
-						const slug = name.split(' ').join('-').toLowerCase();
-						const createCategory = new Category({ name, slug });
-
-						await createCategory.save((err, data) => {
-							if (err) {
-								return res.status(400).json({ error: errorHandler(err) });
-							}
-
-							return res.status(201).json(data);
-						});
+						await Blog.find({})
+							.populate('tags', '_id name slug')
+							.populate('postedBy', '_id username name')
+							.sort({ createdAt: -1 })
+							.select(
+								'tags _id title slug excerpt postedBy createdAt updatedAt'
+							)
+							.exec((err, data) => {
+								if (err) {
+									return res
+										.status(400)
+										.json({ error: '블로그 리스트 불러오기 실패' });
+								}
+								return res.status(200).json({ data, size: data.length });
+							});
 					}
 				} catch (error) {
 					return res.status(400).json({ error: '에러' });

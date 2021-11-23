@@ -16,17 +16,9 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 
 function BlogList({ blog, noLink = true }) {
-	const categoryList = blog => {
-		return blog.categories.map((cat, idx) => (
-			<NextLink key={idx} href={`/categories/${cat.slug}`} passHref>
-				<Chip color="primary" label={cat.name} sx={{ marginRight: 1 }} />
-			</NextLink>
-		));
-	};
-
 	const tagList = blog => {
 		return blog.tags.map((tag, idx) => (
-			<NextLink key={idx} href={`/tags/${tag.slug}`} passHref>
+			<NextLink key={idx} href={`/tags/${encodeURI(tag.slug)}`} passHref>
 				<Chip color="secondary" label={tag.name} sx={{ marginRight: 1 }} />
 			</NextLink>
 		));
@@ -74,9 +66,6 @@ function BlogList({ blog, noLink = true }) {
 									</Grid>
 								</Typography>
 								<Grid container spacing={1}>
-									<Grid item xs={12}>
-										{categoryList(blog)}
-									</Grid>
 									<Grid item xs={12}>
 										{tagList(blog)}
 									</Grid>

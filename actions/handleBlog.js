@@ -3,16 +3,8 @@ import queryString from 'query-string';
 import { isAuth, handleResponse } from '/actions/handleAuth';
 
 export const createBlog = async (blog, token) => {
-	let endpoint;
-
-	if (isAuth() && isAuth().role === 1) {
-		endpoint = '/api/blog';
-	} else if (isAuth() && isAuth().role === 0) {
-		endpoint = '/api/user/blog';
-	}
-
 	const result = await axios
-		.post(endpoint, blog, {
+		.post('/api/user/blog', blog, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -22,15 +14,6 @@ export const createBlog = async (blog, token) => {
 
 	return result;
 };
-
-// export const getBlog = async slug => {
-// 	const result = await axios
-// 		.get(`/api/blog/${slug}`)
-// 		.then(res => res.data)
-// 		.catch(err => err.response.data);
-
-// 	return result;
-// };
 
 export const getBlogInServer = async slug => {
 	const result = await axios
@@ -54,9 +37,29 @@ export const getBlogsUsers = async token => {
 	return result;
 };
 
-export const getBlogsInServer = async token => {
+export const getBlogs = async (limit, skip) => {
+	const data = { limit, skip };
 	const result = await axios
-		.get(`${process.env.API}/api/blogs`, {
+		.post('/api/blogs', data)
+		.then(res => res.data)
+		.catch(err => err.response);
+
+	return result;
+};
+
+export const getBlogsInServer = async (limit, skip) => {
+	const data = { limit, skip };
+	const result = await axios
+		.post(`${process.env.API}/api/blogs`, data)
+		.then(res => res.data)
+		.catch(err => err.response);
+
+	return result;
+};
+
+export const adminManageBlogs = async token => {
+	const result = await axios
+		.get(`${process.env.API}/api/blogs/admin`, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -89,40 +92,12 @@ export const removeBlog = async (slug, token) => {
 };
 
 export const updateBlog = async (blog, slug, token) => {
-	let endpoint;
-
-	if (isAuth() && isAuth().role === 1) {
-		endpoint = `/api/blog/${slug}`;
-	} else if (isAuth() && isAuth().role === 0) {
-		endpoint = `/api/user/blog/${slug}`;
-	}
-
 	const result = await axios
-		.put(endpoint, blog, {
+		.put(`/api/user/blog/${slug}`, blog, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
 		})
-		.then(res => res.data)
-		.catch(err => err.response.data);
-
-	return result;
-};
-
-export const listAll = async (limit, skip) => {
-	const data = { limit, skip };
-	const result = await axios
-		.post('/api/blogs/blogs-categories-tags', data)
-		.then(res => res.data)
-		.catch(err => err.response.data);
-
-	return result;
-};
-
-export const listAllInServer = async (limit, skip) => {
-	const data = { limit, skip };
-	const result = await axios
-		.post(`${process.env.API}/api/blogs/blogs-categories-tags`, data)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
