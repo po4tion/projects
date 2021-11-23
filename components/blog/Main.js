@@ -261,10 +261,30 @@ function Main({ router, token }) {
 		}
 	};
 
+	const handleDelete = tag => {
+		let tagStore = [...tags];
+		const tagIdStore = [...tagId];
+		const tagIdx = tagStore.indexOf(tag);
+
+		tagIdStore.splice(tagIdx, 1);
+		tagStore = tagStore.filter(t => t !== tag);
+
+		data.set('tags', tagIdStore);
+
+		setTagId(tagIdStore);
+		setTags(tagStore);
+	};
+
 	const tagView = () => {
 		return tags.map((tag, idx) => {
 			return (
-				<Chip key={idx} color="primary" label={tag} sx={{ margin: 0.5 }} />
+				<Chip
+					key={idx}
+					color="primary"
+					label={tag}
+					onDelete={() => handleDelete(tag)}
+					sx={{ margin: 0.5 }}
+				/>
 			);
 		});
 	};

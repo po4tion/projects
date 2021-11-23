@@ -19,7 +19,7 @@ function BlogList({ blog, noLink = true }) {
 	const tagList = blog => {
 		return blog.tags.map((tag, idx) => (
 			<NextLink key={idx} href={`/tags/${encodeURI(tag.slug)}`} passHref>
-				<Chip color="secondary" label={tag.name} sx={{ marginRight: 1 }} />
+				<Chip color="secondary" label={tag.name} sx={{ mr: 0.5, mb: 0.5 }} />
 			</NextLink>
 		));
 	};

@@ -3,7 +3,6 @@ import { getBlogInServer, blogRelatedInServer } from '/actions/handleBlog';
 import { OneBlog } from '/components/blog';
 
 function Blogs({ router, blog, related }) {
-	console.log(related);
 	return (
 		<>
 			<OneBlog router={router} blog={blog} related={related} />
