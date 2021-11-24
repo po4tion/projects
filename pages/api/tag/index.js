@@ -51,13 +51,15 @@ export default function handler(req, res) {
 				break;
 			case 'GET':
 				try {
-					await Utag.find().exec((err, tags) => {
-						if (err) {
-							return res.status(400).json({ error: err });
-						}
+					await Utag.findOne()
+						.sort({ createdAt: -1 })
+						.exec((err, tags) => {
+							if (err) {
+								return res.status(400).json({ error: err });
+							}
 
-						return res.status(200).json({ success: tags });
-					});
+							return res.status(200).json({ success: tags });
+						});
 				} catch (error) {
 					return res.status(201).json({ error });
 				}

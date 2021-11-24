@@ -2,8 +2,9 @@ import { withRouter } from 'next/router';
 import { HomeList } from '/components/home';
 import { getBlogsInServer } from '/actions/handleBlog';
 import { getTagList } from '/actions/handleTag';
+import Head from 'next/head';
 
-function Home({ router, blogs, size, limit, skip, tags }) {
+function Home({ router, blogs, size, limit, skip }) {
 	return (
 		<HomeList
 			router={router}
@@ -26,7 +27,6 @@ export async function getServerSideProps() {
 
 	return {
 		props: {
-			tags,
 			blogs: data.blogs,
 			size: data.size,
 			limit,

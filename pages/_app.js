@@ -35,6 +35,7 @@ export default function MyApp(props) {
 						content="width=device-width, initial-scale= 1.0"
 					/>
 					<title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+					<link rel="icon" href="/favicon.ico" />
 				</Head>
 				<ThemeProvider theme={theme}>
 					<Layout>
