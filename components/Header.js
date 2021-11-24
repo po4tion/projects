@@ -69,6 +69,18 @@ function Header({ title }) {
 							</Link>
 						)}
 						{isAuth() && (
+							<Link href="/deleteAccount" passHref>
+								<Button
+									color="primary"
+									variant="contained"
+									size="medium"
+									sx={{ ml: 0.5 }}
+								>
+									회원탈퇴
+								</Button>
+							</Link>
+						)}
+						{isAuth() && (
 							<Button
 								onClick={onClick}
 								color="primary"

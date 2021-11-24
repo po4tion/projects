@@ -42,6 +42,19 @@ export const signoutAxios = async next => {
 	return result;
 };
 
+export const deleteUserInfo = async token => {
+	const result = await axios
+		.delete('/api/auth/deleteUser', {
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		})
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
 export const setCookie = (key, value) => {
 	if (process.browser) {
 		Cookies.set(key, value, {
