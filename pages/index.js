@@ -18,6 +18,7 @@ function Home({ router, blogs, size, limit, skip, tags }) {
 export default withRouter(Home);
 
 export async function getServerSideProps() {
+	// populate[tags] 작동하기 위해 최소 한번 실행
 	const tags = await getTagList();
 	const limit = 4,
 		skip = 0;
