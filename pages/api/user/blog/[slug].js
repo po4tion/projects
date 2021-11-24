@@ -24,6 +24,29 @@ export default function handler(req, res) {
 		await dbConnect();
 
 		switch (method) {
+			case 'GET':
+				try {
+					const { slug } = req.query;
+
+					await Blog.findOne({ slug: slug.toLowerCase() })
+						.populate('tags', '_id name slug')
+						.populate('postedBy', '_id username name')
+						.select(
+							'tags _id title slug body sTitle sDesc postedBy photo createdAt updatedAt excerpt'
+						)
+						.exec((err, data) => {
+							if (err) {
+								return res.status(400).json({
+									error: '해당 블로그를 불러오지 못했습니다.',
+								});
+							}
+
+							return res.status(200).json({ data });
+						});
+				} catch (error) {
+					return res.status(400).json({ error: '에러' });
+				}
+				break;
 			case 'DELETE':
 				try {
 					// 토큰 유효성 검사
@@ -120,17 +143,21 @@ export default function handler(req, res) {
 									prev = _.merge(prev, fields);
 									// prev.slug = prevSlug;
 
-									const { body, desc, tags: tag } = fields;
+									const { body, desc, tags: tag, excerpt } = fields;
 
-									// 본문 업데이트
+									// 본문 짧은 소개 업데이트
 									if (body) {
-										prev.excerpt = excerptHandler(body, 300, ' ', ' ...');
 										prev.sDesc = stripHtml(body.substring(0, 150)).result;
 									}
 
 									// 태그 업데이트
 									if (tag) {
 										prev.tags = tag.split(',');
+									}
+
+									// 포스트 소개글 업데이트
+									if (excerpt) {
+										prev.excerpt = excerpt;
 									}
 
 									// 사진 업데이트

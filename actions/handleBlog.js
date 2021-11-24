@@ -17,7 +17,7 @@ export const createBlog = async (blog, token) => {
 
 export const getBlogInServer = async slug => {
 	const result = await axios
-		.get(`${process.env.API}/api/blog/${slug}`)
+		.get(`${process.env.API}/api/user/blog/${slug}`)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 

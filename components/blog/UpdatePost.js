@@ -24,6 +24,8 @@ import Alert from '@mui/material/Alert';
 import Input from '@mui/material/Input';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
@@ -39,6 +41,9 @@ function AdminUpdatePost({ token, post }) {
 		title: post.title,
 	});
 
+	// 등록된 썸네일 사진 불러와서 미리보기
+	const [preImg, setPreImg] = useState(true);
+
 	const [data, setData] = useState('');
 
 	useEffect(() => {
@@ -50,6 +55,10 @@ function AdminUpdatePost({ token, post }) {
 	// title & photo control
 	const handleChange = key => e => {
 		const value = key === 'photo' ? e.target.files[0] : e.target.value;
+
+		if (key === 'photo') {
+			setPreImg(false);
+		}
 
 		if (key === 'photo' && e.target.files.length === 0) {
 			data.set(key, undefined);
@@ -126,6 +135,19 @@ function AdminUpdatePost({ token, post }) {
 	};
 
 	const handlePhotoForm = () => {
+		const src =
+			preImg &&
+			`${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(post.slug)}`;
+		const myLoader = ({ src, width, quality }) => {
+			if (preImg) {
+				return `${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(
+					post.slug
+				)}?w=${width}&q=${quality || 75}`;
+			} else {
+				return '';
+			}
+		};
+
 		return (
 			<Box
 				sx={{
@@ -136,6 +158,28 @@ function AdminUpdatePost({ token, post }) {
 					alignItems: 'center',
 				}}
 			>
+				{preImg && (
+					<Box
+						sx={{
+							width: '300px',
+							maxWidth: '300px',
+							height: '250px',
+							maxHeight: '250px',
+							overflow: 'hidden',
+							marginBottom: 1,
+						}}
+					>
+						<Image
+							priority={true}
+							loader={myLoader}
+							quality={100}
+							src={src}
+							alt="thumbnail image"
+							width={300}
+							height={250}
+						/>
+					</Box>
+				)}
 				{info.photo && (
 					<>
 						<Box
@@ -157,6 +201,16 @@ function AdminUpdatePost({ token, post }) {
 						</Box>
 					</>
 				)}
+
+				{!info.photo && !preImg && (
+					<Skeleton
+						animation="wave"
+						variant="rectangular"
+						width={300}
+						height={250}
+						sx={{ marginBottom: 0.5 }}
+					/>
+				)}
 				<label
 					style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
 				>
@@ -176,6 +230,46 @@ function AdminUpdatePost({ token, post }) {
 						썸네일 등록(1mb 이하)
 					</Button>
 				</label>
+			</Box>
+		);
+	};
+
+	const [excerpt, setExcerpt] = useState(post.excerpt);
+
+	const handleExcerpt = e => {
+		const { value } = e.target;
+
+		// 150자 초과 방지
+		if (value.length < 151) {
+			data.set('excerpt', value);
+
+			setExcerpt(value);
+		}
+	};
+
+	const excerptForm = () => {
+		return (
+			<Box
+				sx={{
+					width: '100%',
+					mt: 10,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}
+			>
+				<TextField
+					value={excerpt}
+					onChange={handleExcerpt}
+					variant="outlined"
+					placeholder="소개문구를 적어보세요"
+					sx={{ width: '300px' }}
+					rows={8}
+					multiline
+				/>
+				<Typography sx={{ width: '300px' }} align="right">
+					{excerpt.length} / 150
+				</Typography>
 			</Box>
 		);
 	};
@@ -273,10 +367,10 @@ function AdminUpdatePost({ token, post }) {
 
 	return (
 		<>
-			<Container component="main" maxWidth="md">
+			<Container component="main" maxWidth="lg">
 				<CssBaseline />
 				<Grid container spacing={2}>
-					<Grid item xs={12}>
+					<Grid item xs={8}>
 						<Box
 							component="form"
 							onSubmit={handleSubmit}
@@ -328,7 +422,8 @@ function AdminUpdatePost({ token, post }) {
 						</Box>
 					</Grid>
 					<Grid item xs={4}>
-						{/* {handlePhotoForm()} */}
+						{handlePhotoForm()}
+						{excerptForm()}
 					</Grid>
 				</Grid>
 			</Container>

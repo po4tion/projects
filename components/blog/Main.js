@@ -24,12 +24,12 @@ import Input from '@mui/material/Input';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
 import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
-import { Typography } from '@mui/material';
 
 function Main({ router, token }) {
 	const [info, setInfo] = useState({
@@ -224,6 +224,8 @@ function Main({ router, token }) {
 
 		// 150자 초과 방지
 		if (value.length < 151) {
+			data.set('excerpt', value);
+
 			setExcerpt(value);
 		}
 	};

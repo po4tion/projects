@@ -51,7 +51,7 @@ export default function handler(req, res) {
 								return res.status(400).json({ error: '사진 업로드 실패' });
 							}
 
-							const { title, body, tags } = fields;
+							const { title, body, tags, excerpt } = fields;
 
 							if (!title || !title.length) {
 								return res.status(400).json({
@@ -73,7 +73,7 @@ export default function handler(req, res) {
 							blog.title = title;
 							blog.slug = title.split(' ').join('-').toLowerCase();
 							blog.body = body;
-							blog.excerpt = excerptHandler(body, 300, ' ', ' ...');
+							blog.excerpt = excerpt;
 							blog.sTitle = `${process.env.APP_NAME} | ${title} `;
 							blog.sDesc = stripHtml(body.substring(0, 150)).result;
 							blog.postedBy = user._id;

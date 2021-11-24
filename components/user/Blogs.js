@@ -153,7 +153,7 @@ function Blogs({ blogs, user }) {
 					{checked && (
 						<>
 							<Typography component="h1" variant="h5">
-								이용자 문의
+								{user.username}님에게 문의하기
 							</Typography>
 							<Box component="form" novalidate sx={{ width: '100%', mt: 1 }}>
 								<Grid container spacing={1}>
