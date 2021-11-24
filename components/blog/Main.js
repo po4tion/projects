@@ -23,11 +23,13 @@ import Alert from '@mui/material/Alert';
 import Input from '@mui/material/Input';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
+import Skeleton from '@mui/material/Skeleton';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
 import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
+import { Typography } from '@mui/material';
 
 function Main({ router, token }) {
 	const [info, setInfo] = useState({
@@ -171,17 +173,26 @@ function Main({ router, token }) {
 								height: '250px',
 								maxHeight: '250px',
 								overflow: 'hidden',
-								marginBottom: 1,
+								marginBottom: 0.5,
 							}}
 						>
 							<Image
 								src={URL.createObjectURL(info.photo)}
-								alt="#"
+								alt="미리보기 이미지"
 								width={300}
 								height={250}
 							/>
 						</Box>
 					</>
+				)}
+				{!info.photo && (
+					<Skeleton
+						animation="wave"
+						variant="rectangular"
+						width={300}
+						height={250}
+						sx={{ marginBottom: 0.5 }}
+					/>
 				)}
 				<label
 					style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
@@ -202,6 +213,44 @@ function Main({ router, token }) {
 						썸네일 등록(1mb 이하)
 					</Button>
 				</label>
+			</Box>
+		);
+	};
+
+	const [excerpt, setExcerpt] = useState('');
+
+	const handleExcerpt = e => {
+		const { value } = e.target;
+
+		// 150자 초과 방지
+		if (value.length < 151) {
+			setExcerpt(value);
+		}
+	};
+
+	const excerptForm = () => {
+		return (
+			<Box
+				sx={{
+					width: '100%',
+					mt: 10,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}
+			>
+				<TextField
+					value={excerpt}
+					onChange={handleExcerpt}
+					variant="outlined"
+					placeholder="소개문구를 적어보세요"
+					sx={{ width: '300px' }}
+					rows={8}
+					multiline
+				/>
+				<Typography sx={{ width: '300px' }} align="right">
+					{excerpt.length} / 150
+				</Typography>
 			</Box>
 		);
 	};
@@ -303,10 +352,10 @@ function Main({ router, token }) {
 
 	return (
 		<>
-			<Container component="main" maxWidth="md">
+			<Container component="main" maxWidth="lg">
 				<CssBaseline />
 				<Grid container spacing={2}>
-					<Grid item xs={12}>
+					<Grid item xs={8}>
 						<Box
 							component="form"
 							onSubmit={handleSubmit}
@@ -357,6 +406,10 @@ function Main({ router, token }) {
 								작성완료
 							</Button>
 						</Box>
+					</Grid>
+					<Grid item xs={4}>
+						{handlePhotoForm()}
+						{excerptForm()}
 					</Grid>
 				</Grid>
 			</Container>

@@ -66,7 +66,7 @@ export default function handler(req, res) {
 					if (auth) {
 						const { slug } = req.query;
 
-						await Blog.findOneAndRemove({ slug: slug.toLowerCase() }).exec(
+						Blog.findOneAndRemove({ slug: slug.toLowerCase() }).exec(
 							(err, data) => {
 								if (err) {
 									return res.status(400).json({
