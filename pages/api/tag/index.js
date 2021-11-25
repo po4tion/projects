@@ -2,7 +2,7 @@
 	새로운 태그를 추가한다
 */
 import Utag from '/models/Utag';
-import { dbConnect, tokenValidation, authMiddleware, errorHandler } from '/lib';
+import { dbConnect, tokenValidation, authMiddleware } from '/lib';
 
 export default function handler(req, res) {
 	return new Promise(async () => {
@@ -11,6 +11,21 @@ export default function handler(req, res) {
 		await dbConnect();
 
 		switch (method) {
+			case 'GET':
+				try {
+					await Utag.findOne()
+						.sort({ createdAt: -1 })
+						.exec((err, tags) => {
+							if (err) {
+								return res.status(400).json({ error: err });
+							}
+
+							return res.status(200).json({ success: tags });
+						});
+				} catch (error) {
+					return res.status(201).json({ error });
+				}
+				break;
 			case 'POST':
 				try {
 					// 토큰 유효성 검사
@@ -49,21 +64,7 @@ export default function handler(req, res) {
 					return res.status(201).json({ error });
 				}
 				break;
-			case 'GET':
-				try {
-					await Utag.findOne()
-						.sort({ createdAt: -1 })
-						.exec((err, tags) => {
-							if (err) {
-								return res.status(400).json({ error: err });
-							}
 
-							return res.status(200).json({ success: tags });
-						});
-				} catch (error) {
-					return res.status(201).json({ error });
-				}
-				break;
 			default:
 				return res.status(400).json({ error: 'request method를 확인해주세요' });
 				break;

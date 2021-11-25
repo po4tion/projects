@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { withRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { isAuth, signoutAxios } from '/actions/handleAuth';
 import { createBlog } from '/actions/handleBlog';
 import { createTag } from '/actions/handleTag';
-import Image from 'next/image';
+import { photoResize } from '/lib/photoResize';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,13 +13,6 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListSubheader from '@mui/material/ListSubheader';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Alert from '@mui/material/Alert';
 import Input from '@mui/material/Input';
 import Chip from '@mui/material/Chip';
@@ -36,6 +30,7 @@ function Main({ router, token }) {
 		error: '',
 		success: '',
 		title: '',
+		photo: undefined,
 	});
 
 	const [data, setData] = useState('');
@@ -45,43 +40,43 @@ function Main({ router, token }) {
 	}, [router]);
 
 	// title & photo control
-	const handleChange = key => e => {
-		const value = key === 'photo' ? e.target.files[0] : e.target.value;
+	const handleThumbnail = async e => {
+		const { files } = e.target;
 
-		if (key === 'photo' && e.target.files.length === 0) {
-			URL.revokeObjectURL(info.photo);
-
-			setInfo({
-				...info,
-				[key]: '',
-			});
-
-			data.set(key, undefined);
-			setData(data);
-
+		// 최소 한번은 사진을 더블 클릭하여 등록하였을 경우, 그 이후에 썸네일 등록 버튼 클릭 후 취소버튼을 누르면 length가 0으로 뜬다
+		if (files.length === 0) {
 			return;
+		} else {
+			const value = files[0];
+			const resizeFile = await photoResize(value); // photo Resize
+
+			// 압축한 사진인데도 불구하고 용량이 너무 클 경우 (nextjs limit data 4mb) 4000000
+			if (resizeFile.size >= 4000000) {
+				setInfo({
+					...info,
+					error: '사진의 용량이 너무 큽니다',
+				});
+			} else {
+				data.set('photo', resizeFile); // blob data 전달
+				setInfo({
+					...info,
+					error: '',
+					photo: resizeFile,
+				});
+
+				setData(data);
+			}
 		}
+	};
 
-		if (key === 'photo' && e.target && e.target.files[0].size > 1500000) {
-			URL.revokeObjectURL(info.photo);
+	const handleTitle = e => {
+		const { value } = e.target;
 
-			setInfo({
-				...info,
-				error: '사진의 용량은 1mb 이하여야 합니다',
-				[key]: '',
-			});
-
-			data.set(key, undefined);
-			setData(data);
-
-			return;
-		}
-
-		data.set(key, value);
+		data.set('title', value);
 		setInfo({
 			...info,
 			error: '',
-			[key]: value,
+			title: value,
 		});
 
 		setData(data);
@@ -105,6 +100,7 @@ function Main({ router, token }) {
 	// quill 본문 control
 	const handleQuill = e => {
 		setBody(e);
+		data.set('body', e);
 
 		// window === 'object' => 브라우저 상태
 		if (typeof window !== 'undefined') {
@@ -114,12 +110,6 @@ function Main({ router, token }) {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-
-		if (localStorage.getItem('blog')) {
-			const value = JSON.parse(localStorage.getItem('blog'));
-
-			data.set('body', value);
-		}
 
 		createBlog(data, token).then(data => {
 			if (data.error) {
@@ -148,6 +138,17 @@ function Main({ router, token }) {
 				}
 			}
 		});
+	};
+
+	const removeThumbnail = () => {
+		URL.revokeObjectURL(info.photo);
+
+		setInfo({
+			...info,
+			photo: undefined,
+		});
+
+		data.delete('photo');
 	};
 
 	const handlePhotoForm = () => {
@@ -185,6 +186,7 @@ function Main({ router, token }) {
 						</Box>
 					</>
 				)}
+
 				{!info.photo && (
 					<Skeleton
 						animation="wave"
@@ -194,25 +196,43 @@ function Main({ router, token }) {
 						sx={{ marginBottom: 0.5 }}
 					/>
 				)}
-				<label
-					style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
-				>
-					<Input
-						onChange={handleChange('photo')}
-						type="file"
-						accept="image/*"
-						sx={{ display: 'none' }}
-					/>
-					<Button
-						fullWidth
-						color="primary"
-						variant="contained"
-						component="span"
-						sx={{ maxWidth: '300px' }}
-					>
-						썸네일 등록(1mb 이하)
-					</Button>
-				</label>
+				<Grid container sx={{ width: '300px' }}>
+					<Grid item xs={9}>
+						<label
+							style={{
+								width: '100%',
+								justifyContent: 'center',
+								display: 'flex',
+							}}
+						>
+							<Input
+								onChange={handleThumbnail}
+								type="file"
+								accept="image/*"
+								sx={{ display: 'none' }}
+							/>
+							<Button
+								fullWidth
+								color="primary"
+								variant="contained"
+								component="span"
+							>
+								썸네일 등록
+							</Button>
+						</label>
+					</Grid>
+					<Grid item xs={3}>
+						<Button
+							fullWidth
+							color="primary"
+							variant="contained"
+							component="span"
+							onClick={removeThumbnail}
+						>
+							취소
+						</Button>
+					</Grid>
+				</Grid>
 			</Box>
 		);
 	};
@@ -264,7 +284,7 @@ function Main({ router, token }) {
 				label="제목을 입력해주세요"
 				variant="outlined"
 				fullWidth
-				onChange={handleChange('title')}
+				onChange={handleTitle}
 				sx={{ mt: 2 }}
 			/>
 		);

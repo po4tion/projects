@@ -24,11 +24,11 @@ export default function handler(req, res) {
 						그래서 blog를 create하고 read하면 오류가 안생김 */
 					await Blog.find({})
 						.populate('postedBy', '_id username name')
+						.populate('tags', '_id name slug')
 						.sort({ createdAt: -1 })
 						.skip(skipPage)
 						.limit(limitPage)
 						.select('tags _id title slug excerpt postedBy createdAt updatedAt')
-						.populate('tags', '_id name slug')
 						.exec((err, blogs) => {
 							if (err) {
 								return res

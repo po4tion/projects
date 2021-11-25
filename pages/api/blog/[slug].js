@@ -1,25 +1,9 @@
 /* 
-  1. 해당 블로그의 정보를 가져온다
-	2. 해당 블로그를 정보를 제거한다
+  1. 운영자가 해당 블로그를 삭제한다
 */
 
 import Blog from '/models/Blog';
-import {
-	dbConnect,
-	adminMiddleware,
-	tokenValidation,
-	excerptHandler,
-} from '/lib';
-import formidable from 'formidable';
-import _ from 'lodash';
-import { stripHtml } from 'string-strip-html';
-import fs from 'fs';
-
-export const config = {
-	api: {
-		bodyParser: false,
-	},
-};
+import { dbConnect, adminMiddleware, tokenValidation } from '/lib';
 
 export default function handler(req, res) {
 	return new Promise(async () => {

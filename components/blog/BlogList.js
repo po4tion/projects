@@ -1,5 +1,4 @@
 import NextLink from 'next/link';
-import renderHTML from 'react-render-html';
 import moment from 'moment';
 import 'moment/locale/ko';
 
@@ -42,7 +41,6 @@ function BlogList({ blog, noLink = true }) {
 								<Typography component="h2" variant="h5">
 									{blog.title}
 								</Typography>
-
 								<Typography variant="subtitle1" color="text.secondary">
 									<Grid
 										container
@@ -70,7 +68,7 @@ function BlogList({ blog, noLink = true }) {
 										{tagList(blog)}
 									</Grid>
 								</Grid>
-								<Box>{renderHTML(blog.excerpt)}</Box>
+								<Box>{blog.excerpt}</Box>
 							</CardContent>
 						</Card>
 					</CardActionArea>

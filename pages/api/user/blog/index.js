@@ -2,16 +2,8 @@
 	새로운 블로그를 추가한다
 */
 import Blog from '/models/Blog';
-import Utag from '/models/Utag';
-import {
-	dbConnect,
-	tokenValidation,
-	authMiddleware,
-	errorHandler,
-	excerptHandler,
-} from '/lib';
+import { dbConnect, tokenValidation, authMiddleware } from '/lib';
 import formidable from 'formidable';
-import { stripHtml } from 'string-strip-html';
 import fs from 'fs';
 import axios from 'axios';
 
@@ -73,13 +65,19 @@ export default function handler(req, res) {
 							blog.title = title;
 							blog.slug = title.split(' ').join('-').toLowerCase();
 							blog.body = body;
-							blog.excerpt = excerpt;
 							blog.sTitle = `${process.env.APP_NAME} | ${title} `;
-							blog.sDesc = stripHtml(body.substring(0, 150)).result;
 							blog.postedBy = user._id;
 
+							if (excerpt) {
+								blog.excerpt = excerpt;
+								blog.sDesc = excerpt.substring(0, 80);
+							} else {
+								blog.excerpt = '소개문구가 등록되지 않았습니다';
+								blog.sDesc = '설명이 등록되지 않았습니다';
+							}
+
 							// file data[photo]
-							if (files.photo !== undefined) {
+							if (files.photo) {
 								if (files.photo.size >= 1500000) {
 									return res.status(400).json({
 										error: '사진은 1mb를 넘을 수 없습니다.',

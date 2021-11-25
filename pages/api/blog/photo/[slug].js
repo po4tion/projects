@@ -5,12 +5,6 @@
 import Blog from '/models/Blog';
 import { dbConnect } from '/lib';
 
-export const config = {
-	api: {
-		bodyParser: false,
-	},
-};
-
 export default function handler(req, res) {
 	return new Promise(async () => {
 		const { method } = req;

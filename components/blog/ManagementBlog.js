@@ -48,7 +48,7 @@ function ManagementBlog({ blogList, token, size }) {
 	const updateBtn = blog => {
 		if (auth === 0) {
 			return (
-				<Link href={`/user/crud/${blog.slug}`} passHref>
+				<Link href={`/user/crud/${blog.slug}`} replace passHref>
 					<Button
 						component="a"
 						variant="outlined"

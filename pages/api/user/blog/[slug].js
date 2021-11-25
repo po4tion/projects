@@ -7,8 +7,7 @@
 import Blog from '/models/Blog';
 import { dbConnect, authMiddleware, tokenValidation } from '/lib';
 import formidable from 'formidable';
-import _ from 'lodash';
-import { stripHtml } from 'string-strip-html';
+import { merge } from 'lodash';
 import fs from 'fs';
 
 export const config = {
@@ -140,15 +139,9 @@ export default function handler(req, res) {
 
 									// slug는 unique 속성을 갖고 있다(까먹지 말기)
 									const prevSlug = prev.slug;
-									prev = _.merge(prev, fields);
-									// prev.slug = prevSlug;
+									prev = merge(prev, fields);
 
-									const { body, desc, tags: tag, excerpt } = fields;
-
-									// 본문 짧은 소개 업데이트
-									if (body) {
-										prev.sDesc = stripHtml(body.substring(0, 150)).result;
-									}
+									const { tags: tag, excerpt } = fields;
 
 									// 태그 업데이트
 									if (tag) {
@@ -158,6 +151,7 @@ export default function handler(req, res) {
 									// 포스트 소개글 업데이트
 									if (excerpt) {
 										prev.excerpt = excerpt;
+										prev.sDesc = excerpt.substring(0, 80);
 									}
 
 									// 사진 업데이트

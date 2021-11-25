@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -6,6 +6,7 @@ import { getCookie, isAuth } from '/actions/handleAuth';
 import { updateBlog } from '/actions/handleBlog';
 import { createTag } from '/actions/handleTag';
 import Image from 'next/image';
+import { photoResize } from '/lib/photoResize';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,13 +14,6 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListSubheader from '@mui/material/ListSubheader';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Alert from '@mui/material/Alert';
 import Input from '@mui/material/Input';
 import Chip from '@mui/material/Chip';
@@ -53,54 +47,47 @@ function AdminUpdatePost({ token, post }) {
 	const [body, setBody] = useState(post.body);
 
 	// title & photo control
-	const handleChange = key => e => {
-		const value = key === 'photo' ? e.target.files[0] : e.target.value;
+	const handleThumbnail = async e => {
+		const { files } = e.target;
 
-		if (key === 'photo') {
-			setPreImg(false);
-		}
-
-		if (key === 'photo' && e.target.files.length === 0) {
-			data.set(key, undefined);
-
-			setInfo({
-				...info,
-				[key]: '',
-			});
-
-			setData(data);
+		if (files.length === 0) {
 			return;
+		} else {
+			setPreImg(false); // 등록된 썸네일 안보이게 하기
+
+			const value = files[0];
+			const resizeFile = await photoResize(value); // photo Resize
+
+			// 압축한 사진인데도 불구하고 용량이 너무 클 경우 (nextjs limit data 4mb) 4000000
+			if (resizeFile.size >= 4000000) {
+				setInfo({
+					...info,
+					error: '사진의 용량이 너무 큽니다',
+				});
+			} else {
+				data.set('photo', resizeFile); // blob data 전달
+				setInfo({
+					...info,
+					error: '',
+					photo: resizeFile,
+				});
+
+				setData(data);
+			}
 		}
+	};
 
-		if (key === 'photo' && e.target && e.target.files[0].size > 1500000) {
-			setInfo({
-				...info,
-				error: '사진의 용량은 1mb 이하여야 합니다',
-				photo: '',
-			});
+	const handleTitle = e => {
+		const { value } = e.target;
 
-			return;
-		}
-
-		data.set(key, value);
+		data.set('title', value);
 		setInfo({
 			...info,
 			error: '',
-			[key]: value,
+			title: value,
 		});
 
 		setData(data);
-	};
-
-	// 선택되어 있던 태그 관리
-	const checkedTags = tgs => {
-		const store = [];
-
-		tgs.forEach(tag => {
-			store.push(tag._id);
-		});
-
-		return store;
 	};
 
 	// quill 본문 control
@@ -114,6 +101,8 @@ function AdminUpdatePost({ token, post }) {
 		e.preventDefault();
 
 		await updateBlog(data, post.slug, token).then(data => {
+			URL.revokeObjectURL(info.photo);
+
 			if (data.error) {
 				setInfo({
 					...info,
@@ -134,18 +123,25 @@ function AdminUpdatePost({ token, post }) {
 		});
 	};
 
+	const removeThumbnail = () => {
+		URL.revokeObjectURL(info.photo);
+
+		setInfo({
+			...info,
+			photo: undefined,
+		});
+
+		data.delete('photo');
+	};
+
 	const handlePhotoForm = () => {
-		const src =
-			preImg &&
-			`${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(post.slug)}`;
+		const src = `${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(
+			post.slug
+		)}`;
 		const myLoader = ({ src, width, quality }) => {
-			if (preImg) {
-				return `${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(
-					post.slug
-				)}?w=${width}&q=${quality || 75}`;
-			} else {
-				return '';
-			}
+			return `${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(
+				post.slug
+			)}?w=${width}&q=${quality || 75}`;
 		};
 
 		return (
@@ -170,6 +166,8 @@ function AdminUpdatePost({ token, post }) {
 						}}
 					>
 						<Image
+							key={post.slug}
+							objectFit="fill"
 							priority={true}
 							loader={myLoader}
 							quality={100}
@@ -211,25 +209,43 @@ function AdminUpdatePost({ token, post }) {
 						sx={{ marginBottom: 0.5 }}
 					/>
 				)}
-				<label
-					style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
-				>
-					<Input
-						onChange={handleChange('photo')}
-						type="file"
-						accept="image/*"
-						sx={{ display: 'none' }}
-					/>
-					<Button
-						fullWidth
-						color="primary"
-						variant="contained"
-						component="span"
-						sx={{ maxWidth: '300px' }}
-					>
-						썸네일 등록(1mb 이하)
-					</Button>
-				</label>
+				<Grid container sx={{ width: '300px' }}>
+					<Grid item xs={9}>
+						<label
+							style={{
+								width: '100%',
+								justifyContent: 'center',
+								display: 'flex',
+							}}
+						>
+							<Input
+								onChange={handleThumbnail}
+								type="file"
+								accept="image/*"
+								sx={{ display: 'none' }}
+							/>
+							<Button
+								fullWidth
+								color="primary"
+								variant="contained"
+								component="span"
+							>
+								썸네일 수정
+							</Button>
+						</label>
+					</Grid>
+					<Grid item xs={3}>
+						<Button
+							fullWidth
+							color="primary"
+							variant="contained"
+							component="span"
+							onClick={removeThumbnail}
+						>
+							취소
+						</Button>
+					</Grid>
+				</Grid>
 			</Box>
 		);
 	};
@@ -282,7 +298,7 @@ function AdminUpdatePost({ token, post }) {
 				label="제목을 입력해주세요"
 				variant="outlined"
 				fullWidth
-				onChange={handleChange('title')}
+				onChange={handleTitle}
 				sx={{ mt: 2 }}
 			/>
 		);
