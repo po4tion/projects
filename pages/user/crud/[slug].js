@@ -13,7 +13,7 @@ function UpdateBlog({ blog, token }) {
 export default UpdateBlog;
 
 export async function getServerSideProps(ctx) {
-	const blog = await getBlogInServer(encodeURI(ctx.params.slug));
+	const blog = await getBlogInServer(encodeURIComponent(ctx.params.slug));
 
 	const { req } = ctx;
 	const accessToken = req.headers.cookie.slice(13);

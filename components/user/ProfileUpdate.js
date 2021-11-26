@@ -124,13 +124,15 @@ function ProfileUpdate({ token, profile }) {
 	};
 
 	const handlePhotoForm = () => {
-		const src = `${process.env.NEXT_PUBLIC_API}/api/user/photo/${encodeURI(
-			profile.username
-		)}`;
+		const src = `${
+			process.env.NEXT_PUBLIC_API
+		}/api/user/photo/${encodeURIComponent(profile.username)}`;
 		const myLoader = ({ src, width, quality }) => {
-			return `${process.env.NEXT_PUBLIC_API}/api/user/photo/${encodeURI(
-				profile.username
-			)}?w=${width}&q=${quality || 75}`;
+			return `${
+				process.env.NEXT_PUBLIC_API
+			}/api/user/photo/${encodeURIComponent(profile.username)}?w=${width}&q=${
+				quality || 75
+			}`;
 		};
 
 		// 사진의 용량은 1mb 이하여야 합니다

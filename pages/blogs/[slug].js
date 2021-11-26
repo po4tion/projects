@@ -13,7 +13,7 @@ function Blogs({ router, blog, related }) {
 export default withRouter(Blogs);
 
 export async function getServerSideProps(ctx) {
-	const blog = await getBlogInServer(encodeURI(ctx.params.slug));
+	const blog = await getBlogInServer(encodeURIComponent(ctx.params.slug));
 	const related = await blogRelatedInServer(blog.data);
 
 	return {

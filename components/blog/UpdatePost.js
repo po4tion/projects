@@ -135,13 +135,15 @@ function AdminUpdatePost({ token, post }) {
 	};
 
 	const handlePhotoForm = () => {
-		const src = `${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(
-			post.slug
-		)}`;
+		const src = `${
+			process.env.NEXT_PUBLIC_API
+		}/api/blog/photo/${encodeURIComponent(post.slug)}`;
 		const myLoader = ({ src, width, quality }) => {
-			return `${process.env.NEXT_PUBLIC_API}/api/blog/photo/${encodeURI(
-				post.slug
-			)}?w=${width}&q=${quality || 75}`;
+			return `${
+				process.env.NEXT_PUBLIC_API
+			}/api/blog/photo/${encodeURIComponent(post.slug)}?w=${width}&q=${
+				quality || 75
+			}`;
 		};
 
 		return (

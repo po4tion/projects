@@ -12,7 +12,7 @@ function UserBlogs({ blogs, user }) {
 export default UserBlogs;
 
 export async function getServerSideProps(ctx) {
-	const data = await getUserBlogs(encodeURI(ctx.params.username));
+	const data = await getUserBlogs(encodeURIComponent(ctx.params.username));
 
 	return {
 		props: {

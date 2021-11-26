@@ -53,7 +53,7 @@ export default function handler(req, res) {
 								}
 
 								prev = _.assignIn(prev, fields);
-								prev.profile = `${process.env.API}/profile/${encodeURI(
+								prev.profile = `${process.env.API}/profile/${encodeURIComponent(
 									fields.username
 								)}`;
 								prev.role = req.profile.role;

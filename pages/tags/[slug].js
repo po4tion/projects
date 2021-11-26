@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(ctx) {
-	const res = await getTagInServer(encodeURI(ctx.params.slug));
+	const res = await getTagInServer(encodeURIComponent(ctx.params.slug));
 
 	return {
 		props: {

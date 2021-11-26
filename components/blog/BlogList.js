@@ -17,7 +17,11 @@ import Link from '@mui/material/Link';
 function BlogList({ blog, noLink = true }) {
 	const tagList = blog => {
 		return blog.tags.map((tag, idx) => (
-			<NextLink key={idx} href={`/tags/${encodeURI(tag.slug)}`} passHref>
+			<NextLink
+				key={idx}
+				href={`/tags/${encodeURIComponent(tag.slug)}`}
+				passHref
+			>
 				<Chip color="secondary" label={tag.name} sx={{ mr: 0.5, mb: 0.5 }} />
 			</NextLink>
 		));
@@ -49,7 +53,9 @@ function BlogList({ blog, noLink = true }) {
 										{noLink && (
 											<>
 												<NextLink
-													href={`/profile/${encodeURI(blog.postedBy.username)}`}
+													href={`/profile/${encodeURIComponent(
+														blog.postedBy.username
+													)}`}
 													passHref
 												>
 													<Link underline="hover">

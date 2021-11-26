@@ -26,7 +26,11 @@ function OneBlog({ router, blog, related }) {
 	// 태그 Chip 생성
 	const handleTag = tags => {
 		return tags.map((tag, idx) => (
-			<NextLink key={idx} href={`/tags/${encodeURI(tag.slug)}`} passHref>
+			<NextLink
+				key={idx}
+				href={`/tags/${encodeURIComponent(tag.slug)}`}
+				passHref
+			>
 				<Chip color="secondary" label={tag.name} sx={{ marginRight: 1 }} />
 			</NextLink>
 		));
