@@ -343,6 +343,18 @@ function ProfileUpdate({ token, profile }) {
 					>
 						수정하기
 					</Button>
+
+					<Link href="/deleteAccount" passHref>
+						<Button
+							fullWidth
+							color="primary"
+							variant="contained"
+							size="medium"
+							sx={{ ml: 0.5 }}
+						>
+							회원탈퇴
+						</Button>
+					</Link>
 				</Box>
 			</Box>
 		</Container>

@@ -166,9 +166,6 @@ function Main({ router, token }) {
 					<>
 						<Box
 							sx={{
-								// display: 'flex',
-								// alignItems: 'center',
-								// justifyContent: 'center',
 								width: '300px',
 								maxWidth: '300px',
 								height: '250px',
@@ -217,7 +214,7 @@ function Main({ router, token }) {
 								variant="contained"
 								component="span"
 							>
-								썸네일 등록
+								썸네일 등록 (선택사항)
 							</Button>
 						</label>
 					</Grid>
@@ -265,7 +262,7 @@ function Main({ router, token }) {
 					value={excerpt}
 					onChange={handleExcerpt}
 					variant="outlined"
-					placeholder="소개문구를 적어보세요"
+					placeholder="소개문구를 적어보세요 (선택사항)"
 					sx={{ width: '300px' }}
 					rows={8}
 					multiline
@@ -281,7 +278,7 @@ function Main({ router, token }) {
 		return (
 			<TextField
 				id="title"
-				label="제목을 입력해주세요"
+				label="제목을 입력해주세요 (필수사항)"
 				variant="outlined"
 				fullWidth
 				onChange={handleTitle}
@@ -367,7 +364,7 @@ function Main({ router, token }) {
 				onChange={handleTags}
 				sx={{ width: '100%', padding: 0.5 }}
 				type="text"
-				placeholder="쉼표(,)를 사용하여 태그를 등록할 수 있습니다"
+				placeholder="쉼표(,)를 사용하여 태그를 등록할 수 있습니다 (필수사항)"
 			/>
 		);
 	};

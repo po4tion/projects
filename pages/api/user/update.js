@@ -57,6 +57,7 @@ export default function handler(req, res) {
 									fields.username
 								)}`;
 								prev.role = req.profile.role;
+								prev.email = req.profile.email;
 
 								// if (fields.username) {
 								// 	prev.username = fields.username.split(' ').join('-');

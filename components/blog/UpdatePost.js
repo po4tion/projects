@@ -115,7 +115,7 @@ function AdminUpdatePost({ token, post }) {
 				});
 
 				if (isAuth() && isAuth().role === 0) {
-					router.replace('/user');
+					window.location.replace(router.asPath);
 				} else if (isAuth() && isAuth().role === 1) {
 					router.replace('/admin');
 				}

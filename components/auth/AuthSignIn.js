@@ -16,6 +16,7 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import router from 'next/router';
 
 function AuthSignIn() {
 	useEffect(() => {
@@ -76,12 +77,10 @@ function AuthSignIn() {
 					authenticate(value, () => {
 						setState({ ...state, loading: false });
 
-						if (isAuth() && isAuth().role === 1) {
-							Router.push('/admin');
-						} else if (isAuth() && isAuth().role === 0) {
-							Router.push('/user');
+						if (isAuth()) {
+							router.replace('/');
 						} else {
-							Router.push('/');
+							router.replace('/');
 						}
 					});
 				}

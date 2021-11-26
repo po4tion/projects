@@ -8,7 +8,7 @@ function Layout({ children }) {
 			{children}
 			<Footer
 				title={process.env.NEXT_PUBLIC_APP_NAME}
-				description="개발자들을 위한 블로그"
+				description="개발자들의 소통공간"
 			/>
 		</>
 	);
