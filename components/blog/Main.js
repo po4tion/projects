@@ -134,7 +134,7 @@ function Main({ router, token }) {
 				if (isAuth() && isAuth().role === 1) {
 					router.push('/admin');
 				} else if (isAuth() && isAuth().role === 0) {
-					router.push('/user');
+					router.push('/');
 				}
 			}
 		});
