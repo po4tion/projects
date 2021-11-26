@@ -78,7 +78,7 @@ function OneBlog({ router, blog, related }) {
 		url: 'https://utteranc.es/client.js',
 		theme: 'github-light',
 		issueTerm: 'pathname',
-		repo: 'po4tion/devblog',
+		repo: 'po4tion/devblog-comments',
 		ref: comment,
 	});
 
