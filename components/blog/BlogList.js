@@ -37,7 +37,7 @@ function BlogList({ blog, noLink = true }) {
 							<CardMedia
 								component="img"
 								sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-								image={`/api/blog/photo/${blog.slug}`}
+								image={`/api/blog/photo/${encodeURIComponent(blog.slug)}`}
 								alt={blog.title}
 							/>
 

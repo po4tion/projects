@@ -46,7 +46,7 @@ function OneBlog({ router, blog, related }) {
 						<Card raised sx={{ height: '400px' }}>
 							<CardMedia
 								component="img"
-								image={`/api/blog/photo/${blog.slug}`}
+								image={`/api/blog/photo/${encodeURIComponent(blog.slug)}`}
 								alt={blog.title}
 								sx={{
 									height: '200px',
@@ -95,7 +95,9 @@ function OneBlog({ router, blog, related }) {
 				<meta name="description" content={sDesc} />
 				<link
 					rel="canonical"
-					href={`${process.env.NEXT_PUBLIC_API}/blogs/${slug}`}
+					href={`${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
+						slug
+					)}`}
 				/>
 				<meta
 					property="og:title"
@@ -105,7 +107,9 @@ function OneBlog({ router, blog, related }) {
 				<meta property="og:type" content="website" />
 				<meta
 					property="og:url"
-					content={`${process.env.NEXT_PUBLIC_API}/blogs/${slug}`}
+					content={`${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
+						slug
+					)}`}
 				/>
 				<meta
 					property="og:site_name"
@@ -113,11 +117,15 @@ function OneBlog({ router, blog, related }) {
 				/>
 				<meta
 					property="og:image"
-					content={`${process.env.NEXT_PUBLIC_API}/api/blog/photo/${slug}`}
+					content={`${
+						process.env.NEXT_PUBLIC_API
+					}/api/blog/photo/${encodeURIComponent(slug)}`}
 				/>
 				<meta
 					property="og:image:secure_url"
-					content={`${process.env.NEXT_PUBLIC_API}/api/blog/photo/${slug}`}
+					content={`${
+						process.env.NEXT_PUBLIC_API
+					}/api/blog/photo/${encodeURIComponent(slug)}`}
 				/>
 				<meta property="og:image:type" content="image/jpg" />
 			</Head>
