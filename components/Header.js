@@ -95,6 +95,17 @@ function Header({ title }) {
 					</MenuItem>
 				</Link>
 
+				{isAuth().role === 1 && (
+					<Link href="/admin/crud/management" passHref>
+						<MenuItem>
+							<Avatar>
+								<BookIcon />
+							</Avatar>
+							유저 블로그 관리
+						</MenuItem>
+					</Link>
+				)}
+
 				<Divider />
 
 				<Link href="/admin/contact" passHref>
@@ -190,20 +201,12 @@ function Header({ title }) {
 								</IconButton>
 							</Tooltip>
 						)}
-						{handleMenu()}
+						{isAuth() && handleMenu()}
 
 						{!isAuth() && (
 							<Link href="/signin" passHref>
 								<Button color="primary" variant="contained" size="medium">
 									로그인
-								</Button>
-							</Link>
-						)}
-
-						{isAuth() && isAuth().role === 1 && (
-							<Link href="/admin" passHref>
-								<Button color="primary" variant="contained" size="medium">
-									{`${isAuth().username}님`}
 								</Button>
 							</Link>
 						)}

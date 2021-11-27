@@ -243,6 +243,11 @@ function Main({ router, token }) {
 		if (value.length < 151) {
 			data.set('excerpt', value);
 
+			setInfo({
+				...info,
+				error: '',
+			});
+
 			setExcerpt(value);
 		}
 	};
@@ -293,6 +298,11 @@ function Main({ router, token }) {
 	const [tagId, setTagId] = useState([]);
 
 	const handleTags = async e => {
+		setInfo({
+			...info,
+			error: '',
+		});
+
 		const { value } = e.target;
 
 		// 쉼표(,)만 입력하는 상황 방지
@@ -330,6 +340,11 @@ function Main({ router, token }) {
 	};
 
 	const handleDelete = tag => {
+		setInfo({
+			...info,
+			error: '',
+		});
+
 		let tagStore = [...tags];
 		const tagIdStore = [...tagId];
 		const tagIdx = tagStore.indexOf(tag);
