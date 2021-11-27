@@ -168,7 +168,6 @@ function AdminUpdatePost({ token, post }) {
 						}}
 					>
 						<Image
-							key={post.slug}
 							objectFit="fill"
 							priority={true}
 							loader={myLoader}

@@ -22,13 +22,13 @@ export default function handler(req, res) {
 						오류 발생 이유. populate 즉 참조를 위해서는 참조가
 						들어간 mongoose를 최소 한번은 실행해야 한다
 						그래서 blog를 create하고 read하면 오류가 안생김 */
+					// .populate('tags', '_id name slug')
 					await Blog.find({})
 						.populate('postedBy', '_id username name')
-						.populate('tags', '_id name slug')
 						.sort({ createdAt: -1 })
 						.skip(skipPage)
 						.limit(limitPage)
-						.select('tags _id title slug excerpt postedBy createdAt updatedAt')
+						.select('_id title slug excerpt postedBy createdAt updatedAt')
 						.exec((err, blogs) => {
 							if (err) {
 								return res

@@ -12,6 +12,8 @@ export const createTag = async (tag, token) => {
 
 	return result;
 };
+
+// cause: home index page populate
 export const getTagList = async () => {
 	const result = await axios
 		.get(`${process.env.API}/api/tag`)

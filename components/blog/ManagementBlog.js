@@ -32,8 +32,8 @@ function ManagementBlog({ blogList, token, size }) {
 	const router = useRouter();
 
 	const deletePost = async slug => {
-		await removeBlog(slug, token).then(data => {
-			router.replace(router.asPath);
+		await removeBlog(encodeURIComponent(slug), token).then(data => {
+			router.replace('/admin/crud/management');
 		});
 	};
 

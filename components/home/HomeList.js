@@ -22,9 +22,22 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 	const displayBlog = () => {
 		return blogs.map((blog, idx) => {
 			return (
-				<article key={idx}>
+				<Grid
+					key={idx}
+					xs={12}
+					sm={6}
+					md={4}
+					lg={3}
+					item
+					sx={{
+						mb: 2,
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
 					<BlogList blog={blog} />
-				</article>
+				</Grid>
 			);
 		});
 	};
@@ -52,7 +65,11 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 				</Button>
 			);
 		} else {
-			return <Alert severity="info">마지막 글입니다</Alert>;
+			return (
+				<Alert severity="info" sx={{ mt: 4 }}>
+					마지막 글입니다
+				</Alert>
+			);
 		}
 	};
 
@@ -60,9 +77,22 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 	const displayNewBlog = () => {
 		return blogObj.map((blog, idx) => {
 			return (
-				<article key={idx}>
+				<Grid
+					key={idx}
+					xs={12}
+					sm={6}
+					md={4}
+					lg={3}
+					item
+					sx={{
+						mb: 2,
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
 					<BlogList blog={blog} />
-				</article>
+				</Grid>
 			);
 		});
 	};
@@ -100,7 +130,7 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 				/>
 				<meta property="og:image:type" content="image/jpg" />
 			</Head>
-			<Container component="main" maxWidth="md">
+			<Container component="main" maxWidth="lg">
 				<CssBaseline />
 				<Box
 					sx={{
@@ -108,11 +138,15 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
+						justifyContent: 'center',
 						width: '100%',
 					}}
 				>
-					{displayBlog()}
-					{displayNewBlog()}
+					<Grid container spacing={2}>
+						{displayBlog()}
+						{displayNewBlog()}
+					</Grid>
+
 					{loading && (
 						<Box sx={{ marginBottom: 2 }}>
 							<CircularProgress />
