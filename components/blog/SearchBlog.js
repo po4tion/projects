@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { blogSearch } from '/actions/handleBlog';
-import renderHTML from 'react-render-html';
+import { BlogList } from '/components/blog';
 import moment from 'moment';
 import 'moment/locale/ko';
 import Link from 'next/link';
@@ -16,9 +16,25 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
+import Pagination from '@mui/material/Pagination';
+import Divider from '@mui/material/Divider';
 
 function SearchBlog() {
 	const [searched, setSearched] = useState([]);
+	const [page, setPage] = useState(1);
+	const inputRef = useRef();
+
+	const handleBlur = () => {
+		inputRef.current.blur();
+	};
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleBlur);
+
+		return () => {
+			window.removeEventListener('scroll', handleBlur);
+		};
+	});
 
 	const handleChange = async e => {
 		await blogSearch({ search: e.target.value }).then(data => {
@@ -30,34 +46,42 @@ function SearchBlog() {
 		});
 	};
 
-	const searchedList = searched => {
-		return searched.map((post, idx) => (
-			<Paper key={idx} sx={{ width: 600, my: 1, p: 2, userSelect: 'none' }}>
-				<Link href={`/blogs/${post.slug}`} passHref>
-					<Grid container spacing={2}>
-						<Grid item xs={12}>
-							<Typography align="left" variant="h5" sx={{ fontWeight: 600 }}>
-								{post.title}
-							</Typography>
-						</Grid>
-						<Grid item xs={12}>
-							{renderHTML(post.excerpt)}
-						</Grid>
+	const searchedList = (searched, start, end) => {
+		const result = [];
 
-						<Grid item xs={12}>
-							<Typography>
-								{post.postedBy.name} &#183;&nbsp;
-								{moment(post.updatedAt).format('YYYY년 MM월 DD일')}
-							</Typography>
-						</Grid>
-					</Grid>
-				</Link>
-			</Paper>
-		));
+		for (let i = start; i < end; i++) {
+			if (searched[i] === undefined) {
+				break;
+			}
+
+			const post = searched[i];
+
+			result.push(
+				<Grid
+					key={i}
+					item
+					xs={12}
+					sx={{
+						mb: 2,
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<BlogList blog={post} />
+				</Grid>
+			);
+		}
+
+		return result;
+	};
+
+	const handlePage = (_, value) => {
+		setPage(value);
 	};
 
 	return (
-		<Container component="main" maxWidth="md">
+		<Container component="main" maxWidth="md" onScroll={handleBlur}>
 			<CssBaseline />
 			<Box
 				sx={{
@@ -79,9 +103,10 @@ function SearchBlog() {
 						}}
 					>
 						<InputBase
+							inputRef={inputRef}
 							onChange={handleChange}
 							autoFocus
-							sx={{ fontSize: 25, ml: 1, flex: 1 }}
+							sx={{ fontSize: '2.5em', ml: 1, flex: 1 }}
 							placeholder="검색어를 입력해주세요"
 							inputProps={{ 'aria-label': '검색어를 입력해주세요' }}
 						/>
@@ -100,7 +125,18 @@ function SearchBlog() {
 						</Typography>
 					)}
 				</Stack>
-				<Stack sx={{ width: 600 }}>{searchedList(searched)}</Stack>
+
+				<Grid container spacing={2}>
+					{searchedList(searched, 5 * page - 5, 5 * page)}
+				</Grid>
+
+				<Stack spacing={2} sx={{ marginTop: 4 }}>
+					<Pagination
+						page={page}
+						count={Math.ceil(searched.length / 5)}
+						onChange={handlePage}
+					/>
+				</Stack>
 			</Box>
 		</Container>
 	);

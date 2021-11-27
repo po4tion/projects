@@ -104,14 +104,14 @@ export const updateBlog = async (blog, slug, token) => {
 	return result;
 };
 
-export const blogRelated = async blog => {
-	const result = await axios
-		.post(`/api/blogs/related`, blog)
-		.then(res => res.data)
-		.catch(err => err.response.data);
+// export const blogRelated = async blog => {
+// 	const result = await axios
+// 		.post(`/api/blogs/related`, blog)
+// 		.then(res => res.data)
+// 		.catch(err => err.response.data);
 
-	return result;
-};
+// 	return result;
+// };
 
 export const blogRelatedInServer = async blog => {
 	const result = await axios

@@ -23,8 +23,9 @@ export default function handler(req, res) {
 								{ body: { $regex: search, $options: 'i' } },
 							], // options 대소문자 구분 X
 						})
-							.populate('postedBy', 'name')
-							.select('-photo -body')
+							.populate('postedBy', 'username')
+							.select('-photo -body ')
+							.sort({ createdAt: -1 })
 							.exec((err, blogs) => {
 								if (err) {
 									return res.status(400).json({ error: '검색 불가능!' });
