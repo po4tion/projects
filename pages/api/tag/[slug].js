@@ -33,7 +33,7 @@ export default function handler(req, res) {
 
 							await Blog.find({ tags: tag })
 								.populate('tags', '_id name slug')
-								.populate('postedBy', '_id name')
+								.populate('postedBy', '_id username name')
 								.sort({ createdAt: -1 })
 								.select(
 									'tags _id title slug excerpt postedBy createdAt updatedAt'

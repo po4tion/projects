@@ -45,7 +45,7 @@ function BlogList({ blog, noLink = true }) {
 			<CssBaseline />
 			<Card raised sx={{ maxWidth: 300 }}>
 				<CardActionArea>
-					<NextLink href={`/blogs/${blog.slug}`} passHref>
+					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>
 						<CardMedia title={blog.title}>
 							<div
 								style={{
@@ -59,8 +59,8 @@ function BlogList({ blog, noLink = true }) {
 						</CardMedia>
 					</NextLink>
 
-					<CardContent sx={{ userSelect: 'none', height: 136 }}>
-						<NextLink href={`/blogs/${blog.slug}`} passHref>
+					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>
+						<CardContent sx={{ userSelect: 'none', height: 136 }}>
 							<Typography
 								gutterBottom
 								variant="h6"
@@ -69,8 +69,7 @@ function BlogList({ blog, noLink = true }) {
 							>
 								{blog.title}
 							</Typography>
-						</NextLink>
-						<NextLink href={`/blogs/${blog.slug}`} passHref>
+
 							<Typography
 								gutterBottom
 								variant="body2"
@@ -85,10 +84,12 @@ function BlogList({ blog, noLink = true }) {
 							>
 								{blog.excerpt}
 							</Typography>
-						</NextLink>
-					</CardContent>
+						</CardContent>
+					</NextLink>
 				</CardActionArea>
+
 				<Divider />
+
 				<Box
 					sx={{
 						pr: 2,

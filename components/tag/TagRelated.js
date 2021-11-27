@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
 
 function TagRelated({ tag, blogs }) {
 	const { name, slug } = tag;
@@ -24,7 +25,24 @@ function TagRelated({ tag, blogs }) {
 				break;
 			}
 
-			result.push(<BlogList key={i} blog={blogs[i]} />);
+			result.push(
+				<Grid
+					key={i}
+					xs={12}
+					sm={6}
+					md={4}
+					lg={3}
+					item
+					sx={{
+						mb: 2,
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<BlogList blog={blogs[i]} />
+				</Grid>
+			);
 		}
 
 		return result;
@@ -72,7 +90,7 @@ function TagRelated({ tag, blogs }) {
 				/>
 				<meta property="og:image:type" content="image/jpg" />
 			</Head>
-			<Container component="main" maxWidth="md">
+			<Container component="main" maxWidth="lg">
 				<CssBaseline />
 				<Box
 					sx={{
@@ -82,10 +100,17 @@ function TagRelated({ tag, blogs }) {
 						alignItems: 'center',
 					}}
 				>
-					<Typography gutterBottom color="secondary">
-						{name}
+					<Typography
+						gutterBottom
+						color="secondary"
+						variant="h4"
+						sx={{ userSelect: 'none', fontWeight: 'bold', mb: 4 }}
+					>
+						#{name}
 					</Typography>
-					{displayBlog(5 * page - 5, 5 * page)}
+					<Grid container spacing={2}>
+						{displayBlog(5 * page - 5, 5 * page)}
+					</Grid>
 					<Stack spacing={2} sx={{ marginTop: 4 }}>
 						<Pagination
 							page={page}

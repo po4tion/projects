@@ -83,6 +83,7 @@ export default function handler(req, res) {
 										error: '사진은 1mb를 넘을 수 없습니다.',
 									});
 								}
+
 								blog.photo.data = fs.readFileSync(files.photo.filepath);
 								blog.photo.contentType = files.photo.mimetype;
 							} else {
