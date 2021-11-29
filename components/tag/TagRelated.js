@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
 function TagRelated({ tag, blogs }) {
 	const { name, slug } = tag;
@@ -108,6 +109,7 @@ function TagRelated({ tag, blogs }) {
 					>
 						#{name}
 					</Typography>
+					<Divider variant="middle" sx={{ mb: 4, width: '100%' }} />
 					<Grid container spacing={2}>
 						{displayBlog(5 * page - 5, 5 * page)}
 					</Grid>

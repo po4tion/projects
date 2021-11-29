@@ -38,7 +38,7 @@ function Blogs({ blogs, user }) {
 	const userInfo = () => {
 		return (
 			<>
-				<Typography variant="h5" sx={{ userSelect: 'none' }}>
+				<Typography variant="h5" sx={{ userSelect: 'none', mb: 2 }}>
 					<b>{user.username}</b> 님의 포스트(총 {blogs.length} 개)
 				</Typography>
 				<Typography>문의하기</Typography>
@@ -62,10 +62,20 @@ function Blogs({ blogs, user }) {
 			if (blogs[i] === undefined) {
 				break;
 			}
+
 			store.push(
-				<article key={i}>
+				<Grid
+					key={i}
+					xs={12}
+					item
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
 					<BlogList blog={blogs[i]} noLink={false} />
-				</article>
+				</Grid>
 			);
 		}
 
@@ -136,9 +146,13 @@ function Blogs({ blogs, user }) {
 					}}
 				>
 					{userInfo()}
-					<Divider variant="middle" sx={{ mt: 4, mb: 4, width: '100%' }} />
+					<Divider variant="middle" sx={{ mb: 4, width: '100%' }} />
 
-					{!checked && userBlog(5 * page - 5, 5 * page)}
+					{!checked && (
+						<Grid container spacing={2}>
+							{userBlog(5 * page - 5, 5 * page)}
+						</Grid>
+					)}
 
 					{!checked && (
 						<Stack spacing={2} sx={{ marginTop: 4 }}>
