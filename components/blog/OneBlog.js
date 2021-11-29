@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import { withRouter } from 'next/router';
@@ -206,47 +206,33 @@ function OneBlog({ router, blog, related }) {
 
 	return (
 		<>
-			<Head>
-				<title>
-					{process.env.NEXT_PUBLIC_APP_NAME} | {title}
-				</title>
-				<meta name="description" content={sDesc} />
-				<link
-					rel="canonical"
-					href={`${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
+			<NextSeo
+				title={`${process.env.NEXT_PUBLIC_APP_NAME} | ${title}`}
+				description={sDesc}
+				canonical={`${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
+					slug
+				)}`}
+				openGraph={{
+					url: `${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
 						slug
-					)}`}
-				/>
-				<meta
-					property="og:title"
-					content={`${process.env.NEXT_PUBLIC_APP_NAME} | ${title}`}
-				/>
-				<meta property="og:description" content={sDesc} />
-				<meta property="og:type" content="website" />
-				<meta
-					property="og:url"
-					content={`${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
-						slug
-					)}`}
-				/>
-				<meta
-					property="og:site_name"
-					content={process.env.NEXT_PUBLIC_APP_NAME}
-				/>
-				<meta
-					property="og:image"
-					content={`${
-						process.env.NEXT_PUBLIC_API
-					}/api/blog/photo/${encodeURIComponent(slug)}`}
-				/>
-				<meta
-					property="og:image:secure_url"
-					content={`${
-						process.env.NEXT_PUBLIC_API
-					}/api/blog/photo/${encodeURIComponent(slug)}`}
-				/>
-				<meta property="og:image:type" content="image/jpg" />
-			</Head>
+					)}`,
+					title: `${process.env.NEXT_PUBLIC_APP_NAME} | ${title}`,
+					description: sDesc,
+					images: [
+						{
+							url: `${
+								process.env.NEXT_PUBLIC_API
+							}/api/blog/photo/${encodeURIComponent(slug)}`,
+							width: 500,
+							height: 500,
+							alt: '썸네일',
+							type: 'image/jpeg',
+						},
+					],
+					site_name: process.env.NEXT_PUBLIC_APP_NAME,
+				}}
+			/>
+
 			<Container component="main" maxWidth="md">
 				<CssBaseline />
 				<Box

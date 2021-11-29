@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import { BlogList } from '/components/blog';
@@ -31,7 +31,7 @@ function TagRelated({ tag, blogs }) {
 					key={i}
 					xs={12}
 					sm={6}
-					md={4}
+					md={3}
 					lg={3}
 					item
 					sx={{
@@ -55,42 +55,31 @@ function TagRelated({ tag, blogs }) {
 
 	return (
 		<>
-			<Head>
-				<title>
-					{process.env.NEXT_PUBLIC_APP_NAME} | {name}
-				</title>
-				<meta name="description" content={`[${name}] 태그와 관련된 포스트`} />
-				<link
-					rel="canonical"
-					href={`${process.env.NEXT_PUBLIC_API}/tags/${slug}`}
-				/>
-				<meta
-					property="og:title"
-					content={`${process.env.NEXT_PUBLIC_APP_NAME} | ${name}`}
-				/>
-				<meta
-					property="og:description"
-					content={`${name} 태그와 관련된 포스트`}
-				/>
-				<meta property="og:type" content="website" />
-				<meta
-					property="og:url"
-					content={`${process.env.NEXT_PUBLIC_API}/tags/${slug}`}
-				/>
-				<meta
-					property="og:site_name"
-					content={process.env.NEXT_PUBLIC_APP_NAME}
-				/>
-				<meta
-					property="og:image"
-					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
-				/>
-				<meta
-					property="og:image:secure_url"
-					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
-				/>
-				<meta property="og:image:type" content="image/jpg" />
-			</Head>
+			<NextSeo
+				title={`${process.env.NEXT_PUBLIC_APP_NAME} | ${name}`}
+				description={`#${name}로 검색된 글들`}
+				canonical={`${process.env.NEXT_PUBLIC_API}/tags/${encodeURIComponent(
+					slug
+				)}`}
+				openGraph={{
+					url: `${process.env.NEXT_PUBLIC_API}/tags/${encodeURIComponent(
+						slug
+					)}`,
+					title: `${process.env.NEXT_PUBLIC_APP_NAME} | ${name}`,
+					description: `태그 ${name} 으로/로 검색된 글들`,
+					images: [
+						{
+							url: `${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`,
+							width: 500,
+							height: 500,
+							alt: 'DEVBLOG의 마스코트',
+							type: 'image/jpeg',
+						},
+					],
+					site_name: process.env.NEXT_PUBLIC_APP_NAME,
+				}}
+			/>
+
 			<Container component="main" maxWidth="lg">
 				<CssBaseline />
 				<Box

@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { BlogList } from '/components/blog';
 import { getBlogs } from '/actions/handleBlog';
@@ -26,7 +26,7 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 					key={idx}
 					xs={12}
 					sm={6}
-					md={4}
+					md={3}
 					lg={3}
 					item
 					sx={{
@@ -81,7 +81,7 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 					key={idx}
 					xs={12}
 					sm={6}
-					md={4}
+					md={3}
 					lg={3}
 					item
 					sx={{
@@ -99,37 +99,27 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 
 	return (
 		<>
-			<Head>
-				<title>{process.env.NEXT_PUBLIC_APP_NAME} | 홈</title>
-				<meta name="description" content="개발자들의 글이 숨쉬는 곳" />
-				<link
-					rel="canonical"
-					href={`${process.env.NEXT_PUBLIC_API}${router.pathname}`}
-				/>
-				<meta
-					property="og:title"
-					content={`${process.env.NEXT_PUBLIC_APP_NAME} | 홈`}
-				/>
-				<meta property="og:description" content="개발자들의 글이 숨쉬는 곳" />
-				<meta property="og:type" content="website" />
-				<meta
-					property="og:url"
-					content={`${process.env.NEXT_PUBLIC_API}${router.pathname}`}
-				/>
-				<meta
-					property="og:site_name"
-					content={process.env.NEXT_PUBLIC_APP_NAME}
-				/>
-				<meta
-					property="og:image"
-					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
-				/>
-				<meta
-					property="og:image:secure_url"
-					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
-				/>
-				<meta property="og:image:type" content="image/jpg" />
-			</Head>
+			<NextSeo
+				title={process.env.NEXT_PUBLIC_APP_NAME}
+				description="개발자들의 글이 숨쉬는 곳"
+				canonical={`${process.env.NEXT_PUBLIC_API}${router.pathname}`}
+				openGraph={{
+					url: `${process.env.NEXT_PUBLIC_API}${router.pathname}`,
+					title: `${process.env.NEXT_PUBLIC_APP_NAME} | 홈`,
+					description: '개발자들의 글이 숨쉬는 곳',
+					images: [
+						{
+							url: `${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`,
+							width: 600,
+							height: 1000,
+							alt: 'DEVBLOG 마스코트',
+							type: 'image/jpeg',
+						},
+					],
+					site_name: process.env.NEXT_PUBLIC_APP_NAME,
+				}}
+			/>
+
 			<Container component="main" maxWidth="lg">
 				<CssBaseline />
 				<Box

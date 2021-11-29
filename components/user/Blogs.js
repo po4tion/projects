@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { BlogList } from '/components/blog';
 import { useForm } from 'react-hook-form';
@@ -102,39 +102,33 @@ function Blogs({ blogs, user }) {
 
 	return (
 		<>
-			<Head>
-				<title>
-					{process.env.NEXT_PUBLIC_APP_NAME} | {user.name}
-				</title>
-				<meta name="description" content={`${user.name}님의 블로그`} />
-				<link
-					rel="canonical"
-					href={`${process.env.NEXT_PUBLIC_API}/profile/${user.username}`}
-				/>
-				<meta
-					property="og:title"
-					content={`${process.env.NEXT_PUBLIC_APP_NAME} | ${user.name}`}
-				/>
-				<meta property="og:description" content={`${user.name}님의 블로그`} />
-				<meta property="og:type" content="website" />
-				<meta
-					property="og:url"
-					content={`${process.env.NEXT_PUBLIC_API}/profile/${user.username}`}
-				/>
-				<meta
-					property="og:site_name"
-					content={process.env.NEXT_PUBLIC_APP_NAME}
-				/>
-				<meta
-					property="og:image"
-					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
-				/>
-				<meta
-					property="og:image:secure_url"
-					content={`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`}
-				/>
-				<meta property="og:image:type" content="image/jpg" />
-			</Head>
+			<NextSeo
+				title={`${process.env.NEXT_PUBLIC_APP_NAME} | ${user.name}`}
+				description={`${user.name}의 블로그`}
+				canonical={`${process.env.NEXT_PUBLIC_API}/profile/${encodeURIComponent(
+					user.username
+				)}`}
+				openGraph={{
+					url: `${process.env.NEXT_PUBLIC_API}/profile/${encodeURIComponent(
+						user.username
+					)}`,
+					title: `${process.env.NEXT_PUBLIC_APP_NAME} | ${user.name}`,
+					description: `${user.name}의 글이 숨쉬는 곳`,
+					images: [
+						{
+							url: `${
+								process.env.NEXT_PUBLIC_API
+							}/api/user/photo/${encodeURIComponent(user.username)}`,
+							width: 500,
+							height: 500,
+							alt: `${user.username}의 프로필 사진`,
+							type: 'image/jpeg',
+						},
+					],
+					site_name: process.env.NEXT_PUBLIC_APP_NAME,
+				}}
+			/>
+
 			<Container component="main" maxWidth="md">
 				<CssBaseline />
 				<Box
