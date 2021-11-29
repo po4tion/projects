@@ -3,10 +3,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { isAuth, updateLocalStorage } from '/actions/handleAuth';
-import { updateUserProfile, getPhoto } from '/actions/handleUser';
+import {
+	updateUserProfile,
+	getPhoto,
+	removeProfileImg,
+} from '/actions/handleUser';
 import { photoResize } from '/lib/photoResize';
 import axios from 'axios';
 
+import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -17,6 +22,8 @@ import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import Divider from '@mui/material/Divider';
 
 function ProfileUpdate({ token, profile }) {
 	const router = useRouter();
@@ -46,6 +53,7 @@ function ProfileUpdate({ token, profile }) {
 	};
 
 	useEffect(() => {
+		console.log('하이');
 		modifyImg();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router]);
@@ -115,6 +123,7 @@ function ProfileUpdate({ token, profile }) {
 						error: '',
 						loading: false,
 						photoError: false,
+						photo: undefined,
 					});
 
 					URL.revokeObjectURL(info.photo);
@@ -122,6 +131,18 @@ function ProfileUpdate({ token, profile }) {
 					router.replace(router.asPath);
 				});
 			}
+		});
+	};
+
+	const handleProfileImg = () => {
+		removeProfileImg(profile.username).then(_ => {
+			setInfo({
+				...info,
+				photo: undefined,
+			});
+
+			setImg(undefined);
+			router.replace(router.asPath);
 		});
 	};
 
@@ -152,77 +173,64 @@ function ProfileUpdate({ token, profile }) {
 						</Box>
 					</Box>
 				)}
-				{!info.photo && (
-					<Box
+
+				<Box
+					sx={{
+						width: '100%',
+						display: 'flex',
+						flexDirection: 'column',
+					}}
+				>
+					<Avatar
+						alt="profile image"
 						sx={{
-							width: '100%',
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
+							width: 150,
+							height: 150,
+							mb: 2,
 						}}
 					>
-						<Box
-							sx={{
-								width: '100%',
-								maxWidth: '300px',
-								height: '250px',
-								maxHeight: '250px',
-								overflow: 'hidden',
-								marginBottom: 1,
-							}}
-						>
-							<Image src={img} alt="profile image" width={300} height={250} />
-						</Box>
-					</Box>
-				)}
-				{info.photo && (
-					<Box
-						sx={{
-							width: '100%',
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
-						<Box
-							sx={{
-								width: '100%',
-								maxWidth: '300px',
-								height: '250px',
-								maxHeight: '250px',
-								overflow: 'hidden',
-								marginBottom: 1,
-							}}
-						>
+						<PersonOutlineIcon sx={{ width: 150, height: 150 }} />
+						{!info.photo && img && (
+							<Image priority src={img} alt="profile image" layout="fill" />
+						)}
+						{info.photo && (
 							<Image
 								src={URL.createObjectURL(info.photo)}
-								alt="#"
-								width={300}
-								height={250}
+								alt="업로드 사진 미리보기"
+								layout="fill"
 							/>
-						</Box>
-					</Box>
-				)}
-				<label
-					style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
-				>
-					<Input
-						onChange={handleChange}
-						type="file"
-						accept="image/*"
-						sx={{ display: 'none' }}
-					/>
+						)}
+					</Avatar>
 
+					<label style={{ width: 150 }}>
+						<Input
+							onChange={handleChange}
+							type="file"
+							accept="image/*"
+							sx={{ display: 'none' }}
+						/>
+
+						<Button
+							fullWidth
+							color="primary"
+							variant="contained"
+							component="span"
+							sx={{ maxWidth: 150, mb: 0.3 }}
+						>
+							이미지 업로드
+						</Button>
+					</label>
 					<Button
 						fullWidth
 						color="primary"
-						variant="contained"
+						variant="outlined"
 						component="span"
-						sx={{ maxWidth: '300px' }}
+						onClick={handleProfileImg}
+						sx={{ maxWidth: 150 }}
 					>
-						프로필 사진 등록(1mb 이하)
+						이미지 삭제
 					</Button>
-				</label>
+				</Box>
 			</>
 		);
 	};
@@ -236,15 +244,10 @@ function ProfileUpdate({ token, profile }) {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					border: '1px solid black',
 				}}
 			>
-				<Typography variant="h4" align="left" sx={{ mb: 6, width: '100%' }}>
-					{profile.name} 님의 프로필
-				</Typography>
-
 				<Box sx={{ width: '100%', mt: 1 }}>
-					<Grid container spacing={2}>
+					<Grid container spacing={2} mb={4}>
 						{info.loading && (
 							<Grid
 								item
@@ -257,9 +260,22 @@ function ProfileUpdate({ token, profile }) {
 								<CircularProgress />
 							</Grid>
 						)}
-						<Grid item xs={12}>
-							{img && handlePhotoForm()}
+						<Grid item xs={3}>
+							{handlePhotoForm()}
 						</Grid>
+						<Grid item xs={1}>
+							<Divider orientation="vertical" width={1} />
+						</Grid>
+						<Grid item xs={8}>
+							<Typography variant="h4" fontWeight="bold" mb={2}>
+								{profile.name}
+							</Typography>
+							<Typography variant="body1">
+								{profile.about ? profile.about : '자기소개를 입력해주세요'}
+							</Typography>
+						</Grid>
+					</Grid>
+					<Grid container spacing={3}>
 						<Grid item xs={12}>
 							<TextField
 								onChange={handleThings('about')}
@@ -267,8 +283,11 @@ function ProfileUpdate({ token, profile }) {
 								fullWidth
 								id="about"
 								label="자기소개 수정"
+								placeholder="자기소개를 입력해주세요"
 								name="about"
 								type="text"
+								rows={4}
+								multiline
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -278,6 +297,7 @@ function ProfileUpdate({ token, profile }) {
 								fullWidth
 								id="username"
 								label="별명 수정"
+								placeholder="별명을 입력해주세요"
 								name="username"
 								type="text"
 								error={info.error === 'username' ? true : false}
@@ -290,53 +310,57 @@ function ProfileUpdate({ token, profile }) {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								defaultValue={profile.email}
-								fullWidth
-								id="email"
-								label="이메일 수정"
-								name="email"
-								type="email"
-								error={info.error === 'email' ? true : false}
-							/>
-							{info.error === 'email' && (
-								<Alert severity="error" sx={{ mt: '2px', width: '100%' }}>
-									이메일이 중복됩니다
-								</Alert>
-							)}
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
 								onChange={handleThings('password')}
 								value={info.password}
 								fullWidth
 								id="password"
 								label="비밀번호 수정"
+								placeholder="새로운 비밀번호를 입력해주세요"
 								name="password"
 								type="password"
 							/>
 						</Grid>
-					</Grid>
-					<Button
-						onClick={handleSubmit}
-						type="button"
-						fullWidth
-						variant="contained"
-						sx={{ mt: 3, mb: 2 }}
-					>
-						수정하기
-					</Button>
-
-					<Link href="/deleteAccount" passHref>
-						<Button
-							fullWidth
-							color="primary"
-							variant="contained"
-							size="medium"
-							sx={{ ml: 0.5 }}
+						<Grid item xs={12}>
+							<TextField
+								defaultValue={profile.email}
+								fullWidth
+								id="email"
+								label="이메일 수정불가"
+								name="email"
+								type="email"
+								disabled
+							/>
+						</Grid>
+						<Grid
+							item
+							xs={12}
+							sx={{ display: 'flex', justifyContent: 'flex-end' }}
 						>
-							회원탈퇴
-						</Button>
-					</Link>
+							<Button onClick={handleSubmit} type="button" variant="contained">
+								수정하기
+							</Button>
+						</Grid>
+						<Grid item xs={12}>
+							<Divider color="primary" sx={{ width: '100%' }} />
+						</Grid>
+						<Grid item xs={12}>
+							<Alert severity="warning" sx={{ height: '100%' }}>
+								경고! 회원탈퇴 후, 작성하신 모든 글이 삭제되며 회원 정보와 개인
+								저작물은 복구되지 않습니다.
+							</Alert>
+						</Grid>
+						<Grid
+							item
+							xs={12}
+							sx={{ display: 'flex', justifyContent: 'flex-end' }}
+						>
+							<Link href="/deleteAccount" passHref>
+								<Button color="warning" type="button" variant="outlined">
+									회원탈퇴
+								</Button>
+							</Link>
+						</Grid>
+					</Grid>
 				</Box>
 			</Box>
 		</Container>

@@ -43,3 +43,12 @@ export const getPhoto = async username => {
 
 	return result;
 };
+
+export const removeProfileImg = async username => {
+	const result = await axios
+		.delete(`/api/user/photo/${username}`)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
