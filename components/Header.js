@@ -45,7 +45,7 @@ function Header({ title }) {
 	};
 
 	useEffect(() => {
-		modifyImg();
+		isAuth() && modifyImg();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router]);
 
