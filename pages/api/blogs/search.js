@@ -21,10 +21,11 @@ export default function handler(req, res) {
 							$or: [
 								{ title: { $regex: search, $options: 'i' } },
 								{ body: { $regex: search, $options: 'i' } },
+								{ excerpt: { $regex: search, $options: 'i' } },
 							], // options 대소문자 구분 X
 						})
 							.populate('postedBy', 'username')
-							.select('-photo -body ')
+							.select('-photo -body')
 							.sort({ createdAt: -1 })
 							.exec((err, blogs) => {
 								if (err) {

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { blogSearch } from '/actions/handleBlog';
 import { BlogList } from '/components/blog';
 import moment from 'moment';
@@ -18,33 +18,11 @@ import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
 import Pagination from '@mui/material/Pagination';
 import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
 
 function SearchBlog() {
 	const [searched, setSearched] = useState([]);
 	const [page, setPage] = useState(1);
-	const inputRef = useRef();
-
-	const handleBlur = () => {
-		inputRef.current.blur();
-	};
-
-	useEffect(() => {
-		window.addEventListener('scroll', handleBlur);
-
-		return () => {
-			window.removeEventListener('scroll', handleBlur);
-		};
-	});
-
-	const handleChange = async e => {
-		await blogSearch({ search: e.target.value }).then(data => {
-			if (e.target.value === '') {
-				setSearched([]);
-			} else {
-				setSearched(data);
-			}
-		});
-	};
 
 	const searchedList = (searched, start, end) => {
 		const result = [];
@@ -80,8 +58,20 @@ function SearchBlog() {
 		setPage(value);
 	};
 
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		blogSearch({ search: e.target.searchText.value }).then(data => {
+			if (data.length === 0) {
+				setSearched([]);
+			} else {
+				setSearched(data);
+			}
+		});
+	};
+
 	return (
-		<Container component="main" maxWidth="md" onScroll={handleBlur}>
+		<Container component="main" maxWidth="md">
 			<CssBaseline />
 			<Box
 				sx={{
@@ -94,6 +84,7 @@ function SearchBlog() {
 				<Stack direction="column" spacing={2} sx={{ marginBottom: 10 }}>
 					<Paper
 						component="form"
+						onSubmit={handleSubmit}
 						sx={{
 							p: '2px 4px',
 							display: 'flex',
@@ -103,21 +94,17 @@ function SearchBlog() {
 						}}
 					>
 						<InputBase
-							inputRef={inputRef}
-							onChange={handleChange}
 							autoFocus
 							sx={{ fontSize: '2.5em', ml: 1, flex: 1 }}
 							placeholder="검색어를 입력해주세요"
+							name="searchText"
 							inputProps={{ 'aria-label': '검색어를 입력해주세요' }}
 						/>
-						<IconButton
-							type="submit"
-							disabled
-							sx={{ p: '10px' }}
-							aria-label="search"
-						>
-							<SearchIcon color="primary" fontSize="large" />
-						</IconButton>
+						<Tooltip title="클릭" arrow>
+							<IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+								<SearchIcon color="primary" fontSize="large" />
+							</IconButton>
+						</Tooltip>
 					</Paper>
 					{searched.length !== 0 && (
 						<Typography fontSize="large">
