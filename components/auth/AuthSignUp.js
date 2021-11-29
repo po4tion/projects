@@ -178,7 +178,8 @@ function Signup() {
 					)}
 					{!ready && (
 						<Alert severity="info" sx={{ width: '100%' }}>
-							등록하신 이메일로 본인 인증을 완료해주세요
+							등록하신 이메일로 본인 인증을 완료해주세요 (스팸 또는 프로모션
+							보관함을 확인해주세요)
 						</Alert>
 					)}
 				</Box>

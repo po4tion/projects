@@ -6,6 +6,9 @@ const CompressionPlugin = require('compression-webpack-plugin');
 module.exports = withBundleAnalyzer({
 	reactStrictMode: true,
 	compress: true,
+	images: {
+		domains: [process.env.IMAGE_SRC],
+	},
 
 	webpack: function (config) {
 		config.plugins.push(new CompressionPlugin());

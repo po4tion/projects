@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signoutAxios, isAuth } from '/actions/handleAuth';
+import Image from 'next/image';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -195,6 +196,9 @@ function Header({ title }) {
 											width: 36,
 											height: 36,
 										}}
+										src={`${
+											process.env.NEXT_PUBLIC_API
+										}/api/user/photo/${encodeURIComponent(isAuth().username)}`}
 									>
 										{sliceFirstUsername()}
 									</Avatar>

@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { BlogList } from '/components/blog';
 import { getBlogs } from '/actions/handleBlog';
-
+import Image from 'next/image';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import CssBaseline from '@mui/material/CssBaseline';

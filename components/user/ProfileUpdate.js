@@ -229,6 +229,14 @@ function ProfileUpdate({ token, profile }) {
 						accept="image/*"
 						sx={{ display: 'none' }}
 					/>
+					<Image
+						src={`${
+							process.env.NEXT_PUBLIC_API
+						}/api/user/photo/${encodeURIComponent(profile.username)}`}
+						alt="#"
+						width={300}
+						height={300}
+					/>
 					<Button
 						fullWidth
 						color="primary"
