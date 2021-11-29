@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signoutAxios, isAuth } from '/actions/handleAuth';
 import Image from 'next/image';
+import axios from 'axios';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -31,6 +32,22 @@ function Header({ title }) {
 	useEffect(() => {
 		setStart(true);
 	}, []);
+
+	const [img, setImg] = useState(undefined);
+
+	const modifyImg = async () => {
+		const res = await axios.get(
+			`/api/user/photo/${encodeURIComponent(isAuth().username)}`
+		);
+
+		const trans = new Buffer.from(res.data.data.data).toString('base64');
+		setImg(`data:image/jpeg;base64,${trans}`);
+	};
+
+	useEffect(() => {
+		modifyImg();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [router]);
 
 	const sliceFirstUsername = () => {
 		const userName = isAuth() && isAuth().username;
@@ -196,10 +213,8 @@ function Header({ title }) {
 											width: 36,
 											height: 36,
 										}}
-										src={`${
-											process.env.NEXT_PUBLIC_API
-										}/api/user/photo/${encodeURIComponent(isAuth().username)}`}
 									>
+										{img && <Image src={img} layout="fill" alt="프로필 사진" />}
 										{sliceFirstUsername()}
 									</Avatar>
 								</IconButton>

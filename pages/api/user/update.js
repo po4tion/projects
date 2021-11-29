@@ -53,15 +53,15 @@ export default function handler(req, res) {
 								}
 
 								prev = _.assignIn(prev, fields);
-								prev.profile = `${process.env.API}/profile/${encodeURIComponent(
-									fields.username
-								)}`;
+
+								if (fields.username) {
+									prev.profile = `${
+										process.env.API
+									}/profile/${encodeURIComponent(fields.username)}`;
+								}
+
 								prev.role = req.profile.role;
 								prev.email = req.profile.email;
-
-								// if (fields.username) {
-								// 	prev.username = fields.username.split(' ').join('-');
-								// }
 
 								const { password } = fields;
 								const { photo } = files;

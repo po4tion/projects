@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { isAuth, updateLocalStorage } from '/actions/handleAuth';
 import { updateUserProfile, getPhoto } from '/actions/handleUser';
+import { photoResize } from '/lib/photoResize';
+import axios from 'axios';
 
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,64 +20,73 @@ import Alert from '@mui/material/Alert';
 
 function ProfileUpdate({ token, profile }) {
 	const router = useRouter();
-	const [photoRefresh, setPhotoRefresh] = useState(false);
 
 	const [info, setInfo] = useState({
-		username: '',
-		email: '',
-		about: '',
 		password: '',
-		photo: '',
-		userInfo: '',
 		error: '',
 		loading: false,
 		photoError: false,
 	});
 
-	const handleChange = key => e => {
-		if (key === 'photo') {
-			setPhotoRefresh(false);
-		}
+	const [data, setData] = useState('');
 
-		const value = key === 'photo' ? e.target.files[0] : e.target.value;
-		const userData = new FormData();
+	useEffect(() => {
+		setData(new FormData());
+	}, []);
 
-		if (key === 'photo' && e.target.files.length === 0) {
-			URL.revokeObjectURL(info.photo);
-			userData.set(key, undefined);
+	const [img, setImg] = useState(undefined);
 
-			setInfo({
-				...info,
-				[key]: '',
-				userInfo: userData,
-				photoError: false,
-			});
+	const modifyImg = async () => {
+		const res = await axios.get(
+			`/api/user/photo/${encodeURIComponent(profile.username)}`
+		);
 
+		const trans = new Buffer.from(res.data.data.data).toString('base64');
+		setImg(`data:image/jpeg;base64,${trans}`);
+	};
+
+	useEffect(() => {
+		modifyImg();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [router]);
+
+	const handleChange = async e => {
+		const { files } = e.target;
+
+		if (files.length === 0) {
 			return;
+		} else {
+			const value = files[0];
+			const resizeFile = await photoResize(value);
+
+			if (resizeFile.size >= 4000000) {
+				setInfo({
+					...info,
+					photoError: '사진의 용량이 너무 큽니다',
+				});
+			} else {
+				data.set('photo', resizeFile); // blob data 전달
+
+				setInfo({
+					...info,
+					photoError: '',
+					photo: resizeFile,
+				});
+
+				setData(data);
+			}
 		}
+	};
 
-		if (key === 'photo' && e.target && e.target.files[0].size > 1500000) {
-			URL.revokeObjectURL(info.photo);
-			userData.set(key, undefined);
+	const handleThings = key => e => {
+		const { value } = e.target;
 
-			setInfo({
-				...info,
-				photoError: true,
-				[key]: '',
-				userInfo: userData,
-			});
-
-			return;
-		}
-
-		userData.set(key, value);
+		data.set(key, value);
 
 		setInfo({
 			...info,
-			[key]: value,
-			userInfo: userData,
 			error: '',
-			photoError: false,
+			[key]: value,
 		});
 	};
 
@@ -84,7 +95,7 @@ function ProfileUpdate({ token, profile }) {
 
 		setInfo({ ...info, loading: true });
 
-		await updateUserProfile(info.userInfo, token).then(data => {
+		await updateUserProfile(data, token).then(data => {
 			if (data.error) {
 				if (data.error.keyPattern.username === 1) {
 					setInfo({
@@ -100,23 +111,14 @@ function ProfileUpdate({ token, profile }) {
 			} else {
 				updateLocalStorage(data, () => {
 					setInfo({
-						username: '',
-						email: '',
-						about: '',
 						password: '',
 						error: '',
 						loading: false,
 						photoError: false,
 					});
 
-					// 상단의 username 버튼 활성화를 위해 refresh, 사진은 브라우저 새로고침
-					// if (info.photo) {
-					// 	window.location.replace(router.asPath);
-					// } else {
-					// 	router.replace(router.asPath);
-					// }
 					URL.revokeObjectURL(info.photo);
-					setPhotoRefresh(handlePhotoForm);
+
 					router.replace(router.asPath);
 				});
 			}
@@ -124,17 +126,6 @@ function ProfileUpdate({ token, profile }) {
 	};
 
 	const handlePhotoForm = () => {
-		const src = `${
-			process.env.NEXT_PUBLIC_API
-		}/api/user/photo/${encodeURIComponent(profile.username)}`;
-		const myLoader = ({ src, width, quality }) => {
-			return `${
-				process.env.NEXT_PUBLIC_API
-			}/api/user/photo/${encodeURIComponent(profile.username)}?w=${width}&q=${
-				quality || 75
-			}`;
-		};
-
 		// 사진의 용량은 1mb 이하여야 합니다
 		return (
 			<>
@@ -180,15 +171,7 @@ function ProfileUpdate({ token, profile }) {
 								marginBottom: 1,
 							}}
 						>
-							<Image
-								priority={true}
-								loader={myLoader}
-								quality={100}
-								src={src}
-								alt="profile image"
-								width={300}
-								height={250}
-							/>
+							<Image src={img} alt="profile image" width={300} height={250} />
 						</Box>
 					</Box>
 				)}
@@ -224,19 +207,12 @@ function ProfileUpdate({ token, profile }) {
 					style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
 				>
 					<Input
-						onChange={handleChange('photo')}
+						onChange={handleChange}
 						type="file"
 						accept="image/*"
 						sx={{ display: 'none' }}
 					/>
-					<Image
-						src={`${
-							process.env.NEXT_PUBLIC_API
-						}/api/user/photo/${encodeURIComponent(profile.username)}`}
-						alt="#"
-						width={300}
-						height={300}
-					/>
+
 					<Button
 						fullWidth
 						color="primary"
@@ -266,12 +242,8 @@ function ProfileUpdate({ token, profile }) {
 				<Typography variant="h4" align="left" sx={{ mb: 6, width: '100%' }}>
 					{profile.name} 님의 프로필
 				</Typography>
-				<Box
-					component="form"
-					onSubmit={handleSubmit}
-					novalidate
-					sx={{ width: '100%', mt: 1 }}
-				>
+
+				<Box sx={{ width: '100%', mt: 1 }}>
 					<Grid container spacing={2}>
 						{info.loading && (
 							<Grid
@@ -286,11 +258,11 @@ function ProfileUpdate({ token, profile }) {
 							</Grid>
 						)}
 						<Grid item xs={12}>
-							{photoRefresh || handlePhotoForm()}
+							{img && handlePhotoForm()}
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								onChange={handleChange('about')}
+								onChange={handleThings('about')}
 								defaultValue={profile.about}
 								fullWidth
 								id="about"
@@ -301,7 +273,7 @@ function ProfileUpdate({ token, profile }) {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								onChange={handleChange('username')}
+								onChange={handleThings('username')}
 								defaultValue={profile.username}
 								fullWidth
 								id="username"
@@ -318,7 +290,6 @@ function ProfileUpdate({ token, profile }) {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								onChange={handleChange('email')}
 								defaultValue={profile.email}
 								fullWidth
 								id="email"
@@ -335,7 +306,7 @@ function ProfileUpdate({ token, profile }) {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								onChange={handleChange('password')}
+								onChange={handleThings('password')}
 								value={info.password}
 								fullWidth
 								id="password"
@@ -346,7 +317,8 @@ function ProfileUpdate({ token, profile }) {
 						</Grid>
 					</Grid>
 					<Button
-						type="submit"
+						onClick={handleSubmit}
+						type="button"
 						fullWidth
 						variant="contained"
 						sx={{ mt: 3, mb: 2 }}

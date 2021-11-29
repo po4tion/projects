@@ -58,6 +58,7 @@ function Main({ router, token }) {
 				});
 			} else {
 				data.set('photo', resizeFile); // blob data 전달
+
 				setInfo({
 					...info,
 					error: '',
@@ -73,6 +74,7 @@ function Main({ router, token }) {
 		const { value } = e.target;
 
 		data.set('title', value);
+
 		setInfo({
 			...info,
 			error: '',

@@ -14,9 +14,9 @@ export default function handler(req, res) {
 		switch (method) {
 			case 'GET':
 				try {
-					const { username } = req.query;
+					const { test } = req.query;
 
-					await User.findOne({ username }).exec(async (err, user) => {
+					await User.findOne({ username: test }).exec(async (err, user) => {
 						if (err || !user) {
 							return res
 								.status(400)
