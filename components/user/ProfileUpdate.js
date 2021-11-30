@@ -2,12 +2,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { isAuth, updateLocalStorage } from '/actions/handleAuth';
-import {
-	updateUserProfile,
-	getPhoto,
-	removeProfileImg,
-} from '/actions/handleUser';
+import { updateLocalStorage } from '/actions/handleAuth';
+import { updateUserProfile, removeProfileImg } from '/actions/handleUser';
 import { photoResize } from '/lib/photoResize';
 import axios from 'axios';
 
@@ -36,9 +32,11 @@ function ProfileUpdate({ token, profile }) {
 	});
 
 	const [data, setData] = useState('');
+	const [photoData, setPhotoData] = useState('');
 
 	useEffect(() => {
 		setData(new FormData());
+		setPhotoData(new FormData());
 	}, []);
 
 	const [img, setImg] = useState(undefined);
@@ -53,7 +51,6 @@ function ProfileUpdate({ token, profile }) {
 	};
 
 	useEffect(() => {
-		console.log('하이');
 		modifyImg();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router]);
@@ -73,15 +70,32 @@ function ProfileUpdate({ token, profile }) {
 					photoError: '사진의 용량이 너무 큽니다',
 				});
 			} else {
-				data.set('photo', resizeFile); // blob data 전달
+				photoData.set('photo', resizeFile); // blob data 전달
 
 				setInfo({
 					...info,
 					photoError: '',
-					photo: resizeFile,
 				});
 
-				setData(data);
+				setPhotoData(photoData);
+
+				await updateUserProfile(photoData, token).then(data => {
+					console.log(data);
+
+					if (data.error) {
+						setInfo({
+							...info,
+							photoError: '업로드 불가',
+						});
+					} else {
+						setInfo({
+							...info,
+							photoError: false,
+						});
+
+						router.replace(router.asPath);
+					}
+				});
 			}
 		}
 	};
@@ -122,11 +136,7 @@ function ProfileUpdate({ token, profile }) {
 						password: '',
 						error: '',
 						loading: false,
-						photoError: false,
-						photo: undefined,
 					});
-
-					URL.revokeObjectURL(info.photo);
 
 					router.replace(router.asPath);
 				});
@@ -135,11 +145,8 @@ function ProfileUpdate({ token, profile }) {
 	};
 
 	const handleProfileImg = () => {
-		removeProfileImg(profile.username).then(_ => {
-			setInfo({
-				...info,
-				photo: undefined,
-			});
+		removeProfileImg(profile.username).then(data => {
+			console.log(data);
 
 			setImg(undefined);
 			router.replace(router.asPath);
@@ -190,15 +197,8 @@ function ProfileUpdate({ token, profile }) {
 						}}
 					>
 						<PersonOutlineIcon sx={{ width: 150, height: 150 }} />
-						{!info.photo && img && (
+						{img && (
 							<Image priority src={img} alt="profile image" layout="fill" />
-						)}
-						{info.photo && (
-							<Image
-								src={URL.createObjectURL(info.photo)}
-								alt="업로드 사진 미리보기"
-								layout="fill"
-							/>
 						)}
 					</Avatar>
 
@@ -315,7 +315,7 @@ function ProfileUpdate({ token, profile }) {
 								fullWidth
 								id="password"
 								label="비밀번호 수정"
-								placeholder="새로운 비밀번호를 입력해주세요"
+								placeholder="새로운 비밀번호를 입력해주세요(8자 이상)"
 								name="password"
 								type="password"
 							/>

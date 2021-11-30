@@ -35,15 +35,6 @@ export const updateUserProfile = async (user, token) => {
 	return result;
 };
 
-export const getPhoto = async username => {
-	const result = await axios
-		.get(`/api/user/photo/${username}`)
-		.then(res => res.data)
-		.catch(err => err.response.data);
-
-	return result;
-};
-
 export const removeProfileImg = async username => {
 	const result = await axios
 		.delete(`/api/user/photo/${username}`)
