@@ -14,49 +14,27 @@ import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
 
 function BlogList({ blog, noLink = true }) {
-	const handleImage = () => {
-		const src = `${
-			process.env.NEXT_PUBLIC_API
-		}/api/blog/photo/${encodeURIComponent(blog.slug)}`;
-
-		const myLoader = ({ src, width, quality }) => {
-			return `${
-				process.env.NEXT_PUBLIC_API
-			}/api/blog/photo/${encodeURIComponent(blog.slug)}?w=${width}&q=${
-				quality || 75
-			}`;
-		};
-
+	const handleImage = blog => {
 		return (
 			<Image
-				width={300}
-				height={200}
+				width="300px"
+				height="250px"
 				objectFit="cover"
-				loader={myLoader}
 				quality={100}
-				src={src}
+				src={`${
+					process.env.NEXT_PUBLIC_API
+				}/api/blog/photo/${encodeURIComponent(blog.slug)}`}
 				alt="thumbnail image"
 			/>
 		);
 	};
-
 	return (
 		<div>
 			<CssBaseline />
 			<Card raised sx={{ maxWidth: 300 }}>
 				<CardActionArea>
 					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>
-						<CardMedia title={blog.title}>
-							<div
-								style={{
-									position: 'relative',
-									width: '100%',
-									height: '100%',
-								}}
-							>
-								{handleImage()}
-							</div>
-						</CardMedia>
+						<CardMedia title={blog.title}>{handleImage(blog)}</CardMedia>
 					</NextLink>
 
 					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>

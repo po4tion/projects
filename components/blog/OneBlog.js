@@ -40,26 +40,16 @@ function OneBlog({ router, blog, related }) {
 	};
 
 	const handleImage = blog => {
-		const src = `${
-			process.env.NEXT_PUBLIC_API
-		}/api/blog/photo/${encodeURIComponent(blog.slug)}`;
-
-		const myLoader = ({ src, width, quality }) => {
-			return `${
-				process.env.NEXT_PUBLIC_API
-			}/api/blog/photo/${encodeURIComponent(blog.slug)}?w=${width}&q=${
-				quality || 75
-			}`;
-		};
-
 		return (
 			<Image
+				priority
 				width={300}
-				height={200}
+				height={250}
 				objectFit="cover"
-				loader={myLoader}
 				quality={100}
-				src={src}
+				src={`${
+					process.env.NEXT_PUBLIC_API
+				}/api/blog/photo/${encodeURIComponent(blog.slug)}`}
 				alt="thumbnail image"
 			/>
 		);
@@ -88,17 +78,7 @@ function OneBlog({ router, blog, related }) {
 								href={`/blogs/${encodeURIComponent(blog.slug)}`}
 								passHref
 							>
-								<CardMedia title={blog.title}>
-									<div
-										style={{
-											position: 'relative',
-											width: '100%',
-											height: '100%',
-										}}
-									>
-										{handleImage(blog)}
-									</div>
-								</CardMedia>
+								<CardMedia title={blog.title}>{handleImage(blog)}</CardMedia>
 							</NextLink>
 
 							<NextLink

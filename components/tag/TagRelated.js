@@ -100,12 +100,12 @@ function TagRelated({ tag, blogs }) {
 					</Typography>
 					<Divider variant="middle" sx={{ mb: 4, width: '100%' }} />
 					<Grid container spacing={2}>
-						{displayBlog(5 * page - 5, 5 * page)}
+						{displayBlog(4 * page - 4, 4 * page)}
 					</Grid>
 					<Stack spacing={2} sx={{ marginTop: 4 }}>
 						<Pagination
 							page={page}
-							count={Math.ceil(blogs.length / 5)}
+							count={Math.ceil(blogs.length / 4)}
 							onChange={handleChange}
 						/>
 					</Stack>

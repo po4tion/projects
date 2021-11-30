@@ -198,7 +198,14 @@ function ProfileUpdate({ token, profile }) {
 					>
 						<PersonOutlineIcon sx={{ width: 150, height: 150 }} />
 						{img && (
-							<Image priority src={img} alt="profile image" layout="fill" />
+							<Image
+								priority
+								src={img}
+								alt="profile image"
+								layout="fill"
+								objectFit="cover"
+								quality={100}
+							/>
 						)}
 					</Avatar>
 

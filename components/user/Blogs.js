@@ -67,6 +67,9 @@ function Blogs({ blogs, user }) {
 				<Grid
 					key={i}
 					xs={12}
+					sm={6}
+					md={3}
+					lg={3}
 					item
 					sx={{
 						display: 'flex',
@@ -129,7 +132,7 @@ function Blogs({ blogs, user }) {
 				}}
 			/>
 
-			<Container component="main" maxWidth="md">
+			<Container component="main" maxWidth="lg">
 				<CssBaseline />
 				<Box
 					sx={{
@@ -144,7 +147,7 @@ function Blogs({ blogs, user }) {
 
 					{!checked && (
 						<Grid container spacing={2}>
-							{userBlog(5 * page - 5, 5 * page)}
+							{userBlog(4 * page - 4, 4 * page)}
 						</Grid>
 					)}
 
@@ -153,7 +156,7 @@ function Blogs({ blogs, user }) {
 							<Pagination
 								onChange={handleChange}
 								page={page}
-								count={Math.ceil(blogs.length / 5)}
+								count={Math.ceil(blogs.length / 4)}
 							/>
 						</Stack>
 					)}

@@ -214,7 +214,15 @@ function Header({ title }) {
 											height: 36,
 										}}
 									>
-										{img && <Image src={img} layout="fill" alt="프로필 사진" />}
+										{img && (
+											<Image
+												src={img}
+												layout="fill"
+												objectFit="cover"
+												quality={100}
+												alt="프로필 사진"
+											/>
+										)}
 										{sliceFirstUsername()}
 									</Avatar>
 								</IconButton>
