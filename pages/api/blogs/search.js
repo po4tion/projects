@@ -38,6 +38,28 @@ export default function handler(req, res) {
 					return res.status(400).json({ error: '에러' });
 				}
 				break;
+			case 'POST':
+				try {
+					const { search } = req.query;
+
+					if (search) {
+						await Blog.find({
+							'postedBy.username': search,
+						})
+							.populate('postedBy', 'username')
+							.select('-photo -body')
+							.sort({ createdAt: -1 })
+							.exec((err, blogs) => {
+								if (err) {
+									return res.status(400).json({ error: '검색 불가능!' });
+								}
+								return res.status(200).json(blogs);
+							});
+					}
+				} catch (error) {
+					return res.status(400).json({ error: '에러' });
+				}
+				break;
 			default:
 				return res.status(400).json({ error: 'request method를 확인해주세요' });
 				break;

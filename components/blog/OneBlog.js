@@ -22,6 +22,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
+import Button from '@mui/material/Button';
 
 function OneBlog({ router, blog, related }) {
 	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data;
@@ -184,98 +185,107 @@ function OneBlog({ router, blog, related }) {
 		ref: comment,
 	});
 
+	const handleBtn = () => {
+		router.back();
+	};
+
 	return (
 		<>
-			<NextSeo
-				title={`${process.env.NEXT_PUBLIC_APP_NAME} | ${title}`}
-				description={sDesc}
-				canonical={`${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
-					slug
-				)}`}
-				openGraph={{
-					url: `${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
+			{blog && (
+				<NextSeo
+					title={`${process.env.NEXT_PUBLIC_APP_NAME} | ${title}`}
+					description={sDesc}
+					canonical={`${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
 						slug
-					)}`,
-					title: `${process.env.NEXT_PUBLIC_APP_NAME} | ${title}`,
-					description: sDesc,
-					images: [
-						{
-							url: `${
-								process.env.NEXT_PUBLIC_API
-							}/api/blog/photo/${encodeURIComponent(slug)}`,
-							width: 500,
-							height: 500,
-							alt: '썸네일',
-							type: 'image/jpeg',
-						},
-					],
-					site_name: process.env.NEXT_PUBLIC_APP_NAME,
-				}}
-			/>
-
-			<Container component="main" maxWidth="md">
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 6,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
+					)}`}
+					openGraph={{
+						url: `${process.env.NEXT_PUBLIC_API}/blogs/${encodeURIComponent(
+							slug
+						)}`,
+						title: `${process.env.NEXT_PUBLIC_APP_NAME} | ${title}`,
+						description: sDesc,
+						images: [
+							{
+								url: `${
+									process.env.NEXT_PUBLIC_API
+								}/api/blog/photo/${encodeURIComponent(slug)}`,
+								width: 500,
+								height: 500,
+								alt: '썸네일',
+								type: 'image/jpeg',
+							},
+						],
+						site_name: process.env.NEXT_PUBLIC_APP_NAME,
 					}}
-				>
-					<Grid container rowSpacing={2}>
-						<Grid item xs={12}>
-							<Typography
-								component="h1"
-								variant="h3"
-								sx={{ boxShadow: '0 3px 3px -3px #000' }}
-							>
-								{title}
-							</Typography>
-						</Grid>
+				/>
+			)}
 
-						<Grid item xs={12}>
-							<Typography variant="h6" sx={{ userSelect: 'none' }}>
-								<NextLink
-									href={`/profile/${encodeURIComponent(postedBy.username)}`}
-									passHref
+			{blog && (
+				<Container component="main" maxWidth="md">
+					<CssBaseline />
+					<Box
+						sx={{
+							marginTop: 6,
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
+					>
+						<Button onClick={handleBtn}>버튼</Button>
+						<Grid container rowSpacing={2}>
+							<Grid item xs={12}>
+								<Typography
+									component="h1"
+									variant="h3"
+									sx={{ boxShadow: '0 3px 3px -3px #000' }}
 								>
-									<Link underline="hover">{postedBy.username}</Link>
-								</NextLink>{' '}
-								&#183;&nbsp;
-								{moment(updatedAt).format(`YYYY년 MM월 DD일`)}
-							</Typography>
+									{title}
+								</Typography>
+							</Grid>
+
+							<Grid item xs={12}>
+								<Typography variant="h6" sx={{ userSelect: 'none' }}>
+									<NextLink
+										href={`/profile/${encodeURIComponent(postedBy.username)}`}
+										passHref
+									>
+										<Link underline="hover">{postedBy.username}</Link>
+									</NextLink>{' '}
+									&#183;&nbsp;
+									{moment(updatedAt).format(`YYYY년 MM월 DD일`)}
+								</Typography>
+							</Grid>
+
+							<Grid item xs={12} sx={{ marginBottom: 5 }}>
+								{handleTag(tags)}
+							</Grid>
+							<Grid item xs={12}>
+								<Box sx={{ width: '100%' }}>{renderHTML(body)}</Box>
+							</Grid>
+
+							<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
+
+							<Box ref={comment} sx={{ width: '100%' }} />
+
+							<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
+
+							<Grid item xs={12}>
+								<Typography
+									variant="h5"
+									sx={{ textAlign: 'center', mb: 4, userSelect: 'none' }}
+								>
+									관심 있을 만한 포스터
+								</Typography>
+							</Grid>
+
+							<Grid container spacing={2}>
+								{relateCards(related)}
+								{handleSkeleton()}
+							</Grid>
 						</Grid>
-
-						<Grid item xs={12} sx={{ marginBottom: 5 }}>
-							{handleTag(tags)}
-						</Grid>
-						<Grid item xs={12}>
-							<Box sx={{ width: '100%' }}>{renderHTML(body)}</Box>
-						</Grid>
-
-						<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
-
-						<Box ref={comment} sx={{ width: '100%' }} />
-
-						<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
-
-						<Grid item xs={12}>
-							<Typography
-								variant="h5"
-								sx={{ textAlign: 'center', mb: 4, userSelect: 'none' }}
-							>
-								관심 있을 만한 포스터
-							</Typography>
-						</Grid>
-
-						<Grid container spacing={2}>
-							{relateCards(related)}
-							{handleSkeleton()}
-						</Grid>
-					</Grid>
-				</Box>
-			</Container>
+					</Box>
+				</Container>
+			)}
 		</>
 	);
 }
