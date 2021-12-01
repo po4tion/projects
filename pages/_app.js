@@ -9,6 +9,8 @@ import { theme, createEmotionCache } from '/view';
 import { Layout } from '/components';
 import '/public/css/nprogress.css';
 
+import { getTagList } from '/actions/handleTag';
+
 // NProgress settings
 Router.events.on('routeChangeStart', url => {
 	NProgress.start();

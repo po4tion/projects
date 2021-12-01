@@ -185,10 +185,6 @@ function OneBlog({ router, blog, related }) {
 		ref: comment,
 	});
 
-	const handleBtn = () => {
-		router.back();
-	};
-
 	return (
 		<>
 			{blog && (
@@ -231,7 +227,6 @@ function OneBlog({ router, blog, related }) {
 							alignItems: 'center',
 						}}
 					>
-						<Button onClick={handleBtn}>버튼</Button>
 						<Grid container rowSpacing={2}>
 							<Grid item xs={12}>
 								<Typography
