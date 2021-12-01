@@ -13,7 +13,14 @@ function Blogs({ router, blog, related }) {
 
 export default withRouter(Blogs);
 
-export async function getServerSideProps(ctx) {
+export async function getStaticPaths() {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	};
+}
+
+export async function getStaticProps(ctx) {
 	const tags = await getTagList();
 	const blog = await getBlogInServer(encodeURIComponent(ctx.params.slug));
 	const related = await blogRelatedInServer(blog.data);
@@ -23,5 +30,6 @@ export async function getServerSideProps(ctx) {
 			blog,
 			related,
 		},
+		revalidate: 10,
 	};
 }
