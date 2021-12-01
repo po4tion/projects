@@ -3,74 +3,35 @@ import { useState } from 'react';
 import { BlogList } from '/components/blog';
 import { getBlogs } from '/actions/handleBlog';
 import Image from 'next/image';
+
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
-	const [blogObj, setBlogObj] = useState([]);
-	const [size, setSize] = useState(blogSize);
+function HomeList({ router, blogs, limitNum, skipNum }) {
+	const [blogObj, setBlogObj] = useState(blogs);
 	const [limit, setLimit] = useState(limitNum);
 	const [skip, setSkip] = useState(skipNum);
-	const [loading, setLoading] = useState(false);
-
-	// 처음 pre-rendering을 통해 소수의 블로그를 출력한다
-	const displayBlog = () => {
-		return blogs.map((blog, idx) => {
-			return (
-				<Grid
-					key={idx}
-					xs={12}
-					sm={6}
-					md={3}
-					lg={3}
-					item
-					sx={{
-						mb: 2,
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-				>
-					<BlogList blog={blog} />
-				</Grid>
-			);
-		});
-	};
+	const [hasMore, setHasMore] = useState(true);
 
 	// 버튼을 통해 새로운 블로그 정보를 불러온다
 	const getMoreBlog = async () => {
-		setLoading(true);
-		// 2 페이지씩 증가(mongoose 기준)
+		// 4 페이지씩 증가(mongoose 기준)
 		const addSkip = limit + skip;
 
 		const result = await getBlogs(limit, addSkip).then(data => {
-			setBlogObj([...blogObj, ...data.blogs]);
-			setSize(data.size);
-			setSkip(addSkip);
-			setLoading(false);
+			if (data.size === 0) {
+				setHasMore(false);
+			} else {
+				setBlogObj([...blogObj, ...data.blogs]);
+				setSkip(addSkip);
+			}
 		});
-	};
-
-	// 블로그 더보기 버튼
-	const getMoreBtn = () => {
-		if (size > 0 && size >= limit) {
-			return (
-				<Button size="large" variant="outlined" onClick={getMoreBlog}>
-					더보기
-				</Button>
-			);
-		} else {
-			return (
-				<Alert severity="info" sx={{ mt: 4 }}>
-					마지막 글입니다
-				</Alert>
-			);
-		}
 	};
 
 	// getMoreBlog에서 추가된 새로운 블로글 출력한다
@@ -132,17 +93,26 @@ function HomeList({ router, blogs, blogSize, limitNum, skipNum }) {
 						width: '100%',
 					}}
 				>
-					<Grid container spacing={2}>
-						{displayBlog()}
-						{displayNewBlog()}
-					</Grid>
-
-					{loading && (
-						<Box sx={{ marginBottom: 2 }}>
-							<CircularProgress />
-						</Box>
-					)}
-					{getMoreBtn()}
+					<InfiniteScroll
+						dataLength={blogObj.length}
+						next={getMoreBlog}
+						hasMore={hasMore}
+						loader={
+							<Typography variant="h5" align="center" mt={4}>
+								로딩중...
+							</Typography>
+						}
+						endMessage={
+							<Typography variant="h5" align="center" mt={4}>
+								마지막 글입니다
+							</Typography>
+						}
+						scrollThreshold={0.5}
+					>
+						<Grid container spacing={2}>
+							{displayNewBlog()}
+						</Grid>
+					</InfiniteScroll>
 				</Box>
 			</Container>
 		</>

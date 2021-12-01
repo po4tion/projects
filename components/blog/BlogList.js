@@ -84,7 +84,17 @@ function BlogList({ blog, noLink = true }) {
 								href={`/profile/${encodeURIComponent(blog.postedBy.username)}`}
 								passHref
 							>
-								<Link underline="hover" sx={{ p: 0, m: 0, userSelect: 'none' }}>
+								<Link
+									underline="hover"
+									sx={{
+										p: 0,
+										m: 0,
+										width: 100,
+										whiteSpace: 'nowrap',
+										overflow: 'hidden',
+										textOverflow: 'ellipsis',
+									}}
+								>
 									#{blog.postedBy.username}
 								</Link>
 							</NextLink>{' '}
