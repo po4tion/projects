@@ -8,7 +8,7 @@ import moment, { relativeTimeThreshold } from 'moment';
 import renderHTML from 'react-render-html';
 import useScript from '/lib/blog/useScript';
 import { isBookmarked, bookmarked } from '/actions/handleBookmark';
-import { isAuth } from '/actions/handleAuth';
+import { getCookie, isAuth } from '/actions/handleAuth';
 
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,6 +31,8 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Tooltip from '@mui/material/Tooltip';
 
 function OneBlog({ router, blog, related }) {
+	const [blogInfo, setBlogInfo] = useState(undefined);
+
 	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data;
 
 	// 태그 Chip 생성
@@ -49,7 +51,6 @@ function OneBlog({ router, blog, related }) {
 	const handleImage = blog => {
 		return (
 			<Image
-				priority
 				width={300}
 				height={250}
 				objectFit="cover"
@@ -201,7 +202,7 @@ function OneBlog({ router, blog, related }) {
 
 	const clickBookmark = () => {
 		isAuth() &&
-			bookmarked(isAuth().email, slug).then(data => {
+			bookmarked(isAuth().email, slug, getCookie('access-token')).then(data => {
 				setBookmark(bm => !bm);
 			});
 	};

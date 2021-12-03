@@ -20,6 +20,7 @@ import Divider from '@mui/material/Divider';
 import BookIcon from '@mui/icons-material/Book';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { grey } from '@mui/material/colors';
 
@@ -110,6 +111,15 @@ function Header({ title }) {
 							<BookIcon />
 						</Avatar>
 						내 블로그
+					</MenuItem>
+				</Link>
+
+				<Link href="/user/crud/bookmark" passHref>
+					<MenuItem>
+						<Avatar>
+							<BookmarksIcon />
+						</Avatar>
+						북마크 관리
 					</MenuItem>
 				</Link>
 

@@ -15,19 +15,25 @@ export default function handler(req, res) {
 		switch (method) {
 			case 'GET':
 				try {
-					const { email } = req.query;
+					const { email, limit, skip } = req.query;
 
-					await Bookmark.findOne({ email }).exec(async (err, docs) => {
-						if (err || !docs) {
-							return res.status(400).json({ error: err });
-						}
+					await Bookmark.findOne({ email })
+						.lean()
+						.exec(async (err, docs) => {
+							if (err || !docs) {
+								return res.status(400).json({ error: err });
+							}
 
-						const data = await Blog.find({ slug: { $in: docs.list } })
-							.select('title body')
-							.lean();
+							const data = await Blog.find({ slug: { $in: docs.list } })
+								.populate('postedBy', 'username -_id')
+								.select('title postedBy slug')
+								.limit(parseInt(limit))
+								.skip(parseInt(skip))
+								.sort({ createdAt: -1 })
+								.lean();
 
-						return res.json(data);
-					});
+							return res.json(data);
+						});
 				} catch (error) {
 					return res.status(400).json({ error: '에러' });
 				}

@@ -31,7 +31,7 @@ export default function handler(req, res) {
 						.populate('tags', '_id name slug')
 						.populate('postedBy', '_id username name')
 						.select(
-							'tags _id title slug body sTitle sDesc postedBy photo createdAt updatedAt excerpt'
+							'tags _id title slug body sTitle sDesc postedBy createdAt updatedAt excerpt'
 						)
 						.exec((err, data) => {
 							if (err) {

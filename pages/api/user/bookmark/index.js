@@ -36,38 +36,48 @@ export default function handler(req, res) {
 				try {
 					const { email, slug } = req.body;
 
-					await Bookmark.findOneAndUpdate({ email }).exec(async (err, docs) => {
-						if (err || !docs) {
-							const create = new Bookmark();
+					const user = await tokenValidation(req, res).catch(msg =>
+						res.status(400).json({ error: 'getTokenError' })
+					);
 
-							create.email = email;
-							create.list = [slug];
+					const auth = await authMiddleware(req, res, user);
 
-							await create.save((err, docs) => {
-								if (err) {
-									return res.status(400).json({ error: err });
-								}
+					req.profile.password = undefined;
 
-								return res.status(200).json({ success: '북마크 저장 완료' });
-							});
-						} else {
-							const idx = docs.list.indexOf(slug);
+					if (auth) {
+						Bookmark.findOneAndUpdate({ email }).exec(async (err, docs) => {
+							if (err || !docs) {
+								const create = new Bookmark();
 
-							if (idx !== -1) {
-								docs.list.splice(idx, 1);
+								create.email = email;
+								create.list = [slug];
+
+								await create.save((err, docs) => {
+									if (err) {
+										return res.status(400).json({ error: err });
+									}
+
+									return res.status(200).json({ success: '북마크 저장 완료' });
+								});
 							} else {
-								docs.list = [...docs.list, slug];
-							}
+								const idx = docs.list.indexOf(slug);
 
-							await docs.save((err, docs) => {
-								if (err) {
-									return res.status(400).json({ error: err });
+								if (idx !== -1) {
+									docs.list.splice(idx, 1);
+								} else {
+									docs.list = [...docs.list, slug];
 								}
 
-								return res.status(200).json({ success: '북마크 저장 완료' });
-							});
-						}
-					});
+								await docs.save((err, docs) => {
+									if (err) {
+										return res.status(400).json({ error: err });
+									}
+
+									return res.status(200).json({ success: '북마크 저장 완료' });
+								});
+							}
+						});
+					}
 				} catch (error) {
 					return res.status(400).json({ error: '에러' });
 				}
