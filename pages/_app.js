@@ -1,4 +1,3 @@
-import * as React from 'react';
 import NProgress from 'nprogress';
 import Head from 'next/head';
 import Router from 'next/router';

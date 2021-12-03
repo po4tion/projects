@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import NextLink from 'next/link';
 import Image from 'next/image';
@@ -7,6 +7,8 @@ import { getBlogInServer } from '/actions/handleBlog';
 import moment, { relativeTimeThreshold } from 'moment';
 import renderHTML from 'react-render-html';
 import useScript from '/lib/blog/useScript';
+import { isBookmarked, bookmarked } from '/actions/handleBookmark';
+import { isAuth } from '/actions/handleAuth';
 
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,6 +25,10 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import Tooltip from '@mui/material/Tooltip';
 
 function OneBlog({ router, blog, related }) {
 	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data;
@@ -185,6 +191,21 @@ function OneBlog({ router, blog, related }) {
 		ref: comment,
 	});
 
+	const [bookmark, setBookmark] = useState(undefined);
+	useEffect(() => {
+		isAuth() &&
+			isBookmarked(isAuth().email, blog.data.slug).then(data => {
+				setBookmark(data.docs);
+			});
+	}, [blog.data.slug]);
+
+	const clickBookmark = () => {
+		isAuth() &&
+			bookmarked(isAuth().email, slug).then(data => {
+				setBookmark(bm => !bm);
+			});
+	};
+
 	return (
 		<>
 			{blog && (
@@ -229,6 +250,32 @@ function OneBlog({ router, blog, related }) {
 					>
 						<Grid container rowSpacing={2}>
 							<Grid item xs={12}>
+								{bookmark && (
+									<Tooltip title="북마크 취소" arrow>
+										<IconButton
+											onClick={clickBookmark}
+											sx={{
+												position: 'absolute',
+												ml: -8,
+											}}
+										>
+											<BookmarkIcon fontSize="large" />
+										</IconButton>
+									</Tooltip>
+								)}
+								{!bookmark && (
+									<Tooltip title="북마크 추가" arrow>
+										<IconButton
+											onClick={clickBookmark}
+											sx={{
+												position: 'absolute',
+												ml: -8,
+											}}
+										>
+											<BookmarkBorderIcon fontSize="large" />
+										</IconButton>
+									</Tooltip>
+								)}
 								<Typography
 									component="h1"
 									variant="h3"
