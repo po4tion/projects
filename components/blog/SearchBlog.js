@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { blogSearch } from '/actions/handleBlog';
+import { useState, useCallback } from 'react';
+import { blogSearch, unBlogSearch } from '/actions/handleBlog';
 import { BlogList } from '/components/blog';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -19,10 +19,13 @@ import CardActions from '@mui/material/CardActions';
 import Pagination from '@mui/material/Pagination';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 function SearchBlog() {
 	const [searched, setSearched] = useState([]);
 	const [page, setPage] = useState(1);
+	const [alignment, setAlignment] = useState('body');
 
 	const searchedList = (searched, start, end) => {
 		const result = [];
@@ -39,6 +42,8 @@ function SearchBlog() {
 					key={i}
 					item
 					xs={12}
+					sm={6}
+					md={3}
 					sx={{
 						mb: 2,
 						display: 'flex',
@@ -54,24 +59,70 @@ function SearchBlog() {
 		return result;
 	};
 
-	const handlePage = (_, value) => {
-		setPage(value);
-	};
-
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		blogSearch({ search: e.target.searchText.value }).then(data => {
-			if (data.length === 0) {
-				setSearched([]);
-			} else {
-				setSearched(data);
-			}
-		});
+		if (alignment === 'body') {
+			blogSearch({ search: e.target.searchText.value }).then(data => {
+				console.log(e.target.searchText.value);
+				console.log(data);
+				if (data.length === 0) {
+					setSearched([]);
+				} else {
+					setSearched(data);
+				}
+			});
+		} else {
+			unBlogSearch({ username: e.target.searchText.value }).then(data => {
+				if (data.length === 0) {
+					setSearched([]);
+				} else {
+					setSearched(data);
+				}
+			});
+		}
 	};
 
+	const handlePagination = useCallback(() => {
+		const handlePage = (_, value) => {
+			setPage(value);
+		};
+
+		return (
+			<Pagination
+				page={page}
+				count={searched.length ? Math.ceil(searched.length / 4) : 1}
+				onChange={handlePage}
+			/>
+		);
+	}, [page, searched]);
+
+	const handleToggleBtn = useCallback(() => {
+		const handleToggle = (_, newAlignment) => {
+			setAlignment(newAlignment);
+		};
+
+		return (
+			<ToggleButtonGroup
+				size="large"
+				color="primary"
+				value={alignment}
+				exclusive
+				onChange={handleToggle}
+				sx={{ display: 'flex', justifyContent: 'center' }}
+			>
+				<ToggleButton value="body" sx={{ fontSize: '1.2em' }}>
+					본문 / 제목 / 소개글
+				</ToggleButton>
+				<ToggleButton value="username" sx={{ fontSize: '1.2em' }}>
+					작성자
+				</ToggleButton>
+			</ToggleButtonGroup>
+		);
+	}, [alignment]);
+
 	return (
-		<Container component="main" maxWidth="md">
+		<Container component="main" maxWidth="lg">
 			<CssBaseline />
 			<Box
 				sx={{
@@ -82,6 +133,7 @@ function SearchBlog() {
 				}}
 			>
 				<Stack direction="column" spacing={2} sx={{ marginBottom: 10 }}>
+					{handleToggleBtn()}
 					<Paper
 						component="form"
 						onSubmit={handleSubmit}
@@ -114,15 +166,11 @@ function SearchBlog() {
 				</Stack>
 
 				<Grid container spacing={2}>
-					{searchedList(searched, 5 * page - 5, 5 * page)}
+					{searchedList(searched, 4 * page - 4, 4 * page)}
 				</Grid>
 
 				<Stack spacing={2} sx={{ marginTop: 4 }}>
-					<Pagination
-						page={page}
-						count={Math.ceil(searched.length / 5)}
-						onChange={handlePage}
-					/>
+					{handlePagination()}
 				</Stack>
 			</Box>
 		</Container>

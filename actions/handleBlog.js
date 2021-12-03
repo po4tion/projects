@@ -131,3 +131,13 @@ export const blogSearch = async params => {
 
 	return result;
 };
+
+export const unBlogSearch = async params => {
+	const query = queryString.stringify(params);
+	const result = await axios
+		.get(`/api/blogs/usernameSearch?${query}`)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
