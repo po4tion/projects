@@ -52,8 +52,7 @@ function ProfileUpdate({ token, profile }) {
 
 	useEffect(() => {
 		modifyImg();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [router]);
+	});
 
 	const handleChange = async e => {
 		const { files } = e.target;
@@ -80,8 +79,6 @@ function ProfileUpdate({ token, profile }) {
 				setPhotoData(photoData);
 
 				await updateUserProfile(photoData, token).then(data => {
-					console.log(data);
-
 					if (data.error) {
 						setInfo({
 							...info,

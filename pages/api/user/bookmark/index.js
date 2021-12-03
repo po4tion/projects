@@ -45,9 +45,9 @@ export default function handler(req, res) {
 					req.profile.password = undefined;
 
 					if (auth) {
-						Bookmark.findOneAndUpdate({ email }).exec(async (err, docs) => {
+						Bookmark.findOne({ email }).exec(async (err, docs) => {
 							if (err || !docs) {
-								const create = new Bookmark();
+								let create = new Bookmark();
 
 								create.email = email;
 								create.list = [slug];

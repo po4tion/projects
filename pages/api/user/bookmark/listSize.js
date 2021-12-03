@@ -18,8 +18,8 @@ export default function handler(req, res) {
 
 					await Bookmark.findOne({ email })
 						.lean()
-						.exec(async (err, docs) => {
-							if (err) {
+						.exec((err, docs) => {
+							if (err || !docs) {
 								return res.status(400).json({ error: '북마크 findOne 에러' });
 							}
 

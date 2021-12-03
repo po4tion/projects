@@ -9,6 +9,7 @@ import { isAuth } from '/actions/handleAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Alert from '@mui/material/Alert';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -34,14 +35,22 @@ function BookmarkManagement() {
 	useEffect(() => {
 		isAuth() &&
 			getBookmarkSize(isAuth().email).then(data => {
-				setSize(data.size);
+				if (data.error) {
+					setSize(0);
+				} else {
+					setSize(data.size);
+				}
 			});
 	}, [removed]);
 
 	useEffect(() => {
 		isAuth() &&
 			getBookmarkList(isAuth().email, limit, skip).then(data => {
-				setBookmark(data);
+				if (data.error) {
+					setBookmark(data.error.error);
+				} else {
+					setBookmark(data);
+				}
 			});
 	}, [limit, skip, removed]);
 
@@ -136,8 +145,13 @@ function BookmarkManagement() {
 	return (
 		<>
 			<Body>
-				{!bookmark && <CircularProgress sx={{ mb: 4 }} />}
+				{!bookmark && size > 0 && <CircularProgress sx={{ mb: 4 }} />}
 				{bookmark && <List>{handleBookmark()}</List>}
+				{!size && (
+					<Alert sx={{ mb: 4 }} severity="info">
+						등록된 북마크가 없습니다
+					</Alert>
+				)}
 				<Stack>{handlePagination()}</Stack>
 			</Body>
 		</>

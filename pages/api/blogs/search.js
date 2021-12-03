@@ -27,6 +27,7 @@ export default function handler(req, res) {
 							.populate('postedBy', 'username')
 							.select('-photo -body')
 							.sort({ createdAt: -1 })
+							.lean()
 							.exec((err, blogs) => {
 								if (err) {
 									return res.status(400).json({ error: '검색 불가능!' });

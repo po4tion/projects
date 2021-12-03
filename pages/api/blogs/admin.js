@@ -30,6 +30,7 @@ export default function handler(req, res) {
 							.populate('postedBy', '_id username name')
 							.sort({ createdAt: -1 })
 							.select(' _id title slug excerpt postedBy createdAt updatedAt')
+							.lean()
 							.exec((err, data) => {
 								if (err) {
 									return res
