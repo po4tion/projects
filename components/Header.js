@@ -22,6 +22,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LogoutIcon from '@mui/icons-material/Logout';
+import TagIcon from '@mui/icons-material/Tag';
 import { grey } from '@mui/material/colors';
 
 function Header({ title }) {
@@ -191,8 +192,20 @@ function Header({ title }) {
 						</Tooltip>
 					</Link>
 					<Box sx={{ height: '100%' }}>
+						<Link href="/tags/list" passHref>
+							<Tooltip arrow title="태그 목록">
+								<IconButton
+									type="button"
+									sx={{ p: '10px' }}
+									aria-label="tag-list"
+								>
+									<TagIcon fontSize="large" />
+								</IconButton>
+							</Tooltip>
+						</Link>
+
 						<Link href="/blogs/search" passHref>
-							<Tooltip arrow title="검색">
+							<Tooltip arrow title="내용 검색">
 								<IconButton
 									type="button"
 									sx={{ p: '10px' }}

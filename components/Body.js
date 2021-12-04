@@ -2,9 +2,9 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 
-function Body({ children }) {
+function Body({ children, maxWidth = 'md' }) {
 	return (
-		<Container component="main" maxWidth="md">
+		<Container component="main" maxWidth={maxWidth}>
 			<CssBaseline />
 			<Box
 				sx={{

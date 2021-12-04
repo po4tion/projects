@@ -12,6 +12,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
+import PersonIcon from '@mui/icons-material/Person';
 
 function BlogList({ blog, noLink = true }) {
 	const handleImage = blog => {
@@ -31,7 +32,16 @@ function BlogList({ blog, noLink = true }) {
 	return (
 		<div>
 			<CssBaseline />
-			<Card raised sx={{ maxWidth: 300 }}>
+			<Card
+				sx={{
+					maxWidth: 300,
+					border: '1px solid lightgray',
+					transition: 0.5,
+					'&:hover': {
+						transform: 'scale(0.98)',
+					},
+				}}
+			>
 				<CardActionArea>
 					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>
 						<CardMedia title={blog.title}>{handleImage(blog)}</CardMedia>
@@ -89,13 +99,15 @@ function BlogList({ blog, noLink = true }) {
 									sx={{
 										p: 0,
 										m: 0,
-										width: 100,
-										whiteSpace: 'nowrap',
+										width: '50%',
 										overflow: 'hidden',
+										whiteSpace: 'nowrap',
 										textOverflow: 'ellipsis',
+										display: 'flex',
 									}}
 								>
-									#{blog.postedBy.username}
+									<PersonIcon />
+									{blog.postedBy.username}
 								</Link>
 							</NextLink>{' '}
 							&nbsp;
@@ -103,7 +115,7 @@ function BlogList({ blog, noLink = true }) {
 					)}
 
 					<Typography sx={{ display: 'inline-flex', userSelect: 'none' }}>
-						{moment(blog.updatedAt).format('YYYY년 MM월 DD일')}
+						{moment(blog.updatedAt).format('YY년 MM월 DD일')}
 					</Typography>
 				</Box>
 			</Card>

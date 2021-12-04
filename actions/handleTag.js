@@ -32,6 +32,24 @@ export const getTagInServer = async slug => {
 	return result;
 };
 
+export const getTags = async () => {
+	const result = await axios
+		.get('/api/tag/list')
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
+export const searchTag = async name => {
+	const result = await axios
+		.post('/api/tag/list', name)
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
 export const removeTag = async (slug, token) => {
 	const result = await axios
 		.delete(`/api/tag/${slug}`, {

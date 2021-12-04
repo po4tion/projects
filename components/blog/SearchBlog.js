@@ -4,6 +4,7 @@ import { BlogList } from '/components/blog';
 import moment from 'moment';
 import 'moment/locale/ko';
 import Link from 'next/link';
+import { Body } from '/components';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
@@ -122,58 +123,49 @@ function SearchBlog() {
 	}, [alignment]);
 
 	return (
-		<Container component="main" maxWidth="lg">
-			<CssBaseline />
-			<Box
-				sx={{
-					marginTop: 8,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
-			>
-				<Stack direction="column" spacing={2} sx={{ marginBottom: 10 }}>
-					{handleToggleBtn()}
-					<Paper
-						component="form"
-						onSubmit={handleSubmit}
-						sx={{
-							p: '2px 4px',
-							display: 'flex',
-							alignItems: 'center',
-							width: 600,
-							height: 70,
-						}}
-					>
-						<InputBase
-							autoFocus
-							sx={{ fontSize: '2.5em', ml: 1, flex: 1 }}
-							placeholder="검색어를 입력해주세요"
-							name="searchText"
-							inputProps={{ 'aria-label': '검색어를 입력해주세요' }}
-						/>
-						<Tooltip title="클릭" arrow>
-							<IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-								<SearchIcon color="primary" fontSize="large" />
-							</IconButton>
-						</Tooltip>
-					</Paper>
-					{searched.length !== 0 && (
-						<Typography fontSize="large">
-							총 <b>{searched.length}개</b>의 포스트를 찾았습니다
-						</Typography>
-					)}
-				</Stack>
+		<Body maxWidth="lg">
+			<Stack direction="column" spacing={2} sx={{ marginBottom: 10 }}>
+				{handleToggleBtn()}
+				<Paper
+					component="form"
+					onSubmit={handleSubmit}
+					sx={{
+						p: '2px 4px',
+						display: 'flex',
+						alignItems: 'center',
+						width: 500,
+						minWidth: 500,
+						height: 70,
+					}}
+				>
+					<InputBase
+						autoFocus
+						sx={{ fontSize: '2.5em', ml: 1, flex: 1 }}
+						placeholder="검색어를 입력해주세요"
+						name="searchText"
+						inputProps={{ 'aria-label': '검색어를 입력해주세요' }}
+					/>
+					<Tooltip title="클릭" arrow>
+						<IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+							<SearchIcon color="primary" fontSize="large" />
+						</IconButton>
+					</Tooltip>
+				</Paper>
+				{searched.length !== 0 && (
+					<Typography fontSize="large">
+						총 <b>{searched.length}개</b>의 포스트를 찾았습니다
+					</Typography>
+				)}
+			</Stack>
 
-				<Grid container spacing={2}>
-					{searchedList(searched, 4 * page - 4, 4 * page)}
-				</Grid>
+			<Grid container spacing={2}>
+				{searchedList(searched, 4 * page - 4, 4 * page)}
+			</Grid>
 
-				<Stack spacing={2} sx={{ marginTop: 4 }}>
-					{handlePagination()}
-				</Stack>
-			</Box>
-		</Container>
+			<Stack spacing={2} sx={{ marginTop: 4 }}>
+				{handlePagination()}
+			</Stack>
+		</Body>
 	);
 }
 
