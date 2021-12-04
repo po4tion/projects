@@ -15,7 +15,7 @@ export default function handler(req, res) {
 				try {
 					await Utag.find()
 						.sort({ slug: 1 })
-						.select('name -_id')
+						.select('name slug -_id')
 						.lean()
 						.exec((err, docs) => {
 							if (err) {
@@ -33,7 +33,7 @@ export default function handler(req, res) {
 					const { name } = req.body;
 
 					await Utag.find({ name: { $regex: name, $options: 'i' } })
-						.select('name -_id')
+						.select('name slug -_id')
 						.lean()
 						.exec((err, docs) => {
 							if (err) {

@@ -12,6 +12,8 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
+import TagIcon from '@mui/icons-material/Tag';
+import Alert from '@mui/material/Alert';
 
 function TagRelated({ tag, blogs }) {
 	const { name, slug } = tag;
@@ -94,12 +96,39 @@ function TagRelated({ tag, blogs }) {
 						gutterBottom
 						color="secondary"
 						variant="h4"
-						sx={{ userSelect: 'none', fontWeight: 'bold', mb: 4 }}
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							userSelect: 'none',
+							fontWeight: 'bold',
+							mb: 4,
+						}}
 					>
-						#{name}
+						<TagIcon fontSize="large" />
+						{name}
 					</Typography>
 					<Divider variant="middle" sx={{ mb: 4, width: '100%' }} />
 					<Grid container spacing={2}>
+						{blogs.length === 0 && (
+							<Box
+								sx={{
+									width: '100%',
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+								}}
+							>
+								<Alert
+									severity="info"
+									sx={{
+										width: 300,
+									}}
+								>
+									해당 태그의 글은 삭제되었습니다
+								</Alert>
+							</Box>
+						)}
 						{displayBlog(4 * page - 4, 4 * page)}
 					</Grid>
 					<Stack spacing={2} sx={{ marginTop: 4 }}>

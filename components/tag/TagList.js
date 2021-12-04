@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Body } from '/components';
 import { getTags, searchTag } from '/actions/handleTag';
+import Link from 'next/link';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -54,9 +55,14 @@ function TagList() {
 					key={index}
 					component="div"
 				>
-					<ListItemButton>
-						<ListItemText primary={info.tags[index].name} />
-					</ListItemButton>
+					<Link
+						href={`/tags/${encodeURIComponent(info.tags[index].slug)}`}
+						passHref
+					>
+						<ListItemButton>
+							<ListItemText primary={info.tags[index].name} />
+						</ListItemButton>
+					</Link>
 				</ListItem>
 			);
 		};
