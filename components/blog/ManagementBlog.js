@@ -151,8 +151,8 @@ function ManagementBlog({ blogList, token, size }) {
 			<Body>
 				<Typography gutterBottom>모든 글 : {blogSize}</Typography>
 
-				{blogs.length > 0 && allBlog(5 * page - 5, 5 * page)}
-				{blogSize > 0 && (
+				{allBlog(5 * page - 5, 5 * page)}
+				{size > 0 && (
 					<Stack spacing={2} sx={{ marginTop: 4 }}>
 						<Pagination
 							page={page}
