@@ -31,6 +31,10 @@ function ProfileUpdate({ token, profile }) {
 		photoError: false,
 	});
 
+	const [textLength, setTextLength] = useState('');
+	const [unLength, setUnLength] = useState('');
+	const [pwdLength, setPwdLength] = useState('');
+
 	const [data, setData] = useState('');
 	const [photoData, setPhotoData] = useState('');
 
@@ -38,6 +42,16 @@ function ProfileUpdate({ token, profile }) {
 		setData(new FormData());
 		setPhotoData(new FormData());
 	}, []);
+
+	useEffect(() => {
+		if (profile.about) {
+			setTextLength(profile.about);
+		}
+
+		if (profile.username) {
+			setUnLength(profile.username);
+		}
+	}, [profile]);
 
 	const [img, setImg] = useState(undefined);
 
@@ -101,13 +115,41 @@ function ProfileUpdate({ token, profile }) {
 	const handleThings = key => e => {
 		const { value } = e.target;
 
-		data.set(key, value);
+		if (key === 'about') {
+			if (value.length < 151) {
+				setTextLength(value);
+				data.set(key, value);
+				setInfo({
+					...info,
+					error: '',
+					[key]: value,
+				});
+			}
+		}
 
-		setInfo({
-			...info,
-			error: '',
-			[key]: value,
-		});
+		if (key === 'username') {
+			if (value.length < 33) {
+				setUnLength(value);
+				data.set(key, value);
+				setInfo({
+					...info,
+					error: '',
+					[key]: value,
+				});
+			}
+		}
+
+		if (key === 'password') {
+			if (value.length < 33) {
+				setPwdLength(value);
+				data.set(key, value);
+				setInfo({
+					...info,
+					error: '',
+					[key]: value,
+				});
+			}
+		}
 	};
 
 	const handleSubmit = async e => {
@@ -144,8 +186,6 @@ function ProfileUpdate({ token, profile }) {
 
 	const handleProfileImg = () => {
 		removeProfileImg(profile.username).then(data => {
-			console.log(data);
-
 			setImg(undefined);
 			router.replace(router.asPath);
 		});
@@ -284,7 +324,7 @@ function ProfileUpdate({ token, profile }) {
 						<Grid item xs={12}>
 							<TextField
 								onChange={handleThings('about')}
-								defaultValue={profile.about}
+								value={textLength}
 								fullWidth
 								id="about"
 								label="자기소개 수정"
@@ -295,10 +335,15 @@ function ProfileUpdate({ token, profile }) {
 								multiline
 							/>
 						</Grid>
+
+						<Typography sx={{ width: '100%' }} align="right">
+							{textLength.length} / 150
+						</Typography>
+
 						<Grid item xs={12}>
 							<TextField
 								onChange={handleThings('username')}
-								defaultValue={profile.username}
+								value={unLength}
 								fullWidth
 								id="username"
 								label="별명 수정"
@@ -307,6 +352,9 @@ function ProfileUpdate({ token, profile }) {
 								type="text"
 								error={info.error === 'username' ? true : false}
 							/>
+							<Typography sx={{ width: '100%' }} align="right">
+								{unLength.length} / 32
+							</Typography>
 							{info.error === 'username' && (
 								<Alert severity="error" sx={{ mt: '2px', width: '100%' }}>
 									별명이 중복됩니다
@@ -316,7 +364,7 @@ function ProfileUpdate({ token, profile }) {
 						<Grid item xs={12}>
 							<TextField
 								onChange={handleThings('password')}
-								value={info.password}
+								value={pwdLength}
 								fullWidth
 								id="password"
 								label="비밀번호 수정"
@@ -325,6 +373,9 @@ function ProfileUpdate({ token, profile }) {
 								type="password"
 							/>
 						</Grid>
+						<Typography sx={{ width: '100%' }} align="right">
+							{pwdLength.length} / 32
+						</Typography>
 						<Grid item xs={12}>
 							<TextField
 								defaultValue={profile.email}

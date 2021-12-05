@@ -322,8 +322,8 @@ function OneBlog({ router, blog, related }) {
 							</Grid>
 
 							<Grid container spacing={2}>
-								{relateCards(related)}
-								{handleSkeleton()}
+								{related && relateCards(related)}
+								{related && handleSkeleton()}
 							</Grid>
 						</Grid>
 					</Box>

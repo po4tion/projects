@@ -115,7 +115,8 @@ function AdminUpdatePost({ token, post }) {
 				});
 
 				if (isAuth() && isAuth().role === 0) {
-					window.location.replace(router.asPath);
+					// window.location.replace(router.asPath);
+					router.replace(`/blogs/${post.slug}`);
 				} else if (isAuth() && isAuth().role === 1) {
 					router.replace('/admin');
 				}
@@ -386,63 +387,65 @@ function AdminUpdatePost({ token, post }) {
 		<>
 			<Container component="main" maxWidth="lg">
 				<CssBaseline />
-				<Grid container spacing={2}>
-					<Grid item xs={8}>
-						<Box
-							component="form"
-							onSubmit={handleSubmit}
-							noValidate
-							sx={{
-								marginTop: 8,
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-							}}
-						>
-							{info.error && (
-								<Alert severity="error" sx={{ width: '100%' }}>
-									{info.error}
-								</Alert>
-							)}
-							{titleView()}
-							<Paper
+				{post && (
+					<Grid container spacing={2}>
+						<Grid item xs={8}>
+							<Box
+								component="form"
+								onSubmit={handleSubmit}
+								noValidate
 								sx={{
+									marginTop: 8,
 									display: 'flex',
-									flexWrap: 'wrap',
-									p: 0.5,
-									mt: 1,
-									width: '100%',
+									flexDirection: 'column',
+									alignItems: 'center',
 								}}
 							>
-								{tagView()}
-								{inputView()}
-							</Paper>
-							<Box sx={{ width: '100%', mt: 1 }}>
-								<ReactQuill
-									theme="snow"
-									modules={Modules}
-									formats={Formats}
-									value={body}
-									placeholder="내용을 입력해주세요"
-									onChange={handleQuill}
-									style={{ height: '600px', marginBottom: '24px' }}
-								/>
+								{info.error && (
+									<Alert severity="error" sx={{ width: '100%' }}>
+										{info.error}
+									</Alert>
+								)}
+								{titleView()}
+								<Paper
+									sx={{
+										display: 'flex',
+										flexWrap: 'wrap',
+										p: 0.5,
+										mt: 1,
+										width: '100%',
+									}}
+								>
+									{tagView()}
+									{inputView()}
+								</Paper>
+								<Box sx={{ width: '100%', mt: 1 }}>
+									<ReactQuill
+										theme="snow"
+										modules={Modules}
+										formats={Formats}
+										value={body}
+										placeholder="내용을 입력해주세요"
+										onChange={handleQuill}
+										style={{ height: '600px', marginBottom: '24px' }}
+									/>
+								</Box>
+								<Button
+									type="submit"
+									fullWidth
+									variant="contained"
+									sx={{ mt: 6, mb: 2 }}
+								>
+									작성완료
+								</Button>
 							</Box>
-							<Button
-								type="submit"
-								fullWidth
-								variant="contained"
-								sx={{ mt: 6, mb: 2 }}
-							>
-								작성완료
-							</Button>
-						</Box>
+						</Grid>
+						<Grid item xs={4}>
+							{handlePhotoForm()}
+							{excerptForm()}
+						</Grid>
 					</Grid>
-					<Grid item xs={4}>
-						{handlePhotoForm()}
-						{excerptForm()}
-					</Grid>
-				</Grid>
+				)}
 			</Container>
 		</>
 	);
