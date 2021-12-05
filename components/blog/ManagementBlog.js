@@ -5,6 +5,7 @@ import { isAuth } from '/actions/handleAuth';
 import { removeBlog } from '/actions/handleBlog';
 import moment from 'moment';
 import renderHTML from 'react-render-html';
+import { Body } from '/components';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -125,20 +126,12 @@ function ManagementBlog({ blogList, token, size }) {
 
 	return (
 		<>
-			<Container component="main" maxWidth="md">
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 6,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}}
-				>
-					<Typography gutterBottom>모든 글 : {size}</Typography>
+			<Body>
+				{size && <Typography gutterBottom>모든 글 : {size}</Typography>}
 
-					{allBlog(5 * page - 5, 5 * page)}
+				{blogList && allBlog(5 * page - 5, 5 * page)}
 
+				{size && (
 					<Stack spacing={2} sx={{ marginTop: 4 }}>
 						<Pagination
 							page={page}
@@ -146,8 +139,8 @@ function ManagementBlog({ blogList, token, size }) {
 							onChange={handleChange}
 						/>
 					</Stack>
-				</Box>
-			</Container>
+				)}
+			</Body>
 		</>
 	);
 }

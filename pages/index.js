@@ -12,7 +12,7 @@ function Home({ router, blogs, limit, skip }) {
 
 export default withRouter(Home);
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	// populate[tags] 작동하기 위해 최소 한번 실행
 	const tags = await getTagList();
 	const limit = 8,
@@ -25,6 +25,5 @@ export async function getStaticProps() {
 			limit,
 			skip,
 		},
-		revalidate: 10,
 	};
 }
