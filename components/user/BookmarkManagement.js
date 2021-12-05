@@ -21,11 +21,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
-import Skeleton from '@mui/material/Skeleton';
-import CircularProgress from '@mui/material/CircularProgress';
 
 function BookmarkManagement() {
-	const [bookmark, setBookmark] = useState(undefined);
+	const [bookmark, setBookmark] = useState([]);
 	const [limit, setLimit] = useState(5);
 	const [skip, setSkip] = useState(0);
 	const [page, setPage] = useState(1);
@@ -46,8 +44,8 @@ function BookmarkManagement() {
 	useEffect(() => {
 		isAuth() &&
 			getBookmarkList(isAuth().email, limit, skip).then(data => {
-				if (data.error) {
-					setBookmark(data.error.error);
+				if (data.error === null) {
+					setBookmark([]);
 				} else {
 					setBookmark(data);
 				}
@@ -145,9 +143,8 @@ function BookmarkManagement() {
 	return (
 		<>
 			<Body>
-				{!bookmark && size > 0 && <CircularProgress sx={{ mb: 4 }} />}
-				{bookmark && <List>{handleBookmark()}</List>}
-				{!size && (
+				{bookmark.length !== 0 && <List>{handleBookmark()}</List>}
+				{size === 0 && (
 					<Alert sx={{ mb: 4 }} severity="info">
 						등록된 북마크가 없습니다
 					</Alert>
