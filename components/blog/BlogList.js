@@ -1,3 +1,5 @@
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
@@ -15,7 +17,10 @@ import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 
 function BlogList({ blog, noLink = true }) {
-	const handleImage = blog => {
+	const [img, setImg] = useState(<p>불러오는 중</p>);
+	const router = useRouter();
+
+	const handleImage = useCallback(() => {
 		return (
 			<Image
 				width="300px"
@@ -28,10 +33,16 @@ function BlogList({ blog, noLink = true }) {
 				alt="thumbnail image"
 			/>
 		);
-	};
+	}, [blog]);
+
+	useEffect(() => {
+		setImg(handleImage);
+	}, [router, handleImage]);
+
 	return (
 		<div>
 			<CssBaseline />
+
 			<Card
 				sx={{
 					maxWidth: 300,
@@ -44,7 +55,7 @@ function BlogList({ blog, noLink = true }) {
 			>
 				<CardActionArea>
 					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>
-						<CardMedia title={blog.title}>{handleImage(blog)}</CardMedia>
+						<CardMedia title={blog.title}>{img}</CardMedia>
 					</NextLink>
 
 					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>

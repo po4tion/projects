@@ -22,7 +22,6 @@ export async function getStaticProps() {
 	return {
 		props: {
 			blogs: data.blogs,
-
 			limit,
 			skip,
 		},
