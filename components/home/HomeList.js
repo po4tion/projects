@@ -1,5 +1,5 @@
 import { NextSeo } from 'next-seo';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { BlogList } from '/components/blog';
 import { getBlogs } from '/actions/handleBlog';
 import Image from 'next/image';
@@ -35,7 +35,7 @@ function HomeList({ router, blogs, limitNum, skipNum }) {
 	};
 
 	// getMoreBlog에서 추가된 새로운 블로글 출력한다
-	const displayNewBlog = () => {
+	const displayNewBlog = useCallback(() => {
 		return blogObj.map((blog, idx) => {
 			return (
 				<Grid
@@ -56,7 +56,7 @@ function HomeList({ router, blogs, limitNum, skipNum }) {
 				</Grid>
 			);
 		});
-	};
+	}, [blogObj]);
 
 	return (
 		<>

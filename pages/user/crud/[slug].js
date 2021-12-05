@@ -5,7 +5,7 @@ import { getBlogInServer } from '/actions/handleBlog';
 function UpdateBlog({ blog, token }) {
 	return (
 		<ProtectRoute>
-			<UpdatePost token={token} post={blog.data} />
+			<UpdatePost token={token} post={blog.data[0]} />
 		</ProtectRoute>
 	);
 }

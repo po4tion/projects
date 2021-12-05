@@ -26,7 +26,7 @@ import '/node_modules/react-quill/dist/quill.snow.css';
 import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
 
-function AdminUpdatePost({ token, post }) {
+function UpdatePost({ token, post }) {
 	const router = useRouter();
 
 	const [info, setInfo] = useState({
@@ -451,4 +451,4 @@ function AdminUpdatePost({ token, post }) {
 	);
 }
 
-export default AdminUpdatePost;
+export default UpdatePost;
