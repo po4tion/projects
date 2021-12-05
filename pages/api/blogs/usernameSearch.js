@@ -23,7 +23,7 @@ export default function handler(req, res) {
 							.lean()
 							.exec(async (err, docs) => {
 								if (!docs.length) {
-									return res.status(400).json(docs);
+									return res.json(docs);
 								} else {
 									await Blog.find({ postedBy: docs[0]._id })
 										.select('title excerpt createdAt postedBy slug ')

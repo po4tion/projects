@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import NextLink from 'next/link';
 import Image from 'next/image';
-import { withRouter } from 'next/router';
 import { getBlogInServer } from '/actions/handleBlog';
 import moment, { relativeTimeThreshold } from 'moment';
 import renderHTML from 'react-render-html';
@@ -30,10 +29,10 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Tooltip from '@mui/material/Tooltip';
 
-function OneBlog({ router, blog, related }) {
+function OneBlog({ blog, related }) {
 	const [blogInfo, setBlogInfo] = useState(undefined);
 
-	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data;
+	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data[0];
 
 	// 태그 Chip 생성
 	const handleTag = tags => {

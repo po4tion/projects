@@ -151,11 +151,10 @@ function SearchBlog() {
 						</IconButton>
 					</Tooltip>
 				</Paper>
-				{searched.length !== 0 && (
-					<Typography fontSize="large">
-						총 <b>{searched.length}개</b>의 포스트를 찾았습니다
-					</Typography>
-				)}
+
+				<Typography fontSize="large">
+					총 <b>{searched.length}개</b>의 포스트를 찾았습니다
+				</Typography>
 			</Stack>
 
 			<Grid container spacing={2}>

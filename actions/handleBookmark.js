@@ -50,15 +50,3 @@ export const getBookmarkList = async (email, limit, skip) => {
 
 	return result;
 };
-
-export const getBookmarkSize = async email => {
-	const data = { email };
-	const query = queryString.stringify(data);
-
-	const result = axios
-		.get(`/api/user/bookmark/listSize?${query}`)
-		.then(res => res.data)
-		.catch(err => err.response.data);
-
-	return result;
-};

@@ -1,10 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Body } from '/components';
-import {
-	getBookmarkList,
-	getBookmarkSize,
-	removeBookmarked,
-} from '/actions/handleBookmark';
+import { getBookmarkList, removeBookmarked } from '/actions/handleBookmark';
 import { isAuth } from '/actions/handleAuth';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,21 +28,12 @@ function BookmarkManagement() {
 
 	useEffect(() => {
 		isAuth() &&
-			getBookmarkSize(isAuth().email).then(data => {
-				if (data.error) {
-					setSize(0);
-				} else {
-					setSize(data.size);
-				}
-			});
-	}, [removed]);
-
-	useEffect(() => {
-		isAuth() &&
 			getBookmarkList(isAuth().email, limit, skip).then(data => {
 				if (data.error === null) {
+					setSize(0);
 					setBookmark([]);
 				} else {
+					setSize(data.length);
 					setBookmark(data);
 				}
 			});

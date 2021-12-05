@@ -27,7 +27,7 @@ export default function handler(req, res) {
 				try {
 					const { slug } = req.query;
 
-					await Blog.findOne({ slug: slug.toLowerCase() })
+					await Blog.find({ slug: slug.toLowerCase() })
 						.populate('tags', '_id name slug')
 						.populate('postedBy', '_id username name')
 						.select(
