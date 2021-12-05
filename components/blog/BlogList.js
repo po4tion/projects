@@ -19,7 +19,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 function BlogList({ blog, noLink = true }) {
 	const [img, setImg] = useState(
-		`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`
+		`${process.env.NEXT_PUBLIC_API}/images/loading.jpg`
 	);
 	const router = useRouter();
 

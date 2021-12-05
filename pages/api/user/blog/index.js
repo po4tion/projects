@@ -88,7 +88,7 @@ export default function handler(req, res) {
 								blog.photo.contentType = files.photo.mimetype;
 							} else {
 								const res = await axios.get(
-									'https://devblog-mu.vercel.app/images/kuma.jpg',
+									`${process.env.API}/images/base.jpg`,
 									{ responseType: 'arraybuffer' }
 								);
 								const buffer = Buffer.from(res.data, 'utf-8');
