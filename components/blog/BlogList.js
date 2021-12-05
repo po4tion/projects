@@ -4,6 +4,7 @@ import NextLink from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
 import 'moment/locale/ko';
+import axios from 'axios';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
@@ -17,27 +18,23 @@ import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 
 function BlogList({ blog, noLink = true }) {
-	const [img, setImg] = useState(<p>불러오는 중</p>);
+	const [img, setImg] = useState(
+		`${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`
+	);
 	const router = useRouter();
 
-	const handleImage = useCallback(() => {
-		return (
-			<Image
-				width="300px"
-				height="250px"
-				objectFit="cover"
-				quality={100}
-				src={`${
-					process.env.NEXT_PUBLIC_API
-				}/api/blog/photo/${encodeURIComponent(blog.slug)}`}
-				alt="thumbnail image"
-			/>
-		);
-	}, [blog]);
-
 	useEffect(() => {
-		setImg(handleImage);
-	}, [router, handleImage]);
+		const modifyImg = async () => {
+			const res = await axios.get(
+				`/api/blog/homePhoto/${encodeURIComponent(blog.slug)}`
+			);
+
+			const trans = new Buffer.from(res.data.data.data).toString('base64');
+			setImg(`data:image/jpeg;base64,${trans}`);
+		};
+
+		modifyImg();
+	}, [blog]);
 
 	return (
 		<div>
@@ -55,7 +52,18 @@ function BlogList({ blog, noLink = true }) {
 			>
 				<CardActionArea>
 					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>
-						<CardMedia title={blog.title}>{img}</CardMedia>
+						<CardMedia title={blog.title}>
+							{img && (
+								<Image
+									src={img}
+									width={300}
+									height={250}
+									objectFit="cover"
+									quality={100}
+									alt="썸네일 사진"
+								/>
+							)}
+						</CardMedia>
 					</NextLink>
 
 					<NextLink href={`/blogs/${encodeURIComponent(blog.slug)}`} passHref>
