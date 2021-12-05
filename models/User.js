@@ -29,7 +29,6 @@ const UserSchema = new mongoose.Schema(
 		password: {
 			type: String,
 			required: true,
-			maxLength: 32,
 		},
 		profile: {
 			type: String,

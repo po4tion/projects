@@ -38,9 +38,7 @@ export default function handler(req, res) {
 								await createUser.setPwd(password);
 								await createUser.save((err, _) => {
 									if (err) {
-										return res
-											.status(400)
-											.json({ error: '사용자 정보 저장 실패' });
+										return res.status(400).json({ error: '가입인증 실패' });
 									}
 
 									return res
