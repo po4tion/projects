@@ -207,9 +207,10 @@ function Main({ router, token }) {
 							<Input
 								onChange={handleThumbnail}
 								type="file"
-								accept="image/*"
+								inputProps={{ accept: 'image/png, image/jpeg' }}
 								sx={{ display: 'none' }}
 							/>
+
 							<Button
 								fullWidth
 								color="primary"
