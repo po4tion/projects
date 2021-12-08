@@ -5,6 +5,7 @@ import { signoutAxios, isAuth } from '/actions/handleAuth';
 import Image from 'next/image';
 import axios from 'axios';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -24,12 +25,16 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LogoutIcon from '@mui/icons-material/Logout';
 import TagIcon from '@mui/icons-material/Tag';
 import { grey } from '@mui/material/colors';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 
 function Header({ title }) {
 	const [start, setStart] = useState(false);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const router = useRouter();
+	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
 
 	useEffect(() => {
 		setStart(true);
@@ -178,45 +183,65 @@ function Header({ title }) {
 						justifyContent: 'space-between',
 					}}
 				>
-					<Link href="/" passHref>
-						<Tooltip arrow title="홈으로">
-							<Typography
-								align="center"
-								component="h2"
-								noWrap
-								variant="h4"
-								sx={{ userSelect: 'none', fontWeight: 'bold' }}
-							>
-								{title}
-							</Typography>
-						</Tooltip>
-					</Link>
+					{!matches && (
+						<Link href="/" passHref>
+							<Tooltip arrow title="홈으로">
+								<Typography
+									align="center"
+									component="h2"
+									noWrap
+									variant="h4"
+									sx={{ userSelect: 'none', fontWeight: 'bold' }}
+								>
+									{title}
+								</Typography>
+							</Tooltip>
+						</Link>
+					)}
+
+					{matches && (
+						<Link href="/" passHref>
+							<a>
+								<Image
+									src="/favicon.ico"
+									width={50}
+									height={50}
+									alt="home 500"
+								/>
+							</a>
+						</Link>
+					)}
+
 					<Box sx={{ height: '100%' }}>
-						<Link href="/tags/list" passHref>
-							<Tooltip arrow title="태그 목록">
-								<IconButton
-									type="button"
-									sx={{ p: '10px' }}
-									aria-label="tag-list"
-								>
-									<TagIcon fontSize="large" />
-								</IconButton>
-							</Tooltip>
-						</Link>
+						{!matches && (
+							<Link href="/tags/list" passHref>
+								<Tooltip arrow title="태그 목록">
+									<IconButton
+										type="button"
+										sx={{ p: '10px' }}
+										aria-label="tag-list"
+									>
+										<TagIcon fontSize="large" />
+									</IconButton>
+								</Tooltip>
+							</Link>
+						)}
 
-						<Link href="/blogs/search" passHref>
-							<Tooltip arrow title="내용 검색">
-								<IconButton
-									type="button"
-									sx={{ p: '10px' }}
-									aria-label="search"
-								>
-									<SearchIcon fontSize="large" />
-								</IconButton>
-							</Tooltip>
-						</Link>
+						{!matches && (
+							<Link href="/blogs/search" passHref>
+								<Tooltip arrow title="내용 검색">
+									<IconButton
+										type="button"
+										sx={{ p: '10px' }}
+										aria-label="search"
+									>
+										<SearchIcon fontSize="large" />
+									</IconButton>
+								</Tooltip>
+							</Link>
+						)}
 
-						{isAuth() && (
+						{isAuth() && !matches && (
 							<Link href="/user/crud/blog" passHref>
 								<Button
 									color="primary"

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup.umd';
 import { contactValidation } from '/lib/contactValidation';
 import { contactAuthor } from '/actions/handleContact';
+import { Body } from '/components';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -20,6 +21,9 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
+import Paper from '@mui/material/Paper';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 function Blogs({ blogs, user }) {
 	const router = useRouter();
@@ -35,25 +39,44 @@ function Blogs({ blogs, user }) {
 		resolver: yupResolver(contactValidation),
 	});
 
-	const userInfo = () => {
+	const userInfo = useCallback(() => {
+		const handleSwitch = () => {
+			setChecked(!checked);
+		};
+
+		const handleAbout = () => {
+			return (
+				<Paper
+					elevation={0}
+					sx={{ p: 2, bgcolor: 'grey.100', width: 350, minWidth: 350 }}
+				>
+					<Typography variant="body1">{user.about}</Typography>
+				</Paper>
+			);
+		};
+
 		return (
 			<>
 				<Typography variant="h5" sx={{ userSelect: 'none', mb: 2 }}>
 					<b>{user.username}</b> 님의 포스트(총 {blogs.length} 개)
 				</Typography>
-				<Typography>문의하기</Typography>
-				<Switch
-					checked={checked}
-					onChange={handleSwitch}
-					inputProps={{ 'aria-label': 'controlled' }}
-				/>
+				{handleAbout()}
+
+				<FormGroup>
+					<FormControlLabel
+						control={
+							<Switch
+								checked={checked}
+								onChange={handleSwitch}
+								inputProps={{ 'aria-label': 'controlled' }}
+							/>
+						}
+						label="문의하기"
+					/>
+				</FormGroup>
 			</>
 		);
-	};
-
-	const handleSwitch = () => {
-		setChecked(!checked);
-	};
+	}, [blogs.length, checked, user.username, user.about]);
 
 	const userBlog = (start, end) => {
 		const store = [];
@@ -132,104 +155,92 @@ function Blogs({ blogs, user }) {
 				}}
 			/>
 
-			<Container component="main" maxWidth="lg">
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 8,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}}
-				>
-					{userInfo()}
-					<Divider variant="middle" sx={{ mb: 4, width: '100%' }} />
+			<Body maxWidth="lg">
+				{userInfo()}
 
-					{!checked && (
-						<Grid container spacing={2}>
-							{userBlog(4 * page - 4, 4 * page)}
-						</Grid>
-					)}
-
-					{!checked && (
-						<Stack spacing={2} sx={{ marginTop: 4 }}>
-							<Pagination
-								onChange={handleChange}
-								page={page}
-								count={Math.ceil(blogs.length / 4)}
-							/>
-						</Stack>
-					)}
-
-					{checked && (
-						<>
-							<Typography component="h1" variant="h5">
-								{user.username}님에게 문의하기
-							</Typography>
-							<Box component="form" novalidate sx={{ width: '100%', mt: 1 }}>
-								<Grid container spacing={1}>
-									<Grid item xs={12}>
-										<TextField
-											margin="normal"
-											autoFocus
-											defaultValue=""
-											fullWidth
-											id="name"
-											label="성함 또는 별명을 입력해주세요"
-											name="name"
-											required
-											type="text"
-											{...register('name')}
-											error={errors.name ? true : false}
-										/>
-										{errors.name && (
-											<Alert severity="warning" sx={{ width: '100%' }}>
-												{errors.name?.message}
-											</Alert>
-										)}
-									</Grid>
-									<Grid item xs={12}>
-										<TextField
-											margin="normal"
-											autoFocus
-											defaultValue=""
-											fullWidth
-											id="email"
-											label="이메일을 입력해주세요"
-											name="email"
-											required
-											type="email"
-											{...register('email')}
-											error={errors.email ? true : false}
-										/>
-										{errors.email && (
-											<Alert severity="warning" sx={{ width: '100%' }}>
-												{errors.email?.message}
-											</Alert>
-										)}
-									</Grid>
-									<Grid item xs={12}>
-										<TextField
-											margin="normal"
-											autoFocus
-											defaultValue=""
-											fullWidth
-											id="message"
-											label="내용을 입력해주세요"
-											name="message"
-											required
-											type="text"
-											rows={4}
-											multiline
-											{...register('message')}
-											error={errors.message ? true : false}
-										/>
-										{errors.message && (
-											<Alert severity="warning" sx={{ width: '100%' }}>
-												{errors.message?.message}
-											</Alert>
-										)}
-									</Grid>
+				<Divider variant="middle" sx={{ mb: 4, width: '100%' }} />
+				{!checked && (
+					<Grid container spacing={2}>
+						{userBlog(4 * page - 4, 4 * page)}
+					</Grid>
+				)}
+				{!checked && (
+					<Stack spacing={2} sx={{ marginTop: 4 }}>
+						<Pagination
+							onChange={handleChange}
+							page={page}
+							count={Math.ceil(blogs.length / 4)}
+						/>
+					</Stack>
+				)}
+				{checked && (
+					<>
+						<Typography component="h1" variant="h5">
+							{user.username}님에게 문의하기
+						</Typography>
+						<Box component="form" novalidate sx={{ width: '100%', mt: 1 }}>
+							<Grid container spacing={1}>
+								<Grid item xs={12}>
+									<TextField
+										margin="normal"
+										autoFocus
+										defaultValue=""
+										fullWidth
+										id="name"
+										label="성함 또는 별명을 입력해주세요"
+										name="name"
+										required
+										type="text"
+										{...register('name')}
+										error={errors.name ? true : false}
+									/>
+									{errors.name && (
+										<Alert severity="warning" sx={{ width: '100%' }}>
+											{errors.name?.message}
+										</Alert>
+									)}
+								</Grid>
+								<Grid item xs={12}>
+									<TextField
+										margin="normal"
+										defaultValue=""
+										fullWidth
+										id="email"
+										label="이메일을 입력해주세요"
+										name="email"
+										required
+										type="email"
+										{...register('email')}
+										error={errors.email ? true : false}
+									/>
+									{errors.email && (
+										<Alert severity="warning" sx={{ width: '100%' }}>
+											{errors.email?.message}
+										</Alert>
+									)}
+								</Grid>
+								<Grid item xs={12}>
+									<TextField
+										margin="normal"
+										defaultValue=""
+										fullWidth
+										id="message"
+										label="내용을 입력해주세요"
+										name="message"
+										required
+										type="text"
+										rows={4}
+										multiline
+										{...register('message')}
+										error={errors.message ? true : false}
+									/>
+									{errors.message && (
+										<Alert severity="warning" sx={{ width: '100%' }}>
+											{errors.message?.message}
+										</Alert>
+									)}
+								</Grid>
+								<Grid item xs={12}>
 									<Button
 										onClick={handleSubmit(onSubmit)}
 										fullWidth
@@ -239,11 +250,11 @@ function Blogs({ blogs, user }) {
 										문의하기
 									</Button>
 								</Grid>
-							</Box>
-						</>
-					)}
-				</Box>
-			</Container>
+							</Grid>
+						</Box>
+					</>
+				)}
+			</Body>
 		</>
 	);
 }
