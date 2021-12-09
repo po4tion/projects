@@ -7,6 +7,8 @@ import { createBlog } from '/actions/handleBlog';
 import { createTag } from '/actions/handleTag';
 import { photoResize } from '/lib/photoResize';
 
+import { Body } from '/components';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
@@ -26,6 +28,7 @@ import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
 
 function Main({ router, token }) {
+	const matches = useMediaQuery('(max-width: 900px)', { noSsr: true });
 	const [info, setInfo] = useState({
 		error: '',
 		success: '',
@@ -290,7 +293,7 @@ function Main({ router, token }) {
 				variant="outlined"
 				fullWidth
 				onChange={handleTitle}
-				sx={{ mt: 2 }}
+				sx={{ mt: 2, minWidth: 380 }}
 			/>
 		);
 	};
@@ -380,7 +383,11 @@ function Main({ router, token }) {
 			<Input
 				value={currentTag}
 				onChange={handleTags}
-				sx={{ width: '100%', padding: 0.5 }}
+				sx={{
+					width: '100%',
+					padding: 0.5,
+					fontSize: matches ? '0.8em' : '1em',
+				}}
 				type="text"
 				placeholder="쉼표(,)를 사용하여 태그를 등록할 수 있습니다 (필수사항)"
 			/>
@@ -389,10 +396,13 @@ function Main({ router, token }) {
 
 	return (
 		<>
-			<Container component="main" maxWidth="lg">
-				<CssBaseline />
+			<Body maxWidth="lg">
 				<Grid container spacing={2}>
-					<Grid item xs={8}>
+					<Grid item xs={matches ? 12 : 4}>
+						{handlePhotoForm()}
+						{excerptForm()}
+					</Grid>
+					<Grid item xs={matches ? 12 : 8}>
 						<Box
 							component="form"
 							onSubmit={handleSubmit}
@@ -417,13 +427,14 @@ function Main({ router, token }) {
 									p: 0.5,
 									mt: 1,
 									width: '100%',
+									minWidth: 380,
 								}}
 							>
 								{tagView()}
 								{inputView()}
 							</Paper>
 
-							<Box sx={{ width: '100%', mt: 1 }}>
+							<Box sx={{ width: '100%', minWidth: 380, mt: 1 }}>
 								<ReactQuill
 									theme="snow"
 									modules={Modules}
@@ -431,7 +442,10 @@ function Main({ router, token }) {
 									value={body}
 									placeholder="내용을 입력해주세요"
 									onChange={handleQuill}
-									style={{ height: '600px', marginBottom: '24px' }}
+									style={{
+										height: matches ? '400px' : '600px',
+										marginBottom: matches ? '48px' : '24px',
+									}}
 								/>
 							</Box>
 							<Button
@@ -444,12 +458,8 @@ function Main({ router, token }) {
 							</Button>
 						</Box>
 					</Grid>
-					<Grid item xs={4}>
-						{handlePhotoForm()}
-						{excerptForm()}
-					</Grid>
 				</Grid>
-			</Container>
+			</Body>
 		</>
 	);
 }

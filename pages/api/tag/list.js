@@ -15,7 +15,7 @@ export default function handler(req, res) {
 				try {
 					await Utag.find()
 						.sort({ slug: 1 })
-						.select('name slug -_id')
+						.select('name slug')
 						.lean()
 						.exec((err, docs) => {
 							if (err) {

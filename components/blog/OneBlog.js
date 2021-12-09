@@ -192,12 +192,13 @@ function OneBlog({ blog, related }) {
 	});
 
 	const [bookmark, setBookmark] = useState(undefined);
+
 	useEffect(() => {
 		isAuth() &&
-			isBookmarked(isAuth().email, blog.data.slug).then(data => {
+			isBookmarked(isAuth().email, blog.data[0].slug).then(data => {
 				setBookmark(data.docs);
 			});
-	}, [blog.data.slug]);
+	}, [blog.data]);
 
 	const clickBookmark = () => {
 		isAuth() &&

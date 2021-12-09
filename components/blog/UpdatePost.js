@@ -8,6 +8,8 @@ import { createTag } from '/actions/handleTag';
 import Image from 'next/image';
 import { photoResize } from '/lib/photoResize';
 
+import { Body } from '/components';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
@@ -27,6 +29,7 @@ import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
 
 function UpdatePost({ token, post }) {
+	const matches = useMediaQuery('(max-width: 900px)', { noSsr: true });
 	const router = useRouter();
 
 	const [info, setInfo] = useState({
@@ -301,7 +304,7 @@ function UpdatePost({ token, post }) {
 				variant="outlined"
 				fullWidth
 				onChange={handleTitle}
-				sx={{ mt: 2 }}
+				sx={{ mt: 2, minWidth: 380 }}
 			/>
 		);
 	};
@@ -385,11 +388,14 @@ function UpdatePost({ token, post }) {
 
 	return (
 		<>
-			<Container component="main" maxWidth="lg">
-				<CssBaseline />
+			<Body component="main" maxWidth="lg">
 				{post && (
 					<Grid container spacing={2}>
-						<Grid item xs={8}>
+						<Grid item xs={matches ? 12 : 4}>
+							{handlePhotoForm()}
+							{excerptForm()}
+						</Grid>
+						<Grid item xs={matches ? 12 : 8}>
 							<Box
 								component="form"
 								onSubmit={handleSubmit}
@@ -414,12 +420,13 @@ function UpdatePost({ token, post }) {
 										p: 0.5,
 										mt: 1,
 										width: '100%',
+										minWidth: 380,
 									}}
 								>
 									{tagView()}
 									{inputView()}
 								</Paper>
-								<Box sx={{ width: '100%', mt: 1 }}>
+								<Box sx={{ width: '100%', minWidth: 380, mt: 1 }}>
 									<ReactQuill
 										theme="snow"
 										modules={Modules}
@@ -427,7 +434,10 @@ function UpdatePost({ token, post }) {
 										value={body}
 										placeholder="내용을 입력해주세요"
 										onChange={handleQuill}
-										style={{ height: '600px', marginBottom: '24px' }}
+										style={{
+											height: matches ? '400px' : '600px',
+											marginBottom: matches ? '48px' : '24px',
+										}}
 									/>
 								</Box>
 								<Button
@@ -440,13 +450,9 @@ function UpdatePost({ token, post }) {
 								</Button>
 							</Box>
 						</Grid>
-						<Grid item xs={4}>
-							{handlePhotoForm()}
-							{excerptForm()}
-						</Grid>
 					</Grid>
 				)}
-			</Container>
+			</Body>
 		</>
 	);
 }

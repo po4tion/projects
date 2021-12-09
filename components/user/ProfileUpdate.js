@@ -7,6 +7,7 @@ import { updateUserProfile, removeProfileImg } from '/actions/handleUser';
 import { photoResize } from '/lib/photoResize';
 import axios from 'axios';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,6 +24,7 @@ import Divider from '@mui/material/Divider';
 
 function ProfileUpdate({ token, profile }) {
 	const router = useRouter();
+	const matches = useMediaQuery('(max-width: 650px)', { noSsr: true });
 
 	const [info, setInfo] = useState({
 		password: '',
@@ -223,6 +225,7 @@ function ProfileUpdate({ token, profile }) {
 					sx={{
 						width: '100%',
 						display: 'flex',
+						alignItems: 'center',
 						flexDirection: 'column',
 					}}
 				>
@@ -251,7 +254,7 @@ function ProfileUpdate({ token, profile }) {
 						<Input
 							onChange={handleChange}
 							type="file"
-							accept="image/*"
+							inputProps={{ accept: 'image/png, image/jpeg' }}
 							sx={{ display: 'none' }}
 						/>
 
@@ -271,7 +274,7 @@ function ProfileUpdate({ token, profile }) {
 						variant="outlined"
 						component="span"
 						onClick={handleProfileImg}
-						sx={{ maxWidth: 150 }}
+						sx={{ width: 150, maxWidth: 150 }}
 					>
 						이미지 삭제
 					</Button>
@@ -305,13 +308,13 @@ function ProfileUpdate({ token, profile }) {
 								<CircularProgress />
 							</Grid>
 						)}
-						<Grid item xs={3}>
+						<Grid item xs={matches ? 12 : 3}>
 							{handlePhotoForm()}
 						</Grid>
 						<Grid item xs={1}>
 							<Divider orientation="vertical" width={1} />
 						</Grid>
-						<Grid item xs={8}>
+						<Grid item xs={matches ? 11 : 8}>
 							<Typography variant="h4" fontWeight="bold" mb={2}>
 								{profile.name}
 							</Typography>

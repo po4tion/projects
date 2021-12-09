@@ -72,7 +72,7 @@ function ManagementBlog({ blogList, token, size }) {
 			const deletePost = async slug => {
 				await removeBlog(encodeURIComponent(slug), token).then(data => {
 					setReload(r => !r);
-					router.replace('/user/crud/management');
+					router.replace(router.asPath);
 				});
 			};
 
@@ -85,7 +85,7 @@ function ManagementBlog({ blogList, token, size }) {
 			};
 
 			const deleteBtn = blog => {
-				if (auth === 0) {
+				if (auth === 0 || auth === 1) {
 					return (
 						<Button onClick={() => deletePostAlarm(blog.title, blog.slug)}>
 							삭제
@@ -208,7 +208,7 @@ function ManagementBlog({ blogList, token, size }) {
 			};
 
 			const deleteBtn = blog => {
-				if (auth === 0) {
+				if (auth === 0 || auth === 1) {
 					return (
 						<IconButton
 							onClick={() => deletePostAlarm(blog.title, blog.slug)}
@@ -306,7 +306,7 @@ function ManagementBlog({ blogList, token, size }) {
 
 			return result;
 		},
-		[blogs, matches]
+		[auth, blogs, matches, router, token]
 	);
 
 	// 페이지네이션 번호 상태 관리

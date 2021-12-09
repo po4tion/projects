@@ -1,4 +1,5 @@
-import { withRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { ProtectRoute } from '/components/auth';
 import { ProfileUpdate } from '/components/user';
 import { getUserProfile } from '/actions/handleUser';
@@ -7,9 +8,11 @@ import { signoutAxios } from '/actions/handleAuth';
 import Container from '@mui/material/Container';
 import Box from '@mui/system/Box';
 
-function User({ router, token, profile }) {
+function User({ token, profile }) {
+	const { replace } = useRouter();
+
 	if (profile === 401) {
-		signoutAxios(() => router.replace('/signin'));
+		signoutAxios(() => replace('/signin'));
 
 		return (
 			<Container component="main" maxWidth="md">
@@ -34,7 +37,7 @@ function User({ router, token, profile }) {
 	);
 }
 
-export default withRouter(User);
+export default User;
 
 export async function getServerSideProps(ctx) {
 	const { req } = ctx;

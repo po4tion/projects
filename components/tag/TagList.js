@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Body } from '/components';
-import { getTags, searchTag } from '/actions/handleTag';
+import { getTags, searchTag, cleanTagList } from '/actions/handleTag';
+import { getCookie, isAuth } from '/actions/handleAuth';
 import Link from 'next/link';
 
 import Box from '@mui/material/Box';
@@ -19,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Alert from '@mui/material/Alert';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 
 function TagList() {
 	const [info, setInfo] = useState({
@@ -28,6 +30,7 @@ function TagList() {
 	});
 	const [reload, setReload] = useState(false);
 	const [searchText, setSearchText] = useState('');
+	const [role, setRole] = useState(0);
 
 	useEffect(() => {
 		const result = async () => {
@@ -42,6 +45,10 @@ function TagList() {
 
 		result();
 	}, [reload]);
+
+	useEffect(() => {
+		isAuth() && setRole(isAuth().role);
+	}, []);
 
 	const fixedSizeList = useCallback(() => {
 		const renderRow = props => {
@@ -144,6 +151,31 @@ function TagList() {
 		);
 	};
 
+	const cleanBtn = () => {
+		const handleClick = () => {
+			const token = getCookie('access-token');
+
+			for (let i = 0; i < info.size; i++) {
+				cleanTagList({ id: info.tags[i]._id }, token);
+			}
+
+			setReload(r => !r);
+		};
+
+		return (
+			<Tooltip title="태그 리스트 정리" arrow placement="top">
+				<IconButton
+					onClick={handleClick}
+					type="button"
+					sx={{ p: '10px' }}
+					aria-label="clean"
+				>
+					<CleaningServicesIcon color="warning" />
+				</IconButton>
+			</Tooltip>
+		);
+	};
+
 	return (
 		<Body>
 			<Box
@@ -165,6 +197,7 @@ function TagList() {
 					<TagIcon fontSize="large" />
 					<Typography variant="h5">태그 목록</Typography>
 					{reloadBtn()}
+					{role === 1 && cleanBtn()}
 				</Box>
 
 				{searchBar()}

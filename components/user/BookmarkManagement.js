@@ -5,6 +5,7 @@ import { isAuth } from '/actions/handleAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Alert from '@mui/material/Alert';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -25,6 +26,7 @@ function BookmarkManagement() {
 	const [page, setPage] = useState(1);
 	const [size, setSize] = useState(0);
 	const [removed, setRemoved] = useState(false);
+	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
 
 	useEffect(() => {
 		isAuth() &&
@@ -115,6 +117,7 @@ function BookmarkManagement() {
 		const handleChange = (_, value) => {
 			setPage(value);
 			setSkip((value - 1) * limit);
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		};
 
 		return (
@@ -129,14 +132,16 @@ function BookmarkManagement() {
 
 	return (
 		<>
-			<Body>
-				{bookmark.length !== 0 && <List>{handleBookmark()}</List>}
+			<Body maxWidth="md">
+				{bookmark.length !== 0 && (
+					<List sx={{ width: matches ? 400 : '100%' }}>{handleBookmark()}</List>
+				)}
 				{size === 0 && (
 					<Alert sx={{ mb: 4 }} severity="info">
 						등록된 북마크가 없습니다
 					</Alert>
 				)}
-				<Stack>{handlePagination()}</Stack>
+				<Stack sx={{ mt: 2 }}>{handlePagination()}</Stack>
 			</Body>
 		</>
 	);

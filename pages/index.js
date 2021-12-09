@@ -1,16 +1,13 @@
-import { withRouter } from 'next/router';
 import { HomeList } from '/components/home';
 import { getBlogsInServer } from '/actions/handleBlog';
 import { getTagList } from '/actions/handleTag';
 import Head from 'next/head';
 
-function Home({ router, blogs, limit, skip }) {
-	return (
-		<HomeList router={router} blogs={blogs} limitNum={limit} skipNum={skip} />
-	);
+function Home({ blogs, limit, skip }) {
+	return <HomeList blogs={blogs} limitNum={limit} skipNum={skip} />;
 }
 
-export default withRouter(Home);
+export default Home;
 
 export async function getStaticProps() {
 	// populate[tags] 작동하기 위해 최소 한번 실행

@@ -62,3 +62,16 @@ export const removeTag = async (slug, token) => {
 
 	return result;
 };
+
+export const cleanTagList = async (id, token) => {
+	const result = await axios
+		.post('/api/tag/cleanTags', id, {
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		})
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};

@@ -3,6 +3,7 @@ import { useState, useCallback } from 'react';
 import { BlogList } from '/components/blog';
 import { getBlogs } from '/actions/handleBlog';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -13,7 +14,8 @@ import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-function HomeList({ router, blogs, limitNum, skipNum }) {
+function HomeList({ blogs, limitNum, skipNum }) {
+	const { pathname } = useRouter();
 	const [blogObj, setBlogObj] = useState(blogs);
 	const [limit, setLimit] = useState(limitNum);
 	const [skip, setSkip] = useState(skipNum);
@@ -63,9 +65,9 @@ function HomeList({ router, blogs, limitNum, skipNum }) {
 			<NextSeo
 				title={process.env.NEXT_PUBLIC_APP_NAME}
 				description="개발자들의 글이 숨쉬는 곳"
-				canonical={`${process.env.NEXT_PUBLIC_API}${router.pathname}`}
+				canonical={`${process.env.NEXT_PUBLIC_API}${pathname}`}
 				openGraph={{
-					url: `${process.env.NEXT_PUBLIC_API}${router.pathname}`,
+					url: `${process.env.NEXT_PUBLIC_API}${pathname}`,
 					title: `${process.env.NEXT_PUBLIC_APP_NAME} | 홈`,
 					description: '개발자들의 글이 숨쉬는 곳',
 					images: [

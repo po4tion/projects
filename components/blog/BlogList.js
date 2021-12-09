@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
@@ -21,8 +20,6 @@ function BlogList({ blog, noLink = true }) {
 	const [img, setImg] = useState(
 		`${process.env.NEXT_PUBLIC_API}/images/loading.jpg`
 	);
-	const router = useRouter();
-
 	useEffect(() => {
 		const modifyImg = async () => {
 			const res = await axios.get(

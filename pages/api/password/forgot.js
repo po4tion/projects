@@ -27,6 +27,8 @@ export default function handler(req, res) {
 
 						const resetToken = await user.generateResetToken();
 
+						const url = `${process.env.API}/user/reset/${resetToken}`;
+
 						const sendgridData = {
 							to: email,
 							from: process.env.EMAIL_ADMIN,
@@ -34,7 +36,7 @@ export default function handler(req, res) {
 							html: `
                 <p>아래의 링크를 클릭하여 비밀번호를 초기화 해주세요</p>
                 <p>아래의 링크는 5분 후 파기됩니다</p>
-                <p>${process.env.API}/user/reset/${resetToken}</p>
+                <a href=${url}>링크 클릭</a>
                 <p>https://devblog-mu.vercel.app</p>
               `,
 						};

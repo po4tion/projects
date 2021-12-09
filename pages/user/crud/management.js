@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { getBlogsUsers } from '/actions/handleBlog';
 import { signoutAxios } from '/actions/handleAuth';
@@ -10,9 +10,11 @@ import Container from '@mui/material/Container';
 import Box from '@mui/system/Box';
 import Alert from '@mui/material/Alert';
 
-function Management({ router, token, blogs, size }) {
+function Management({ token, blogs, size }) {
+	const { replace } = useRouter();
+
 	if (blogs === 401) {
-		signoutAxios(() => router.replace('/signin'));
+		signoutAxios(() => replace('/signin'));
 
 		return (
 			<Container component="main" maxWidth="md">
@@ -37,7 +39,7 @@ function Management({ router, token, blogs, size }) {
 	);
 }
 
-export default withRouter(Management);
+export default Management;
 
 export async function getServerSideProps(ctx) {
 	const { req } = ctx;
