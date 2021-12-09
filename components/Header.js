@@ -183,34 +183,19 @@ function Header({ title }) {
 						justifyContent: 'space-between',
 					}}
 				>
-					{!matches && (
-						<Link href="/" passHref>
-							<Tooltip arrow title="홈으로">
-								<Typography
-									align="center"
-									component="h2"
-									noWrap
-									variant="h4"
-									sx={{ userSelect: 'none', fontWeight: 'bold' }}
-								>
-									{title}
-								</Typography>
-							</Tooltip>
-						</Link>
-					)}
-
-					{matches && (
-						<Link href="/" passHref>
-							<a>
-								<Image
-									src="/favicon.ico"
-									width={50}
-									height={50}
-									alt="home 500"
-								/>
-							</a>
-						</Link>
-					)}
+					<Link href="/" passHref>
+						<Tooltip arrow title="홈으로">
+							<Typography
+								align="center"
+								component="h2"
+								noWrap
+								variant="h4"
+								sx={{ userSelect: 'none', fontWeight: 'bold' }}
+							>
+								{title}
+							</Typography>
+						</Tooltip>
+					</Link>
 
 					<Box sx={{ height: '100%' }}>
 						{!matches && (

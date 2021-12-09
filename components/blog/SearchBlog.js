@@ -6,6 +6,7 @@ import 'moment/locale/ko';
 import Link from 'next/link';
 import { Body } from '/components';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -27,6 +28,7 @@ function SearchBlog() {
 	const [searched, setSearched] = useState([]);
 	const [page, setPage] = useState(1);
 	const [alignment, setAlignment] = useState('body');
+	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
 
 	const searchedList = (searched, start, end) => {
 		const result = [];
@@ -65,8 +67,6 @@ function SearchBlog() {
 
 		if (alignment === 'body') {
 			blogSearch({ search: e.target.searchText.value }).then(data => {
-				console.log(e.target.searchText.value);
-				console.log(data);
 				if (data.length === 0) {
 					setSearched([]);
 				} else {
@@ -87,6 +87,7 @@ function SearchBlog() {
 	const handlePagination = useCallback(() => {
 		const handlePage = (_, value) => {
 			setPage(value);
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		};
 
 		return (
@@ -133,14 +134,13 @@ function SearchBlog() {
 						p: '2px 4px',
 						display: 'flex',
 						alignItems: 'center',
-						width: 500,
-						minWidth: 500,
-						height: 70,
+						width: matches ? 300 : 500,
+						height: matches ? 50 : 70,
 					}}
 				>
 					<InputBase
 						autoFocus
-						sx={{ fontSize: '2.5em', ml: 1, flex: 1 }}
+						sx={{ fontSize: matches ? '1.2em' : '2.5em', ml: 1, flex: 1 }}
 						placeholder="검색어를 입력해주세요"
 						name="searchText"
 						inputProps={{ 'aria-label': '검색어를 입력해주세요' }}
