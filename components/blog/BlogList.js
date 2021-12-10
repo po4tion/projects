@@ -52,6 +52,7 @@ function BlogList({ blog, noLink = true }) {
 						<CardMedia title={blog.title}>
 							{img && (
 								<Image
+									priority
 									src={img}
 									width={300}
 									height={250}

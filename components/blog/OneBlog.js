@@ -9,8 +9,8 @@ import useScript from '/lib/blog/useScript';
 import { isBookmarked, bookmarked } from '/actions/handleBookmark';
 import { getCookie, isAuth } from '/actions/handleAuth';
 
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Body } from '/components';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -30,6 +30,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Tooltip from '@mui/material/Tooltip';
 
 function OneBlog({ blog, related }) {
+	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
 	const [blogInfo, setBlogInfo] = useState(undefined);
 
 	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data[0];
@@ -239,95 +240,78 @@ function OneBlog({ blog, related }) {
 			)}
 
 			{blog && (
-				<Container component="main" maxWidth="md">
-					<CssBaseline />
-					<Box
-						sx={{
-							marginTop: 6,
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
-						<Grid container rowSpacing={2}>
-							<Grid item xs={12}>
-								{bookmark && (
-									<Tooltip title="북마크 취소" arrow>
-										<IconButton
-											onClick={clickBookmark}
-											sx={{
-												position: 'absolute',
-												ml: -8,
-											}}
-										>
-											<BookmarkIcon fontSize="large" />
-										</IconButton>
-									</Tooltip>
-								)}
-								{!bookmark && (
-									<Tooltip title="북마크 추가" arrow>
-										<IconButton
-											onClick={clickBookmark}
-											sx={{
-												position: 'absolute',
-												ml: -8,
-											}}
-										>
-											<BookmarkBorderIcon fontSize="large" />
-										</IconButton>
-									</Tooltip>
-								)}
-								<Typography
-									component="h1"
-									variant="h3"
-									sx={{ boxShadow: '0 3px 3px -3px #000' }}
-								>
-									{title}
-								</Typography>
-							</Grid>
-
-							<Grid item xs={12}>
-								<Typography variant="h6" sx={{ userSelect: 'none' }}>
-									<NextLink
-										href={`/profile/${encodeURIComponent(postedBy.username)}`}
-										passHref
-									>
-										<Link underline="hover">{postedBy.username}</Link>
-									</NextLink>{' '}
-									&#183;&nbsp;
-									{moment(updatedAt).format(`YYYY년 MM월 DD일`)}
-								</Typography>
-							</Grid>
-
-							<Grid item xs={12} sx={{ marginBottom: 5 }}>
-								{handleTag(tags)}
-							</Grid>
-							<Grid item xs={12}>
-								<Box sx={{ width: '100%' }}>{renderHTML(body)}</Box>
-							</Grid>
-
-							<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
-
-							<Box ref={comment} sx={{ width: '100%' }} />
-
-							<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
-
-							<Grid item xs={12}>
-								<Typography
-									variant="h5"
-									sx={{ textAlign: 'center', mb: 4, userSelect: 'none' }}
-								>
-									관심 있을 만한 포스터
-								</Typography>
-							</Grid>
-
-							<Grid container spacing={2}>
-								{related && relateCards(related)}
-								{related && handleSkeleton()}
-							</Grid>
+				<Body>
+					<Grid container rowSpacing={2}>
+						<Grid
+							item
+							xs={12}
+							sx={{
+								display: 'flex',
+								justifyContent: 'flex-start',
+							}}
+						>
+							{bookmark && (
+								<Tooltip title="북마크 취소" arrow>
+									<IconButton onClick={clickBookmark}>
+										<BookmarkIcon fontSize="large" />
+									</IconButton>
+								</Tooltip>
+							)}
+							{!bookmark && (
+								<Tooltip title="북마크 추가" arrow>
+									<IconButton onClick={clickBookmark}>
+										<BookmarkBorderIcon fontSize="large" />
+									</IconButton>
+								</Tooltip>
+							)}
 						</Grid>
-					</Box>
-				</Container>
+						<Grid item xs={12}>
+							<Typography component="h1" variant={matches ? 'h4' : 'h3'}>
+								{title}
+							</Typography>
+						</Grid>
+
+						<Grid item xs={12}>
+							<Typography variant="h6" sx={{ userSelect: 'none' }}>
+								<NextLink
+									href={`/profile/${encodeURIComponent(postedBy.username)}`}
+									passHref
+								>
+									<Link underline="hover">{postedBy.username}</Link>
+								</NextLink>{' '}
+								&#183;&nbsp;
+								{moment(updatedAt).format(`YYYY년 MM월 DD일`)}
+							</Typography>
+						</Grid>
+
+						<Grid item xs={12} sx={{ marginBottom: 5 }}>
+							{handleTag(tags)}
+						</Grid>
+						<Grid item xs={12}>
+							<Box sx={{ width: '100%' }}>{renderHTML(body)}</Box>
+						</Grid>
+
+						<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
+
+						<Box ref={comment} sx={{ width: '100%' }} />
+
+						<Divider sx={{ width: '100%', mt: 4, mb: 2 }} />
+
+						<Grid item xs={12}>
+							<Typography
+								variant="h5"
+								sx={{ textAlign: 'center', mb: 4, userSelect: 'none' }}
+							>
+								관심 있을 만한 포스터
+							</Typography>
+						</Grid>
+
+						<Grid container spacing={2}>
+							{related && relateCards(related)}
+							{related && handleSkeleton()}
+						</Grid>
+					</Grid>
+				</Body>
 			)}
 		</>
 	);
