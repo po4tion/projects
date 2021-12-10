@@ -32,6 +32,7 @@ export const signinAxios = async user => {
 export const signoutAxios = async next => {
 	removeCookie('access-token');
 	removeLocalStorage('user');
+	localStorage.removeItem('blog');
 	next();
 
 	const result = await axios

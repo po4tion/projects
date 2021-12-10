@@ -252,14 +252,14 @@ function OneBlog({ blog, related }) {
 						>
 							{bookmark && (
 								<Tooltip title="북마크 취소" arrow>
-									<IconButton onClick={clickBookmark}>
+									<IconButton onClick={clickBookmark} sx={{ ml: -1 }}>
 										<BookmarkIcon fontSize="large" />
 									</IconButton>
 								</Tooltip>
 							)}
 							{!bookmark && (
 								<Tooltip title="북마크 추가" arrow>
-									<IconButton onClick={clickBookmark}>
+									<IconButton onClick={clickBookmark} sx={{ ml: -1 }}>
 										<BookmarkBorderIcon fontSize="large" />
 									</IconButton>
 								</Tooltip>
