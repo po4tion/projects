@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function HomeList({ blogs, limitNum, skipNum }) {
@@ -105,9 +106,21 @@ function HomeList({ blogs, limitNum, skipNum }) {
 							</Typography>
 						}
 						endMessage={
-							<Typography variant="h5" align="center" mt={4}>
+							<Alert
+								severity="info"
+								variant="outlined"
+								sx={{
+									display: 'flex',
+									justifyContent: 'center',
+									width: 300,
+									margin: '0 auto',
+									fontWeight: 700,
+									fontSize: 25,
+								}}
+							>
+								<AlertTitle sx={{ fontWeight: 'bold' }}>알림</AlertTitle>
 								마지막 글입니다
-							</Typography>
+							</Alert>
 						}
 						scrollThreshold={0.5}
 					>

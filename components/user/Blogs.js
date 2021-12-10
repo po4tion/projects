@@ -66,6 +66,7 @@ function Blogs({ blogs, user }) {
 					<FormControlLabel
 						control={
 							<Switch
+								color="write"
 								checked={checked}
 								onChange={handleSwitch}
 								inputProps={{ 'aria-label': 'controlled' }}
@@ -176,7 +177,7 @@ function Blogs({ blogs, user }) {
 				{checked && (
 					<>
 						<Typography component="h1" variant="h5">
-							{user.username}님에게 문의하기
+							<b>{user.username}</b>님에게 문의하기
 						</Typography>
 						<Box component="form" novalidate sx={{ width: '100%', mt: 1 }}>
 							<Grid container spacing={1}>
@@ -242,6 +243,7 @@ function Blogs({ blogs, user }) {
 								</Grid>
 								<Grid item xs={12}>
 									<Button
+										color="write"
 										onClick={handleSubmit(onSubmit)}
 										fullWidth
 										variant="contained"

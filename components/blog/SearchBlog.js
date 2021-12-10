@@ -94,6 +94,7 @@ function SearchBlog() {
 			<Pagination
 				page={page}
 				count={searched.length ? Math.ceil(searched.length / 4) : 1}
+				color="numbering"
 				onChange={handlePage}
 			/>
 		);

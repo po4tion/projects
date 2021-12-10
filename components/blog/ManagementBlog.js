@@ -36,6 +36,7 @@ function ManagementBlog({ blogList, token, size }) {
 	const [blogSize, setBlogSize] = useState(0);
 	const router = useRouter();
 	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
+	const matches600 = useMediaQuery('(max-width: 600px)', { noSsr: true });
 
 	useEffect(() => {
 		setAuth(isAuth() && isAuth().role);
@@ -58,8 +59,9 @@ function ManagementBlog({ blogList, token, size }) {
 					return (
 						<Link href={`/user/crud/${blog.slug}`} passHref>
 							<Button
+								color="write"
 								component="a"
-								variant="outlined"
+								variant="contained"
 								sx={{ borderBottom: 'none' }}
 							>
 								수정
@@ -87,7 +89,10 @@ function ManagementBlog({ blogList, token, size }) {
 			const deleteBtn = blog => {
 				if (auth === 0 || auth === 1) {
 					return (
-						<Button onClick={() => deletePostAlarm(blog.title, blog.slug)}>
+						<Button
+							color="error"
+							onClick={() => deletePostAlarm(blog.title, blog.slug)}
+						>
 							삭제
 						</Button>
 					);
@@ -134,9 +139,14 @@ function ManagementBlog({ blogList, token, size }) {
 											>
 												<CardHeader
 													title={blogs[i].title}
+													titleTypographyProps={{
+														fontSize: 25,
+														fontWeight: 'bold',
+													}}
 													subheader={`${blogs[i].postedBy.username} ${moment(
 														blogs[i].updatedAt
 													).format('YYYY년 MM월 DD일 HH:MM')}`}
+													subheaderTypographyProps={{ fontWeight: 'bold' }}
 												/>
 												<CardContent
 													sx={{
@@ -281,7 +291,11 @@ function ManagementBlog({ blogList, token, size }) {
 													title={blogs[i].title}
 													subheader={`${blogs[i].postedBy.username} ${moment(
 														blogs[i].updatedAt
-													).format('YYYY년 MM월 DD일 HH:MM')}`}
+													).format(
+														matches600
+															? 'YY년 MM월 DD일'
+															: 'YYYY년 MM월 DD일 HH:MM'
+													)}`}
 												/>
 												<CardContent
 													sx={{
@@ -306,7 +320,7 @@ function ManagementBlog({ blogList, token, size }) {
 
 			return result;
 		},
-		[auth, blogs, matches, router, token]
+		[auth, blogs, matches, matches600, router, token]
 	);
 
 	// 페이지네이션 번호 상태 관리
@@ -318,7 +332,9 @@ function ManagementBlog({ blogList, token, size }) {
 	return (
 		<>
 			<Body>
-				<Typography gutterBottom>모든 글 : {blogSize}</Typography>
+				<Typography gutterBottom variant="h6">
+					모든 글 : <b>{blogSize}</b>
+				</Typography>
 
 				{!matches && allBlog(5 * page - 5, 5 * page)}
 				{matches && allBlogUnder500(5 * page - 5, 5 * page)}
@@ -327,6 +343,7 @@ function ManagementBlog({ blogList, token, size }) {
 						<Pagination
 							page={page}
 							count={Math.ceil(blogSize / 5)}
+							color="numbering"
 							onChange={handleChange}
 						/>
 					</Stack>

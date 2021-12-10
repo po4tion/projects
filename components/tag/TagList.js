@@ -67,7 +67,12 @@ function TagList() {
 						passHref
 					>
 						<ListItemButton>
-							<ListItemText primary={info.tags[index].name} />
+							<ListItemText
+								primary={info.tags[index].name}
+								primaryTypographyProps={{
+									fontSize: 20,
+								}}
+							/>
 						</ListItemButton>
 					</Link>
 				</ListItem>
@@ -195,7 +200,9 @@ function TagList() {
 					}}
 				>
 					<TagIcon fontSize="large" />
-					<Typography variant="h5">태그 목록</Typography>
+					<Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+						태그 목록
+					</Typography>
 					{reloadBtn()}
 					{role === 1 && cleanBtn()}
 				</Box>

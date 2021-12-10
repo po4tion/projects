@@ -21,6 +21,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 function BookmarkManagement() {
 	const [bookmark, setBookmark] = useState([]);
+	const [msg, setMsg] = useState('북마크를 불러오는 중입니다');
 	const [limit, setLimit] = useState(5);
 	const [skip, setSkip] = useState(0);
 	const [page, setPage] = useState(1);
@@ -37,6 +38,7 @@ function BookmarkManagement() {
 				} else {
 					setSize(data.length);
 					setBookmark(data);
+					setMsg('등록된 북마크가 없습니다');
 				}
 			});
 	}, [limit, skip, removed]);
@@ -61,6 +63,7 @@ function BookmarkManagement() {
 								onClick={() => handleDelete(bm.slug)}
 							>
 								<DeleteIcon
+									color="primary"
 									fontSize="large"
 									sx={{
 										transition: 0.5,
@@ -124,7 +127,7 @@ function BookmarkManagement() {
 			<Pagination
 				page={page}
 				count={size ? Math.ceil(size / limit) : 1}
-				color="primary"
+				color="numbering"
 				onChange={handleChange}
 			/>
 		);
@@ -138,7 +141,7 @@ function BookmarkManagement() {
 				)}
 				{size === 0 && (
 					<Alert sx={{ mb: 4 }} severity="info">
-						등록된 북마크가 없습니다
+						{msg}
 					</Alert>
 				)}
 				<Stack sx={{ mt: 2 }}>{handlePagination()}</Stack>

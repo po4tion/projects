@@ -19,6 +19,7 @@ import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Divider from '@mui/material/Divider';
 
@@ -260,7 +261,7 @@ function ProfileUpdate({ token, profile }) {
 
 						<Button
 							fullWidth
-							color="primary"
+							color="write"
 							variant="contained"
 							component="span"
 							sx={{ maxWidth: 150, mb: 0.3 }}
@@ -270,7 +271,7 @@ function ProfileUpdate({ token, profile }) {
 					</label>
 					<Button
 						fullWidth
-						color="primary"
+						color="error"
 						variant="outlined"
 						component="span"
 						onClick={handleProfileImg}
@@ -326,6 +327,7 @@ function ProfileUpdate({ token, profile }) {
 					<Grid container spacing={3}>
 						<Grid item xs={12}>
 							<TextField
+								color="write"
 								onChange={handleThings('about')}
 								value={textLength}
 								fullWidth
@@ -345,6 +347,7 @@ function ProfileUpdate({ token, profile }) {
 
 						<Grid item xs={12}>
 							<TextField
+								color="write"
 								onChange={handleThings('username')}
 								value={unLength}
 								fullWidth
@@ -366,6 +369,7 @@ function ProfileUpdate({ token, profile }) {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
+								color="write"
 								onChange={handleThings('password')}
 								value={pwdLength}
 								fullWidth
@@ -395,7 +399,12 @@ function ProfileUpdate({ token, profile }) {
 							xs={12}
 							sx={{ display: 'flex', justifyContent: 'flex-end' }}
 						>
-							<Button onClick={handleSubmit} type="button" variant="contained">
+							<Button
+								color="write"
+								onClick={handleSubmit}
+								type="button"
+								variant="contained"
+							>
 								수정하기
 							</Button>
 						</Grid>
@@ -404,7 +413,8 @@ function ProfileUpdate({ token, profile }) {
 						</Grid>
 						<Grid item xs={12}>
 							<Alert severity="warning" sx={{ height: '100%' }}>
-								경고! 회원탈퇴 후, 작성하신 모든 글이 삭제되며 회원 정보와 개인
+								<AlertTitle sx={{ fontWeight: 'bold' }}>경고</AlertTitle>
+								회원탈퇴 후, 작성하신 모든 글이 삭제되며 회원 정보와 개인
 								저작물은 복구되지 않습니다.
 							</Alert>
 						</Grid>
@@ -414,7 +424,7 @@ function ProfileUpdate({ token, profile }) {
 							sx={{ display: 'flex', justifyContent: 'flex-end' }}
 						>
 							<Link href="/deleteAccount" passHref>
-								<Button color="warning" type="button" variant="outlined">
+								<Button color="error" type="button" variant="outlined">
 									회원탈퇴
 								</Button>
 							</Link>

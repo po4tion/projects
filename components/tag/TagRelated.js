@@ -94,7 +94,7 @@ function TagRelated({ tag, blogs }) {
 				>
 					<Typography
 						gutterBottom
-						color="secondary"
+						color="primary"
 						variant="h4"
 						sx={{
 							display: 'flex',
@@ -108,6 +108,7 @@ function TagRelated({ tag, blogs }) {
 						<TagIcon fontSize="large" />
 						{name}
 					</Typography>
+
 					<Divider variant="middle" sx={{ mb: 4, width: '100%' }} />
 					<Grid container spacing={2}>
 						{blogs.length === 0 && (
@@ -135,6 +136,7 @@ function TagRelated({ tag, blogs }) {
 						<Pagination
 							page={page}
 							count={Math.ceil(blogs.length / 4)}
+							color="numbering"
 							onChange={handleChange}
 						/>
 					</Stack>

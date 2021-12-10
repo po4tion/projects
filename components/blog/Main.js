@@ -24,7 +24,6 @@ import Typography from '@mui/material/Typography';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
-import '/node_modules/react-quill/dist/quill.bubble.css';
 import { Modules, Formats } from '/lib/blog/quillSetting';
 
 function Main({ router, token }) {

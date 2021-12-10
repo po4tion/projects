@@ -229,10 +229,13 @@ function Header({ title }) {
 						{isAuth() && !matches && (
 							<Link href="/user/crud/blog" passHref>
 								<Button
-									color="primary"
+									color="write"
 									variant="contained"
 									size="large"
-									sx={{ height: 36, ml: 2 }}
+									sx={{
+										height: 36,
+										ml: 2,
+									}}
 								>
 									글쓰기
 								</Button>

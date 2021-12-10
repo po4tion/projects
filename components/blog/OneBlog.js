@@ -43,7 +43,12 @@ function OneBlog({ blog, related }) {
 				href={`/tags/${encodeURIComponent(tag.slug)}`}
 				passHref
 			>
-				<Chip color="secondary" label={tag.name} sx={{ marginRight: 1 }} />
+				<Chip
+					color="tagChip"
+					variant="outlined"
+					label={tag.name}
+					sx={{ marginRight: 1 }}
+				/>
 			</NextLink>
 		));
 	};
@@ -253,7 +258,7 @@ function OneBlog({ blog, related }) {
 							{bookmark && (
 								<Tooltip title="북마크 취소" arrow>
 									<IconButton onClick={clickBookmark} sx={{ ml: -1 }}>
-										<BookmarkIcon fontSize="large" />
+										<BookmarkIcon color="mark" fontSize="large" />
 									</IconButton>
 								</Tooltip>
 							)}
@@ -300,7 +305,12 @@ function OneBlog({ blog, related }) {
 						<Grid item xs={12}>
 							<Typography
 								variant="h5"
-								sx={{ textAlign: 'center', mb: 4, userSelect: 'none' }}
+								sx={{
+									textAlign: 'center',
+									mb: 4,
+									userSelect: 'none',
+									fontWeight: 'bold',
+								}}
 							>
 								관심 있을 만한 포스터
 							</Typography>

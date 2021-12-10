@@ -91,7 +91,7 @@ function Footer({ title, description }) {
 							{title}
 						</Typography>
 						<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-							<Link href="https://github.com/po4tion/devblog" passHref>
+							<Link href="https://github.com/po4tion" passHref>
 								<a target="_blank">
 									<IconButton
 										type="button"

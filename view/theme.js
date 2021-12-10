@@ -13,6 +13,25 @@ const theme = createTheme({
 		error: {
 			main: red.A400,
 		},
+		write: {
+			main: '#2196f3',
+			contrastText: '#fff',
+		},
+		numbering: {
+			main: '#ff5252',
+			contrastText: '#fff',
+		},
+		mark: {
+			main: '#ff9800',
+			contrastText: '#ff9800',
+		},
+		tagChip: {
+			main: '#2196f3',
+			contrastText: '#2196f3',
+		},
+	},
+	typography: {
+		fontFamily: 'Nanum Gothic',
 	},
 });
 
