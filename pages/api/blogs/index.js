@@ -35,6 +35,7 @@ export default function handler(req, res) {
 									.status(400)
 									.json({ error: '블로그 리스트 불러오기 실패' });
 							}
+
 							return res.status(200).json({ blogs, size: blogs.length });
 						});
 				} catch (error) {

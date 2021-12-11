@@ -8,7 +8,7 @@ module.exports = withBundleAnalyzer({
 	compress: true,
 	images: {
 		domains: [process.env.IMAGE_SRC],
-		minimumCacheTTL: 100,
+		minimumCacheTTL: 1,
 	},
 
 	webpack: function (config) {

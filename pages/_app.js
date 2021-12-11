@@ -7,8 +7,7 @@ import { CacheProvider } from '@emotion/react';
 import { theme, createEmotionCache } from '/view';
 import { Layout } from '/components';
 import '/public/css/nprogress.css';
-
-import { getTagList } from '/actions/handleTag';
+import '/public/asset/Nanum_Gothic/style.css';
 
 // NProgress settings
 Router.events.on('routeChangeStart', url => {
