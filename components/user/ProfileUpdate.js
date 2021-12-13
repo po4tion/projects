@@ -1,27 +1,31 @@
+/* 
+	Connect: user/crud/update.js
+*/
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import { updateLocalStorage } from '/actions/handleAuth';
 import { updateUserProfile, removeProfileImg } from '/actions/handleUser';
 import { photoResize } from '/lib/photoResize';
-import axios from 'axios';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Avatar from '@mui/material/Avatar';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Input from '@mui/material/Input';
-import CircularProgress from '@mui/material/CircularProgress';
+// MUI
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import Avatar from '@mui/material/Avatar';
+import { Body } from '/components';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Input from '@mui/material/Input';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function ProfileUpdate({ token, profile }) {
 	const router = useRouter();
@@ -58,20 +62,21 @@ function ProfileUpdate({ token, profile }) {
 
 	const [img, setImg] = useState(undefined);
 
-	const modifyImg = async () => {
-		const res = await axios.get(
-			`/api/user/photo/${encodeURIComponent(profile.username)}`
-		);
-
-		const trans = new Buffer.from(res.data.data.data).toString('base64');
-		setImg(`data:image/jpeg;base64,${trans}`);
-	};
-
 	useEffect(() => {
-		modifyImg();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [router]);
+		// 사용자 프로필 이미지 가져오기
+		const modifyImg = async () => {
+			const res = await axios.get(
+				`/api/user/photo/${encodeURIComponent(profile.username)}`
+			);
 
+			const trans = new Buffer.from(res.data.data.data).toString('base64');
+			setImg(`data:image/jpeg;base64,${trans}`);
+		};
+
+		profile.username && modifyImg();
+	}, [profile.username, router]);
+
+	// 프로필 사진 등록
 	const handleChange = async e => {
 		const { files } = e.target;
 
@@ -115,6 +120,15 @@ function ProfileUpdate({ token, profile }) {
 		}
 	};
 
+	// 프로필 이미지 삭제
+	const handleProfileImg = () => {
+		removeProfileImg(profile.username).then(data => {
+			setImg(undefined);
+			router.replace(router.asPath);
+		});
+	};
+
+	// 자기소개, 별명, 비밀번호 설정
 	const handleThings = key => e => {
 		const { value } = e.target;
 
@@ -184,13 +198,6 @@ function ProfileUpdate({ token, profile }) {
 					router.replace(router.asPath);
 				});
 			}
-		});
-	};
-
-	const handleProfileImg = () => {
-		removeProfileImg(profile.username).then(data => {
-			setImg(undefined);
-			router.replace(router.asPath);
 		});
 	};
 
@@ -285,154 +292,144 @@ function ProfileUpdate({ token, profile }) {
 	};
 
 	return (
-		<Container component="main" maxWidth="md">
-			<CssBaseline />
-			<Box
-				sx={{
-					marginTop: 6,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
-			>
-				<Box sx={{ width: '100%', mt: 1 }}>
-					<Grid container spacing={2} mb={4}>
-						{info.loading && (
-							<Grid
-								item
-								xs={12}
-								sx={{
-									display: 'flex',
-									justifyContent: 'center',
-								}}
-							>
-								<CircularProgress />
-							</Grid>
-						)}
-						<Grid item xs={matches ? 12 : 3}>
-							{handlePhotoForm()}
-						</Grid>
-						<Grid item xs={1}>
-							<Divider orientation="vertical" width={1} />
-						</Grid>
-						<Grid item xs={matches ? 11 : 8}>
-							<Typography variant="h4" fontWeight="bold" mb={2}>
-								{profile.name}
-							</Typography>
-							<Typography variant="body1">
-								{profile.about ? profile.about : '자기소개를 입력해주세요'}
-							</Typography>
-						</Grid>
-					</Grid>
-					<Grid container spacing={3}>
-						<Grid item xs={12}>
-							<TextField
-								color="write"
-								onChange={handleThings('about')}
-								value={textLength}
-								fullWidth
-								id="about"
-								label="자기소개 수정"
-								placeholder="자기소개를 입력해주세요"
-								name="about"
-								type="text"
-								rows={4}
-								multiline
-							/>
-						</Grid>
-
-						<Typography sx={{ width: '100%' }} align="right">
-							{textLength.length} / 150
-						</Typography>
-
-						<Grid item xs={12}>
-							<TextField
-								color="write"
-								onChange={handleThings('username')}
-								value={unLength}
-								fullWidth
-								id="username"
-								label="별명 수정"
-								placeholder="별명을 입력해주세요"
-								name="username"
-								type="text"
-								error={info.error === 'username' ? true : false}
-							/>
-							<Typography sx={{ width: '100%' }} align="right">
-								{unLength.length} / 32
-							</Typography>
-							{info.error === 'username' && (
-								<Alert severity="error" sx={{ mt: '2px', width: '100%' }}>
-									별명이 중복됩니다
-								</Alert>
-							)}
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								color="write"
-								onChange={handleThings('password')}
-								value={pwdLength}
-								fullWidth
-								id="password"
-								label="비밀번호 수정"
-								placeholder="새로운 비밀번호를 입력해주세요(8자 이상)"
-								name="password"
-								type="password"
-							/>
-						</Grid>
-						<Typography sx={{ width: '100%' }} align="right">
-							{pwdLength.length} / 32
-						</Typography>
-						<Grid item xs={12}>
-							<TextField
-								defaultValue={profile.email}
-								fullWidth
-								id="email"
-								label="이메일 수정불가"
-								name="email"
-								type="email"
-								disabled
-							/>
-						</Grid>
+		<Body maxWidth="md">
+			<Box sx={{ width: '100%', mt: 1 }}>
+				<Grid container spacing={2} mb={4}>
+					{info.loading && (
 						<Grid
 							item
 							xs={12}
-							sx={{ display: 'flex', justifyContent: 'flex-end' }}
+							sx={{
+								display: 'flex',
+								justifyContent: 'center',
+							}}
 						>
-							<Button
-								color="write"
-								onClick={handleSubmit}
-								type="button"
-								variant="contained"
-							>
-								수정하기
-							</Button>
+							<CircularProgress />
 						</Grid>
-						<Grid item xs={12}>
-							<Divider color="primary" sx={{ width: '100%' }} />
-						</Grid>
-						<Grid item xs={12}>
-							<Alert severity="warning" sx={{ height: '100%' }}>
-								<AlertTitle sx={{ fontWeight: 'bold' }}>경고</AlertTitle>
-								회원탈퇴 후, 작성하신 모든 글이 삭제되며 회원 정보와 개인
-								저작물은 복구되지 않습니다.
+					)}
+					<Grid item xs={matches ? 12 : 3}>
+						{handlePhotoForm()}
+					</Grid>
+					<Grid item xs={1}>
+						<Divider orientation="vertical" width={1} />
+					</Grid>
+					<Grid item xs={matches ? 11 : 8}>
+						<Typography variant="h4" fontWeight="bold" mb={2}>
+							{profile.name}
+						</Typography>
+						<Typography variant="body1">
+							{profile.about ? profile.about : '자기소개를 입력해주세요'}
+						</Typography>
+					</Grid>
+				</Grid>
+				<Grid container spacing={3}>
+					<Grid item xs={12}>
+						<TextField
+							color="write"
+							onChange={handleThings('about')}
+							value={textLength}
+							fullWidth
+							id="about"
+							label="자기소개 수정"
+							placeholder="자기소개를 입력해주세요"
+							name="about"
+							type="text"
+							rows={4}
+							multiline
+						/>
+					</Grid>
+
+					<Typography sx={{ width: '100%' }} align="right">
+						{textLength.length} / 150
+					</Typography>
+
+					<Grid item xs={12}>
+						<TextField
+							color="write"
+							onChange={handleThings('username')}
+							value={unLength}
+							fullWidth
+							id="username"
+							label="별명 수정"
+							placeholder="별명을 입력해주세요"
+							name="username"
+							type="text"
+							error={info.error === 'username' ? true : false}
+						/>
+						<Typography sx={{ width: '100%' }} align="right">
+							{unLength.length} / 32
+						</Typography>
+						{info.error === 'username' && (
+							<Alert severity="error" sx={{ mt: '2px', width: '100%' }}>
+								별명이 중복됩니다
 							</Alert>
-						</Grid>
-						<Grid
-							item
-							xs={12}
-							sx={{ display: 'flex', justifyContent: 'flex-end' }}
-						>
-							<Link href="/deleteAccount" passHref>
-								<Button color="error" type="button" variant="outlined">
-									회원탈퇴
-								</Button>
-							</Link>
-						</Grid>
+						)}
 					</Grid>
-				</Box>
+					<Grid item xs={12}>
+						<TextField
+							color="write"
+							onChange={handleThings('password')}
+							value={pwdLength}
+							fullWidth
+							id="password"
+							label="비밀번호 수정"
+							placeholder="새로운 비밀번호를 입력해주세요(8자 이상)"
+							name="password"
+							type="password"
+						/>
+					</Grid>
+					<Typography sx={{ width: '100%' }} align="right">
+						{pwdLength.length} / 32
+					</Typography>
+					<Grid item xs={12}>
+						<TextField
+							defaultValue={profile.email}
+							fullWidth
+							id="email"
+							label="이메일 수정불가"
+							name="email"
+							type="email"
+							disabled
+						/>
+					</Grid>
+					<Grid
+						item
+						xs={12}
+						sx={{ display: 'flex', justifyContent: 'flex-end' }}
+					>
+						<Button
+							color="write"
+							onClick={handleSubmit}
+							type="button"
+							variant="contained"
+						>
+							수정하기
+						</Button>
+					</Grid>
+					<Grid item xs={12}>
+						<Divider color="primary" sx={{ width: '100%' }} />
+					</Grid>
+					<Grid item xs={12}>
+						<Alert severity="warning" sx={{ height: '100%' }}>
+							<AlertTitle sx={{ fontWeight: 'bold' }}>경고</AlertTitle>
+							회원탈퇴 후, 작성하신 모든 글이 삭제되며 회원 정보와 개인 저작물은
+							복구되지 않습니다.
+						</Alert>
+					</Grid>
+					<Grid
+						item
+						xs={12}
+						sx={{ display: 'flex', justifyContent: 'flex-end' }}
+					>
+						<Link href="/deleteAccount" passHref>
+							<Button color="error" type="button" variant="outlined">
+								회원탈퇴
+							</Button>
+						</Link>
+					</Grid>
+				</Grid>
 			</Box>
-		</Container>
+		</Body>
 	);
 }
 

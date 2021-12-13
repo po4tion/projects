@@ -1,25 +1,31 @@
+/* 
+	Connect: HomeList, SearchBlog, TagRelated, Blogs
+*/
+
 import { useState, useEffect, useCallback } from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/ko';
-import axios from 'axios';
 
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
+// MUI
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import CardActionArea from '@mui/material/CardActionArea';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 import PersonIcon from '@mui/icons-material/Person';
+import Typography from '@mui/material/Typography';
 
 function BlogList({ blog, noLink = true }) {
 	const [img, setImg] = useState(
 		`${process.env.NEXT_PUBLIC_API}/images/loading.jpg`
 	);
+
 	useEffect(() => {
 		const modifyImg = async () => {
 			const res = await axios.get(

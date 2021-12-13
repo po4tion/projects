@@ -1,3 +1,7 @@
+/* 
+	운영자가 사용자들의 포스트들을 관리하는 페이지
+*/
+
 import { adminManageBlogs } from '/actions/handleBlog';
 import { ManagementBlog } from '/components/blog';
 import { ProtectAdminRoute } from '/components/auth';

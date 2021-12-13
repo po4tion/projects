@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// profile/[username].js [getStaticProps]
 export const getUserBlogs = async username => {
 	const result = await axios
 		.get(`${process.env.API}/api/user/${username}`)
@@ -9,6 +10,7 @@ export const getUserBlogs = async username => {
 	return result;
 };
 
+// user/crud/update.js [getServerSideProps]
 export const getUserProfile = async token => {
 	const result = await axios
 		.get(`${process.env.API}/api/user/profile`, {
@@ -21,7 +23,7 @@ export const getUserProfile = async token => {
 
 	return result;
 };
-
+// ProfileUpdate
 export const updateUserProfile = async (user, token) => {
 	const result = await axios
 		.put('/api/user/update', user, {
@@ -35,6 +37,7 @@ export const updateUserProfile = async (user, token) => {
 	return result;
 };
 
+// ProfileUpdate
 export const removeProfileImg = async username => {
 	const result = await axios
 		.delete(`/api/user/photo/${username}`)

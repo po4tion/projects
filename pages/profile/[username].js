@@ -1,3 +1,7 @@
+/* 
+	사용자가 작성한 포스트들을 보여주는 페이지
+*/
+
 import { Blogs } from '/components/user';
 import { getUserBlogs } from '/actions/handleUser';
 

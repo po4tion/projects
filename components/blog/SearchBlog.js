@@ -1,28 +1,30 @@
+/* 
+	Connect: blogs/search.js
+*/
+
 import { useState, useCallback } from 'react';
-import { blogSearch, unBlogSearch } from '/actions/handleBlog';
-import { BlogList } from '/components/blog';
+import Link from 'next/link';
 import moment from 'moment';
 import 'moment/locale/ko';
-import Link from 'next/link';
-import { Body } from '/components';
+import { blogSearch, unBlogSearch } from '/actions/handleBlog';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
+// MUI
+import { BlogList } from '/components/blog';
+import { Body } from '/components';
 import CardActions from '@mui/material/CardActions';
-import Pagination from '@mui/material/Pagination';
 import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
+import Paper from '@mui/material/Paper';
+import Pagination from '@mui/material/Pagination';
+import SearchIcon from '@mui/icons-material/Search';
+import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function SearchBlog() {
 	const [searched, setSearched] = useState([]);
@@ -30,6 +32,7 @@ function SearchBlog() {
 	const [alignment, setAlignment] = useState('body');
 	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
 
+	// 검색된 포스트 표시
 	const searchedList = (searched, start, end) => {
 		const result = [];
 
@@ -42,7 +45,7 @@ function SearchBlog() {
 
 			result.push(
 				<Grid
-					key={i}
+					key={post.slug}
 					item
 					xs={12}
 					sm={6}
@@ -84,6 +87,7 @@ function SearchBlog() {
 		}
 	};
 
+	// 페이지네이션 관리
 	const handlePagination = useCallback(() => {
 		const handlePage = (_, value) => {
 			setPage(value);
@@ -100,6 +104,7 @@ function SearchBlog() {
 		);
 	}, [page, searched]);
 
+	// 검색 카테고리 관리
 	const handleToggleBtn = useCallback(() => {
 		const handleToggle = (_, newAlignment) => {
 			setAlignment(newAlignment);

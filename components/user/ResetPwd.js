@@ -1,22 +1,25 @@
+/* 
+	Connect: user/reset/[id].js
+*/
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup.umd';
-import { resetPwdValidation } from '/lib/resetPwdValidation';
-import { setResetPwd } from '/actions/handleAuth';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup.umd';
+import { setResetPwd } from '/actions/handleAuth';
+import { resetPwdValidation } from '/lib/resetPwdValidation';
 
-import { Body } from '/components';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+// MUI
 import Alert from '@mui/material/Alert';
-import Link from '@mui/material/Link';
+import { Body } from '/components';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 function ResetPwd({ params }) {
 	const router = useRouter();
@@ -30,6 +33,7 @@ function ResetPwd({ params }) {
 		resolver: yupResolver(resetPwdValidation),
 	});
 
+	// 새로운 비밀번호 등록
 	const onSubmit = async data => {
 		setLoading(true);
 		const { password } = data;

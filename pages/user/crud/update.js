@@ -1,3 +1,7 @@
+/* 
+	사용자 프로필 설정 페이지
+ */
+
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { ProtectRoute } from '/components/auth';
@@ -11,6 +15,7 @@ import Box from '@mui/system/Box';
 function User({ token, profile }) {
 	const { replace } = useRouter();
 
+	// 토큰 기간 만료 에러 처리
 	if (profile === 401) {
 		signoutAxios(() => replace('/signin'));
 

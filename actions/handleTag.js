@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Main, UpdatePost
 export const createTag = async (tag, token) => {
 	const result = await axios
 		.post('/api/tag', tag, {
@@ -13,7 +14,7 @@ export const createTag = async (tag, token) => {
 	return result;
 };
 
-// cause: home index page populate
+// index.js [getStaticProps], blogs/[slug].js [getStaticProps]
 export const getTagList = async () => {
 	const result = await axios
 		.get(`${process.env.API}/api/tag`)
@@ -23,6 +24,7 @@ export const getTagList = async () => {
 	return result;
 };
 
+// tags/[slug].js [getStaticProps]
 export const getTagInServer = async slug => {
 	const result = await axios
 		.get(`${process.env.API}/api/tag/${slug}`)
@@ -32,6 +34,7 @@ export const getTagInServer = async slug => {
 	return result;
 };
 
+// TagList
 export const getTags = async () => {
 	const result = await axios
 		.get('/api/tag/list')
@@ -41,6 +44,7 @@ export const getTags = async () => {
 	return result;
 };
 
+// TagList
 export const searchTag = async name => {
 	const result = await axios
 		.post('/api/tag/list', name)
@@ -50,19 +54,7 @@ export const searchTag = async name => {
 	return result;
 };
 
-export const removeTag = async (slug, token) => {
-	const result = await axios
-		.delete(`/api/tag/${slug}`, {
-			headers: {
-				authorization: `Bearer ${token}`,
-			},
-		})
-		.then(res => res.data)
-		.catch(err => err.response.data);
-
-	return result;
-};
-
+// TagList
 export const cleanTagList = async (id, token) => {
 	const result = await axios
 		.post('/api/tag/cleanTags', id, {

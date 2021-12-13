@@ -1,29 +1,32 @@
+/* 
+	Connect: profile/[username].js
+*/
+
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import { BlogList } from '/components/blog';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup.umd';
 import { contactValidation } from '/lib/contactValidation';
 import { contactAuthor } from '/actions/handleContact';
-import { Body } from '/components';
 
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
+// MUI
 import Alert from '@mui/material/Alert';
+import { BlogList } from '/components/blog';
+import { Body } from '/components';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
-import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 function Blogs({ blogs, user }) {
 	const router = useRouter();
@@ -39,6 +42,7 @@ function Blogs({ blogs, user }) {
 		resolver: yupResolver(contactValidation),
 	});
 
+	// 해당 사용자의 정보
 	const userInfo = useCallback(() => {
 		const handleSwitch = () => {
 			setChecked(!checked);
@@ -79,35 +83,39 @@ function Blogs({ blogs, user }) {
 		);
 	}, [blogs.length, checked, user.username, user.about]);
 
-	const userBlog = (start, end) => {
-		const store = [];
+	// 사용자의 포스트 표시
+	const userBlog = useCallback(
+		(start, end) => {
+			const store = [];
 
-		for (let i = start; i < end; i++) {
-			if (blogs[i] === undefined) {
-				break;
+			for (let i = start; i < end; i++) {
+				if (blogs[i] === undefined) {
+					break;
+				}
+
+				store.push(
+					<Grid
+						key={blogs[i].slug}
+						xs={12}
+						sm={6}
+						md={3}
+						lg={3}
+						item
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<BlogList blog={blogs[i]} noLink={false} />
+					</Grid>
+				);
 			}
 
-			store.push(
-				<Grid
-					key={i}
-					xs={12}
-					sm={6}
-					md={3}
-					lg={3}
-					item
-					sx={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-				>
-					<BlogList blog={blogs[i]} noLink={false} />
-				</Grid>
-			);
-		}
-
-		return store;
-	};
+			return store;
+		},
+		[blogs]
+	);
 
 	const handleChange = (_, value) => {
 		setPage(value);

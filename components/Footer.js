@@ -2,17 +2,18 @@ import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+// MUI
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import IconButton from '@mui/material/IconButton';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import SearchIcon from '@mui/icons-material/Search';
 import TagIcon from '@mui/icons-material/Tag';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function Footer({ title, description }) {
 	const [start, setStart] = useState(false);
@@ -25,6 +26,7 @@ function Footer({ title, description }) {
 	const [dial, setDial] = useState(false);
 	const router = useRouter();
 
+	// 모바일 크기에 맞춰 500px 미만일 경우 스피드다이얼 표시
 	const handleSpeedDial = useCallback(() => {
 		const handleOpen = () => {
 			setDial(true);

@@ -2,6 +2,7 @@ import axios from 'axios';
 import queryString from 'query-string';
 import { isAuth, handleResponse } from '/actions/handleAuth';
 
+// Main
 export const createBlog = async (blog, token) => {
 	const result = await axios
 		.post('/api/user/blog', blog, {
@@ -15,6 +16,7 @@ export const createBlog = async (blog, token) => {
 	return result;
 };
 
+// user/crud/[slug].js [getServerSideProps], blogs/[slug].js [getStaticProps], OneBlog
 export const getBlogInServer = async slug => {
 	const result = await axios
 		.get(`${process.env.API}/api/user/blog/${slug}`)
@@ -24,6 +26,7 @@ export const getBlogInServer = async slug => {
 	return result;
 };
 
+// user/crud/management.js [getServerSideProps], ManagementBlog
 export const getBlogsUsers = async token => {
 	const result = await axios
 		.get(`${process.env.API}/api/user/profileAndBlog`, {
@@ -37,6 +40,7 @@ export const getBlogsUsers = async token => {
 	return result;
 };
 
+// HomeList
 export const getBlogs = async (limit, skip) => {
 	const data = { limit, skip };
 	const result = await axios
@@ -47,6 +51,7 @@ export const getBlogs = async (limit, skip) => {
 	return result;
 };
 
+// index.js [getStaticProps]
 export const getBlogsInServer = async (limit, skip) => {
 	const data = { limit, skip };
 	const result = await axios
@@ -57,6 +62,7 @@ export const getBlogsInServer = async (limit, skip) => {
 	return result;
 };
 
+// admin/crud/management.js [getServerSideProps]
 export const adminManageBlogs = async token => {
 	const result = await axios
 		.get(`${process.env.API}/api/blogs/admin`, {
@@ -70,6 +76,7 @@ export const adminManageBlogs = async token => {
 	return result;
 };
 
+// ManagementBlog
 export const removeBlog = async (slug, token) => {
 	let endpoint;
 
@@ -91,6 +98,7 @@ export const removeBlog = async (slug, token) => {
 	return result;
 };
 
+// UpdatePost
 export const updateBlog = async (blog, slug, token) => {
 	const result = await axios
 		.put(`/api/user/blog/${slug}`, blog, {
@@ -104,15 +112,7 @@ export const updateBlog = async (blog, slug, token) => {
 	return result;
 };
 
-// export const blogRelated = async blog => {
-// 	const result = await axios
-// 		.post(`/api/blogs/related`, blog)
-// 		.then(res => res.data)
-// 		.catch(err => err.response.data);
-
-// 	return result;
-// };
-
+// blogs/[slug].js [getStaticProps]
 export const blogRelatedInServer = async blog => {
 	const result = await axios
 		.post(`${process.env.API}/api/blogs/related`, blog)
@@ -122,6 +122,7 @@ export const blogRelatedInServer = async blog => {
 	return result;
 };
 
+// SearchBlog
 export const blogSearch = async params => {
 	const query = queryString.stringify(params);
 	const result = await axios
@@ -132,6 +133,7 @@ export const blogSearch = async params => {
 	return result;
 };
 
+// SearchBlog
 export const unBlogSearch = async params => {
 	const query = queryString.stringify(params);
 	const result = await axios

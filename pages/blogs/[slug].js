@@ -1,3 +1,7 @@
+/* 
+	클릭한 포스트를 보여주는 페이지
+*/
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Body } from '/components';
@@ -12,6 +16,7 @@ function Blogs({ blog, related }) {
 	const router = useRouter();
 
 	if (blog.data.length === 0) {
+		// 뒤로가기
 		const handleClick = () => {
 			router.back();
 		};

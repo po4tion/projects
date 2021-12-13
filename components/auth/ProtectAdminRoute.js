@@ -1,3 +1,7 @@
+/* 
+	사용자가 운영자인지 확인
+*/
+
 import { useEffect } from 'react';
 import Router from 'next/router';
 import { isAuth } from '/actions/handleAuth';

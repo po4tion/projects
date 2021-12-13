@@ -8,7 +8,7 @@ import { theme, createEmotionCache } from '/view';
 import { Layout } from '/components';
 import '/public/css/nprogress.css';
 
-// NProgress settings
+// NProgress 설정
 Router.events.on('routeChangeStart', url => {
 	NProgress.start();
 });

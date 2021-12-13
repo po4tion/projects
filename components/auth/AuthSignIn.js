@@ -1,22 +1,26 @@
+/* 
+	Connect: signin.js
+*/
+
 import { useState, useEffect } from 'react';
-import { signinAxios, authenticate, isAuth } from '/actions/handleAuth';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import isLength from 'validator/lib/isLength';
+import { signinAxios, authenticate, isAuth } from '/actions/handleAuth';
 
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import CircularProgress from '@mui/material/CircularProgress';
+// MUI
 import Alert from '@mui/material/Alert';
+import { Body } from '/components';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import router from 'next/router';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 function AuthSignIn() {
 	useEffect(() => {
@@ -123,90 +127,80 @@ function AuthSignIn() {
 
 	return (
 		<>
-			<Container component="main" maxWidth="xs">
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 8,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}}
-				>
-					<Typography component="h1" variant="h5">
+			<Body maxWidth="xs">
+				<Typography component="h1" variant="h5">
+					로그인
+				</Typography>
+				<Box component="form" noValidate sx={{ width: '100%', mt: 1 }}>
+					<Grid container>
+						<Grid item xs={12} sx={{ textAlign: 'center' }}>
+							{state.loading && <CircularProgress />}
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								margin="normal"
+								required
+								fullWidth
+								id="email"
+								label="이메일 입력"
+								name="email"
+								autoComplete="email"
+								autoFocus
+								onChange={handleEmail}
+								error={state.emailState ? true : false}
+							/>
+							{state.emailState && (
+								<Alert severity="error" sx={{ width: '100%' }}>
+									{state.emailState}
+								</Alert>
+							)}
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								margin="normal"
+								required
+								fullWidth
+								name="password"
+								label="비밀번호 입력"
+								type="password"
+								id="password"
+								autoComplete="current-password"
+								onChange={handlePassword}
+								error={state.pwdState ? true : false}
+							/>
+							{state.pwdState && (
+								<Alert severity="error" sx={{ width: '100%' }}>
+									{state.pwdState}
+								</Alert>
+							)}
+						</Grid>
+					</Grid>
+					<Button
+						onClick={handleSubmit}
+						fullWidth
+						variant="contained"
+						sx={{ mt: 3, mb: 2 }}
+					>
 						로그인
-					</Typography>
-					<Box component="form" noValidate sx={{ width: '100%', mt: 1 }}>
-						<Grid container>
-							<Grid item xs={12} sx={{ textAlign: 'center' }}>
-								{state.loading && <CircularProgress />}
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									margin="normal"
-									required
-									fullWidth
-									id="email"
-									label="이메일 입력"
-									name="email"
-									autoComplete="email"
-									autoFocus
-									onChange={handleEmail}
-									error={state.emailState ? true : false}
-								/>
-								{state.emailState && (
-									<Alert severity="error" sx={{ width: '100%' }}>
-										{state.emailState}
-									</Alert>
-								)}
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									margin="normal"
-									required
-									fullWidth
-									name="password"
-									label="비밀번호 입력"
-									type="password"
-									id="password"
-									autoComplete="current-password"
-									onChange={handlePassword}
-									error={state.pwdState ? true : false}
-								/>
-								{state.pwdState && (
-									<Alert severity="error" sx={{ width: '100%' }}>
-										{state.pwdState}
-									</Alert>
-								)}
-							</Grid>
+					</Button>
+					<Grid container>
+						<Grid item xs>
+							<NextLink href="/user/forgot" passHref>
+								<Link underline="hover" variant="body2">
+									비밀번호 찾기
+								</Link>
+							</NextLink>
 						</Grid>
-						<Button
-							onClick={handleSubmit}
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-						>
-							로그인
-						</Button>
-						<Grid container>
-							<Grid item xs>
-								<NextLink href="/user/forgot" passHref>
-									<Link underline="hover" variant="body2">
-										비밀번호 찾기
-									</Link>
-								</NextLink>
-							</Grid>
-							<Grid item>
-								<NextLink href="/signup" passHref>
-									<Link underline="hover" variant="body2">
-										회원가입
-									</Link>
-								</NextLink>
-							</Grid>
+						<Grid item>
+							<NextLink href="/signup" passHref>
+								<Link underline="hover" variant="body2">
+									회원가입
+								</Link>
+							</NextLink>
 						</Grid>
-					</Box>
+					</Grid>
 				</Box>
-			</Container>
+			</Body>
 		</>
 	);
 }

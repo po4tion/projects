@@ -1,6 +1,7 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
+// OneBlog
 export const isBookmarked = async (email, slug) => {
 	const data = { email, slug };
 	const query = queryString.stringify(data);
@@ -13,6 +14,7 @@ export const isBookmarked = async (email, slug) => {
 	return result;
 };
 
+// OneBlog
 export const bookmarked = async (email, slug, token) => {
 	const data = { email, slug };
 
@@ -28,6 +30,7 @@ export const bookmarked = async (email, slug, token) => {
 	return result;
 };
 
+// BookmarkManagement
 export const removeBookmarked = async (email, slug) => {
 	const body = { email, slug };
 
@@ -39,6 +42,7 @@ export const removeBookmarked = async (email, slug) => {
 	return result;
 };
 
+// BookmarkManagement
 export const getBookmarkList = async (email, limit, skip) => {
 	const data = { email, limit, skip };
 	const query = queryString.stringify(data);

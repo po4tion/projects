@@ -1,23 +1,28 @@
+/* 
+	Connect: user/crud/bookmark.js
+*/
+
 import { useState, useEffect, useCallback } from 'react';
-import { Body } from '/components';
-import { getBookmarkList, removeBookmarked } from '/actions/handleBookmark';
-import { isAuth } from '/actions/handleAuth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getBookmarkList, removeBookmarked } from '/actions/handleBookmark';
+import { isAuth } from '/actions/handleAuth';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
+// MUI
 import Alert from '@mui/material/Alert';
+import Avatar from '@mui/material/Avatar';
+import { Body } from '/components';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function BookmarkManagement() {
 	const [bookmark, setBookmark] = useState([]);
@@ -43,6 +48,7 @@ function BookmarkManagement() {
 			});
 	}, [limit, skip, removed]);
 
+	// 북마크 등록 & 취소
 	const handleBookmark = useCallback(() => {
 		const handleDelete = slug => {
 			removeBookmarked(isAuth().email, slug).then(data => {
@@ -116,6 +122,7 @@ function BookmarkManagement() {
 		});
 	}, [bookmark]);
 
+	// 페이지네이션 설정
 	const handlePagination = useCallback(() => {
 		const handleChange = (_, value) => {
 			setPage(value);

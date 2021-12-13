@@ -1,20 +1,23 @@
+/* 
+	Connect: user/forgot.js
+*/
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup.umd';
-import { forgotPwdValidation } from '/lib/resetPwdValidation';
-import { findForgotPwd } from '/actions/handleAuth';
 import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup.umd';
+import { findForgotPwd } from '/actions/handleAuth';
+import { forgotPwdValidation } from '/lib/resetPwdValidation';
 
+// MUI
+import Alert from '@mui/material/Alert';
 import { Body } from '/components';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 
 function ForgotPwd() {
 	const router = useRouter();

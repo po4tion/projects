@@ -1,26 +1,31 @@
+/* 
+	Connect: tags/list.js
+*/
+
 import { useState, useEffect, useCallback } from 'react';
-import { Body } from '/components';
+import Link from 'next/link';
 import { getTags, searchTag, cleanTagList } from '/actions/handleTag';
 import { getCookie, isAuth } from '/actions/handleAuth';
-import Link from 'next/link';
 
+// MUI
+import Alert from '@mui/material/Alert';
+import { Body } from '/components';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { FixedSizeList as List } from 'react-window';
-import TagIcon from '@mui/icons-material/Tag';
-import SearchIcon from '@mui/icons-material/Search';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import Alert from '@mui/material/Alert';
-import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
+import SearchIcon from '@mui/icons-material/Search';
+import TagIcon from '@mui/icons-material/Tag';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 
 function TagList() {
 	const [info, setInfo] = useState({
@@ -50,6 +55,7 @@ function TagList() {
 		isAuth() && setRole(isAuth().role);
 	}, []);
 
+	// react-window 모듈을 사용한 List
 	const fixedSizeList = useCallback(() => {
 		const renderRow = props => {
 			const { index, style } = props;
@@ -59,7 +65,7 @@ function TagList() {
 					divider
 					disablePadding
 					style={style}
-					key={index}
+					key={info.tags[index].slug}
 					component="div"
 				>
 					<Link
@@ -86,7 +92,8 @@ function TagList() {
 		);
 	}, [info]);
 
-	const searchBar = () => {
+	// 검색어 입력 관리
+	const searchBar = useCallback(() => {
 		const handleSubmit = async e => {
 			e.preventDefault();
 
@@ -133,8 +140,9 @@ function TagList() {
 				</Tooltip>
 			</Paper>
 		);
-	};
+	}, [info, searchText]);
 
+	// 검색단어와 검색 목록 초기화
 	const reloadBtn = () => {
 		const handleClick = () => {
 			setReload(r => !r);
@@ -156,6 +164,7 @@ function TagList() {
 		);
 	};
 
+	// 운영자용 태그 정리 버튼
 	const cleanBtn = () => {
 		const handleClick = () => {
 			const token = getCookie('access-token');

@@ -1,32 +1,35 @@
+/* 
+	Connect: user/crud/management.js
+*/
+
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { isAuth } from '/actions/handleAuth';
-import { removeBlog, getBlogsUsers } from '/actions/handleBlog';
+import Image from 'next/image';
 import moment from 'moment';
 import renderHTML from 'react-render-html';
-import { Body } from '/components';
-import Image from 'next/image';
+import { isAuth } from '/actions/handleAuth';
+import { removeBlog, getBlogsUsers } from '/actions/handleBlog';
 
-import { grey } from '@mui/material/colors';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import CssBaseline from '@mui/material/CssBaseline';
+// MUI
+import { Body } from '/components';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
-import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
+import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
+import { grey } from '@mui/material/colors';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function ManagementBlog({ blogList, token, size }) {
 	const [auth, setAuth] = useState();
@@ -36,7 +39,6 @@ function ManagementBlog({ blogList, token, size }) {
 	const [blogSize, setBlogSize] = useState(0);
 	const router = useRouter();
 	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
-	const matches600 = useMediaQuery('(max-width: 600px)', { noSsr: true });
 
 	useEffect(() => {
 		setAuth(isAuth() && isAuth().role);
@@ -50,10 +52,12 @@ function ManagementBlog({ blogList, token, size }) {
 		setBlogSize(size);
 	}, [size, reload]);
 
+	// 작성한 모든 포스트 불러오기
 	const allBlog = useCallback(
 		(start, end) => {
 			const result = [];
 
+			// 포스트 수정
 			const updateBtn = blog => {
 				if (auth === 0) {
 					return (
@@ -71,6 +75,7 @@ function ManagementBlog({ blogList, token, size }) {
 				}
 			};
 
+			// 포스트 삭제
 			const deletePost = async slug => {
 				await removeBlog(encodeURIComponent(slug), token).then(data => {
 					setReload(r => !r);
@@ -78,6 +83,7 @@ function ManagementBlog({ blogList, token, size }) {
 				});
 			};
 
+			// 포스트 삭제 알람
 			const deletePostAlarm = (name, slug) => {
 				const result = window.confirm(`[${name}] 글을 삭제하시겠습니까?`);
 
@@ -105,7 +111,12 @@ function ManagementBlog({ blogList, token, size }) {
 					break;
 				} else {
 					result.push(
-						<Grid key={i} container spacing={2} sx={{ marginBottom: 2 }}>
+						<Grid
+							key={blogs[i].slug}
+							container
+							spacing={2}
+							sx={{ marginBottom: 2 }}
+						>
 							<Grid item xs={11} sx={{ zIndex: 10 }}>
 								<Link href={`/blogs/${blogs[i].slug}`} passHref>
 									<CardActionArea component="a">
@@ -186,6 +197,7 @@ function ManagementBlog({ blogList, token, size }) {
 		[auth, blogs, router, token]
 	);
 
+	// 500px 미만일 경우 (모바일 환경)
 	const allBlogUnder500 = useCallback(
 		(start, end) => {
 			const result = [];
@@ -241,7 +253,7 @@ function ManagementBlog({ blogList, token, size }) {
 				} else {
 					result.push(
 						<Grid
-							key={i}
+							key={blogs[i].slug}
 							container
 							spacing={0}
 							sx={{ display: 'flex', marginBottom: 2 }}
@@ -292,7 +304,7 @@ function ManagementBlog({ blogList, token, size }) {
 													subheader={`${blogs[i].postedBy.username} ${moment(
 														blogs[i].updatedAt
 													).format(
-														matches600
+														matches
 															? 'YY년 MM월 DD일'
 															: 'YYYY년 MM월 DD일 HH:MM'
 													)}`}
@@ -320,7 +332,7 @@ function ManagementBlog({ blogList, token, size }) {
 
 			return result;
 		},
-		[auth, blogs, matches, matches600, router, token]
+		[auth, blogs, matches, router, token]
 	);
 
 	// 페이지네이션 번호 상태 관리

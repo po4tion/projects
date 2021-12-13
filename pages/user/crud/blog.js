@@ -1,3 +1,7 @@
+/* 
+	포스트 생성 페이지
+*/
+
 import { Main } from '/components/blog';
 import { ProtectRoute } from '/components/auth';
 

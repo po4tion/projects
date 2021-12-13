@@ -1,19 +1,22 @@
-import { NextSeo } from 'next-seo';
+/* 
+	Connect: index.js
+*/
+
 import { useState, useCallback } from 'react';
-import { BlogList } from '/components/blog';
-import { getBlogs } from '/actions/handleBlog';
+import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { getBlogs } from '/actions/handleBlog';
 
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+// MUI
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { Body } from '/components';
+import { BlogList } from '/components/blog';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Typography from '@mui/material/Typography';
 
 function HomeList({ blogs, limitNum, skipNum }) {
 	const { pathname } = useRouter();
@@ -22,9 +25,8 @@ function HomeList({ blogs, limitNum, skipNum }) {
 	const [skip, setSkip] = useState(skipNum);
 	const [hasMore, setHasMore] = useState(true);
 
-	// 버튼을 통해 새로운 블로그 정보를 불러온다
+	// 새로운 포스트 정보 관리
 	const getMoreBlog = async () => {
-		// 4 페이지씩 증가(mongoose 기준)
 		const addSkip = limit + skip;
 
 		const result = await getBlogs(limit, addSkip).then(data => {
@@ -37,12 +39,12 @@ function HomeList({ blogs, limitNum, skipNum }) {
 		});
 	};
 
-	// getMoreBlog에서 추가된 새로운 블로글 출력한다
+	// 포스트 표시
 	const displayNewBlog = useCallback(() => {
 		return blogObj.map((blog, idx) => {
 			return (
 				<Grid
-					key={idx}
+					key={blog.slug}
 					xs={12}
 					sm={6}
 					md={4}
@@ -84,52 +86,40 @@ function HomeList({ blogs, limitNum, skipNum }) {
 				}}
 			/>
 
-			<Container component="main" maxWidth="lg">
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 8,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						justifyContent: 'center',
-						width: '100%',
-					}}
+			<Body maxWidth="lg">
+				<InfiniteScroll
+					dataLength={blogObj.length}
+					next={getMoreBlog}
+					hasMore={hasMore}
+					loader={
+						<Typography variant="h5" align="center" mt={4}>
+							로딩중...
+						</Typography>
+					}
+					endMessage={
+						<Alert
+							severity="info"
+							variant="outlined"
+							sx={{
+								display: 'flex',
+								justifyContent: 'center',
+								width: 300,
+								margin: '0 auto',
+								fontWeight: 700,
+								fontSize: 25,
+							}}
+						>
+							<AlertTitle sx={{ fontWeight: 'bold' }}>알림</AlertTitle>
+							마지막 글입니다
+						</Alert>
+					}
+					scrollThreshold={0.5}
 				>
-					<InfiniteScroll
-						dataLength={blogObj.length}
-						next={getMoreBlog}
-						hasMore={hasMore}
-						loader={
-							<Typography variant="h5" align="center" mt={4}>
-								로딩중...
-							</Typography>
-						}
-						endMessage={
-							<Alert
-								severity="info"
-								variant="outlined"
-								sx={{
-									display: 'flex',
-									justifyContent: 'center',
-									width: 300,
-									margin: '0 auto',
-									fontWeight: 700,
-									fontSize: 25,
-								}}
-							>
-								<AlertTitle sx={{ fontWeight: 'bold' }}>알림</AlertTitle>
-								마지막 글입니다
-							</Alert>
-						}
-						scrollThreshold={0.5}
-					>
-						<Grid container spacing={2}>
-							{displayNewBlog()}
-						</Grid>
-					</InfiniteScroll>
-				</Box>
-			</Container>
+					<Grid container spacing={2}>
+						{displayNewBlog()}
+					</Grid>
+				</InfiniteScroll>
+			</Body>
 		</>
 	);
 }

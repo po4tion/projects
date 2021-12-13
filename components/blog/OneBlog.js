@@ -1,39 +1,61 @@
-import { useRef, useEffect, useState } from 'react';
-import { NextSeo } from 'next-seo';
+/* 
+	Connect: blogs/[slug].js
+*/
+
+import { useRef, useEffect, useState, useCallback } from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
-import { getBlogInServer } from '/actions/handleBlog';
+import { NextSeo } from 'next-seo';
 import moment, { relativeTimeThreshold } from 'moment';
 import renderHTML from 'react-render-html';
-import useScript from '/lib/blog/useScript';
+import { getBlogInServer } from '/actions/handleBlog';
 import { isBookmarked, bookmarked } from '/actions/handleBookmark';
 import { getCookie, isAuth } from '/actions/handleAuth';
+import useScript from '/lib/blog/useScript';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
+// MUI
+import Alert from '@mui/material/Alert';
 import { Body } from '/components';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Chip from '@mui/material/Chip';
-import Divider from '@mui/material/Divider';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function OneBlog({ blog, related }) {
 	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
 	const [blogInfo, setBlogInfo] = useState(undefined);
 
 	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data[0];
+
+	const [bookmark, setBookmark] = useState(undefined);
+
+	useEffect(() => {
+		isAuth() &&
+			isBookmarked(isAuth().email, blog.data[0].slug).then(data => {
+				setBookmark(data.docs);
+			});
+	}, [blog.data]);
+
+	const clickBookmark = () => {
+		isAuth() &&
+			bookmarked(isAuth().email, slug, getCookie('access-token')).then(data => {
+				setBookmark(bm => !bm);
+			});
+	};
 
 	// 태그 Chip 생성
 	const handleTag = tags => {
@@ -53,28 +75,29 @@ function OneBlog({ blog, related }) {
 		));
 	};
 
-	const handleImage = blog => {
-		return (
-			<Image
-				width={300}
-				height={250}
-				objectFit="cover"
-				quality={100}
-				src={`${
-					process.env.NEXT_PUBLIC_API
-				}/api/blog/photo/${encodeURIComponent(blog.slug)}`}
-				alt="thumbnail image"
-			/>
-		);
-	};
-
 	// 현재 선택한 블로그를 제외하고 현재 선택한 블로그의 카테고리와 연관있는
 	// 블로그를 보여준다
 	const relateCards = blogs => {
+		// 썸네일 불러오기
+		const handleImage = blog => {
+			return (
+				<Image
+					width={300}
+					height={250}
+					objectFit="cover"
+					quality={100}
+					src={`${
+						process.env.NEXT_PUBLIC_API
+					}/api/blog/photo/${encodeURIComponent(blog.slug)}`}
+					alt="thumbnail image"
+				/>
+			);
+		};
+
 		return blogs.map((blog, idx) => {
 			return (
 				<Grid
-					key={idx}
+					key={blog.slug}
 					item
 					xs={12}
 					sm={6}
@@ -189,6 +212,7 @@ function OneBlog({ blog, related }) {
 
 	const comment = useRef(null);
 
+	// utteranc 댓글 관리
 	const status = useScript({
 		url: 'https://utteranc.es/client.js',
 		theme: 'github-light',
@@ -196,22 +220,6 @@ function OneBlog({ blog, related }) {
 		repo: 'po4tion/devblog-comments',
 		ref: comment,
 	});
-
-	const [bookmark, setBookmark] = useState(undefined);
-
-	useEffect(() => {
-		isAuth() &&
-			isBookmarked(isAuth().email, blog.data[0].slug).then(data => {
-				setBookmark(data.docs);
-			});
-	}, [blog.data]);
-
-	const clickBookmark = () => {
-		isAuth() &&
-			bookmarked(isAuth().email, slug, getCookie('access-token')).then(data => {
-				setBookmark(bm => !bm);
-			});
-	};
 
 	return (
 		<>
@@ -319,6 +327,20 @@ function OneBlog({ blog, related }) {
 						<Grid container spacing={2}>
 							{related && relateCards(related)}
 							{related && handleSkeleton()}
+							{!related.length && (
+								<Box
+									sx={{
+										width: '100%',
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}
+								>
+									<Alert severity="info">
+										해당 게시글과 연관된 게시물이 없습니다
+									</Alert>
+								</Box>
+							)}
 						</Grid>
 					</Grid>
 				</Body>

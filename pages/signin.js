@@ -1,4 +1,7 @@
-import { withRouter } from 'next/router';
+/* 
+	로그인 페이지
+*/
+
 import { AuthSignIn } from '/components/auth';
 
 function SignIn() {

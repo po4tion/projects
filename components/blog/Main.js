@@ -1,3 +1,7 @@
+/* 
+	Connect: user/crud/blog.js
+*/
+
 import { useState, useEffect } from 'react';
 import { withRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -7,20 +11,19 @@ import { createBlog } from '/actions/handleBlog';
 import { createTag } from '/actions/handleTag';
 import { photoResize } from '/lib/photoResize';
 
-import { Body } from '/components';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
+// MUI
 import Alert from '@mui/material/Alert';
-import Input from '@mui/material/Input';
+import { Body } from '/components';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
+import Input from '@mui/material/Input';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
@@ -36,70 +39,29 @@ function Main({ router, token }) {
 	});
 
 	const [data, setData] = useState('');
+	const [body, setBody] = useState('');
+	const [excerpt, setExcerpt] = useState('');
 
 	useEffect(() => {
 		setData(new FormData());
 	}, [router]);
 
-	// title & photo control
-	const handleThumbnail = async e => {
-		const { files } = e.target;
-
-		// 최소 한번은 사진을 더블 클릭하여 등록하였을 경우, 그 이후에 썸네일 등록 버튼 클릭 후 취소버튼을 누르면 length가 0으로 뜬다
-		if (files.length === 0) {
-			return;
-		} else {
-			const value = files[0];
-			const resizeFile = await photoResize(value); // photo Resize
-
-			// 압축한 사진인데도 불구하고 용량이 너무 클 경우 (nextjs limit data 4mb) 4000000
-			if (resizeFile.size >= 4000000) {
-				setInfo({
-					...info,
-					error: '사진의 용량이 너무 큽니다',
-				});
-			} else {
-				data.set('photo', resizeFile); // blob data 전달
-
-				setInfo({
-					...info,
-					error: '',
-					photo: resizeFile,
-				});
-
-				setData(data);
+	useEffect(() => {
+		// 작성 중이던 글 임시 저장 기능(뒤로 가기, 새로 고침 시 글 초기화 방지)
+		const blogSave = () => {
+			if (typeof window === 'undefined') {
+				return '';
 			}
-		}
-	};
 
-	const handleTitle = e => {
-		const { value } = e.target;
+			if (localStorage.getItem('blog')) {
+				return JSON.parse(localStorage.getItem('blog'));
+			} else {
+				return '';
+			}
+		};
 
-		data.set('title', value);
-
-		setInfo({
-			...info,
-			error: '',
-			title: value,
-		});
-
-		setData(data);
-	};
-
-	// 작성 중이던 글 임시 저장 기능(뒤로 가기, 새로 고침 시 글 초기화 방지)
-	const blogSave = () => {
-		if (typeof window === 'undefined') {
-			return '';
-		}
-
-		if (localStorage.getItem('blog')) {
-			return JSON.parse(localStorage.getItem('blog'));
-		} else {
-			return '';
-		}
-	};
-
-	const [body, setBody] = useState(blogSave());
+		setBody(blogSave());
+	}, []);
 
 	// quill 본문 control
 	const handleQuill = e => {
@@ -144,18 +106,76 @@ function Main({ router, token }) {
 		});
 	};
 
-	const removeThumbnail = () => {
-		URL.revokeObjectURL(info.photo);
+	const titleView = () => {
+		// 제목 등록
+		const handleTitle = e => {
+			const { value } = e.target;
 
-		setInfo({
-			...info,
-			photo: undefined,
-		});
+			data.set('title', value);
 
-		data.delete('photo');
+			setInfo({
+				...info,
+				error: '',
+				title: value,
+			});
+
+			setData(data);
+		};
+
+		return (
+			<TextField
+				id="title"
+				label="제목을 입력해주세요 (필수사항)"
+				variant="outlined"
+				fullWidth
+				onChange={handleTitle}
+				sx={{ mt: 2, minWidth: 380 }}
+			/>
+		);
 	};
 
 	const handlePhotoForm = () => {
+		// 썸네일 등록
+		const handleThumbnail = async e => {
+			const { files } = e.target;
+
+			if (files.length === 0) {
+				return;
+			} else {
+				const value = files[0];
+				const resizeFile = await photoResize(value);
+
+				if (resizeFile.size >= 4000000) {
+					setInfo({
+						...info,
+						error: '사진의 용량이 너무 큽니다',
+					});
+				} else {
+					data.set('photo', resizeFile);
+
+					setInfo({
+						...info,
+						error: '',
+						photo: resizeFile,
+					});
+
+					setData(data);
+				}
+			}
+		};
+
+		// 썸네일 취소
+		const removeThumbnail = () => {
+			URL.revokeObjectURL(info.photo);
+
+			setInfo({
+				...info,
+				photo: undefined,
+			});
+
+			data.delete('photo');
+		};
+
 		return (
 			<Box
 				sx={{
@@ -239,25 +259,23 @@ function Main({ router, token }) {
 		);
 	};
 
-	const [excerpt, setExcerpt] = useState('');
-
-	const handleExcerpt = e => {
-		const { value } = e.target;
-
-		// 150자 초과 방지
-		if (value.length < 151) {
-			data.set('excerpt', value);
-
-			setInfo({
-				...info,
-				error: '',
-			});
-
-			setExcerpt(value);
-		}
-	};
-
 	const excerptForm = () => {
+		const handleExcerpt = e => {
+			const { value } = e.target;
+
+			// 150자 초과 방지
+			if (value.length < 151) {
+				data.set('excerpt', value);
+
+				setInfo({
+					...info,
+					error: '',
+				});
+
+				setExcerpt(value);
+			}
+		};
+
 		return (
 			<Box
 				sx={{
@@ -284,86 +302,31 @@ function Main({ router, token }) {
 		);
 	};
 
-	const titleView = () => {
-		return (
-			<TextField
-				id="title"
-				label="제목을 입력해주세요 (필수사항)"
-				variant="outlined"
-				fullWidth
-				onChange={handleTitle}
-				sx={{ mt: 2, minWidth: 380 }}
-			/>
-		);
-	};
-
 	// Tag Control
 	const [currentTag, setCurrentTag] = useState('');
 	const [tags, setTags] = useState([]);
 	const [tagId, setTagId] = useState([]);
 
-	const handleTags = async e => {
-		setInfo({
-			...info,
-			error: '',
-		});
-
-		const { value } = e.target;
-
-		// 쉼표(,)만 입력하는 상황 방지
-		if (value === ',') {
-			setCurrentTag('');
-
-			return;
-		}
-
-		// 쉼표(,)를 통해 태그 등록
-		if (value.substr(value.length - 1) === ',') {
-			setCurrentTag('');
-
-			const delComma = value.substr(0, value.length - 1);
-			const duplication = tags.indexOf(delComma);
-
-			// 태그 중복 입력 Control
-			if (duplication === -1) {
-				setTags([...tags, delComma]);
-
-				const tag = { name: delComma };
-
-				const store = [...tagId];
-
-				await createTag(tag, token).then(value => {
-					store.push(value.data._id);
-					setTagId([...tagId, value.data._id]);
-
-					data.set('tags', store);
-				});
-			}
-		} else {
-			setCurrentTag(value);
-		}
-	};
-
-	const handleDelete = tag => {
-		setInfo({
-			...info,
-			error: '',
-		});
-
-		let tagStore = [...tags];
-		const tagIdStore = [...tagId];
-		const tagIdx = tagStore.indexOf(tag);
-
-		tagIdStore.splice(tagIdx, 1);
-		tagStore = tagStore.filter(t => t !== tag);
-
-		data.set('tags', tagIdStore);
-
-		setTagId(tagIdStore);
-		setTags(tagStore);
-	};
-
 	const tagView = () => {
+		const handleDelete = tag => {
+			setInfo({
+				...info,
+				error: '',
+			});
+
+			let tagStore = [...tags];
+			const tagIdStore = [...tagId];
+			const tagIdx = tagStore.indexOf(tag);
+
+			tagIdStore.splice(tagIdx, 1);
+			tagStore = tagStore.filter(t => t !== tag);
+
+			data.set('tags', tagIdStore);
+
+			setTagId(tagIdStore);
+			setTags(tagStore);
+		};
+
 		return tags.map((tag, idx) => {
 			return (
 				<Chip
@@ -378,6 +341,48 @@ function Main({ router, token }) {
 	};
 
 	const inputView = () => {
+		const handleTags = async e => {
+			setInfo({
+				...info,
+				error: '',
+			});
+
+			const { value } = e.target;
+
+			// 쉼표(,)만 입력하는 상황 방지
+			if (value === ',') {
+				setCurrentTag('');
+
+				return;
+			}
+
+			// 쉼표(,)를 통해 태그 등록
+			if (value.substr(value.length - 1) === ',') {
+				setCurrentTag('');
+
+				const delComma = value.substr(0, value.length - 1);
+				const duplication = tags.indexOf(delComma);
+
+				// 태그 중복 입력 Control
+				if (duplication === -1) {
+					setTags([...tags, delComma]);
+
+					const tag = { name: delComma };
+
+					const store = [...tagId];
+
+					await createTag(tag, token).then(value => {
+						store.push(value.data._id);
+						setTagId([...tagId, value.data._id]);
+
+						data.set('tags', store);
+					});
+				}
+			} else {
+				setCurrentTag(value);
+			}
+		};
+
 		return (
 			<Input
 				value={currentTag}

@@ -1,27 +1,30 @@
+/* 
+	Connect: user/curd/[slug].js
+*/
+
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { getCookie, isAuth } from '/actions/handleAuth';
 import { updateBlog } from '/actions/handleBlog';
 import { createTag } from '/actions/handleTag';
-import Image from 'next/image';
 import { photoResize } from '/lib/photoResize';
 
-import { Body } from '/components';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
+// MUI
 import Alert from '@mui/material/Alert';
-import Input from '@mui/material/Input';
+import { Body } from '/components';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
+import Input from '@mui/material/Input';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '/node_modules/react-quill/dist/quill.snow.css';
@@ -38,62 +41,17 @@ function UpdatePost({ token, post }) {
 		title: post.title,
 	});
 
-	// 등록된 썸네일 사진 불러와서 미리보기
+	// 등록된 썸네일 관리
 	const [preImg, setPreImg] = useState(true);
-
 	const [data, setData] = useState('');
+	const [body, setBody] = useState(post.body);
+	const [excerpt, setExcerpt] = useState(post.excerpt);
 
 	useEffect(() => {
 		setData(new FormData());
 	}, [router]);
 
-	const [body, setBody] = useState(post.body);
-
-	// title & photo control
-	const handleThumbnail = async e => {
-		const { files } = e.target;
-
-		if (files.length === 0) {
-			return;
-		} else {
-			setPreImg(false); // 등록된 썸네일 안보이게 하기
-
-			const value = files[0];
-			const resizeFile = await photoResize(value); // photo Resize
-
-			// 압축한 사진인데도 불구하고 용량이 너무 클 경우 (nextjs limit data 4mb) 4000000
-			if (resizeFile.size >= 4000000) {
-				setInfo({
-					...info,
-					error: '사진의 용량이 너무 큽니다',
-				});
-			} else {
-				data.set('photo', resizeFile); // blob data 전달
-				setInfo({
-					...info,
-					error: '',
-					photo: resizeFile,
-				});
-
-				setData(data);
-			}
-		}
-	};
-
-	const handleTitle = e => {
-		const { value } = e.target;
-
-		data.set('title', value);
-		setInfo({
-			...info,
-			error: '',
-			title: value,
-		});
-
-		setData(data);
-	};
-
-	// quill 본문 control
+	// quill 본문 관리
 	const handleQuill = e => {
 		setBody(e);
 
@@ -127,18 +85,50 @@ function UpdatePost({ token, post }) {
 		});
 	};
 
-	const removeThumbnail = () => {
-		URL.revokeObjectURL(info.photo);
-
-		setInfo({
-			...info,
-			photo: undefined,
-		});
-
-		data.delete('photo');
-	};
-
 	const handlePhotoForm = () => {
+		// 썸네일 관리
+		const handleThumbnail = async e => {
+			const { files } = e.target;
+
+			if (files.length === 0) {
+				return;
+			} else {
+				setPreImg(false); // 등록된 썸네일 안보이게 하기
+
+				const value = files[0];
+				const resizeFile = await photoResize(value); // photo Resize
+
+				// 압축한 사진인데도 불구하고 용량이 너무 클 경우 (nextjs limit data 4mb) 4000000
+				if (resizeFile.size >= 4000000) {
+					setInfo({
+						...info,
+						error: '사진의 용량이 너무 큽니다',
+					});
+				} else {
+					data.set('photo', resizeFile); // blob data 전달
+					setInfo({
+						...info,
+						error: '',
+						photo: resizeFile,
+					});
+
+					setData(data);
+				}
+			}
+		};
+
+		// 썸네일 취소
+		const removeThumbnail = () => {
+			URL.revokeObjectURL(info.photo);
+
+			setInfo({
+				...info,
+				photo: undefined,
+			});
+
+			data.delete('photo');
+		};
+
 		const src = `${
 			process.env.NEXT_PUBLIC_API
 		}/api/blog/photo/${encodeURIComponent(post.slug)}`;
@@ -255,20 +245,19 @@ function UpdatePost({ token, post }) {
 		);
 	};
 
-	const [excerpt, setExcerpt] = useState(post.excerpt);
+	const excerptForm = useCallback(() => {
+		// 포스트 소개글 관리
+		const handleExcerpt = e => {
+			const { value } = e.target;
 
-	const handleExcerpt = e => {
-		const { value } = e.target;
+			// 150자 초과 방지
+			if (value.length < 151) {
+				data.set('excerpt', value);
 
-		// 150자 초과 방지
-		if (value.length < 151) {
-			data.set('excerpt', value);
+				setExcerpt(value);
+			}
+		};
 
-			setExcerpt(value);
-		}
-	};
-
-	const excerptForm = () => {
 		return (
 			<Box
 				sx={{
@@ -293,9 +282,23 @@ function UpdatePost({ token, post }) {
 				</Typography>
 			</Box>
 		);
-	};
+	}, [data, excerpt]);
 
-	const titleView = () => {
+	const titleView = useCallback(() => {
+		// 제목 관리
+		const handleTitle = e => {
+			const { value } = e.target;
+
+			data.set('title', value);
+			setInfo({
+				...info,
+				error: '',
+				title: value,
+			});
+
+			setData(data);
+		};
+
 		return (
 			<TextField
 				defaultValue={info.title}
@@ -307,60 +310,29 @@ function UpdatePost({ token, post }) {
 				sx={{ mt: 2, minWidth: 380 }}
 			/>
 		);
-	};
+	}, [data, info]);
 
 	// Tag Control
 	const [currentTag, setCurrentTag] = useState('');
 	const [tags, setTags] = useState(post.tags.map(tag => tag.name));
 	const [tagId, setTagId] = useState(post.tags.map(tag => tag._id));
 
-	const handleTags = async e => {
-		const { value } = e.target;
-		// 쉼표(,)만 입력하는 상황 방지
-		if (value === ',') {
-			setCurrentTag('');
-			return;
-		}
-		// 쉼표(,)를 통해 태그 등록
-		if (value.substr(value.length - 1) === ',') {
-			setCurrentTag('');
+	// 태그 삭제 & 태그 표시
+	const tagView = useCallback(() => {
+		const handleDelete = tag => {
+			let tagStore = [...tags];
+			const tagIdStore = [...tagId];
+			const tagIdx = tagStore.indexOf(tag);
 
-			const delComma = value.substr(0, value.length - 1);
-			const duplication = tags.indexOf(delComma);
+			tagIdStore.splice(tagIdx, 1);
+			tagStore = tagStore.filter(t => t !== tag);
 
-			// 태그 중복 입력 Control
-			if (duplication === -1) {
-				setTags([...tags, delComma]);
+			data.set('tags', tagIdStore);
 
-				const tag = { name: delComma };
-				const store = [...tagId];
+			setTagId(tagIdStore);
+			setTags(tagStore);
+		};
 
-				await createTag(tag, token).then(value => {
-					store.push(value.data._id);
-					setTagId([...tagId, value.data._id]);
-					data.set('tags', store);
-				});
-			}
-		} else {
-			setCurrentTag(value);
-		}
-	};
-
-	const handleDelete = tag => {
-		let tagStore = [...tags];
-		const tagIdStore = [...tagId];
-		const tagIdx = tagStore.indexOf(tag);
-
-		tagIdStore.splice(tagIdx, 1);
-		tagStore = tagStore.filter(t => t !== tag);
-
-		data.set('tags', tagIdStore);
-
-		setTagId(tagIdStore);
-		setTags(tagStore);
-	};
-
-	const tagView = () => {
 		return tags.map((tag, idx) => {
 			return (
 				<Chip
@@ -372,9 +344,42 @@ function UpdatePost({ token, post }) {
 				/>
 			);
 		});
-	};
+	}, [data, tagId, tags]);
 
-	const inputView = () => {
+	const inputView = useCallback(() => {
+		// 태그 등록 & 중복 관리
+		const handleTags = async e => {
+			const { value } = e.target;
+			// 쉼표(,)만 입력하는 상황 방지
+			if (value === ',') {
+				setCurrentTag('');
+				return;
+			}
+			// 쉼표(,)를 통해 태그 등록
+			if (value.substr(value.length - 1) === ',') {
+				setCurrentTag('');
+
+				const delComma = value.substr(0, value.length - 1);
+				const duplication = tags.indexOf(delComma);
+
+				// 태그 중복 입력 Control
+				if (duplication === -1) {
+					setTags([...tags, delComma]);
+
+					const tag = { name: delComma };
+					const store = [...tagId];
+
+					await createTag(tag, token).then(value => {
+						store.push(value.data._id);
+						setTagId([...tagId, value.data._id]);
+						data.set('tags', store);
+					});
+				}
+			} else {
+				setCurrentTag(value);
+			}
+		};
+
 		return (
 			<Input
 				value={currentTag}
@@ -384,7 +389,7 @@ function UpdatePost({ token, post }) {
 				placeholder="쉼표(,)를 사용하여 태그를 등록할 수 있습니다"
 			/>
 		);
-	};
+	}, [currentTag, data, tagId, tags, token]);
 
 	return (
 		<>

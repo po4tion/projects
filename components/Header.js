@@ -1,33 +1,34 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signoutAxios, isAuth } from '/actions/handleAuth';
 import Image from 'next/image';
 import axios from 'axios';
+import { signoutAxios, isAuth } from '/actions/handleAuth';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
+// MUI
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import BookIcon from '@mui/icons-material/Book';
+import Button from '@mui/material/Button';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import Divider from '@mui/material/Divider';
+import { grey } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import SearchIcon from '@mui/icons-material/Search';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import BookIcon from '@mui/icons-material/Book';
+import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
-import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import LogoutIcon from '@mui/icons-material/Logout';
-import TagIcon from '@mui/icons-material/Tag';
-import { grey } from '@mui/material/colors';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
+import TagIcon from '@mui/icons-material/Tag';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function Header({ title }) {
 	const [start, setStart] = useState(false);
@@ -42,21 +43,21 @@ function Header({ title }) {
 
 	const [img, setImg] = useState(undefined);
 
-	const modifyImg = async () => {
-		const res = await axios.get(
-			`/api/user/photo/${encodeURIComponent(isAuth().username)}`
-		);
-
-		const trans = new Buffer.from(res.data.data.data).toString('base64');
-		setImg(`data:image/jpeg;base64,${trans}`);
-	};
-
 	useEffect(() => {
-		isAuth() && modifyImg();
+		// 사용자의 프로필 이미지를 가져온다
+		const modifyImg = async () => {
+			const res = await axios.get(
+				`/api/user/photo/${encodeURIComponent(isAuth().username)}`
+			);
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+			const trans = new Buffer.from(res.data.data.data).toString('base64');
+			setImg(`data:image/jpeg;base64,${trans}`);
+		};
+
+		isAuth() && modifyImg();
 	}, [router]);
 
+	// 사용자의 프로필 이미지가 없을 경우 사용할 아바타
 	const sliceFirstUsername = () => {
 		const userName = isAuth() && isAuth().username;
 		const firstWord = userName.slice(0, 1);

@@ -1,3 +1,7 @@
+/* 
+	비밀번호 초기화 페이지
+*/
+
 import { withRouter } from 'next/router';
 import { ResetPwd } from '/components/user';
 

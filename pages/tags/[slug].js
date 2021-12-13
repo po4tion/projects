@@ -1,3 +1,7 @@
+/* 
+	해당 태그와 연관된 포스트들을 보여주는 페이지
+*/
+
 import { TagRelated } from '/components/tag';
 import { getTagInServer } from '/actions/handleTag';
 

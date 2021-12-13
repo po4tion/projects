@@ -20,7 +20,8 @@
 		"signup",
 		"tion",
 		"usermodel",
-		"Utag"
+		"Utag",
+		"utteranc"
 	],
 	"ignoreWords": [],
 	"import": []

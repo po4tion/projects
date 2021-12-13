@@ -1,3 +1,7 @@
+/* 
+	작성한 포스트 관리 페이지
+*/
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -13,6 +17,7 @@ import Alert from '@mui/material/Alert';
 function Management({ token, blogs, size }) {
 	const { replace } = useRouter();
 
+	// 토큰 기간 만료 에러 처리
 	if (blogs === 401) {
 		signoutAxios(() => replace('/signin'));
 

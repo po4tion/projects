@@ -2,33 +2,37 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Router from 'next/router';
 
+// AuthSignUp
 export const beforeSignup = async user => {
 	const result = await axios
-		.post('/api/auth/beforeSignup', user)
+		.post('/api/localAuth/beforeSignup', user)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
 	return result;
 };
 
+// AuthSignUp, BeforeSignIn
 export const signupAxios = async token => {
 	const result = await axios
-		.post('/api/auth/signup', token)
+		.post('/api/localAuth/signup', token)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
 	return result;
 };
 
+// AuthSignIn
 export const signinAxios = async user => {
 	const result = await axios
-		.post('/api/auth/signin', user)
+		.post('/api/localAuth/signin', user)
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
 	return result;
 };
 
+// components/blog/Main.js, AuthDelete, Main, Header
 export const signoutAxios = async next => {
 	removeCookie('access-token');
 	removeLocalStorage('user');
@@ -36,16 +40,17 @@ export const signoutAxios = async next => {
 	next();
 
 	const result = await axios
-		.get('/api/auth/signout')
+		.get('/api/localAuth/signout')
 		.then(res => res.data)
 		.catch(err => err.response.data);
 
 	return result;
 };
 
+// AuthDelete
 export const deleteUserInfo = async token => {
 	const result = await axios
-		.delete('/api/auth/deleteUser', {
+		.delete('/api/localAuth/deleteUser', {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -64,6 +69,7 @@ export const setCookie = (key, value) => {
 	}
 };
 
+// AuthDelete, OneBlog, UpdatePost
 export const getCookie = key => {
 	if (process.browser) {
 		return Cookies.get(key);
@@ -90,6 +96,7 @@ export const removeLocalStorage = key => {
 	}
 };
 
+// ProfileUpdate
 export const updateLocalStorage = (user, next) => {
 	if (process.browser) {
 		if (localStorage.getItem('user')) {
@@ -99,12 +106,14 @@ export const updateLocalStorage = (user, next) => {
 	}
 };
 
+// AuthSignIn
 export const authenticate = (value, next) => {
 	setCookie('access-token', value.token);
 	setLocalStorage('user', value.data);
 	next();
 };
 
+// components/blog/Main.js, AuthSignIn, AuthSignUp, ProtectAdminRoute, ProtectRoute, Main, ManagementBlog, OneBlog, UpdatePost, BookmarkManagement, ForgotPwd, Header
 export const isAuth = () => {
 	if (process.browser) {
 		const hasCookie = getCookie('access-token');
@@ -119,6 +128,7 @@ export const isAuth = () => {
 	}
 };
 
+// ForgotPwd
 export const findForgotPwd = async email => {
 	const result = axios
 		.put('/api/password/forgot', email)
@@ -128,6 +138,7 @@ export const findForgotPwd = async email => {
 	return result;
 };
 
+// ResetPwd
 export const setResetPwd = async value => {
 	const result = axios
 		.put(`/api/password/reset`, value)

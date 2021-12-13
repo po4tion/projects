@@ -1,3 +1,7 @@
+/* 
+	회원가입 완료 전 이메일 인증 페이지
+*/
+
 import { withRouter } from 'next/router';
 import { BeforeSignIn } from '/components/auth';
 

@@ -1,3 +1,7 @@
+/* 
+	홈 페이지
+*/
+
 import { HomeList } from '/components/home';
 import { getBlogsInServer } from '/actions/handleBlog';
 import { getTagList } from '/actions/handleTag';
@@ -10,7 +14,6 @@ function Home({ blogs, limit, skip }) {
 export default Home;
 
 export async function getStaticProps() {
-	// populate[tags] 작동하기 위해 최소 한번 실행
 	const tags = await getTagList();
 	const limit = 8,
 		skip = 0;
