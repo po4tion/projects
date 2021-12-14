@@ -29,7 +29,7 @@ export default function handler(req, res) {
 
 					await Blog.find({ slug: slug.toLowerCase() })
 						.populate('tags', '_id name slug')
-						.populate('postedBy', '_id username name')
+						.populate('postedBy', '_id username name email')
 						.select(
 							'tags _id title slug body sTitle sDesc postedBy createdAt updatedAt excerpt'
 						)

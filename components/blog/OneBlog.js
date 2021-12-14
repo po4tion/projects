@@ -5,10 +5,11 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import moment, { relativeTimeThreshold } from 'moment';
 import renderHTML from 'react-render-html';
-import { getBlogInServer } from '/actions/handleBlog';
+import { getBlogInServer, removeBlog } from '/actions/handleBlog';
 import { isBookmarked, bookmarked } from '/actions/handleBookmark';
 import { getCookie, isAuth } from '/actions/handleAuth';
 import useScript from '/lib/blog/useScript';
@@ -25,7 +26,9 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Divider from '@mui/material/Divider';
+import EditIcon from '@mui/icons-material/Edit';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
@@ -36,12 +39,18 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 function OneBlog({ blog, related }) {
+	const { push } = useRouter();
 	const matches = useMediaQuery('(max-width: 500px)', { noSsr: true });
 	const [blogInfo, setBlogInfo] = useState(undefined);
-
+	const [bookmark, setBookmark] = useState(undefined);
+	const [userEmail, setUserEmail] = useState('userNone');
+	const [postEmail, setPostEmail] = useState('postNone');
 	const { title, sDesc, slug, postedBy, updatedAt, body, tags } = blog.data[0];
 
-	const [bookmark, setBookmark] = useState(undefined);
+	useEffect(() => {
+		isAuth() && setUserEmail(isAuth().email);
+		setPostEmail(blog.data[0].postedBy.email);
+	}, [blog.data]);
 
 	useEffect(() => {
 		isAuth() &&
@@ -221,6 +230,46 @@ function OneBlog({ blog, related }) {
 		ref: comment,
 	});
 
+	// 포스트 수정
+	const handleUpdateBtn = () => {
+		return (
+			<NextLink href={`/user/crud/${slug}`} passHref>
+				<Tooltip title="글 수정" arrow>
+					<IconButton>
+						<EditIcon fontSize="large" />
+					</IconButton>
+				</Tooltip>
+			</NextLink>
+		);
+	};
+
+	// 포스트 삭제
+	const handleRemoveBtn = () => {
+		const handleClick = (title, slug) => {
+			const result = window.confirm(`[${title}] 글을 삭제하시겠습니까?`);
+
+			const deletePost = slug => {
+				removeBlog(encodeURIComponent(slug), getCookie('access-token')).then(
+					data => {
+						push('/');
+					}
+				);
+			};
+
+			if (result) {
+				deletePost(slug);
+			}
+		};
+
+		return (
+			<Tooltip title="글 삭제" arrow>
+				<IconButton onClick={() => handleClick(title, slug)}>
+					<DeleteForeverIcon fontSize="large" />
+				</IconButton>
+			</Tooltip>
+		);
+	};
+
 	return (
 		<>
 			{blog && (
@@ -260,7 +309,7 @@ function OneBlog({ blog, related }) {
 							xs={12}
 							sx={{
 								display: 'flex',
-								justifyContent: 'flex-start',
+								justifyContent: 'space-between',
 							}}
 						>
 							{bookmark && (
@@ -276,6 +325,12 @@ function OneBlog({ blog, related }) {
 										<BookmarkBorderIcon fontSize="large" />
 									</IconButton>
 								</Tooltip>
+							)}
+							{userEmail === postEmail && (
+								<Box>
+									{handleUpdateBtn()}
+									{handleRemoveBtn()}
+								</Box>
 							)}
 						</Grid>
 						<Grid item xs={12}>
