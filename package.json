@@ -1,11 +1,22 @@
 {
 	"name": "devblog",
 	"version": "1.0.0",
-	"description": "blog-project",
+	"description": "개발자들의 소통 공간",
 	"main": "index.js",
+	"homepage": "https://devblog-mu.vercel.app/",
 	"repository": "git@github.com:po4tion/devblog.git",
-	"author": "DongKyu <po4tion0429@gmail.com>",
+	"author": "Kim Dong Gyu <po4tion0429@gmail.com>",
 	"license": "MIT",
+	"os": [
+		"window10"
+	],
+	"engines": {
+		"yarn": ">=1.22.5",
+		"node": "14.18.1"
+	},
+	"bugs": {
+		"url": "https://github.com/po4tion/devblog/issues"
+	},
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
