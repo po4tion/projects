@@ -13,6 +13,17 @@
 
 ### 🏠 [DEVBLOG로 이동](https://devblog-mu.vercel.app/)
 
+## 목차
+
+1. [DEVBLOG](#DEVBLOG)
+2. [설명](#설명)
+3. [사용기술](#사용기술)
+4. [배포환경](#배포환경)
+5. [제공기능](#제공기능)
+6. [파일관리](#파일관리)
+7. [개발자](#개발자)
+8. [제보사항](#제보사항)
+
 ## DEVBLOG
 
 타게팅 유저는 국내 개발자 분들로, 사는 얘기, 관심사와 기술 개발 등을 게시하여 서로 소통하는 공간을 열어주는 SEO 블로그형 프론트엔드 프로젝트입니다.
@@ -93,6 +104,6 @@
 
 - Github: [@po4tion](https://github.com/po4tion)
 
-## 🤝 제보사항
+## 제보사항
 
 DEVBLOG 이용시 불편사항/불만사항 또는 오류가 발생했을 시 아래 페이지로 제보 부탁드립니다.<br> [issues page](https://github.com/po4tion/devblog/issues)
