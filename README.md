@@ -88,7 +88,7 @@
 
 ## 개발자
 
-👤 **DongKyu <po4tion0429@gmail.com>**
+👤 **Kim DongGyu <po4tion0429@gmail.com>**
 
 - Github: [@po4tion](https://github.com/po4tion)
 
