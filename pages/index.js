@@ -24,7 +24,7 @@ export async function getServerSideProps() {
 			blogs: data.blogs,
 			limit,
 			skip,
+			tags,
 		},
-		revalidate: 1,
 	};
 }
