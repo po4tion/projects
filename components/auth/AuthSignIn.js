@@ -5,6 +5,7 @@
 import { useState, useEffect } from 'react';
 import Router from 'next/router';
 import NextLink from 'next/link';
+import { NextSeo } from 'next-seo';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import isLength from 'validator/lib/isLength';

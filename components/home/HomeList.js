@@ -75,7 +75,7 @@ function HomeList({ blogs, limitNum, skipNum }) {
 					description: '개발자들의 글이 숨쉬는 곳',
 					images: [
 						{
-							url: `${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`,
+							url: `${process.env.NEXT_PUBLIC_API}/images/basic.webp`,
 							width: 600,
 							height: 1000,
 							alt: 'DEVBLOG 마스코트',

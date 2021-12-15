@@ -88,13 +88,13 @@ export default function handler(req, res) {
 								blog.photo.contentType = files.photo.mimetype;
 							} else {
 								const res = await axios.get(
-									`${process.env.API}/images/base.jpg`,
+									`${process.env.API}/images/basic.webp`,
 									{ responseType: 'arraybuffer' }
 								);
 								const buffer = Buffer.from(res.data, 'utf-8');
 
 								blog.photo.data = buffer;
-								blog.photo.contentType = 'image/jpeg';
+								blog.photo.contentType = 'image/webp';
 							}
 
 							// 블로그 저장과 태그

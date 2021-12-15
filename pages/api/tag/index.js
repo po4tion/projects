@@ -15,6 +15,7 @@ export default function handler(req, res) {
 				try {
 					await Utag.findOne()
 						.sort({ createdAt: -1 })
+						.lean()
 						.exec((err, tags) => {
 							if (err) {
 								return res.status(400).json({ error: err });

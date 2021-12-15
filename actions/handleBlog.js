@@ -51,7 +51,7 @@ export const getBlogs = async (limit, skip) => {
 	return result;
 };
 
-// index.js [getStaticProps]
+// index.js [getServerSideProps]
 export const getBlogsInServer = async (limit, skip) => {
 	const data = { limit, skip };
 	const result = await axios

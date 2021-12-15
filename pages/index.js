@@ -13,7 +13,7 @@ function Home({ blogs, limit, skip }) {
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	const tags = await getTagList();
 	const limit = 8,
 		skip = 0;

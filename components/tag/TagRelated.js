@@ -79,7 +79,7 @@ function TagRelated({ tag, blogs }) {
 					description: `태그 ${name} 으로/로 검색된 글들`,
 					images: [
 						{
-							url: `${process.env.NEXT_PUBLIC_API}/images/kuma.jpg`,
+							url: `${process.env.NEXT_PUBLIC_API}/images/basic.webp`,
 							width: 500,
 							height: 500,
 							alt: 'DEVBLOG의 마스코트',

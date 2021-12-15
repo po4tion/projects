@@ -23,7 +23,7 @@ import Typography from '@mui/material/Typography';
 
 function BlogList({ blog, noLink = true }) {
 	const [img, setImg] = useState(
-		`${process.env.NEXT_PUBLIC_API}/images/loading.jpg`
+		`${process.env.NEXT_PUBLIC_API}/images/loading.webp`
 	);
 
 	useEffect(() => {
