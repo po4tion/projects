@@ -1,0 +1,7 @@
+{
+	"cSpell.words": ["arrowParens", "tailwindcss"],
+	"editor.fontFamily": "Fira Code",
+	"editor.fontWeight": "500",
+	"editor.fontLigatures": "'cv01','cv02','cv03','cv07','cv18','cv27','cv29','cv31','ss03','ss04','ss01','ss02','ss05','zero'",
+	"css.lint.unknownAtRules": "ignore"
+}
