@@ -4,58 +4,57 @@
 
 interface SkillsInfo {
 	readonly name: string;
-	readonly iconName: string;
+	readonly svgName: string;
 }
 
 export const skills: SkillsInfo[] = [
 	{
 		name: 'HTML 5',
-		iconName: 'html5',
+		svgName: 'html5',
 	},
 
 	{
 		name: 'CSS3',
-		iconName: 'css3',
+		svgName: 'css3',
 	},
 	{
 		name: 'JavaScript',
-		iconName: 'javascript',
+		svgName: 'javascript',
+	},
+	{
+		name: 'TypeScript',
+		svgName: 'typescript',
 	},
 	{
 		name: 'React',
-		iconName: 'react',
+		svgName: 'react',
 	},
 	{
 		name: 'Next.js',
-		iconName: 'nextjs',
+		svgName: 'nextjs',
 	},
 	{
 		name: 'Mongo DB',
-		iconName: 'mongodb',
-	},
-
-	{
-		name: 'TypeScript',
-		iconName: 'typescript',
+		svgName: 'mongodb',
 	},
 	{
 		name: 'Git',
-		iconName: 'git',
-	},
-	{
-		name: 'Material-UI',
-		iconName: 'material-ui',
+		svgName: 'git',
 	},
 	{
 		name: 'Sass',
-		iconName: 'sass',
+		svgName: 'sass',
+	},
+	{
+		name: 'Material-UI',
+		svgName: 'material-ui',
 	},
 	{
 		name: 'TailWind CSS',
-		iconName: 'tailwindcss',
+		svgName: 'tailwindcss',
 	},
 	{
 		name: 'Vercel',
-		iconName: 'vercel',
+		svgName: 'vercel',
 	},
 ];

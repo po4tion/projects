@@ -5,7 +5,10 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
 function NavigationBar() {
 	return (
-		<Disclosure as="nav" className=" bg-gray-800 fixed top-0 z-20 w-full">
+		<Disclosure
+			as="nav"
+			className="border-b-4 border-b-blue-400 bg-gray-800 fixed top-0 z-20 w-full"
+		>
 			{({ open }: { open: boolean }) => (
 				<>
 					<div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 ">
