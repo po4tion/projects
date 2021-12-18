@@ -3,7 +3,7 @@ import Typed from 'react-typed';
 function TypedHeader() {
 	return (
 		<div className="flex absolute inset-0 z-10 items-center justify-center flex-col text-white text-4xl font-noto select-none">
-			<h1>나는 누구인가?</h1>
+			<h1>저는 누구일까요?</h1>
 			<br />
 			<Typed
 				strings={[

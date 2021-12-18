@@ -12,7 +12,6 @@ export const skills: SkillsInfo[] = [
 		name: 'HTML 5',
 		svgName: 'html5',
 	},
-
 	{
 		name: 'CSS3',
 		svgName: 'css3',
@@ -42,8 +41,8 @@ export const skills: SkillsInfo[] = [
 		svgName: 'git',
 	},
 	{
-		name: 'Sass',
-		svgName: 'sass',
+		name: 'Scss',
+		svgName: 'scss',
 	},
 	{
 		name: 'Material-UI',

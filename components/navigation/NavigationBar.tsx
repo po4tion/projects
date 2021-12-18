@@ -7,7 +7,7 @@ function NavigationBar() {
 	return (
 		<Disclosure
 			as="nav"
-			className="border-b-4 border-b-blue-400 bg-gray-800 fixed top-0 z-20 w-full"
+			className="border-b-4 border-b-blue-400 bg-gray-800 fixed top-0 z-20 w-full h-[64px]"
 		>
 			{({ open }: { open: boolean }) => (
 				<>
@@ -49,7 +49,7 @@ function NavigationBar() {
 						</div>
 					</div>
 
-					<Disclosure.Panel className="sm:hidden">
+					<Disclosure.Panel className="sm:hidden bg-gray-500">
 						<div className="px-2 pt-2 pb-3 space-y-1">
 							{navigationLinks.map(item => (
 								<Disclosure.Button
