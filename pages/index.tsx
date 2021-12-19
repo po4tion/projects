@@ -13,12 +13,11 @@ const Home: NextPage = () => {
 			<NavigationBar />
 			<TypedHeader />
 			<ParticleAni />
+			<span id="about-me" className="border-2 block h-[64px] invisible"></span>
 			<AboutMe />
+			<span id="skills" className="border-2 block h-[64px] invisible"></span>
 			<SkillSet />
-			<span
-				id="portfolio"
-				className="border-2 block h-[128px] invisible"
-			></span>
+			<span id="portfolio" className="border-2 block h-[64px] invisible"></span>
 			<PortFolio />
 			<Contact />
 		</div>
