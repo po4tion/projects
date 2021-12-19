@@ -12,9 +12,8 @@ function TypedHeader() {
 					'학습과 지식을 원하는',
 					'기술 흡수력이 남다른',
 					'신기술에 배타적이지 않은',
-					'Front-end developer',
-					'네!',
-					'그게 바로 저, 김동규 입니다',
+					'Front-end developer 지원자',
+					'<김동규 /> 입니다',
 					' ',
 					' ',
 				]}

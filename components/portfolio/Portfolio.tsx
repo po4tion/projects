@@ -4,7 +4,7 @@ import { BsArrowRightSquareFill } from 'react-icons/bs';
 
 function Portfolio() {
 	return (
-		<div className="container w-screen mx-auto h-[1200px] min-h-[800px]">
+		<div className="container w-screen mx-auto h-[2200px] lg:h-[1200px] min-h-[800px]">
 			<div className="flex items-center justify-center">
 				<h1 className="border-b-4 border-b-blue-400 font-noto text-4xl font-bold mb-10">
 					PORTFOLIO

@@ -53,6 +53,10 @@ export const skills: SkillsInfo[] = [
 		svgName: 'tailwindcss',
 	},
 	{
+		name: 'Styled Components',
+		svgName: 'styled-components',
+	},
+	{
 		name: 'Vercel',
 		svgName: 'vercel',
 	},
