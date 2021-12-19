@@ -11,9 +11,13 @@ const Home: NextPage = () => {
 	return (
 		<div>
 			<NavigationBar />
+			<span id="home" className="border-2 block invisible"></span>
 			<TypedHeader />
 			<ParticleAni />
-			<span id="about-me" className="border-2 block h-[64px] invisible"></span>
+			<span
+				id="about-me"
+				className="border-2 block h-[64px] lg:h-[0px] invisible"
+			></span>
 			<AboutMe />
 			<span id="skills" className="border-2 block h-[64px] invisible"></span>
 			<SkillSet />

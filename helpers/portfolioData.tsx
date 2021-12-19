@@ -18,7 +18,7 @@ interface PortFolioInfo {
 	readonly desc: string;
 	readonly summary: string;
 	readonly tech: string[];
-	readonly icons: IconType[];
+	readonly icons: JSX.Element[];
 	readonly body: string;
 	readonly stack: string[];
 }

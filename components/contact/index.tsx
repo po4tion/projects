@@ -1,7 +1,7 @@
 import { AiOutlineMail, AiFillGithub } from 'react-icons/ai';
 
 function Contact() {
-	const handleClick = async (text: string): Promise<Void> => {
+	const handleClick = async (text: string): Promise<void> => {
 		try {
 			await navigator.clipboard.writeText(text);
 
@@ -32,7 +32,6 @@ function Contact() {
 					href="https://github.com/po4tion"
 					target="_blank"
 					rel="noreferrer"
-					alt="github"
 				>
 					https://github.com/po4tion
 				</a>

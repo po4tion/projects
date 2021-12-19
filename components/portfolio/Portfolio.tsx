@@ -60,7 +60,6 @@ function Portfolio() {
 										<BsArrowRightSquareFill className="mr-2" />
 										<a
 											href={item.stack[1]}
-											alt={item.desc}
 											target="_blank"
 											rel="noreferrer"
 											className="hover:text-cyan-500"
@@ -76,7 +75,6 @@ function Portfolio() {
 										<BsArrowRightSquareFill className="mr-2" />
 										<a
 											href={item.stack[2]}
-											alt={item.desc}
 											target="_blank"
 											rel="noreferrer"
 											className="hover:text-cyan-500"
