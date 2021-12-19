@@ -52,12 +52,12 @@ function AboutMe() {
 						</figure>
 					</p>
 					<br />
+					<p className="text-xl text-center lg:text-left"></p>
 					<br />
 					<p className="text-xl text-center lg:text-left">
 						항상 머릿속을 유영하는 문구입니다.
-					</p>
-					<br />
-					<p className="text-xl text-center lg:text-left">
+						<br />
+						<br />
 						피드백과 타인의 코드를 긍정적으로 수용하는 자세를 통해 보다 나은
 						클린 코드 개발을 목표로 합니다. 남을 인정하는 자세부터 시작하여 제
 						자신을 계속해서 성장해 나갈 수 있는 발판을 마련해주고자 합니다.

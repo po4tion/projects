@@ -1,34 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">Welcome to DEVBLOG 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/yarn-%3E%3D1.22.5-blue.svg" />
+  <img src="https://img.shields.io/badge/npm-%3E%3D8.1.0-blue.svg" />
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
 
-## Getting Started
+> 김동규의 포트폴리오
 
-First, run the development server:
+### 🏠 [PORTFOLIO로 이동](https://portfolio-po4tion.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## 목차
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. [PORTFOLIO](#PORTFOLIO)
+2. [설명](#설명)
+3. [사용기술](#사용기술)
+4. [배포환경](#배포환경)
+5. [제공기능](#제공기능)
+6. [파일관리](#파일관리)
+7. [개발자](#개발자)
+8. [제보사항](#제보사항)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## PORTFOLIO
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+개인 포트폴리오 용도로 제작한 Next.js 기반의 웹사이트입니다. SEO 적용을 위해 Next.js를 선택했고 Vercel로 배포를 완료하였습니다. 또한 TypeScript와 TailWind CSS 적응에 집중하며 UX/UI의 중요성을 알 수 있었던 프로젝트입니다.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 설명
 
-## Learn More
+- Next.js를 통해 SEO 적용
+- TailWind CSS를 통해 웹 UI 전체 적용
+- TypeScript의 정적타입 정의를 통해 에러 사전 방지
 
-To learn more about Next.js, take a look at the following resources:
+## 사용기술
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- React.js
+- Next.js
+- TypeScript
+- TailWind CSS
+- react-typed
+- react-tsparticles
+- react-icons
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 배포환경
 
-## Deploy on Vercel
+- Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 제공기능
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. 홈
+2. 자기소개
+3. 보유 기술
+4. 포트폴리오
+5. 연락방법
+
+## 파일관리
+
+| 파일명     | 목적                    |
+| ---------- | ----------------------- |
+| components | PORTFOLIO의 UI 컴포넌트 |
+| helpers    | 중요 데이터 관리        |
+| pages      | 페이지 렌더링           |
+| public     | images favicon robots   |
+| cypress    | E2E 테스트              |
+
+## 개발자
+
+👤 **Kim DongGyu <po4tion0429@gmail.com>**
+
+- Github: [@po4tion](https://github.com/po4tion)
+
+## 제보사항
+
+PORTFOLIO 이용시 불편사항/불만사항 또는 오류가 발생했을 시 아래 페이지로 제보 부탁드립니다.<br> [issues page](https://github.com/po4tion/portfolio/issues)

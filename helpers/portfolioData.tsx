@@ -42,7 +42,7 @@ export const portfolioData: PortFolioInfo[] = [
 		stack: [
 			'홈, 자기소개, 보유 기술, 포트폴리오, 연락방법',
 			'https://github.com/po4tion/portfolio',
-			'https://portfolio-kdg.vercel.app/',
+			'https://portfolio-po4tion.vercel.app/',
 		],
 	},
 	{
