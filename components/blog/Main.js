@@ -37,6 +37,7 @@ function Main({ router, token }) {
 		title: '',
 		photo: undefined,
 	});
+	const [imgValue, setImgValue] = useState('');
 
 	const [data, setData] = useState('');
 	const [body, setBody] = useState('');
@@ -139,6 +140,8 @@ function Main({ router, token }) {
 		const handleThumbnail = async e => {
 			const { files } = e.target;
 
+			setImgValue(e.target.value);
+
 			if (files.length === 0) {
 				return;
 			} else {
@@ -167,6 +170,7 @@ function Main({ router, token }) {
 		// 썸네일 취소
 		const removeThumbnail = () => {
 			URL.revokeObjectURL(info.photo);
+			setImgValue('');
 
 			setInfo({
 				...info,
@@ -228,6 +232,7 @@ function Main({ router, token }) {
 						>
 							<Input
 								onChange={handleThumbnail}
+								value={imgValue}
 								type="file"
 								inputProps={{ accept: 'image/png, image/jpeg' }}
 								sx={{ display: 'none' }}

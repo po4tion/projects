@@ -79,7 +79,7 @@ function HomeList({ blogs, limitNum, skipNum }) {
 							width: 600,
 							height: 1000,
 							alt: 'DEVBLOG 마스코트',
-							type: 'image/jpeg',
+							type: 'image/webp',
 						},
 					],
 					site_name: process.env.NEXT_PUBLIC_APP_NAME,

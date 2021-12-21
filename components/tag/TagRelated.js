@@ -83,7 +83,7 @@ function TagRelated({ tag, blogs }) {
 							width: 500,
 							height: 500,
 							alt: 'DEVBLOG의 마스코트',
-							type: 'image/jpeg',
+							type: 'image/webp',
 						},
 					],
 					site_name: process.env.NEXT_PUBLIC_APP_NAME,
