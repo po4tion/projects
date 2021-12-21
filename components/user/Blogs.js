@@ -2,10 +2,12 @@
 	Connect: profile/[username].js
 */
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup.umd';
 import { contactValidation } from '/lib/contactValidation';
@@ -13,6 +15,7 @@ import { contactAuthor } from '/actions/handleContact';
 
 // MUI
 import Alert from '@mui/material/Alert';
+import Avatar from '@mui/material/Avatar';
 import { BlogList } from '/components/blog';
 import { Body } from '/components';
 import Box from '@mui/material/Box';
@@ -32,6 +35,23 @@ function Blogs({ blogs, user }) {
 	const router = useRouter();
 	const [page, setPage] = useState(1);
 	const [checked, setChecked] = useState(false);
+	const [img, setImg] = useState(undefined);
+
+	useEffect(() => {
+		const modifyImg = async () => {
+			const res = await axios.get(
+				`/api/user/photo/${encodeURIComponent(user.username)}`
+			);
+
+			const trans = await new Buffer.from(res.data.data.data).toString(
+				'base64'
+			);
+
+			setImg(`data:image/jpeg;base64,${trans}`);
+		};
+
+		modifyImg();
+	}, [user]);
 
 	const {
 		register,
@@ -59,8 +79,29 @@ function Blogs({ blogs, user }) {
 			);
 		};
 
+		const sliceFirstUsername = () => {
+			const userName = user.username;
+			const firstWord = userName.slice(0, 1);
+
+			return firstWord;
+		};
+
 		return (
 			<>
+				<Avatar sx={{ width: 100, height: 100, marginBottom: 2 }}>
+					{img ? (
+						<Image
+							src={img}
+							layout="fill"
+							objectFit="cover"
+							quality={100}
+							alt="프로필 사진"
+						/>
+					) : (
+						<Typography variant="h3">{sliceFirstUsername()}</Typography>
+					)}
+				</Avatar>
+
 				<Typography variant="h5" sx={{ userSelect: 'none', mb: 2 }}>
 					<b>{user.username}</b> 님의 포스트(총 {blogs.length} 개)
 				</Typography>
@@ -81,7 +122,7 @@ function Blogs({ blogs, user }) {
 				</FormGroup>
 			</>
 		);
-	}, [blogs.length, checked, user.username, user.about]);
+	}, [img, user.username, user.about, blogs.length, checked]);
 
 	// 사용자의 포스트 표시
 	const userBlog = useCallback(
