@@ -6,8 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import moment from 'moment';
-import renderHTML from 'react-render-html';
+import dayjs from 'dayjs';
 import { isAuth } from '/actions/handleAuth';
 import { removeBlog, getBlogsUsers } from '/actions/handleBlog';
 
@@ -154,7 +153,7 @@ function ManagementBlog({ blogList, token, size }) {
 														fontSize: 25,
 														fontWeight: 'bold',
 													}}
-													subheader={`${blogs[i].postedBy.username} ${moment(
+													subheader={`${blogs[i].postedBy.username} ${dayjs(
 														blogs[i].updatedAt
 													).format('YYYY년 MM월 DD일 HH:MM')}`}
 													subheaderTypographyProps={{ fontWeight: 'bold' }}
@@ -168,7 +167,7 @@ function ManagementBlog({ blogList, token, size }) {
 														WebkitBoxOrient: 'vertical',
 													}}
 												>
-													{renderHTML(blogs[i].excerpt)}
+													{blogs[i].excerpt}
 												</CardContent>
 											</Box>
 										</Card>
@@ -301,7 +300,7 @@ function ManagementBlog({ blogList, token, size }) {
 											<Box sx={{ height: '200px' }}>
 												<CardHeader
 													title={blogs[i].title}
-													subheader={`${blogs[i].postedBy.username} ${moment(
+													subheader={`${blogs[i].postedBy.username} ${dayjs(
 														blogs[i].updatedAt
 													).format(
 														matches
@@ -318,7 +317,7 @@ function ManagementBlog({ blogList, token, size }) {
 														WebkitBoxOrient: 'vertical',
 													}}
 												>
-													{renderHTML(blogs[i].excerpt)}
+													{blogs[i].excerpt}
 												</CardContent>
 											</Box>
 										</Card>

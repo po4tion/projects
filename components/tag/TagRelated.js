@@ -4,8 +4,6 @@
 
 import { useState, useCallback } from 'react';
 import { NextSeo } from 'next-seo';
-import renderHTML from 'react-render-html';
-import moment from 'moment';
 
 // MUI
 import Alert from '@mui/material/Alert';

@@ -4,8 +4,7 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
-import moment from 'moment';
-import 'moment/locale/ko';
+import dayjs from 'dayjs';
 import { blogSearch, unBlogSearch } from '/actions/handleBlog';
 
 // MUI

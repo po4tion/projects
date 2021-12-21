@@ -6,8 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
-import moment from 'moment';
-import 'moment/locale/ko';
+import dayjs from 'dayjs';
 
 // MUI
 import Box from '@mui/material/Box';
@@ -85,6 +84,7 @@ function BlogList({ blog, noLink = true }) {
 								variant="body2"
 								component="div"
 								sx={{
+									maxWidth: '100%',
 									overflow: 'hidden',
 									textOverflow: 'ellipsis',
 									display: '-webkit-box',
@@ -137,7 +137,7 @@ function BlogList({ blog, noLink = true }) {
 					)}
 
 					<Typography sx={{ display: 'inline-flex', userSelect: 'none' }}>
-						{moment(blog.updatedAt).format('YY년 MM월 DD일')}
+						{dayjs(blog.updatedAt).format('YY년 MM월 DD일')}
 					</Typography>
 				</Box>
 			</Card>

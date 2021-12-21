@@ -2,12 +2,12 @@
 	Connect: blogs/[slug].js
 */
 
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
-import moment, { relativeTimeThreshold } from 'moment';
+import dayjs from 'dayjs';
 import renderHTML from 'react-render-html';
 import { getBlogInServer, removeBlog } from '/actions/handleBlog';
 import { isBookmarked, bookmarked } from '/actions/handleBookmark';
@@ -180,7 +180,7 @@ function OneBlog({ blog, related }) {
 							</NextLink>
 
 							<Typography sx={{ display: 'inline-flex', userSelect: 'none' }}>
-								{moment(blog.updatedAt).format('YYYY년 MM월 DD일')}
+								{dayjs(blog.updatedAt).format('YY년 MM월 DD일')}
 							</Typography>
 						</Box>
 					</Card>
@@ -348,12 +348,28 @@ function OneBlog({ blog, related }) {
 									<Link underline="hover">{postedBy.username}</Link>
 								</NextLink>{' '}
 								&#183;&nbsp;
-								{moment(updatedAt).format(`YYYY년 MM월 DD일`)}
+								{dayjs(updatedAt).format(`YYYY년 MM월 DD일`)}
 							</Typography>
 						</Grid>
 
 						<Grid item xs={12} sx={{ marginBottom: 5 }}>
 							{handleTag(tags)}
+						</Grid>
+						<Grid item xs={12} sx={{ display: 'flex', marginBottom: 5 }}>
+							<Box
+								sx={{
+									borderLeft: '2px solid #27ae60',
+									height: '100%',
+									marginRight: 2,
+								}}
+							></Box>
+							<Typography
+								sx={{
+									fontStyle: 'italic',
+								}}
+							>
+								{blog.data[0].excerpt}
+							</Typography>
 						</Grid>
 						<Grid item xs={12}>
 							<Box sx={{ width: '100%' }}>{renderHTML(body)}</Box>
