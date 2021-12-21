@@ -30,5 +30,6 @@ export async function getStaticProps(ctx) {
 			tag: res.tag,
 			blogs: res.blogs,
 		},
+		revalidate: 10,
 	};
 }
