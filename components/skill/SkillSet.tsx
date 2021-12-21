@@ -3,7 +3,7 @@ import { skills } from 'helpers/skills';
 
 function SkillSet() {
 	return (
-		<div className="container flex flex-col items-center justify-center min-h-[700px] max-w-sm md:max-w-lg lg:max-w-4xl mx-auto h-screen">
+		<div className="container flex flex-col items-center justify-center min-h-[700px] max-w-sm md:max-w-lg lg:max-w-4xl mx-auto h-auto">
 			<h1 className="border-b-4 border-b-blue-400 font-noto text-4xl font-bold mb-10">
 				SKILLS
 			</h1>

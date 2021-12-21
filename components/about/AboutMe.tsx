@@ -3,8 +3,8 @@ import Typed from 'react-typed';
 
 function AboutMe() {
 	return (
-		<div className="container mx-auto  min-h-[700px] h-screen flex flex-col lg:flex-row justify-evenly items-center select-none">
-			<div className="relative w-72 h-72 rounded-full border-solid border-2 border-gray mr-2">
+		<div className="container mx-auto h-screen flex flex-col lg:flex-row justify-center sm:justify-evenly items-center select-none">
+			<div className="relative w-72 h-72 rounded-full border-solid border-2 border-gray sm:mr-2">
 				<Image
 					src="/images/aboutImg/donggyu.webp"
 					alt="프로필 사진"
@@ -19,7 +19,7 @@ function AboutMe() {
 				<h1 className="border-b-4 border-b-blue-400 font-noto text-4xl font-bold mb-2">
 					ABOUT ME
 				</h1>
-				<div className="w-[700px] max-w-md sm:max-w-xl font-noto">
+				<div className="w-[700px] max-w-sm sm:max-w-xl font-noto">
 					<p className="text-center w-full lg:text-left text-xl">
 						안녕하세요, 만나뵙게 되어 반갑습니다. <br />
 						배움과 학습을 통해 성장하는 주니어 개발자,{' '}
@@ -58,7 +58,7 @@ function AboutMe() {
 						항상 머릿속을 유영하는 문구입니다.
 						<br />
 						<br />
-						피드백과 타인의 코드를 긍정적으로 수용하는 자세를 통해 보다 나은
+						피드백과 타인의 지식을 긍정적으로 수용하는 자세를 통해 보다 나은
 						클린 코드 개발을 목표로 합니다. 남을 인정하는 자세부터 시작하여 제
 						자신을 계속해서 성장해 나갈 수 있는 발판을 마련해주고자 합니다.
 					</p>

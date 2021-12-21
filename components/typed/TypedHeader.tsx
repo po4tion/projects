@@ -6,7 +6,7 @@ function TypedHeader() {
 			<h1>저는 누구일까요?</h1>
 			<br />
 			<Typed
-				className="text-6xl text-sky-500"
+				className="text-6xl text-sky-500 text-center"
 				strings={[
 					' ',
 					'개발이 재밌는',

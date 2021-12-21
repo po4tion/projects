@@ -8,6 +8,7 @@ function NavigationBar() {
 		<Disclosure
 			as="nav"
 			className="border-b-4 border-b-blue-400 bg-gray-800 fixed top-0 z-20 w-full h-[64px]"
+			data-cy="NavigationBar"
 		>
 			{({ open }: { open: boolean }) => (
 				<>
@@ -20,13 +21,20 @@ function NavigationBar() {
 									{open ? (
 										<XIcon className="block h-6 w-6" aria-hidden="true" />
 									) : (
-										<MenuIcon className="block h-6 w-6" aria-hidden="true" />
+										<MenuIcon
+											className="block h-6 w-6"
+											aria-hidden="true"
+											data-cy="MobileMenu"
+										/>
 									)}
 								</Disclosure.Button>
 							</div>
 							<div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-between">
 								<div className="flex-shrink-0 flex items-center">
-									<span className="font-bold text-2xl text-white font-noto select-none">
+									<span
+										className="font-bold text-2xl text-white font-noto select-none"
+										data-cy="AppName"
+									>
 										Dong Gyu
 									</span>
 								</div>
@@ -39,6 +47,7 @@ function NavigationBar() {
 												className="text-gray-300 hover:bg-gray-700 hover:text-white
 													px-3 py-2 rounded-md text-base font-medium flex items-center font-noto select-none"
 												aria-current="page"
+												data-cy={item.name}
 											>
 												{item.name}
 											</a>
