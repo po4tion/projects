@@ -9,7 +9,7 @@ function TypedHeader() {
 			<h1 data-cy="WhoAmI">저는 누구일까요?</h1>
 			<br />
 			<Typed
-				className="text-6xl text-sky-500 text-center"
+				className="text-6xl text-blue-500 text-center"
 				strings={[
 					' ',
 					'개발이 재밌는',

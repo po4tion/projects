@@ -29,7 +29,7 @@ function AboutMe() {
 					>
 						안녕하세요, 만나뵙게 되어 반갑습니다. <br />
 						배움과 학습을 통해 성장하는 주니어 개발자,{' '}
-						<span className="text-sky-500 text-2xl">
+						<span className="text-blue-500 text-2xl">
 							<Typed
 								strings={[' ', '김동규', ' ']}
 								typeSpeed={40}
@@ -48,24 +48,21 @@ function AboutMe() {
 						피드백과 타인의 지식을 긍정적으로 수용하는 자세를 통해 보다 나은
 						클린 코드 개발을 목표로 합니다. 또한 문제를 해결하는 과정을 즐기며
 						결과에 대한 성취감을 상상하며 최선을 다합니다.
-						<br />
-						<br />
-						<figure className="bg-slate-200 rounded-md p-1">
-							<blockquote cite="https://hub.zum.com/yoonhongsik/3790">
-								<p>
-									&#34;남이 자기를 알아주지 못함을 걱정하지 말고 자기가 남을
-									알지 못함을 걱정하여라.&#34;
-								</p>
-							</blockquote>
-							<figcaption className="text-center">
-								—공자, <cite>논어 &#39;학이&#39;</cite>
-							</figcaption>
-						</figure>
 					</p>
 					<br />
-					<p className="text-xl text-center lg:text-left"></p>
+					<figure className="bg-slate-200 rounded-md p-1 text-xl text-center lg:text-left">
+						<blockquote cite="https://hub.zum.com/yoonhongsik/3790">
+							<p>
+								&#34;남이 자기를 알아주지 못함을 걱정하지 말고 자기가 남을 알지
+								못함을 걱정하여라.&#34;
+							</p>
+						</blockquote>
+						<figcaption className="text-center">
+							—공자, <cite>논어 &#39;학이&#39;</cite>
+						</figcaption>
+					</figure>
 					<br />
-					<p className="text-xl text-center">
+					<p className="text-xl text-center text-blue-500">
 						제 인생의 멘토가 되어준 명언입니다.
 						<br />
 						이제 프론트엔드 개발자로서 첫 발을 내딛고자 합니다.
