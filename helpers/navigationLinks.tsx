@@ -5,6 +5,7 @@
 interface NavigationLinks {
 	readonly name: string;
 	readonly href: string;
+	readonly cy: string;
 }
 
 export const navigationLinks: NavigationLinks[] = [
