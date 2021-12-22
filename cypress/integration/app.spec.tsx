@@ -55,11 +55,4 @@ describe('Test index', () => {
 			});
 		});
 	});
-
-	// it('Test mobile components', () => {
-	// 	cy.viewport('samsung-note9');
-
-	// 	cy.get('[data-cy=MobileMenu]').click();
-	// 	cy.contains('SKILLS').click({ force: true });
-	// });
 });
