@@ -1,4 +1,4 @@
-import { AiOutlineMail, AiFillGithub } from 'react-icons/ai';
+import { AiOutlineMail, AiFillGithub, AiOutlinePhone } from 'react-icons/ai';
 
 function Contact() {
 	const handleClick = async (text: string): Promise<void> => {
@@ -14,7 +14,7 @@ function Contact() {
 	return (
 		<div
 			id="contact"
-			className="flex items-center justify-center flex-col bg-gray-800 h-[150px]"
+			className="flex items-center justify-center flex-col bg-gray-800 h-[170px]"
 		>
 			<div className="mb-4 flex items-center justify-center">
 				<AiOutlineMail color="white" className="text-2xl mr-2" />
@@ -35,6 +35,10 @@ function Contact() {
 				>
 					https://github.com/po4tion
 				</a>
+			</div>
+			<div className="mb-4 flex items-center justify-center">
+				<AiOutlinePhone color="white" className="text-2xl mr-2" />
+				<p className="text-white">+82 10 2797 6510</p>
 			</div>
 
 			<div className="text-center text-white">
