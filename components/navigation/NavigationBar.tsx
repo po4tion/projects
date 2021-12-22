@@ -47,7 +47,7 @@ function NavigationBar() {
 												className="text-gray-300 hover:bg-gray-700 hover:text-white
 													px-3 py-2 rounded-md text-base font-medium flex items-center font-noto select-none"
 												aria-current="page"
-												data-cy={item.name}
+												data-cy={item.cy}
 											>
 												{item.name}
 											</a>
@@ -68,6 +68,7 @@ function NavigationBar() {
 									className="text-gray-300 hover:bg-gray-700 hover:text-white
 										block px-3 py-2 rounded-md text-base font-medium font-noto select-none"
 									aria-current="page"
+									data-cy={item.cy}
 								>
 									{item.name}
 								</Disclosure.Button>

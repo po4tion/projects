@@ -11,21 +11,26 @@ export const navigationLinks: NavigationLinks[] = [
 	{
 		name: 'HOME',
 		href: '#home',
+		cy: 'home',
 	},
 	{
 		name: 'ABOUT ME',
 		href: '#about-me',
+		cy: 'about-me',
 	},
 	{
 		name: 'SKILLS',
 		href: '#skills',
+		cy: 'skills',
 	},
 	{
 		name: 'PORTFOLIO',
 		href: '#portfolio',
+		cy: 'portfolio',
 	},
 	{
 		name: 'CONTACT',
 		href: '#contact',
+		cy: 'contact',
 	},
 ];

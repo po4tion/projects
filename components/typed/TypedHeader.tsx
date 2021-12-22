@@ -2,8 +2,11 @@ import Typed from 'react-typed';
 
 function TypedHeader() {
 	return (
-		<div className="h-screen flex items-center justify-center flex-col text-black text-4xl font-noto select-none">
-			<h1>저는 누구일까요?</h1>
+		<div
+			className="h-screen flex items-center justify-center flex-col text-black text-4xl font-noto select-none"
+			data-cy="TypedHeader"
+		>
+			<h1 data-cy="WhoAmI">저는 누구일까요?</h1>
 			<br />
 			<Typed
 				className="text-6xl text-sky-500 text-center"

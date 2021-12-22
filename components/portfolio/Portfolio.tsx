@@ -6,7 +6,10 @@ function Portfolio() {
 	return (
 		<div className="container w-screen mx-auto h-auto">
 			<div className="flex items-center justify-center">
-				<h1 className="border-b-4 border-b-blue-400 font-noto text-4xl font-bold mb-10">
+				<h1
+					className="border-b-4 border-b-blue-400 font-noto text-4xl font-bold mb-10"
+					data-cy="Portfolio"
+				>
 					PORTFOLIO
 				</h1>
 			</div>
@@ -28,7 +31,10 @@ function Portfolio() {
 							/>
 						</div>
 						<div className="mt-4 lg:mt-0 w-[350px] h-auto sm:w-[500px] sm:h-[500px] flex flex-col items-center rounded-md border-solid border-2 border-gray">
-							<h1 className="border-b-4 border-b-blue-200 font-noto text-4xl font-bold mb-2">
+							<h1
+								className="border-b-4 border-b-blue-200 font-noto text-4xl font-bold mb-2"
+								data-cy={item.desc}
+							>
 								{item.desc}
 							</h1>
 							<div className="grid gap-2 grid-cols-3 grid-rows-2 mb-2">

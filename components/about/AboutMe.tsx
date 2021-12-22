@@ -3,7 +3,10 @@ import Typed from 'react-typed';
 
 function AboutMe() {
 	return (
-		<div className="container mx-auto h-screen flex flex-col lg:flex-row justify-center sm:justify-evenly items-center select-none">
+		<div
+			className="container mx-auto h-screen flex flex-col lg:flex-row justify-center sm:justify-evenly items-center select-none"
+			data-cy="AboutMe"
+		>
 			<div className="relative w-72 h-72 rounded-full border-solid border-2 border-gray sm:mr-2">
 				<Image
 					src="/images/aboutImg/donggyu.webp"
@@ -20,7 +23,10 @@ function AboutMe() {
 					ABOUT ME
 				</h1>
 				<div className="w-[700px] max-w-sm sm:max-w-xl font-noto">
-					<p className="text-center w-full lg:text-left text-xl">
+					<p
+						className="text-center w-full lg:text-left text-xl"
+						data-cy="Introduce"
+					>
 						안녕하세요, 만나뵙게 되어 반갑습니다. <br />
 						배움과 학습을 통해 성장하는 주니어 개발자,{' '}
 						<span className="text-sky-500 text-2xl">
