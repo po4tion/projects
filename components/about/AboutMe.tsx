@@ -64,7 +64,8 @@ function AboutMe() {
 					</p>
 					<br />
 					<p className="text-xl text-center lg:text-left"></p>
-					<p className="text-xl text-center lg:text-center">
+					<br />
+					<p className="text-xl text-center">
 						제 인생의 멘토가 되어준 명언입니다.
 						<br />
 						이제 프론트엔드 개발자로서 첫 발을 내딛고자 합니다.
