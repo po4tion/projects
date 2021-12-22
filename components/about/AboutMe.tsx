@@ -45,7 +45,12 @@ function AboutMe() {
 						바로 사용해 볼 정도로 개발에 대한 큰 흥미와 열정을 가지고 있습니다.
 						<br />
 						<br />
-						<figure className="bg-slate-200 rounded-md">
+						피드백과 타인의 지식을 긍정적으로 수용하는 자세를 통해 보다 나은
+						클린 코드 개발을 목표로 합니다. 또한 문제를 해결하는 과정을 즐기며
+						결과에 대한 성취감을 상상하며 최선을 다합니다.
+						<br />
+						<br />
+						<figure className="bg-slate-200 rounded-md p-1">
 							<blockquote cite="https://hub.zum.com/yoonhongsik/3790">
 								<p>
 									&#34;남이 자기를 알아주지 못함을 걱정하지 말고 자기가 남을
@@ -59,14 +64,10 @@ function AboutMe() {
 					</p>
 					<br />
 					<p className="text-xl text-center lg:text-left"></p>
-					<br />
-					<p className="text-xl text-center lg:text-left">
-						항상 머릿속을 유영하는 문구입니다.
+					<p className="text-xl text-center lg:text-center">
+						제 인생의 멘토가 되어준 명언입니다.
 						<br />
-						<br />
-						피드백과 타인의 지식을 긍정적으로 수용하는 자세를 통해 보다 나은
-						클린 코드 개발을 목표로 합니다. 남을 인정하는 자세부터 시작하여 제
-						자신을 계속해서 성장해 나갈 수 있는 발판을 마련해주고자 합니다.
+						이제 프론트엔드 개발자로서 첫 발을 내딛고자 합니다.
 					</p>
 				</div>
 			</div>
