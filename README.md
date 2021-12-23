@@ -30,13 +30,12 @@
 
 ## 설명
 
-- Next.js를 통해 SSR, SEO, API Routes 등을 적용
-- Material-UI를 통해 웹 UI 전체 적용(반응형 웹 적용)
+- Next.js를 통해 SSR, SEO, API Routes, font, image optimization 등을 적용
+- Material-UI를 통해 웹 UI 전체 페이지 적용(반응형 웹 적용)
 - 객체 모델링 도구인 mongoose를 통해 MongoDB 사용(RESTful API 적용)
 - cookie와 token을 사용하여 유저 보안 인증
 - React-hook-form과 Yup을 통한 유효성 검사 적용
-- font, image optimization
-- 이메일 인증을 적용하여 무분별한 회원가입 방지
+- email verification을 적용하여 무분별한 회원가입 방지
 
 ## 주요 사용 기술
 
