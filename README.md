@@ -36,7 +36,7 @@
 - cookie와 token을 사용하여 유저 보안 인증
 - React-hook-form과 Yup을 통한 유효성 검사 적용
 - email verification을 적용하여 무분별한 회원가입 방지
-- windowing 기법을 통해 리스트 부분 렌더링
+- windowing 기법을 통해 리스트 렌더링
 
 ## 주요 사용 기술
 
