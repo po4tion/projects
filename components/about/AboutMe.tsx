@@ -41,7 +41,7 @@ function AboutMe() {
 					</p>
 					<br />
 					<p className="text-xl text-center lg:text-left">
-						새롭고 다양한 분야의 기술들을 배우는 것을 즐거워하며 학습한 기술을
+						다양한 분야에서 새로운 기술들을 배우는 것을 즐거워하며 학습한 기술을
 						바로 사용해 볼 정도로 개발에 대한 큰 흥미와 열정을 가지고 있습니다.
 						<br />
 						<br />
