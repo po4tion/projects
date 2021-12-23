@@ -59,7 +59,7 @@ export const portfolioData: PortFolioInfo[] = [
 			<FaGitAlt key="git" />,
 			<SiVercel key="vercel" />,
 		],
-		body: 'SEO 블로그 용도로 제작한 Next.js 기반의 웹사이트입니다. Next.js를 선택하여 Vercel로 배포를 완료하였고 SEO, SSR 등을 적용하며 Pre-rendering, Fash Refresh, Optimization에 대한 개념을 배울 수 있었습니다. 또한 Material-UI을 적용하였고 mongodb로 구현한 CRUD를 통해 REST API의 개념을 확실하게 익힐 수 있었던 프로젝트입니다.',
+		body: 'SEO 블로그 서비스 용도로 제작한 Next.js 기반의 웹사이트입니다. Next.js를 선택하여 Vercel로 배포를 완료하였고 SEO, SSR 등을 적용하며 Pre-rendering, Fash Refresh, Optimization에 대한 개념을 배울 수 있었습니다. 또한 Material-UI을 적용하였고 mongodb로 구현한 CRUD를 통해 REST API의 개념을 확실하게 익힐 수 있었던 프로젝트입니다.',
 		stack: [
 			'계정관련 CRUD, 게시글 CRUD, 북마크 CRUD, 검색기능 등',
 			'https://github.com/po4tion/devblog',
