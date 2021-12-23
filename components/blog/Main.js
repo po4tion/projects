@@ -47,32 +47,10 @@ function Main({ router, token }) {
 		setData(new FormData());
 	}, [router]);
 
-	useEffect(() => {
-		// 작성 중이던 글 임시 저장 기능(뒤로 가기, 새로 고침 시 글 초기화 방지)
-		const blogSave = () => {
-			if (typeof window === 'undefined') {
-				return '';
-			}
-
-			if (localStorage.getItem('blog')) {
-				return JSON.parse(localStorage.getItem('blog'));
-			} else {
-				return '';
-			}
-		};
-
-		setBody(blogSave());
-	}, []);
-
 	// quill 본문 control
 	const handleQuill = e => {
 		setBody(e);
 		data.set('body', e);
-
-		// window === 'object' => 브라우저 상태
-		if (typeof window !== 'undefined') {
-			localStorage.setItem('blog', JSON.stringify(e));
-		}
 	};
 
 	const handleSubmit = e => {
