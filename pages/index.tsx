@@ -21,7 +21,7 @@ const Home: NextPage = () => {
 					description: '김동규의 포트폴리오',
 					images: [
 						{
-							url: `${process.env.NEXT_PUBLIC_DOMAIN}/images/portfolioImg/portfolio.webp`,
+							url: `${process.env.NEXT_PUBLIC_DOMAIN}/images/portfolioImg/portfolio/home.webp`,
 							width: 500,
 							height: 500,
 							alt: '포트폴리오',
