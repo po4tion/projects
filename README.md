@@ -56,6 +56,7 @@
 - react-typed
 - react-tsparticles
 - react-icons
+- react-slick
 
 ## 배포 환경과 테스트 환경
 
