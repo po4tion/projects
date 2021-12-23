@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to DEVBLOG 👋</h1>
+<h1 align="center">Welcome to PORTFOLIO 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <img src="https://img.shields.io/badge/yarn-%3E%3D1.22.5-blue.svg" />
@@ -17,10 +17,10 @@
 1. [PORTFOLIO](#PORTFOLIO)
 2. [설명](#설명)
 3. [브랜치 관리 전략](#브랜치-관리-전략)
-4. [사용기술](#사용기술)
+4. [사용 기술](#사용-기술)
 5. [배포 환경과 테스트 환경](#배포-환경과-테스트-환경)
-6. [제공기능](#제공기능)
-7. [파일관리](#파일관리)
+6. [제공 기능](#제공-기능)
+7. [파일 관리](#파일-관리)
 8. [개발자](#개발자)
 9. [제보사항](#제보사항)
 
@@ -31,8 +31,9 @@
 ## 설명
 
 - Next.js를 통해 SEO 적용
-- TailWind CSS를 통해 웹 UI 전체 적용
-- TypeScript의 정적타입 정의를 통해 에러 사전 방지
+- TailWind CSS를 통해 웹 UI 전체 페이지 적용(반응형 웹 적용)
+- TypeScript의 정적타입 정의를 통해 사전 에러 방지
+- Cypress를 통해 사용자 관점에서 테스트 완료
 
 ## 브랜치 관리 전략
 
@@ -46,7 +47,7 @@
 | release | 배포 전 테스트를 하기 위한 브랜치               |
 | hotfix  | 배포 후 버그 발생 시, 긴급 수정하기 위한 브랜치 |
 
-## 사용기술
+## 사용 기술
 
 - React.js
 - Next.js
@@ -61,7 +62,7 @@
 - 배포 환경 : Vercel
 - 테스트 환경 : Cypress
 
-## 제공기능
+## 제공 기능
 
 1. 홈
 2. 자기소개
@@ -69,7 +70,7 @@
 4. 포트폴리오
 5. 연락방법
 
-## 파일관리
+## 파일 관리
 
 | 파일명     | 목적                    |
 | ---------- | ----------------------- |
