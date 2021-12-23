@@ -1,8 +1,31 @@
 import Image from 'next/image';
 import { portfolioData } from 'helpers/portfolioData';
 import { BsArrowRightSquareFill } from 'react-icons/bs';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+interface SliderSettings {
+	dots: boolean;
+	infinite: boolean;
+	speed: number;
+	slidesToShow: number;
+	slidesToScroll: number;
+	autoplay: boolean;
+	autoplaySpeed: number;
+}
 
 function Portfolio() {
+	const settings: SliderSettings = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 2000,
+	};
+
 	return (
 		<div className="container w-screen mx-auto h-auto">
 			<div className="flex items-center justify-center">
@@ -19,18 +42,28 @@ function Portfolio() {
 						key={item.desc}
 						className="flex items-center justify-center flex-col lg:flex-row mb-10"
 					>
-						<div className="relative w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] rounded-md border-solid border-2 border-gray mr-2">
-							<Image
-								src={`/images/portfolioImg/${item.image}`}
-								alt="프로필 사진"
-								layout="fill"
-								objectFit="cover"
-								className="rounded-md"
-								quality={100}
-								priority
-							/>
-						</div>
-						<div className="mt-4 lg:mt-0 w-[350px] h-auto sm:w-[500px] sm:h-[500px] flex flex-col items-center rounded-md border-solid border-2 border-gray">
+						<Slider
+							{...settings}
+							className="w-[350px] h-[350px] sm:w-[500px] sm:h-[500px]"
+						>
+							{item.images.map(image => (
+								<div
+									key={image}
+									className="relative w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] rounded-md border-solid border-2 border-gray mr-2"
+								>
+									<Image
+										src={`/images/portfolioImg/${item.src}/${image}${item.ext}`}
+										alt="프로필 사진"
+										layout="fill"
+										className="rounded-md"
+										quality={100}
+										priority
+									/>
+								</div>
+							))}
+						</Slider>
+
+						<div className="mt-8 lg:mt-0 w-[350px] h-auto sm:w-[500px] sm:h-[500px] flex flex-col items-center rounded-md border-solid border-2 border-gray">
 							<h1
 								className="border-b-4 border-b-blue-200 font-noto text-4xl font-bold mb-2"
 								data-cy={item.desc}

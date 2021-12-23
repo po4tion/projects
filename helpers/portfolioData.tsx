@@ -13,7 +13,9 @@ import {
 } from 'react-icons/si';
 
 interface PortFolioInfo {
-	readonly image: string;
+	readonly src: string;
+	readonly ext: string;
+	readonly images: string[];
 	readonly link: string;
 	readonly desc: string;
 	readonly summary: string;
@@ -25,7 +27,9 @@ interface PortFolioInfo {
 
 export const portfolioData: PortFolioInfo[] = [
 	{
-		image: 'portfolio.webp',
+		src: 'portfolio',
+		ext: '.webp',
+		images: ['home', 'about-me', 'skills', 'portfolio'],
 		link: 'https://devblog-mu.vercel.app/',
 		desc: 'PORTFOLIO',
 		summary: 'Tailwind CSS를 사용한 포트폴리오 프로젝트',
@@ -46,7 +50,18 @@ export const portfolioData: PortFolioInfo[] = [
 		],
 	},
 	{
-		image: 'devblog.webp',
+		src: 'devblog',
+		ext: '.webp',
+		images: [
+			'home',
+			'signup',
+			'login',
+			'search',
+			'write',
+			'post',
+			'related',
+			'profile',
+		],
 		link: 'https://devblog-mu.vercel.app/',
 		desc: 'DEVBLOG',
 		summary: 'Next.js를 적용한 SEO 블로그 프론트엔드 프로젝트',

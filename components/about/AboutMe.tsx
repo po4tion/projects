@@ -4,7 +4,7 @@ import Typed from 'react-typed';
 function AboutMe() {
 	return (
 		<div
-			className="container mx-auto h-screen flex flex-col lg:flex-row justify-center sm:justify-evenly items-center select-none"
+			className="container mx-auto h-[1000px] lg:h-screen flex flex-col lg:flex-row justify-center sm:justify-evenly items-center select-none"
 			data-cy="AboutMe"
 		>
 			<div className="relative w-72 h-72 rounded-full border-solid border-2 border-gray sm:mr-2">
