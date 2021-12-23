@@ -27,8 +27,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 function BookmarkManagement() {
 	const [bookmark, setBookmark] = useState([]);
 	const [msg, setMsg] = useState('북마크를 불러오는 중입니다');
-	const [limit, setLimit] = useState(5);
-	const [skip, setSkip] = useState(0);
 	const [page, setPage] = useState(1);
 	const [size, setSize] = useState(0);
 	const [removed, setRemoved] = useState(false);
@@ -36,7 +34,7 @@ function BookmarkManagement() {
 
 	useEffect(() => {
 		isAuth() &&
-			getBookmarkList(isAuth().email, limit, skip).then(data => {
+			getBookmarkList(isAuth().email).then(data => {
 				if (data.error === null) {
 					setSize(0);
 					setBookmark([]);
@@ -46,10 +44,10 @@ function BookmarkManagement() {
 					setMsg('등록된 북마크가 없습니다');
 				}
 			});
-	}, [limit, skip, removed]);
+	}, [removed]);
 
 	// 북마크 등록 & 취소
-	const handleBookmark = useCallback(() => {
+	const handleBookmark = bookmark => {
 		const handleDelete = slug => {
 			removeBookmarked(isAuth().email, slug).then(data => {
 				setRemoved(r => !r);
@@ -120,31 +118,33 @@ function BookmarkManagement() {
 				</ListItem>
 			);
 		});
-	}, [bookmark]);
+	};
 
 	// 페이지네이션 설정
 	const handlePagination = useCallback(() => {
 		const handleChange = (_, value) => {
 			setPage(value);
-			setSkip((value - 1) * limit);
+
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		};
 
 		return (
 			<Pagination
 				page={page}
-				count={size ? Math.ceil(size / limit) : 1}
+				count={size ? Math.ceil(size / 5) : 1}
 				color="numbering"
 				onChange={handleChange}
 			/>
 		);
-	}, [page, size, limit]);
+	}, [page, size]);
 
 	return (
 		<>
 			<Body maxWidth="md">
 				{bookmark.length !== 0 && (
-					<List sx={{ width: matches ? 400 : '100%' }}>{handleBookmark()}</List>
+					<List sx={{ width: matches ? 400 : '100%' }}>
+						{handleBookmark(bookmark.slice(page * 5 - 5, page * 5))}
+					</List>
 				)}
 				{size === 0 && (
 					<Alert sx={{ mb: 4 }} severity="info">

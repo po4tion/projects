@@ -43,8 +43,8 @@ export const removeBookmarked = async (email, slug) => {
 };
 
 // BookmarkManagement
-export const getBookmarkList = async (email, limit, skip) => {
-	const data = { email, limit, skip };
+export const getBookmarkList = async email => {
+	const data = { email };
 	const query = queryString.stringify(data);
 
 	const result = axios

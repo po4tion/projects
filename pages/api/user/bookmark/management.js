@@ -15,7 +15,7 @@ export default function handler(req, res) {
 		switch (method) {
 			case 'GET':
 				try {
-					const { email, limit, skip } = req.query;
+					const { email } = req.query;
 
 					await Bookmark.findOne({ email })
 						.lean()
@@ -27,8 +27,6 @@ export default function handler(req, res) {
 							const data = await Blog.find({ slug: { $in: docs.list } })
 								.populate('postedBy', 'username -_id')
 								.select('title postedBy slug')
-								.limit(parseInt(limit))
-								.skip(parseInt(skip))
 								.sort({ createdAt: -1 })
 								.lean();
 
