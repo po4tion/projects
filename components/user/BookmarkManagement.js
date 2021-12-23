@@ -89,7 +89,12 @@ function BookmarkManagement() {
 					<ListItemAvatar>
 						<Avatar
 							variant="rounded"
-							sx={{ position: 'relative', width: 48, height: 48 }}
+							sx={{
+								position: 'relative',
+								width: 48,
+								height: 48,
+								border: '1px solid lightgray',
+							}}
 						>
 							<Image
 								layout="fill"
