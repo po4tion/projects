@@ -2,11 +2,12 @@
 	Connect: index.js
 */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { getBlogs } from '/actions/handleBlog';
+import { getOneTag } from '/actions/handleTag';
 
 // MUI
 import Alert from '@mui/material/Alert';
@@ -18,12 +19,36 @@ import Grid from '@mui/material/Grid';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Typography from '@mui/material/Typography';
 
-function HomeList({ blogs, limitNum, skipNum }) {
+function HomeList() {
 	const { pathname } = useRouter();
-	const [blogObj, setBlogObj] = useState(blogs);
-	const [limit, setLimit] = useState(limitNum);
-	const [skip, setSkip] = useState(skipNum);
+	const [blogObj, setBlogObj] = useState([]);
+	const [limit, setLimit] = useState(8);
+	const [skip, setSkip] = useState(0);
 	const [hasMore, setHasMore] = useState(true);
+
+	// tagList 가져오기(populate)
+	useEffect(() => {
+		const getTagData = async () => {
+			await getOneTag();
+		};
+
+		getTagData();
+	}, []);
+
+	// 처음으로 보여지는 유저 포스트 8개 가져오기
+	useEffect(() => {
+		const limit = 8,
+			skip = 0;
+
+		const getBlogData = async () => {
+			const data = await getBlogs(limit, skip);
+			const blogs = await data.blogs;
+
+			setBlogObj(blogs);
+		};
+
+		getBlogData();
+	}, []);
 
 	// 새로운 포스트 정보 관리
 	const getMoreBlog = async () => {

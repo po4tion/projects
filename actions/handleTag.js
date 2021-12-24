@@ -24,6 +24,15 @@ export const getTagList = async () => {
 	return result;
 };
 
+export const getOneTag = async () => {
+	const result = await axios
+		.get('/api/tag')
+		.then(res => res.data)
+		.catch(err => err.response.data);
+
+	return result;
+};
+
 // tags/[slug].js [getStaticProps]
 export const getTagInServer = async slug => {
 	const result = await axios
