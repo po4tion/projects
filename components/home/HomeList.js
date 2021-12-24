@@ -117,7 +117,7 @@ function HomeList() {
 					next={getMoreBlog}
 					hasMore={hasMore}
 					loader={
-						<Typography variant="h5" align="center" mt={4}>
+						<Typography variant="h4" align="center" mt={4}>
 							로딩중...
 						</Typography>
 					}

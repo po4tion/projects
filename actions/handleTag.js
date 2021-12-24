@@ -14,7 +14,7 @@ export const createTag = async (tag, token) => {
 	return result;
 };
 
-// index.js [getStaticProps], blogs/[slug].js [getStaticProps]
+// blogs/[slug].js [getStaticProps]
 export const getTagList = async () => {
 	const result = await axios
 		.get(`${process.env.API}/api/tag`)
@@ -24,6 +24,7 @@ export const getTagList = async () => {
 	return result;
 };
 
+// HomeList
 export const getOneTag = async () => {
 	const result = await axios
 		.get('/api/tag')

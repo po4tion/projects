@@ -51,17 +51,6 @@ export const getBlogs = async (limit, skip) => {
 	return result;
 };
 
-// index.js [getServerSideProps]
-export const getBlogsInServer = async (limit, skip) => {
-	const data = { limit, skip };
-	const result = await axios
-		.post(`${process.env.API}/api/blogs`, data)
-		.then(res => res.data)
-		.catch(err => err.response);
-
-	return result;
-};
-
 // admin/crud/management.js [getServerSideProps]
 export const adminManageBlogs = async token => {
 	const result = await axios
