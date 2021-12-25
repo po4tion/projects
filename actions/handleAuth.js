@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import Router from 'next/router';
 
 // AuthSignUp
 export const beforeSignup = async user => {

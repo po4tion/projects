@@ -1,6 +1,6 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import { isAuth, handleResponse } from '/actions/handleAuth';
+import { isAuth } from '/actions/handleAuth';
 
 // Main
 export const createBlog = async (blog, token) => {
