@@ -6,17 +6,18 @@ function Header({ name }: { name: string }) {
     const result = [];
 
     for (let i = 0; i < 40; i++) {
-      result.push(<div className={styles.text}>{name}</div>);
+      result.push(
+        <div key={i} className={styles.text}>
+          {name}
+        </div>
+      );
     }
 
     return result;
   };
 
   return (
-    <Box
-      className={styles.body}
-      sx={{ border: "1px solid black", width: "100%" }}
-    >
+    <Box className={styles.body} sx={{ width: "100%", userSelect: "none" }}>
       <Box className={styles.ui}>{textEffect()}</Box>
     </Box>
   );

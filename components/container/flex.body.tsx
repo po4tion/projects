@@ -5,7 +5,7 @@ function FlexBody({
   children,
   mw,
 }: {
-  children: ReactJSXElement;
+  children: ReactJSXElement[];
   mw: Breakpoint;
 }) {
   return (
@@ -15,6 +15,7 @@ function FlexBody({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flexDirection: "column",
         height: "100%",
       }}
     >
