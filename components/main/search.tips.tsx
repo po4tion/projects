@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { useRecoilValue } from "recoil";
 import { lengthState, emailState } from "../../atoms/atom.searchTips";

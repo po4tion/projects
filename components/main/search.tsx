@@ -6,6 +6,7 @@ import debounce from "lodash/debounce";
 import { checkLength, checkEmail } from "../../utils/validation";
 import { useSetRecoilState } from "recoil";
 import { lengthState, emailState } from "../../atoms/atom.searchTips";
+import { useApex } from "../../hooks/useApex";
 
 function Skeletons({ w, h }: { w: string; h: string }) {
   return (
@@ -20,8 +21,28 @@ function Skeletons({ w, h }: { w: string; h: string }) {
 
 function SearchInput({ appearance }: { appearance: boolean }) {
   const [originId, setOriginId] = useState<string | null>(null);
+  const [startFetch, setStartFetch] = useState(false);
   const setLengthState = useSetRecoilState(lengthState);
   const setEmailState = useSetRecoilState(emailState);
+  const { user, isLoading } = useApex("Leaderboard", startFetch);
+
+  /**
+   *! TEST용 clg
+   */
+  console.log(isLoading);
+  if (user) {
+    console.log(user);
+  }
+
+  const validation = (): boolean => {
+    const resultLength = checkLength(originId as string);
+    const resultEmail = checkEmail(originId as string);
+
+    setLengthState(resultLength);
+    setEmailState(resultEmail);
+
+    return resultLength && resultEmail;
+  };
 
   const debounceChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
     setOriginId(e.target.value);
@@ -29,16 +50,16 @@ function SearchInput({ appearance }: { appearance: boolean }) {
 
   const enterSearch = debounce((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log("push enter");
+      validation();
     }
   }, 150);
 
   const clickIcon = () => {
-    const resultLength = checkLength(originId as string);
-    const resultEmail = checkEmail(originId as string);
+    const result = validation();
 
-    setLengthState(resultLength);
-    setEmailState(resultEmail);
+    if (result) {
+      setStartFetch(true);
+    }
   };
 
   return (
