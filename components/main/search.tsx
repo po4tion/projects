@@ -1,7 +1,11 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import { Box, Fade, IconButton, Input, Skeleton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchTips from "./search.tips";
+import debounce from "lodash/debounce";
+import { checkLength, checkEmail } from "../../utils/validation";
+import { useSetRecoilState } from "recoil";
+import { lengthState, emailState } from "../../atoms/atom.searchTips";
 
 function Skeletons({ w, h }: { w: string; h: string }) {
   return (
@@ -16,9 +20,25 @@ function Skeletons({ w, h }: { w: string; h: string }) {
 
 function SearchInput({ appearance }: { appearance: boolean }) {
   const [originId, setOriginId] = useState<string | null>(null);
+  const setLengthState = useSetRecoilState(lengthState);
+  const setEmailState = useSetRecoilState(emailState);
 
-  const handleId = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+  const debounceChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
+    setOriginId(e.target.value);
+  }, 150);
+
+  const enterSearch = debounce((e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      console.log("push enter");
+    }
+  }, 150);
+
+  const clickIcon = () => {
+    const resultLength = checkLength(originId as string);
+    const resultEmail = checkEmail(originId as string);
+
+    setLengthState(resultLength);
+    setEmailState(resultEmail);
   };
 
   return (
@@ -41,11 +61,12 @@ function SearchInput({ appearance }: { appearance: boolean }) {
         justifyContent={"space-between"}
       >
         <Input
-          onChange={handleId}
+          onChange={debounceChange}
+          onKeyDown={enterSearch}
           placeholder="Origin ID를 입력해주세요"
           sx={{ fontSize: "1.5rem", width: "400px" }}
         />
-        <IconButton edge="end" color="primary">
+        <IconButton edge="end" color="primary" onClick={clickIcon}>
           <SearchIcon color="primary" fontSize="large" />
         </IconButton>
       </Box>

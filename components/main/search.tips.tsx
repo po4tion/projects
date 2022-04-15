@@ -1,7 +1,13 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { useRecoilValue } from "recoil";
+import { lengthState, emailState } from "../../atoms/atom.searchTips";
 import Link from "../../src/Link";
 
 function SearchTips() {
+  const tipsLengthState = useRecoilValue(lengthState);
+  const tipsEmailState = useRecoilValue(emailState);
+
   return (
     <Grid
       container
@@ -12,13 +18,19 @@ function SearchTips() {
       sx={{ userSelect: "none" }}
     >
       <Grid item xs={12}>
-        <Typography color="#959595">
+        <Typography color={tipsLengthState ? "#959595" : "#F44336"}>
           &middot; ID는 최소 4자, 최대 16자 입니다.
+          {tipsLengthState ? null : (
+            <CheckIcon color="warning" sx={{ fontSize: "14px" }} />
+          )}
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography color="#959595">
+        <Typography color={tipsEmailState ? "#959595" : "#F44336"}>
           &middot; ID는 이메일 주소가 아닙니다.
+          {tipsEmailState ? null : (
+            <CheckIcon color="warning" sx={{ fontSize: "14px" }} />
+          )}
         </Typography>
       </Grid>
       <Grid item xs={12}>

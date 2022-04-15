@@ -12,6 +12,9 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    warning: {
+      main: "#F44336",
+    },
   },
   breakpoints: {
     values: {
