@@ -17,7 +17,7 @@ function Header({ name }: { name: string }) {
   };
 
   return (
-    <Box className={styles.body} sx={{ width: "100%", userSelect: "none" }}>
+    <Box className={styles.body} width={"100%"} sx={{ userSelect: "none" }}>
       <Box className={styles.ui}>{textEffect()}</Box>
     </Box>
   );

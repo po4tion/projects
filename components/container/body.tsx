@@ -3,7 +3,7 @@ import { Breakpoint, Container } from "@mui/material";
 
 function Body({ children, mw }: { children: ReactJSXElement; mw: Breakpoint }) {
   return (
-    <Container maxWidth={mw} sx={{ height: "100vh" }}>
+    <Container maxWidth={mw} sx={{ height: "100vh", minWidth: "800px" }}>
       {children}
     </Container>
   );
