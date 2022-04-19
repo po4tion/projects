@@ -7,10 +7,13 @@ const theme = createTheme({
       main: "#556cd6",
     },
     secondary: {
-      main: "#19857b",
+      main: "#ff5722",
     },
     error: {
       main: red.A400,
+    },
+    warning: {
+      main: "#F44336",
     },
   },
   breakpoints: {

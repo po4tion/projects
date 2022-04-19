@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import styles from "../../styles/textSlicer.module.scss";
 
-function Header({ name }: { name: string }) {
+function Header({ name }: { name: string | undefined }) {
   const textEffect = () => {
     const result = [];
 
@@ -17,7 +17,7 @@ function Header({ name }: { name: string }) {
   };
 
   return (
-    <Box className={styles.body} sx={{ width: "100%", userSelect: "none" }}>
+    <Box className={styles.body} width={"100%"} sx={{ userSelect: "none" }}>
       <Box className={styles.ui}>{textEffect()}</Box>
     </Box>
   );

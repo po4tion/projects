@@ -4,7 +4,7 @@ function Home() {
   return (
     <Body mw="lg">
       <FlexBody mw="lg">
-        <Header name="ApexStats" />
+        <Header name={process.env.NEXT_PUBLIC_APPNAME} />
         <Search />
       </FlexBody>
     </Body>
