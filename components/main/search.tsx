@@ -6,7 +6,9 @@ import debounce from "lodash/debounce";
 import { checkLength, checkEmail } from "../../utils/validation";
 import { useSetRecoilState } from "recoil";
 import { lengthState, emailState } from "../../atoms/atom.searchTips";
-import { useApex } from "../../hooks/useApex";
+import { useUser, useProfileImg } from "../../hooks/useApex";
+import { profileUrlState, userState } from "../../atoms/atom.userInfo";
+import { useRouter } from "next/router";
 
 function Skeletons({ w, h }: { w: string; h: string }) {
   return (
@@ -24,15 +26,27 @@ function SearchInput({ appearance }: { appearance: boolean }) {
   const [startFetch, setStartFetch] = useState(false);
   const setLengthState = useSetRecoilState(lengthState);
   const setEmailState = useSetRecoilState(emailState);
-  const { user, isLoading } = useApex("Leaderboard", startFetch);
 
-  /**
-   *! TEST용 clg
-   */
-  console.log(isLoading);
-  if (user) {
-    console.log(user);
-  }
+  const { user } = useUser(originId as string, startFetch);
+  const { url } = useProfileImg(originId as string, startFetch);
+  const setUserInfo = useSetRecoilState(userState);
+  const setProfileUrl = useSetRecoilState(profileUrlState);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    let next = false;
+
+    if (user && url) {
+      setUserInfo(user);
+      setProfileUrl(url);
+      next = !next;
+    }
+
+    if (next) {
+      router.push(`/${originId}`);
+    }
+  }, [user, url, setUserInfo, setProfileUrl, originId, router]);
 
   const validation = (): boolean => {
     const resultLength = checkLength(originId as string);
@@ -46,13 +60,13 @@ function SearchInput({ appearance }: { appearance: boolean }) {
 
   const debounceChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
     setOriginId(e.target.value);
-  }, 150);
+  }, 200);
 
   const enterSearch = debounce((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       validation();
     }
-  }, 150);
+  }, 200);
 
   const clickIcon = () => {
     const result = validation();

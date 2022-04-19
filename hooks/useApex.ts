@@ -3,16 +3,26 @@ import useSWR from "swr";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-export function useApex(id: string, shouldFetch: boolean) {
+export function useUser(id: string, shouldFetch: boolean) {
   const { data, error } = useSWR(
-    shouldFetch
-      ? `https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=${id}&auth=Xw7aOON3VpfYq2pnpXpO`
-      : null,
+    shouldFetch ? `/api/apexlegends?uid=${id}` : null,
     fetcher
   );
 
   return {
     user: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+}
+export function useProfileImg(id: string, shouldFetch: boolean) {
+  const { data, error } = useSWR(
+    shouldFetch ? `/api/tracker?uid=${id}` : null,
+    fetcher
+  );
+
+  return {
+    url: data,
     isLoading: !error && !data,
     isError: error,
   };
