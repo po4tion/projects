@@ -38,10 +38,7 @@ function SearchInput({ appearance }: { appearance: boolean }) {
     originId as string,
     startFetch
   );
-  const { url, isLoading: urlLoading } = useProfileImg(
-    originId as string,
-    startFetch
-  );
+  const { url } = useProfileImg(originId as string, startFetch);
   const setUserInfo = useSetRecoilState(userState);
   const setProfileUrl = useSetRecoilState(profileUrlState);
 
@@ -52,14 +49,22 @@ function SearchInput({ appearance }: { appearance: boolean }) {
   useEffect(() => {
     let next = false;
 
-    if (user && url) {
+    /**
+     ** url type 1. origin url 2. "" string
+     */
+    if (user && (url || url === "")) {
       setUserInfo(user);
       setProfileUrl(url);
+
+      sessionStorage.setItem("userinfo", JSON.stringify(user));
+      sessionStorage.setItem("profileurl", url);
+
       next = !next;
     }
 
     if (next) {
-      router.push(`/${originId}`);
+      setLoading(false);
+      router.push(`/${encodeURIComponent(originId)}`);
     }
   }, [user, url, setUserInfo, setProfileUrl, originId, router]);
 
@@ -99,7 +104,7 @@ function SearchInput({ appearance }: { appearance: boolean }) {
   const handleProgress = () => {
     if (loading) {
       return LoadingProgress();
-    } else if (!userLoading && !urlLoading) {
+    } else if (!userLoading) {
       return null;
     }
   };

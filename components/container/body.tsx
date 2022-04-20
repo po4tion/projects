@@ -9,10 +9,7 @@ function Body({
   mw: Breakpoint;
 }) {
   return (
-    <Container
-      maxWidth={mw}
-      sx={{ height: "100vh", minWidth: "800px", border: "1px solid black" }}
-    >
+    <Container maxWidth={mw} sx={{ height: "100vh", minWidth: "1200px" }}>
       {children}
     </Container>
   );

@@ -29,7 +29,7 @@ function HeaderLogo() {
     /**
      ** recoil value clear
      */
-    setUserInfo(null);
+    setUserInfo({});
     setProfileUrl(null);
 
     router.push("/");
