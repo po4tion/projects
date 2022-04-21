@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import styles from "../../styles/textSlicer.module.scss";
 
-function Header({ name }: { name: string | undefined }) {
+function MainHeader({ name }: { name: string | undefined }) {
   const textEffect = () => {
     const result = [];
 
@@ -23,4 +23,4 @@ function Header({ name }: { name: string | undefined }) {
   );
 }
 
-export default Header;
+export default MainHeader;
