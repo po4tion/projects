@@ -5,7 +5,9 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useUser(id: string, shouldFetch: boolean) {
   const { data, error } = useSWR(
-    shouldFetch ? `/api/apexlegends?uid=${id}` : null,
+    shouldFetch
+      ? `${process.env.NEXT_PUBLIC_URL}/api/apexlegends?uid=${id}`
+      : null,
     fetcher
   );
 
@@ -17,7 +19,7 @@ export function useUser(id: string, shouldFetch: boolean) {
 }
 export function useProfileImg(id: string, shouldFetch: boolean) {
   const { data, error } = useSWR(
-    shouldFetch ? `/api/tracker?uid=${id}` : null,
+    shouldFetch ? `${process.env.NEXT_PUBLIC_URL}/api/tracker?uid=${id}` : null,
     fetcher
   );
 
@@ -29,7 +31,7 @@ export function useProfileImg(id: string, shouldFetch: boolean) {
 
 export function usePredatorLimit(shouldFetch: boolean) {
   const { data, error } = useSWR(
-    shouldFetch ? "/api/predators" : null,
+    shouldFetch ? `${process.env.NEXT_PUBLIC_URL}/api/predators` : null,
     fetcher
   );
 
