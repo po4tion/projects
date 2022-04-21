@@ -29,7 +29,7 @@ export function useProfileImg(id: string, shouldFetch: boolean) {
 
 export function usePredatorLimit(shouldFetch: boolean) {
   const { data, error } = useSWR(
-    shouldFetch ? "/api/predators" : null,
+    shouldFetch ? `/api/predators` : null,
     fetcher
   );
 

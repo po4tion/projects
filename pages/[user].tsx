@@ -1,11 +1,11 @@
-import { Body, UserInfoHeader, UserStats } from "../components";
+import { SideBody, UserInfoHeader, UserStats } from "../components";
 
 function User() {
   return (
-    <Body mw="lg">
+    <SideBody mw="lg">
       <UserInfoHeader />
       <UserStats />
-    </Body>
+    </SideBody>
   );
 }
 

@@ -1,7 +1,7 @@
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { Breakpoint, Container } from "@mui/material";
 
-function Body({
+function SideBody({
   children,
   mw,
 }: {
@@ -15,4 +15,4 @@ function Body({
   );
 }
 
-export default Body;
+export default SideBody;

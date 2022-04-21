@@ -1,12 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
-import {
-  Box,
-  CircularProgress,
-  Fade,
-  IconButton,
-  Input,
-  Skeleton,
-} from "@mui/material";
+import { Box, Fade, IconButton, Input } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchTips from "./SearchTips";
 import debounce from "lodash/debounce";

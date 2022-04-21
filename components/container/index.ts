@@ -1,2 +1,2 @@
-export { default as Body } from "./Body";
+export { default as SideBody } from "./SideBody";
 export { default as FlexBody } from "./FlexBody";
