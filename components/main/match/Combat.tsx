@@ -1,12 +1,7 @@
 import { Box, Typography } from "@mui/material";
+import { combatType } from "../../../types/matchTypes";
 
-function Combat({
-  damage,
-  kill,
-}: {
-  damage: number | undefined;
-  kill: number;
-}) {
+function Combat({ damage, kill }: combatType) {
   return (
     <Box>
       <Typography variant="h5">총 전투력</Typography>

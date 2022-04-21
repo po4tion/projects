@@ -1,15 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+import { rankAvatarType } from "../../../types/matchTypes";
 
-function RankAvatar({
-  rankUrl,
-  score,
-  scoreChange,
-}: {
-  rankUrl: string;
-  score: number;
-  scoreChange: number;
-}) {
+function RankAvatar({ gameMode, rankUrl, score, scoreChange }: rankAvatarType) {
   return (
     <Box
       display={"flex"}
@@ -22,10 +15,10 @@ function RankAvatar({
         width={120}
         height={120}
         quality={100}
-        alt="테스트 사진2"
+        alt={gameMode}
       />
       <Box textAlign={"center"}>
-        <Typography variant="h5">배틀로얄</Typography>
+        <Typography variant="h5">{gameMode}</Typography>
         <Typography variant="inherit">{score}</Typography>
         <Typography variant="inherit">{scoreChange}</Typography>
       </Box>

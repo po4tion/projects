@@ -1,7 +1,8 @@
 import { Avatar, ListItemAvatar } from "@mui/material";
 import Image from "next/image";
+import { iconAvatarType } from "../../../types/matchTypes";
 
-function PlayerAvatar({ iconUrl }: { iconUrl: string }) {
+function PlayerAvatar({ iconUrl }: iconAvatarType) {
   return (
     <ListItemAvatar sx={{ height: "100%" }}>
       <Avatar

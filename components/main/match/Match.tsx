@@ -45,11 +45,13 @@ function Match() {
                 gap={5}
               >
                 <RankAvatar
+                  gameMode="배틀로얄"
                   rankUrl={item.rankUrl}
                   score={item.score}
                   scoreChange={item.scoreChange}
                 />
                 <RankAvatar
+                  gameMode="아레나"
                   rankUrl={item.arenaRankUrl}
                   score={item.arenaScore}
                   scoreChange={item.arenaScoreChange}

@@ -8,6 +8,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (method) {
       /**
        ** 유저 정보
+       *! legends 필요성 여부 다시 확인
        */
       case "GET":
         try {

@@ -14,3 +14,19 @@ export interface matchType {
   kill: number;
   recordDate: string;
 }
+
+export interface rankAvatarType {
+  gameMode: string;
+  rankUrl: string;
+  score: number;
+  scoreChange: number;
+}
+
+export interface iconAvatarType {
+  iconUrl: string;
+}
+
+export interface combatType {
+  damage: number | undefined;
+  kill: number;
+}
