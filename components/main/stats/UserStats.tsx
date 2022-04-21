@@ -23,22 +23,22 @@ function UserStats() {
             justifyContent={"space-between"}
           >
             <Box display={"flex"}>
-              {ProfileImg()}
+              <ProfileImg />
               <Box
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
               >
-                {ProfileContent()}
+                <ProfileContent />
               </Box>
             </Box>
-            {Clubs()}
+            <Clubs />
           </Box>
         </Card>
-        {PredatorLimit()}
+        <PredatorLimit />
       </Box>
       <Card raised sx={{ width: "250px" }}>
-        {LiveContent()}
+        <LiveContent />
       </Card>
     </Box>
   );

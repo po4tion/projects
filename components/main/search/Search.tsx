@@ -10,29 +10,20 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import SearchTips from "./SearchTips";
 import debounce from "lodash/debounce";
-import { checkLength, checkEmail } from "../../utils/validation";
+import { checkLength, checkEmail } from "../../../utils/validation";
 import { useSetRecoilState } from "recoil";
-import { lengthState, emailState } from "../../atoms/atom.searchTips";
-import { useUser, useProfileImg } from "../../hooks/useApex";
+import { lengthState, emailState } from "../../../atoms/atom.searchTips";
+import { useUser, useProfileImg } from "../../../hooks/useApex";
 import {
   clubState,
   globalState,
   legendsState,
   profileUrlState,
   realtimeState,
-} from "../../atoms/atom.userInfo";
+} from "../../../atoms/atom.userInfo";
 import { useRouter } from "next/router";
-
-function Skeletons({ w, h }: { w: string; h: string }) {
-  return (
-    <Skeleton
-      variant="rectangular"
-      width={w}
-      height={h}
-      sx={{ bgcolor: "#ffffff" }}
-    />
-  );
-}
+import Skeletons from "./Skeletons";
+import LoadingProgress from "./LoadingProgress";
 
 function SearchInput({ appearance }: { appearance: boolean }) {
   const [originId, setOriginId] = useState<string>("");
@@ -129,7 +120,7 @@ function SearchInput({ appearance }: { appearance: boolean }) {
 
   const handleProgress = () => {
     if (loading) {
-      return LoadingProgress();
+      return <LoadingProgress />;
     } else if (!userLoading) {
       return null;
     }
@@ -168,14 +159,6 @@ function SearchInput({ appearance }: { appearance: boolean }) {
       </Box>
       {handleProgress()}
     </>
-  );
-}
-
-function LoadingProgress() {
-  return (
-    <Box position="absolute" right="1rem" bottom="1rem">
-      <CircularProgress color="secondary" size={50} />
-    </Box>
   );
 }
 
