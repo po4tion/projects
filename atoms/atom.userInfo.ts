@@ -1,29 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { atom } from "recoil";
 
-export const userState = atom<any>({
-  key: "apexUserState",
-  default: {},
-});
-
 export const globalState = atom<any>({
   key: "globalState",
-  default: {},
+  default: null,
 });
 
 export const realtimeState = atom<any>({
   key: "realtimeState",
-  default: {},
+  default: null,
 });
 
 export const legendsState = atom<any>({
   key: "legendsState",
-  default: {},
+  default: null,
 });
 
 export const clubState = atom<any>({
   key: "clubState",
-  default: {},
+  default: null,
 });
 
 export const profileUrlState = atom<string | null>({

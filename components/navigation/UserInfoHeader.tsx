@@ -1,7 +1,13 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
-import { profileUrlState, userState } from "../../atoms/atom.userInfo";
+import {
+  clubState,
+  globalState,
+  legendsState,
+  profileUrlState,
+  realtimeState,
+} from "../../atoms/atom.userInfo";
 import HelpIcon from "@mui/icons-material/Help";
 import { IconButton } from "@mui/material";
 import { useRouter } from "next/router";
@@ -22,15 +28,23 @@ function HeaderBox() {
 
 function HeaderLogo() {
   const router = useRouter();
-  const setUserInfo = useSetRecoilState(userState);
+  const setGlobalState = useSetRecoilState(globalState);
+  const setRealtimeState = useSetRecoilState(realtimeState);
+  const setLegendsState = useSetRecoilState(legendsState);
+  const setClubState = useSetRecoilState(clubState);
   const setProfileUrl = useSetRecoilState(profileUrlState);
 
   const goHome = () => {
     /**
      ** recoil value clear
      */
-    setUserInfo({});
+    setGlobalState(null);
+    setRealtimeState(null);
+    setLegendsState(null);
+    setClubState(null);
     setProfileUrl(null);
+
+    sessionStorage.clear();
 
     router.push("/");
   };

@@ -14,7 +14,13 @@ import { checkLength, checkEmail } from "../../utils/validation";
 import { useSetRecoilState } from "recoil";
 import { lengthState, emailState } from "../../atoms/atom.searchTips";
 import { useUser, useProfileImg } from "../../hooks/useApex";
-import { profileUrlState, userState } from "../../atoms/atom.userInfo";
+import {
+  clubState,
+  globalState,
+  legendsState,
+  profileUrlState,
+  realtimeState,
+} from "../../atoms/atom.userInfo";
 import { useRouter } from "next/router";
 
 function Skeletons({ w, h }: { w: string; h: string }) {
@@ -39,7 +45,10 @@ function SearchInput({ appearance }: { appearance: boolean }) {
     startFetch
   );
   const { url } = useProfileImg(originId as string, startFetch);
-  const setUserInfo = useSetRecoilState(userState);
+  const setGlobalState = useSetRecoilState(globalState);
+  const setRealtimeState = useSetRecoilState(realtimeState);
+  const setLegendsState = useSetRecoilState(legendsState);
+  const setClubState = useSetRecoilState(clubState);
   const setProfileUrl = useSetRecoilState(profileUrlState);
 
   const [loading, setLoading] = useState(false);
@@ -53,10 +62,17 @@ function SearchInput({ appearance }: { appearance: boolean }) {
      ** url type 1. origin url 2. "" string
      */
     if (user && (url || url === "")) {
-      setUserInfo(user);
+      setGlobalState(user.global);
+      setRealtimeState(user.realtime);
+      setLegendsState(user.legends);
+      setClubState(user.club);
       setProfileUrl(url);
 
       sessionStorage.setItem("userinfo", JSON.stringify(user));
+      sessionStorage.setItem("global", JSON.stringify(user.global));
+      sessionStorage.setItem("realtime", JSON.stringify(user.realtime));
+      sessionStorage.setItem("legends", JSON.stringify(user.legends));
+      sessionStorage.setItem("club", JSON.stringify(user.club));
       sessionStorage.setItem("profileurl", url);
 
       next = !next;
@@ -66,7 +82,17 @@ function SearchInput({ appearance }: { appearance: boolean }) {
       setLoading(false);
       router.push(`/${encodeURIComponent(originId)}`);
     }
-  }, [user, url, setUserInfo, setProfileUrl, originId, router]);
+  }, [
+    user,
+    url,
+    setProfileUrl,
+    originId,
+    router,
+    setGlobalState,
+    setRealtimeState,
+    setLegendsState,
+    setClubState,
+  ]);
 
   const validation = (): boolean => {
     const resultLength = checkLength(originId as string);
