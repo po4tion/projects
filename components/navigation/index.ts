@@ -1,2 +1,1 @@
-export { default as Header } from "./Header";
-export { default as UserInfoHeader } from "./UserInfoHeader";
+export { default as Header } from "./header";

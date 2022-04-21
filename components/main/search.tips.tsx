@@ -1,8 +1,8 @@
 import { Grid, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { useRecoilValue } from "recoil";
-import { lengthState, emailState } from "../../../atoms/atom.searchTips";
-import Link from "../../../src/Link";
+import { lengthState, emailState } from "../../atoms/atom.searchTips";
+import Link from "../../src/Link";
 
 function SearchTips() {
   const tipsLengthState = useRecoilValue(lengthState);
