@@ -11,23 +11,14 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
        */
       case "GET":
         try {
-          const { uid } = req.query;
-
           const getFetchData = async () => {
             const result = await axios
               .get(
-                `https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=${encodeURIComponent(
-                  uid as string
-                )}&auth=${process.env.APEX_KEY}&enableClubsBeta=true`
+                `https://api.mozambiquehe.re/predator?auth=${process.env.APEX_KEY}`
               )
               .then((res) => res.data);
 
-            return res.status(200).json({
-              global: result.global,
-              realtime: result.realtime,
-              legends: result.legends,
-              club: result.club,
-            });
+            return res.status(200).json(result);
           };
 
           await getFetchData();

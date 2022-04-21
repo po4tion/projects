@@ -1,2 +1,2 @@
-export { default as Body } from "./body";
-export { default as FlexBody } from "./flex.body";
+export { default as Body } from "./Body";
+export { default as FlexBody } from "./FlexBody";

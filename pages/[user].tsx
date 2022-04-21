@@ -1,10 +1,12 @@
-import { useRouter } from "next/router";
+import { Body, UserInfoHeader, UserStats } from "../components";
 
 function User() {
-  const router = useRouter();
-  const { pid } = router.query;
-
-  return <div>하이 : {pid}</div>;
+  return (
+    <Body mw="lg">
+      <UserInfoHeader />
+      <UserStats />
+    </Body>
+  );
 }
 
 export default User;
