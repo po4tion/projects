@@ -1,13 +1,7 @@
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import { Breakpoint, Container } from "@mui/material";
+import { Container } from "@mui/material";
+import { sideBodyType } from "../../types/bodyTypes";
 
-function SideBody({
-  children,
-  mw,
-}: {
-  children: ReactJSXElement[] | ReactJSXElement;
-  mw: Breakpoint;
-}) {
+function SideBody({ children, mw }: sideBodyType) {
   return (
     <Container maxWidth={mw} sx={{ height: "100vh", minWidth: "1200px" }}>
       {children}

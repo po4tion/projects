@@ -64,7 +64,6 @@ function SearchInput({ appearance }: { appearance: boolean }) {
       setClubState(user.club);
       setProfileUrl(url);
 
-      sessionStorage.setItem("userinfo", JSON.stringify(user));
       sessionStorage.setItem("global", JSON.stringify(user.global));
       sessionStorage.setItem("realtime", JSON.stringify(user.realtime));
       sessionStorage.setItem("legends", JSON.stringify(user.legends));

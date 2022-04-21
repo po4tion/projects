@@ -38,3 +38,15 @@ export function usePredatorLimit(shouldFetch: boolean) {
     isError: error,
   };
 }
+
+export function useMatchHistory(id: string, shouldFetch: boolean) {
+  const { data, error } = useSWR(
+    shouldFetch ? `/api/history?uid=${id}` : null,
+    fetcher
+  );
+
+  return {
+    matches: data,
+    isError: error,
+  };
+}
