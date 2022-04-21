@@ -9,3 +9,8 @@ export const emailState = atom<boolean>({
   key: "emailState",
   default: true,
 });
+
+export const existenceState = atom<boolean>({
+  key: "existenceState",
+  default: true,
+});

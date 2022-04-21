@@ -12,7 +12,7 @@ export function useUser(id: string, shouldFetch: boolean) {
   return {
     user: data,
     isLoading: !error && !data,
-    isError: error,
+    isError: error && true,
   };
 }
 export function useProfileImg(id: string, shouldFetch: boolean) {
@@ -35,6 +35,18 @@ export function usePredatorLimit(shouldFetch: boolean) {
 
   return {
     predator: data,
+    isError: error,
+  };
+}
+
+export function useMatchHistory(id: string, shouldFetch: boolean) {
+  const { data, error } = useSWR(
+    shouldFetch ? `/api/history?uid=${id}` : null,
+    fetcher
+  );
+
+  return {
+    matches: data,
     isError: error,
   };
 }

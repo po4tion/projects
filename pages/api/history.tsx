@@ -7,8 +7,7 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
 
     switch (method) {
       /**
-       ** 유저 정보
-       *! legends 필요성 여부 다시 확인
+       ** 유저 프로필 사진
        */
       case "GET":
         try {
@@ -17,18 +16,16 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
           const getFetchData = async () => {
             const result = await axios
               .get(
-                `https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=${encodeURIComponent(
-                  uid as string
-                )}&auth=${process.env.APEX_KEY}&enableClubsBeta=true`
+                `https://public-api.tracker.gg/v2/apex/standard/profile/origin/${uid}/sessions`,
+                {
+                  headers: {
+                    "TRN-Api-Key": process.env.TRACKER_KEY as string,
+                  },
+                }
               )
-              .then((res) => res.data);
+              .then((res) => res.data.data.items);
 
-            return res.status(200).json({
-              global: result.global,
-              realtime: result.realtime,
-              legends: result.legends,
-              club: result.club,
-            });
+            return res.status(200).json(result);
           };
 
           await getFetchData();

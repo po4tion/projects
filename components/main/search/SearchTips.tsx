@@ -1,12 +1,17 @@
 import { Grid, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { useRecoilValue } from "recoil";
-import { lengthState, emailState } from "../../../atoms/atom.searchTips";
+import {
+  lengthState,
+  emailState,
+  existenceState,
+} from "../../../atoms/atom.searchTips";
 import Link from "../../../src/Link";
 
 function SearchTips() {
   const tipsLengthState = useRecoilValue(lengthState);
   const tipsEmailState = useRecoilValue(emailState);
+  const tipsExistenceState = useRecoilValue(existenceState);
 
   return (
     <Grid
@@ -29,6 +34,14 @@ function SearchTips() {
         <Typography color={tipsEmailState ? "#959595" : "#F44336"}>
           &middot; ID는 이메일 주소가 아닙니다.
           {tipsEmailState ? null : (
+            <CheckIcon color="warning" sx={{ fontSize: "14px" }} />
+          )}
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography color={tipsExistenceState ? "#959595" : "#F44336"}>
+          &middot; 존재하지 않는 ID는 검색되지 않습니다.
+          {tipsExistenceState ? null : (
             <CheckIcon color="warning" sx={{ fontSize: "14px" }} />
           )}
         </Typography>
