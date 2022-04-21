@@ -5,7 +5,11 @@ import SearchTips from "./SearchTips";
 import debounce from "lodash/debounce";
 import { checkLength, checkEmail } from "../../../utils/validation";
 import { useSetRecoilState } from "recoil";
-import { lengthState, emailState } from "../../../atoms/atom.searchTips";
+import {
+  lengthState,
+  emailState,
+  existenceState,
+} from "../../../atoms/atom.searchTips";
 import { useUser, useProfileImg } from "../../../hooks/useApex";
 import {
   clubState,
@@ -23,11 +27,13 @@ function SearchInput({ appearance }: { appearance: boolean }) {
   const [startFetch, setStartFetch] = useState(false);
   const setLengthState = useSetRecoilState(lengthState);
   const setEmailState = useSetRecoilState(emailState);
+  const setExistenceState = useSetRecoilState(existenceState);
 
-  const { user, isLoading: userLoading } = useUser(
-    originId as string,
-    startFetch
-  );
+  const {
+    user,
+    isLoading: userLoading,
+    isError,
+  } = useUser(originId as string, startFetch);
   const { url } = useProfileImg(originId as string, startFetch);
   const setGlobalState = useSetRecoilState(globalState);
   const setRealtimeState = useSetRecoilState(realtimeState);
@@ -39,13 +45,19 @@ function SearchInput({ appearance }: { appearance: boolean }) {
 
   const router = useRouter();
 
+  /**
+   ** url type 1. origin url 2. "" string
+   */
   useEffect(() => {
     let next = false;
+    const isEmptyObject =
+      user && Object.keys(user).length === 0 && user.constructor === Object;
 
-    /**
-     ** url type 1. origin url 2. "" string
-     */
-    if (user && (url || url === "")) {
+    if (isError || isEmptyObject) {
+      setLoading(false);
+      setExistenceState(false);
+    } else if (user && (url || url === "")) {
+      setExistenceState(true);
       setGlobalState(user.global);
       setRealtimeState(user.realtime);
       setLegendsState(user.legends);
@@ -76,12 +88,15 @@ function SearchInput({ appearance }: { appearance: boolean }) {
     setRealtimeState,
     setLegendsState,
     setClubState,
+    setExistenceState,
+    isError,
   ]);
 
   const validation = (): boolean => {
     const resultLength = checkLength(originId as string);
     const resultEmail = checkEmail(originId as string);
 
+    setExistenceState(true);
     setLengthState(resultLength);
     setEmailState(resultEmail);
 
