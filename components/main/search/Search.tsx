@@ -14,6 +14,7 @@ import { useUser, useProfileImg } from "../../../hooks/useApex";
 import {
   clubState,
   globalState,
+  kdState,
   legendsState,
   profileUrlState,
   realtimeState,
@@ -34,12 +35,13 @@ function SearchInput({ appearance }: { appearance: boolean }) {
     isLoading: userLoading,
     isError,
   } = useUser(originId as string, startFetch);
-  const { url } = useProfileImg(originId as string, startFetch);
+  const { url, kills, damage } = useProfileImg(originId as string, startFetch);
   const setGlobalState = useSetRecoilState(globalState);
   const setRealtimeState = useSetRecoilState(realtimeState);
   const setLegendsState = useSetRecoilState(legendsState);
   const setClubState = useSetRecoilState(clubState);
   const setProfileUrl = useSetRecoilState(profileUrlState);
+  const setKdState = useSetRecoilState(kdState);
 
   const [loading, setLoading] = useState(false);
 
@@ -63,12 +65,14 @@ function SearchInput({ appearance }: { appearance: boolean }) {
       setLegendsState(user.legends);
       setClubState(user.club);
       setProfileUrl(url);
+      setKdState({ kills, damage });
 
       sessionStorage.setItem("global", JSON.stringify(user.global));
       sessionStorage.setItem("realtime", JSON.stringify(user.realtime));
       sessionStorage.setItem("legends", JSON.stringify(user.legends));
       sessionStorage.setItem("club", JSON.stringify(user.club));
       sessionStorage.setItem("profileurl", url);
+      sessionStorage.setItem("kd", JSON.stringify({ kills, damage }));
 
       next = !next;
     }
@@ -89,6 +93,9 @@ function SearchInput({ appearance }: { appearance: boolean }) {
     setClubState,
     setExistenceState,
     isError,
+    setKdState,
+    kills,
+    damage,
   ]);
 
   const validation = (): boolean => {
@@ -190,7 +197,7 @@ function Search() {
       ) : (
         <>
           <Skeletons w="600px" h="85px" />
-          <Skeletons w="600px" h="146px" />
+          <Skeletons w="600px" h="178px" />
         </>
       )}
     </>

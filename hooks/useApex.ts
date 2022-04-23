@@ -22,7 +22,9 @@ export function useProfileImg(id: string, shouldFetch: boolean) {
   );
 
   return {
-    url: data,
+    url: data?.avatarUrl,
+    kills: data?.kills,
+    damage: data?.damage,
     isError: error,
   };
 }

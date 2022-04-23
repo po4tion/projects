@@ -23,9 +23,13 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
                   },
                 }
               )
-              .then((res) => res.data.data.platformInfo);
+              .then((res) => res.data.data);
 
-            return res.status(200).json(result.avatarUrl);
+            return res.status(200).json({
+              avatarUrl: result.platformInfo.avatarUrl,
+              kills: result.segments[0].stats.kills.displayValue,
+              damage: result.segments[0].stats.damage.displayValue,
+            });
           };
 
           await getFetchData();

@@ -25,3 +25,8 @@ export const profileUrlState = atom<string | null>({
   key: "profileUrlState",
   default: null,
 });
+
+export const kdState = atom<any>({
+  key: "kdState",
+  default: null,
+});

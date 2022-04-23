@@ -8,20 +8,20 @@ import {
   profileUrlState,
   realtimeState,
 } from "../../atoms/atom.userInfo";
-import HelpIcon from "@mui/icons-material/Help";
-import { IconButton } from "@mui/material";
 import { useRouter } from "next/router";
+import HelpModal from "./HelpModal";
 
 function HeaderBox() {
   return (
     <Box
-      py={2}
+      pt={4}
+      pb={10}
       display={"flex"}
       alignItems={"center"}
       justifyContent={"space-between"}
     >
-      {HeaderLogo()}
-      {HelpBtn()}
+      <HeaderLogo />
+      <HelpModal />
     </Box>
   );
 }
@@ -62,16 +62,8 @@ function HeaderLogo() {
   );
 }
 
-function HelpBtn() {
-  return (
-    <IconButton edge="end" color="primary">
-      <HelpIcon color="primary" fontSize="large" />
-    </IconButton>
-  );
-}
-
 function UserInfoHeader() {
-  return <>{HeaderBox()}</>;
+  return <HeaderBox />;
 }
 
 export default UserInfoHeader;
