@@ -3,7 +3,7 @@ import { sideBodyType } from "../../types/bodyTypes";
 
 function SideBody({ children, mw }: sideBodyType) {
   return (
-    <Container maxWidth={mw} sx={{ height: "100vh", minWidth: "1200px" }}>
+    <Container maxWidth={mw} sx={{ minWidth: "500px", height: "100vh" }}>
       {children}
     </Container>
   );

@@ -1,10 +1,11 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
+import { mobileState } from "../../../atoms/atom.mediaQuery";
 import { useMatchHistory } from "../../../hooks/useApex";
 import { matchType } from "../../../types/matchTypes";
 import { getData } from "../../../utils/matchData";
 import { FlexBody } from "../../container";
-import Combat from "./Combat";
 import PlayerAvatar from "./PlayerAvatar";
 import RankAvatar from "./RankAvatar";
 
@@ -15,6 +16,7 @@ function Match() {
     query.user ? true : false
   );
   const data = getData(matches || null);
+  const mobile = useRecoilValue(mobileState);
 
   return (
     (
@@ -39,9 +41,10 @@ function Match() {
             >
               <PlayerAvatar iconUrl={item.iconUrl} />
               <Box
+                width={"100%"}
                 display={"flex"}
                 alignItems={"center"}
-                justifyContent={"center"}
+                justifyContent={"space-evenly"}
                 gap={5}
               >
                 <RankAvatar
@@ -57,10 +60,21 @@ function Match() {
                   scoreChange={item.arenaScoreChange}
                 />
               </Box>
-              <Combat damage={item.damage} kill={item.kill} />
-              <Box height={"100%"} display={"flex"} alignItems={"flex-end"}>
-                <Typography>{item.recordDate}</Typography>
-              </Box>
+              <Box
+                height={"100%"}
+                display={"flex"}
+                alignItems={"flex-end"}
+              ></Box>
+              <Typography
+                variant={mobile ? "overline" : "inherit"}
+                sx={{
+                  position: "absolute",
+                  right: 0,
+                  bottom: mobile ? -15 : 0,
+                }}
+              >
+                {item.recordDate}
+              </Typography>
             </ListItem>
           </List>
         ))}

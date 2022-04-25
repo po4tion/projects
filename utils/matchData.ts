@@ -13,7 +13,7 @@ export const getData = (matches: any[]) => {
       arenaRankUrl:
         matches[0].stats.arenaRankScore.metadata.arenaRankScoreInfo.image,
       id: matches[0].id,
-      kill: stats.kills.value,
+      kill: stats.kills?.value,
       damage: stats.damage?.value,
       score: stats.rankScore.value,
       arenaScore: stats.arenaRankScore.value,

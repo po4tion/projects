@@ -7,6 +7,7 @@ function RankContent({ global }: { global: any }) {
   return (
     <CardContent
       sx={{
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -21,7 +22,6 @@ function RankContent({ global }: { global: any }) {
           objectFit="cover"
           quality={100}
           alt="배틀로얄 랭크 사진"
-          priority
         />
       </Box>
       <Typography>배틀로얄</Typography>

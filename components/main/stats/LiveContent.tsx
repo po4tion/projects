@@ -79,7 +79,7 @@ function LiveContent() {
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "column",
-        height: "100%",
+        height: "350px",
       }}
     >
       <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>

@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import {
   clubState,
   globalState,
+  kdState,
   legendsState,
   profileUrlState,
   realtimeState,
@@ -14,6 +15,7 @@ import HelpModal from "./HelpModal";
 function HeaderBox() {
   return (
     <Box
+      width={"100%"}
       pt={4}
       pb={10}
       display={"flex"}
@@ -33,6 +35,7 @@ function HeaderLogo() {
   const setLegendsState = useSetRecoilState(legendsState);
   const setClubState = useSetRecoilState(clubState);
   const setProfileUrl = useSetRecoilState(profileUrlState);
+  const setKd = useSetRecoilState(kdState);
 
   const goHome = () => {
     /**
@@ -43,6 +46,7 @@ function HeaderLogo() {
     setLegendsState(null);
     setClubState(null);
     setProfileUrl(null);
+    setKd(null);
 
     sessionStorage.clear();
 

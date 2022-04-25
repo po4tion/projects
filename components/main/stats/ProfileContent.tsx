@@ -2,12 +2,14 @@ import { Box, CardContent, LinearProgress, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { mobileState } from "../../../atoms/atom.mediaQuery";
 import { globalState } from "../../../atoms/atom.userInfo";
 
 function ProfileContent() {
   const { query } = useRouter();
   const [global, setGlobal] = useRecoilState(globalState);
+  const mobile = useRecoilValue(mobileState);
   const { user } = query;
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function ProfileContent() {
             quality={100}
             alt="오리진 사진"
           />
-          <Typography variant="h5">{user}</Typography>
+          <Typography variant={mobile ? "h6" : "h5"}>{user}</Typography>
         </Box>
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <Image
@@ -48,7 +50,7 @@ function ProfileContent() {
             quality={100}
             alt="스팀 사진"
           />
-          <Typography variant="h5">{global?.name}</Typography>
+          <Typography variant={mobile ? "h6" : "h5"}>{global?.name}</Typography>
         </Box>
       </CardContent>
     </>
