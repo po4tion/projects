@@ -7,10 +7,6 @@
 	"repository": "git@github.com:po4tion/devblog.git",
 	"author": "Kim Dong Gyu <po4tion0429@gmail.com>",
 	"license": "MIT",
-	"engines": {
-		"yarn": ">=1.22.5",
-		"node": "14.18.1"
-	},
 	"bugs": {
 		"url": "https://github.com/po4tion/devblog/issues"
 	},
