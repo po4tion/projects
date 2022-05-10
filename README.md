@@ -13,6 +13,12 @@
 
 ### 🏠 [DEVBLOG로 이동](https://devblog-mu.vercel.app/)
 
+## Lighthouse 성능 측정
+
+![lighthouse](./public/Devblog-Total.png)
+
+<br />
+
 ## 목차
 
 1. [DEVBLOG](#DEVBLOG)
@@ -24,9 +30,13 @@
 7. [개발자](#개발자)
 8. [제보사항](#제보사항)
 
+<br />
+
 ## DEVBLOG
 
 타게팅 유저는 국내 개발자 분들로, 사는 얘기, 관심사와 기술 개발 등을 게시하여 서로 소통하는 공간을 열어주는 SEO 블로그 서비스 프론트엔드 프로젝트입니다.
+
+<br />
 
 ## 설명
 
@@ -37,6 +47,8 @@
 - React-hook-form과 Yup을 통한 유효성 검사 적용
 - email verification을 적용하여 무분별한 회원가입 방지
 - windowing 기법을 통해 리스트 렌더링
+
+<br />
 
 ## 주요 사용 기술
 
@@ -50,9 +62,13 @@
 - Formidable
 - Sendgrid
 
+<br />
+
 ## 배포 환경
 
 - Vercel
+
+<br />
 
 ## 제공 기능
 
@@ -89,6 +105,8 @@
 - 태그 검색
 - 게시글 검색(본문, 제목, 소개글 또는 작성자)
 
+<br />
+
 ## 파일 관리
 
 | 파일명     | 목적                      |
@@ -101,11 +119,15 @@
 | public     | css images favicon robots |
 | view       | Material-UI 연동 모듈     |
 
+<br />
+
 ## 개발자
 
 👤 **Kim DongGyu <po4tion0429@gmail.com>**
 
 - Github: [@po4tion](https://github.com/po4tion)
+
+<br />
 
 ## 제보사항
 
