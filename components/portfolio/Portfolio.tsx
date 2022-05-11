@@ -108,7 +108,11 @@ function Portfolio() {
 									</a>
 								</div>
 
-								<p className="font-bold text-lg">도메인(배포완료)</p>
+								<p className="font-bold text-lg">
+									{item.isDeploy
+										? '도메인(배포완료)'
+										: '도메인(배포중지-동영상 대체)'}
+								</p>
 								<div className="flex items-center justify-start">
 									<p className="flex items-center">
 										<BsArrowRightSquareFill className="mr-2" />

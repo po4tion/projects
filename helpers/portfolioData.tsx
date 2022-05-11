@@ -10,29 +10,52 @@ import {
 	SiVercel,
 	SiTypescript,
 	SiTailwindcss,
+	SiRedux,
+	SiChakraui,
+	SiDjango,
 } from 'react-icons/si';
+import { FaChartLine } from 'react-icons/fa';
 
 interface PortFolioInfo {
 	readonly src: string;
 	readonly ext: string;
 	readonly images: string[];
-	readonly link: string;
 	readonly desc: string;
-	readonly summary: string;
 	readonly tech: string[];
 	readonly icons: JSX.Element[];
 	readonly body: string;
 	readonly stack: string[];
+	readonly isDeploy: boolean;
 }
 
 export const portfolioData: PortFolioInfo[] = [
 	{
+		src: 'covig',
+		ext: '.webp',
+		images: ['card', 'chart', 'region', 'dark'],
+		desc: 'COVIG',
+		tech: ['React', 'Redux', 'Chakra', 'Chart.js', 'Vercel', 'Django'],
+		icons: [
+			<FaReact key="react" />,
+			<SiRedux key="redux" />,
+			<SiChakraui key="chakra" />,
+			<FaChartLine key="chartjs" />,
+			<SiVercel key="vercel" />,
+			<SiDjango key="django" />,
+		],
+		body: '현재 국내 covid-19 상황을 한눈에 볼 수 있도록 만든 React 기반의 Website 입니다. React, Redux, Chakra UI에 집중하여 개발하였습니다. Django 백엔드 1분과 협업을 하였고 코드 리뷰의 중요성을 알 수 있었던 프로젝트 입니다.',
+		stack: [
+			'다국어, 다크모드, 확진 정보, 차트 기능',
+			'https://github.com/po4tion/covig-front',
+			'https://www.youtube.com/watch?v=htIcRam5eqA',
+		],
+		isDeploy: false,
+	},
+	{
 		src: 'portfolio',
 		ext: '.webp',
 		images: ['home', 'about-me', 'skills', 'portfolio'],
-		link: 'https://devblog-mu.vercel.app/',
 		desc: 'PORTFOLIO',
-		summary: 'Tailwind CSS를 사용한 포트폴리오 프로젝트',
 		tech: ['TypeScript ', 'React', 'Next.js', 'TailWind', 'Git', 'Vercel'],
 		icons: [
 			<SiTypescript key="typescript" />,
@@ -48,6 +71,7 @@ export const portfolioData: PortFolioInfo[] = [
 			'https://github.com/po4tion/portfolio',
 			'https://portfolio-po4tion.vercel.app/',
 		],
+		isDeploy: true,
 	},
 	{
 		src: 'devblog',
@@ -62,9 +86,7 @@ export const portfolioData: PortFolioInfo[] = [
 			'related',
 			'profile',
 		],
-		link: 'https://devblog-mu.vercel.app/',
 		desc: 'DEVBLOG',
-		summary: 'Next.js를 적용한 SEO 블로그 프론트엔드 프로젝트',
 		tech: ['React', 'Next.js', 'Material-UI', 'MongoDB', 'Git', 'Vercel'],
 		icons: [
 			<FaReact key="react" />,
@@ -80,5 +102,6 @@ export const portfolioData: PortFolioInfo[] = [
 			'https://github.com/po4tion/devblog',
 			'https://devblog-mu.vercel.app/',
 		],
+		isDeploy: true,
 	},
 ];
