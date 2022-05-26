@@ -22,9 +22,8 @@ export const skills: SkillsInfo[] = [
 	},
 	{
 		name: 'TypeScript',
-		svgName: 'typeScript',
+		svgName: 'typescript',
 	},
-
 	{
 		name: 'React',
 		svgName: 'react',
