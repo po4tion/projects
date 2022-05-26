@@ -43,7 +43,7 @@ export const portfolioData: PortFolioInfo[] = [
 			<SiVercel key="vercel" />,
 			<SiDjango key="django" />,
 		],
-		body: '현재 국내 covid-19 상황을 한눈에 볼 수 있도록 만든 React 기반의 Website 입니다. React, Redux, Chakra UI에 집중하여 개발하였습니다. Django 백엔드 1분과 협업을 하였고 코드 리뷰의 중요성을 알 수 있었던 프로젝트 입니다.',
+		body: '현재 국내 covid-19 상황을 한눈에 볼 수 있도록 만든 React 기반의 Website 입니다. React, Redux, Chakra UI에 집중하여 개발하였습니다. Django 백엔드 개발자와 협업을 하였고 코드 리뷰의 중요성을 알 수 있었던 프로젝트 입니다.',
 		stack: [
 			'다국어, 다크모드, 확진 정보, 차트 기능',
 			'https://github.com/po4tion/covig-front',
