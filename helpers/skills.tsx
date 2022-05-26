@@ -20,6 +20,10 @@ export const skills: SkillsInfo[] = [
 		name: 'JavaScript',
 		svgName: 'javascript',
 	},
+	{
+		name: 'TypeScript',
+		svgName: 'typeScript',
+	},
 
 	{
 		name: 'React',
