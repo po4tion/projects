@@ -43,10 +43,7 @@ const Home: NextPage = () => {
 				<AboutMe />
 				<span id="skills" className="border-2 block h-[64px] invisible"></span>
 				<SkillSet />
-				<span
-					id="portfolio"
-					className="border-2 block h-[64px] invisible"
-				></span>
+				<span id="project" className="border-2 block h-[64px] invisible"></span>
 				<PortFolio />
 				<Contact />
 			</div>

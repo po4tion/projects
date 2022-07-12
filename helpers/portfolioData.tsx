@@ -2,7 +2,7 @@
   포트폴리오 값 설정
 */
 
-import { FaReact, FaGitAlt } from 'react-icons/fa';
+import { FaReact, FaGitAlt, FaChartLine } from 'react-icons/fa';
 import {
 	SiNextdotjs,
 	SiMaterialui,
@@ -14,7 +14,7 @@ import {
 	SiChakraui,
 	SiDjango,
 } from 'react-icons/si';
-import { FaChartLine } from 'react-icons/fa';
+import { GiWireCoil } from 'react-icons/gi';
 
 interface PortFolioInfo {
 	readonly src: string;
@@ -50,6 +50,28 @@ export const portfolioData: PortFolioInfo[] = [
 			'https://www.youtube.com/watch?v=htIcRam5eqA',
 		],
 		isDeploy: false,
+	},
+	{
+		src: 'spotify',
+		ext: '.webp',
+		images: ['spotify'],
+		desc: 'Spotify Web Player',
+		tech: ['TypeScript', 'React', 'Next.js', 'Tailwind', 'Recoil', 'Vercel'],
+		icons: [
+			<SiTypescript key="typescript" />,
+			<FaReact key="react" />,
+			<SiNextdotjs key="nextjs" />,
+			<SiTailwindcss key="tailwind" />,
+			<GiWireCoil key="recoil" />,
+			<SiVercel key="vercel" />,
+		],
+		body: 'UI는 Spotify web player를 클론하였으며 Spotify API를 통해 나의 플레이리스트들을 조작할 수 있는 웹 서비스 입니다. NextAuth와 Recoil에 집중하여 개발하였으며 외부 API를 다양하게 다룰 수 있었던 프로젝트 입니다.',
+		stack: [
+			'로그인, 로그아웃, 음악 조작(재생, 일시정지, 볼륨조절 등)',
+			'https://github.com/po4tion/spotify',
+			'https://spotify-po4tion.vercel.app/',
+		],
+		isDeploy: true,
 	},
 	{
 		src: 'portfolio',

@@ -25,8 +25,8 @@ export const navigationLinks: NavigationLinks[] = [
 		cy: 'skills',
 	},
 	{
-		name: 'PORTFOLIO',
-		href: '#portfolio',
+		name: 'PROJECT',
+		href: '#project',
 		cy: 'portfolio',
 	},
 	{

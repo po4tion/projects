@@ -33,7 +33,7 @@ function Portfolio() {
 					className="border-b-4 border-b-blue-400 font-noto text-4xl font-bold mb-10"
 					data-cy="Portfolio"
 				>
-					PORTFOLIO
+					PROJECT
 				</h1>
 			</div>
 			<div className="flex items-center justify-center flex-col">
