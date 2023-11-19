@@ -1,0 +1,35 @@
+export const Modules = {
+	toolbar: [
+		[{ header: '1' }, { header: '2' }, { header: [3, 4, 5, 6] }, { font: [] }],
+		[{ size: [] }],
+		['bold', 'italic', 'underline', 'strike', 'blockquote'],
+		[{ list: 'ordered' }, { list: 'bullet' }],
+		[{ align: [] }],
+		[{ script: 'sub' }, { script: 'super' }],
+		[{ color: [] }, { background: [] }],
+		['link', 'image', 'video'],
+		['clean'],
+		['code-block'],
+	],
+};
+
+export const Formats = [
+	'header',
+	'font',
+	'size',
+	'bold',
+	'italic',
+	'underline',
+	'strike',
+	'blockquote',
+	'list',
+	'bullet',
+	'link',
+	'image',
+	'video',
+	'code-block',
+	'color',
+	'background',
+	'script',
+	'align',
+];
