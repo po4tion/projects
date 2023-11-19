@@ -1,0 +1,16 @@
+# * ignore files
+
+# build
+.next
+
+# modules
+node_modules
+
+# pictures
+public
+
+# style sheets
+styles
+
+# github
+README.md
