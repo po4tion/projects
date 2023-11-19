@@ -1,0 +1,83 @@
+{
+	"name": "covig-front",
+	"version": "0.1.0",
+	"description": "Coivd19 API를 사용하여 코로나 확진자 정보를 제공하는 웹 서비스",
+	"main": "index.js",
+	"homepage": "",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/po4tion/covig-front"
+	},
+	"author": {
+		"name": "김동규",
+		"email": "po4tion0429@gmail.com",
+		"url": "https://github.com/po4tion"
+	},
+	"contributors": [
+		{
+			"name": "김경훈",
+			"email": "kkh2826@naver.com",
+			"url": "https://github.com/kkh2826"
+		}
+	],
+	"bugs": {
+		"url": "https://github.com/po4tion/covig-front/issues"
+	},
+	"private": true,
+	"dependencies": {
+		"@chakra-ui/icons": "^1.1.7",
+		"@chakra-ui/react": "^1.8.6",
+		"@emotion/react": "^11",
+		"@emotion/styled": "^11",
+		"@patternfly/react-icons": "^4.57.2",
+		"chart.js": "^3.7.1",
+		"chartjs-plugin-gradient": "^0.5.0",
+		"framer-motion": "^6",
+		"i18next": "^21.6.16",
+		"prop-types": "^15.8.1",
+		"react": "^17.0.2",
+		"react-chartjs-2": "^4.1.0",
+		"react-dom": "^17.0.2",
+		"react-helmet-async": "^1.3.0",
+		"react-i18next": "^11.16.7",
+		"react-redux": "^7.2.8",
+		"react-scripts": "5.0.0",
+		"redux": "^4.1.2",
+		"redux-actions": "^2.6.5",
+		"redux-thunk": "^2.4.1",
+		"source-map-explorer": "^2.5.2",
+		"web-vitals": "^2.1.0"
+	},
+	"devDependencies": {
+		"eslint": "^8.10.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-react": "^7.29.3",
+		"prettier": "^2.5.1",
+		"redux-devtools-extension": "^2.13.9"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"lint": "eslint --ext .js,.jsx src",
+		"prettier": "prettier --write ./src/**/*.js",
+		"prettier-check": "prettier --check ./src/**/*.js",
+		"analyze": "source-map-explorer 'build/static/js/*.js'"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version"
+		]
+	}
+}
